@@ -27,3 +27,10 @@ create table logistic_db.orders(
     
 );
 
+create table logistic_db.routes(
+	id int not null primary key auto_increment,
+    id_route int not null,
+    order_date date not null,
+    payment_day date not null
+);
+
