@@ -43,3 +43,12 @@ create table logistic_db.routes_info(
     length int not null
 );
 
+create table logistic_db.contacts(
+	id int not null primary key auto_increment,
+    firstname varchar(45) not null,
+    lastname varchar(45) not null,
+    phone_num varchar(45) not null,
+    email varchar(45),
+    id_firm int not null,
+    id_passwords int not null
+);
