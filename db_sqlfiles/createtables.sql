@@ -10,3 +10,13 @@ create table logistic_db.firms(
     
 );
 
+create table logistic_db.address(
+	id int not null primary key auto_increment,
+    street_name varchar(45) not null,
+    street_num int not null,
+    city varchar(45) not null,
+    country varchar(45) not null
+    
+);
+
+
