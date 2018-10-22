@@ -52,3 +52,9 @@ create table logistic_db.contacts(
     id_firm int not null,
     id_passwords int not null
 );
+
+create table logistic_db.passwords(
+	id int not null primary key auto_increment,
+    hash varchar(300),
+    salt varchar(300)
+);
