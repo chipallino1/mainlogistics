@@ -10,7 +10,7 @@ create table logistic_db.firms(
     
 );
 
-create table logistic_db.address(
+create table logistic_db.addresses(
 	id int not null primary key auto_increment,
     street_name varchar(45) not null,
     street_num int not null,
@@ -19,4 +19,11 @@ create table logistic_db.address(
     
 );
 
+create table logistic_db.orders(
+	id int not null primary key auto_increment,
+    id_route int not null,
+    order_date date not null,
+    payment_day date not null
+    
+);
 
