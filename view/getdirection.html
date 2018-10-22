@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Logistics</title>
+  </head>
+  <body style= "background-color: rgb(245,245,245);">
+     <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">Logistics</a>
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarCollapse" style="">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Get direction</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Search</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contacts</a>
+            </li>
+          </ul>
+          <form class="form-inline mt-2 mt-md-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+    </header>
+    <main>
+        <div class="container py-5 my-5" style="background-image: url(images/slide2.jpg);">
+    <div class="row text-center pb-4">
+        <div class="col-md-12">
+            <h2>Find the New & Used Car in India</h2>
+        </div>
+    </div>   
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group ">
+                          <select id="inputState" class="form-control" >
+                            <option selected>... Select New/Used...</option>
+                            <option>New</option>
+                            <option>Used</option>
+                          </select>
+                        </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group ">
+                          <select id="inputState" class="form-control" >
+                            <option selected>... Select Make...</option>
+                            <option>BMW</option>
+                            <option>Audi</option>
+                            <option>Maruti</option>
+                            <option>Tesla</option>
+                          </select>
+                        </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group ">
+                          <select id="inputState" class="form-control" >
+                            <option selected>... Select Model...</option>
+                            <option>City</option>
+                            <option>Jazz</option>
+                            <option>Brio</option>
+                            
+                          </select>
+                        </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group ">
+                          <select id="inputState" class="form-control" >
+                            <option selected>... Select Location...</option>
+                            <option>New Delhi</option>
+                            <option>Banglore</option>
+                            <option>Chennai</option>
+                            <option>Jaipur</option>
+                          </select>
+                        </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group ">
+                          <select id="inputState" class="form-control" >
+                            <option selected>... Select Budget...</option>
+                            <option>1 Lac-5 Lac</option>
+                            <option>5 Lac-10 Lac</option>
+                            <option>10 Lac-15 Lac</option>
+                            <option>15 Lac-20 Lac</option>
+                            <option>20 Lac-25 Lac</option>
+                            <option>25 Lac & Above</option>
+                          </select>
+                        </div>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-dark">Search Car</button>
+
+                </div>
+            </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+      <div class="container py-5 my-5">
+<div class="row">
+  <!-- BEGIN SEARCH RESULT -->
+  <div class="col-md-12">
+    <div class="grid search">
+      <div class="grid-body">
+        <div class="row">
+          
+          <!-- BEGIN RESULT -->
+          <div class="col-md-9">
+            <h2><i class="fa fa-file-o"></i> Result</h2>
+            <hr>
+            
+            <p>Showing all results matching "web development"</p>
+            
+            <div class="padding"></div>
+            
+            <div class="row">
+              <!-- BEGIN ORDER RESULT -->
+              <div class="col-sm-6">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Order by <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Name</a></li>
+                    <li><a href="#">Date</a></li>
+                    <li><a href="#">View</a></li>
+                    <li><a href="#">Rating</a></li>
+                  </ul>
+                </div>
+              </div>
+              <!-- END ORDER RESULT -->
+              
+              <div class="col-md-6 text-right">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default active"><i class="fa fa-list"></i></button>
+                  <button type="button" class="btn btn-default"><i class="fa fa-th"></i></button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- BEGIN TABLE RESULT -->
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <tbody><tr>
+                  <td class="number text-center">1</td>
+                  <td class="image"><img src="https://lorempixel.com/400/300/nature/1" alt=""></td>
+                  <td class="product"><strong>Product 1</strong><br>This is the product description.</td>
+                  <td class="rate text-right"><span><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i></span></td>
+                  <td class="price text-right">$350</td>
+                </tr>
+                <tr>
+                  <td class="number text-center">2</td>
+                  <td class="image"><img src="https://lorempixel.com/400/300/nature/2" alt=""></td>
+                  <td class="product"><strong>Product 2</strong><br>This is the product description.</td>
+                  <td class="rate text-right"><span><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></span></td>
+                  <td class="price text-right">$1,050</td>
+                </tr>
+                <tr>
+                  <td class="number text-center">3</td>
+                  <td class="image"><img src="https://lorempixel.com/400/300/nature/3" alt=""></td>
+                  <td class="product"><strong>Product 3</strong><br>This is the product description.</td>
+                  <td class="rate text-right"><span><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i></span></td>
+                  <td class="price text-right">$550</td>
+                </tr>
+                <tr>
+                  <td class="number text-center">4</td>
+                  <td class="image"><img src="https://lorempixel.com/400/300/nature/4" alt=""></td>
+                  <td class="product"><strong>Product 4</strong><br>This is the product description.</td>
+                  <td class="rate text-right"><span><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i></span></td>
+                  <td class="price text-right">$330</td>
+                </tr>
+                <tr>
+                  <td class="number text-center">5</td>
+                  <td class="image"><img src="https://lorempixel.com/400/300/nature/5" alt=""></td>
+                  <td class="product"><strong>Product 5</strong><br>This is the product description.</td>
+                  <td class="rate text-right"><span><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span></td>
+                  <td class="price text-right">$540</td>
+                </tr>
+                <tr>
+                  <td class="number text-center">6</td>
+                  <td class="image"><img src="https://lorempixel.com/400/300/nature/6" alt=""></td>
+                  <td class="product"><strong>Product 6</strong><br>This is the product description.</td>
+                  <td class="rate text-right"><span><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i></span></td>
+                  <td class="price text-right">$870</td>
+                </tr>
+                <tr>
+                  <td class="number text-center">7</td>
+                  <td class="image"><img src="https://lorempixel.com/400/300/nature/7" alt=""></td>
+                  <td class="product"><strong>Product 7</strong><br>This is the product description.</td>
+                  <td class="rate text-right"><span><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></span></td>
+                  <td class="price text-right">$620</td>
+                </tr>
+                <tr>
+                  <td class="number text-center">8</td>
+                  <td class="image"><img src="https://lorempixel.com/400/300/nature/8" alt=""></td>
+                  <td class="product"><strong>Product 8</strong><br>This is the product description.</td>
+                  <td class="rate text-right"><span><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i></span></td>
+                  <td class="price text-right">$1,550</td>
+                </tr>
+              </tbody></table>
+            </div>
+            <!-- END TABLE RESULT -->
+            
+        
+          </div>
+          <!-- END RESULT -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END SEARCH RESULT -->
+</div>
+</div>
+    </main>
+  
+     <footer class="container">
+        <p class="float-right"><a href="#">Back to top</a></p>
+        <p>© 2018 Skorupich Egor Company, Inc.   <a href="#">Privacy</a>   <a href="#">Terms</a></p>
+      </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
