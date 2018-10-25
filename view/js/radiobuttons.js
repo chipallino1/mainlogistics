@@ -1,6 +1,9 @@
 function radioClick(curr) {
 	
+
 	deleteNodes('searchCont');
+	if(document.getElementById('allCont').childNodes.length-1>1)
+		deleteLastNode('allCont');
 	if(curr.id=='defaultInline1')
 	{
 		let input1=document.createElement('input');
@@ -110,7 +113,7 @@ function radioClick(curr) {
 	if(curr.id=='defaultInline3')
 	{
 		let getElem=document.getElementById('searchCont');
-		let allCont=document.getElementById('allCont');
+		
 
 		let input1=document.createElement('input');
 		input1.className='form-control';
@@ -197,8 +200,24 @@ function radioClick(curr) {
 function deleteNodes(id) {
 	
 	let myNode = document.getElementById(id);
+	if(myNode==null)
+	{
+		return;
+	}
 	while (myNode.firstChild) {
    	 myNode.removeChild(myNode.firstChild);
 	}
+
+}
+function deleteLastNode(id) {
+	
+	let myNode = document.getElementById(id);
+	if(myNode==null)
+	{
+		return;
+	}
+	
+   	 myNode.removeChild(myNode.lastChild);
+	
 
 }
