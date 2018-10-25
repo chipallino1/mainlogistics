@@ -1,5 +1,9 @@
 let result=document.getElementById('resultCol');
 result.appendChild(createHead('Result'));
+result.appendChild(document.createElement('hr'));
+result.appendChild(createParag('Showing all results matching'));
+result.appendChild(createDivPad());
+
 
 function createHead(text) {
 	
@@ -10,5 +14,20 @@ function createHead(text) {
 	h2.appendChild(document.createTextNode(text));
 	return h2;
 
+
+}
+
+function createParag(text) {
+
+	let p=document.createElement('p');
+	p.appendChild(document.createTextNode(text));
+	return p;
+}
+
+function createDivPad() {
+
+	let divPad=document.createElement('div');
+	divPad.className='padding';
+	return divPad;
 
 }
