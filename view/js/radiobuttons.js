@@ -2,6 +2,7 @@ function radioClick(curr) {
 	
 	let getElem=document.getElementById('searchCont');
 	deleteNodes('searchCont');
+	deleteNodes('resultCol');
 	if(document.getElementById('allCont').childNodes.length-1>1)
 		deleteLastNode('allCont');
 	if(curr.id=='defaultInline1')
@@ -10,6 +11,7 @@ function radioClick(curr) {
 		getElem.appendChild(createCol('city'));
 		getElem.appendChild(createButton('Search'));
 		getElem.appendChild(createButton('Show all'));
+		getHelp('Firms');
 
 	}
 	if(curr.id=='defaultInline2')
@@ -20,6 +22,7 @@ function radioClick(curr) {
 		getElem.appendChild(createCol('lastname'));
 		getElem.appendChild(createButton('Search'));
 		getElem.appendChild(createButton('Show all'));
+		getHelp('Users');
 
 	}
 	if(curr.id=='defaultInline3')
@@ -35,6 +38,7 @@ function radioClick(curr) {
 		div.appendChild(createButton('Search'));
 		div.appendChild(createButton('Search'));		
 		allCont.appendChild(div);
+		getHelp('Carriers');
 		
 	}
 
@@ -89,5 +93,55 @@ function createButton(text) {
 	div.appendChild(button);
 
 	return div;
+
+}
+
+function getHelp(type)
+{
+	let resultCol=document.getElementById('resultCol');
+	
+	if(type=='Firms')
+	{
+		resultCol.appendChild(createHead('You will get results about firms which registred on our resource.'));
+		resultCol.appendChild(createParag('If you want to find info about users or carriers just choose it.'));
+		resultCol.appendChild(createDivPad());
+	}
+	if(type=='Users')
+	{
+		resultCol.appendChild(createHead('You will get results about users which registred on our resource.'));
+		resultCol.appendChild(createParag('If you want to find info about firms or carriers just choose it.'));
+		resultCol.appendChild(createDivPad());
+	}
+	if(type=='Carriers')
+	{
+		resultCol.appendChild(createHead('You will get results about carriers which registred on our resource.'));
+		resultCol.appendChild(createParag('If you want to find info about users or firms just choose it.'));
+		resultCol.appendChild(createDivPad());
+	}
+}
+
+function createHead(text) {
+	
+	let i = document.createElement('i');
+	i.className='fa fa-file-o';
+	let h2 = document.createElement('h2');
+	h2.appendChild(i);
+	h2.appendChild(document.createTextNode(text));
+	return h2;
+
+
+}
+
+function createParag(text) {
+
+	let p=document.createElement('p');
+	p.appendChild(document.createTextNode(text));
+	return p;
+}
+function createDivPad() {
+
+	let divPad=document.createElement('div');
+	divPad.className='padding';
+	return divPad;
 
 }

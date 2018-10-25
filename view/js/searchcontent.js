@@ -1,18 +1,22 @@
-let result=document.getElementById('resultCol');
-result.appendChild(createHead('Result'));
-result.appendChild(document.createElement('hr'));
-result.appendChild(createParag('Showing all results matching'));
-result.appendChild(createDivPad());
-result.appendChild(createResultsDiv());
-addResult(null,'Product 1','Its new product taht help me to test this page.',300);
-addResult(null,'Product 1','Its new product taht help me to test this page.',300);
-addResult(null,'Product 1','Its new product taht help me to test this page.',300);
-addResult(null,'Product 1','Its new product taht help me to test this page.',300);
-addResult(null,'Product 1','Its new product taht help me to test this page.',300);
-addResult(null,'Product 1','Its new product taht help me to test this page.',300);
-addResult(null,'Product 1','Its new product taht help me to test this page.',300);
-addResult(null,'Product 1','Its new product taht help me to test this page.',300);
-addResult(null,'Product 1','Its new product taht help me to test this page.',300);
+
+function getResults() {
+	let result=document.getElementById('resultCol');
+	result.appendChild(createHead('Result'));
+	result.appendChild(document.createElement('hr'));
+	result.appendChild(createParag('Showing all results matching'));
+	result.appendChild(createDivPad());
+	result.appendChild(createResultsDiv());
+	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
+	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
+	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
+	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
+	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
+	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
+	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
+	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
+	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
+}
+
 
 
 
