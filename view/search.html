@@ -11,6 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <script src="js/radiobuttons.js" type="text/javascript"></script>
   
 
     <title>Logistics</title>
@@ -28,10 +29,10 @@
               <a class="nav-link" href="index.html">Home </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="getdirection.html">Get direction<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="getdirection.html">Get direction</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="search.html">Search</a>
+              <a class="nav-link active" href="search.html">Search<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Contacts</a>
@@ -48,40 +49,37 @@
         <div class="container py-5 mt-5 pb-0 mb-3" style="background-image: url(images/slide2.jpg);">
     <div class="row text-center pb-4">
         <div class="col-md-12">
-            <h2>Find the optimal direction of your shipping</h2>
+            <h2>Find firms, users or carriers</h2>
         </div>
     </div>   
+     <div class="row justify-content-center">
+     	<!-- Material inline 1 -->
+		<!-- Default inline 1-->
+		<div class="custom-control custom-radio custom-control-inline">
+  			<input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample" onclick="radioClick(this)">
+  			<label class="custom-control-label" for="defaultInline1"><b>Firms</b></label>
+		</div>
 
-                    <div class="row justify-content-center">
-                      <div class="col-md-3">
-                         <span class="input-group-addon my-2 mr-1">
-                            <input type="text" value="" class="form-control" name="custom_name" placeholder="from">
-                        </span>
-                      </div>
-                     
-                       <div class="col-md-3">
-                         <span class="input-group-addon my-2 mr-1">
-                            <input type="text" value="" class="form-control" name="custom_name" placeholder="to">
-                        </span>
-                      </div>
-                      <div class="col-md-3">
-                      <span class="input-group-addon my-2 mr-1" > 
-                        <input id="datepicker" value="" class="form-control" name="custom_name" placeholder="mm/dd/yyyy"/>
-                            <script>
-                               $('#datepicker').datepicker({
-                                      uiLibrary: 'bootstrap4'
-                                 });
-                            </script>
-                      </span>
-                    </div>
-                    <div class="col-md-3">
-                 
-                       <button class="w-100 btn btn-outline-success my-4" type="submit">Search</button>
-                 
-                    </div>
-              
-                  </div>
-<div class="container p-0">
+<!-- Default inline 2-->
+		<div class="custom-control custom-radio custom-control-inline">
+  			<input type="radio" class="custom-control-input" id="defaultInline2" name="inlineDefaultRadiosExample" onclick="radioClick(this)">
+ 			 <label class="custom-control-label" for="defaultInline2"><b>Users</b></label>
+		</div>
+
+<!-- Default inline 3-->
+		<div class="custom-control custom-radio custom-control-inline">
+  			<input type="radio" class="custom-control-input" id="defaultInline3" name="inlineDefaultRadiosExample" onclick="radioClick(this)">
+  			<label class="custom-control-label" for="defaultInline3"><b>Carriers</b></label>
+		</div>
+     </div>
+    
+     <div class="container" id="allCont">
+    	 <div class="row justify-content-center" id="searchCont">
+     		
+ 	    </div>
+	 </div>
+
+<div class="container p-0 mt-2">
 
   <!-- BEGIN SEARCH RESULT -->
   
