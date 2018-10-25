@@ -9,8 +9,8 @@ function radioClick(curr) {
 	{			
 		getElem.appendChild(createCol('name'));
 		getElem.appendChild(createCol('city'));
-		getElem.appendChild(createButton('Search'));
-		getElem.appendChild(createButton('Show all'));
+		getElem.appendChild(createButton('Search',getResults));
+		getElem.appendChild(createButton('Show all',getResults));
 		getHelp('Firms');
 
 	}
@@ -20,8 +20,8 @@ function radioClick(curr) {
 		getElem.appendChild(createCol('username'));
 		getElem.appendChild(createCol('firstname'));
 		getElem.appendChild(createCol('lastname'));
-		getElem.appendChild(createButton('Search'));
-		getElem.appendChild(createButton('Show all'));
+		getElem.appendChild(createButton('Search',getResults));
+		getElem.appendChild(createButton('Show all',getResults));
 		getHelp('Users');
 
 	}
@@ -35,8 +35,8 @@ function radioClick(curr) {
 
 		let div=document.createElement('div');
 		div.className='row justify-content-center';
-		div.appendChild(createButton('Search'));
-		div.appendChild(createButton('Search'));		
+		div.appendChild(createButton('Search',getResults));
+		div.appendChild(createButton('Show all',getResults));		
 		allCont.appendChild(div);
 		getHelp('Carriers');
 		
@@ -82,7 +82,7 @@ function createCol(placeholder) {
 
 	return div;
 }
-function createButton(text) {
+function createButton(text,handler) {
 	
 	let button=document.createElement('button');
 	button.className='w-100 btn btn-outline-success my-4';
@@ -91,6 +91,8 @@ function createButton(text) {
 	let div=document.createElement('div');
 	div.className='col';
 	div.appendChild(button);
+
+	div.addEventListener('click',handler);
 
 	return div;
 
@@ -104,24 +106,28 @@ function getHelp(type)
 	{
 		resultCol.appendChild(createHead('You will get results about firms which registred on our resource.'));
 		resultCol.appendChild(createParag('If you want to find info about users or carriers just choose it.'));
+		resultCol.appendChild(document.createElement('hr'));
 		resultCol.appendChild(createDivPad());
 	}
 	if(type=='Users')
 	{
 		resultCol.appendChild(createHead('You will get results about users which registred on our resource.'));
 		resultCol.appendChild(createParag('If you want to find info about firms or carriers just choose it.'));
+		resultCol.appendChild(document.createElement('hr'));
 		resultCol.appendChild(createDivPad());
 	}
 	if(type=='Carriers')
 	{
 		resultCol.appendChild(createHead('You will get results about carriers which registred on our resource.'));
 		resultCol.appendChild(createParag('If you want to find info about users or firms just choose it.'));
+		resultCol.appendChild(document.createElement('hr'));
 		resultCol.appendChild(createDivPad());
 	}
 }
 
 
 function getResults() {
+	deleteNodes('resultCol');
 	let result=document.getElementById('resultCol');
 	result.appendChild(createHead('Result'));
 	result.appendChild(document.createElement('hr'));
