@@ -43,7 +43,7 @@ function loginPage() {
 
 function signupPage() {
 	deleteNodes('enter');
-	let buttonSub=createButton('submit','btn btn-primary btn-block','Log in');
+	let buttonSub=createButton('submit','btn btn-primary btn-block','Register');
 
 	let divSubmit=createDiv('form-group');
 	divSubmit.appendChild(buttonSub);
@@ -62,6 +62,22 @@ function signupPage() {
 	divEmail.appendChild(inputEmail);
 	divEmail.appendChild(smallEmail);
 
+	let inputLname=createInput('text','form-control','lastname');
+	let labelLname=createLabel('First name');
+	let divLname=createDiv('col form-group');
+	divLname,appendChild(labelLname);
+	divLname.appendChild(inputLname);
+
+	let inputFname=createInput('text','form-control','firstname');
+	let labelFname=createLabel('First name');
+	let divFname=createDiv('col form-group');
+	divFname,appendChild(labelFname);
+	divFname.appendChild(inputFname);
+
+	let divFLnames=createDiv('from-row');
+	divFLnames.appendChild(divFname);
+	divFLnames.appendChild(divLname);
+
 	let form=createForm();
 	form.appendChild(divEmail);
 	form.appendChild(divPass);
@@ -69,7 +85,7 @@ function signupPage() {
 	let article=createArticle('card-body');
 	article.appendChild(form);
 	let h4=createH4('card-title mt-2','Log in');
-	let a=createA('float-right btn btn-outline-primary mt-1','Sign Up',signupPage);
+	let a=createA('float-right btn btn-outline-primary mt-1','Sign Up',loginPage);
 	let header=createHeader('card-header');
 	header.appendChild(a);
 	header.appendChild(h4);
