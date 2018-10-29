@@ -4,7 +4,7 @@ function loginPage() {
 	let buttonSub=createButton('submit','btn btn-primary btn-block','Log in');
 
 	let divSubmit=createDiv('form-group');
-	divSubmit.appendChild();
+	divSubmit.appendChild(buttonSub);
 
 	let inputPass=createInput('password','form-control','password');
 	let labelPass=createLabel('Password');
@@ -22,10 +22,12 @@ function loginPage() {
 
 	let form=createForm();
 	form.appendChild(divEmail);
+	form.appendChild(divPass);
+	form.appendChild(divSubmit);
 	let article=createArticle('card-body');
 	article.appendChild(form);
 	let h4=createH4('card-title mt-2','Log in');
-	let a=createA('float-right btn btn-outline-primary mt-1','Sign Up','');
+	let a=createA('float-right btn btn-outline-primary mt-1','Sign Up');
 	let header=createHeader('card-header');
 	header.appendChild(a);
 	header.appendChild(h4);
@@ -53,11 +55,11 @@ function createHeader(className) {
 	return header;
 
 }
-function createA(className,innerHTML,href) {
+function createA(className,innerHTML) {
 	let a=document.createElement('a');
 	a.className=className;
 	a.innerHTML=innerHTML;
-	a.href=href;
+	a.style.color='#007bff';
 
 	return a;
 }
@@ -72,7 +74,6 @@ function createArticle(className) {
 
 	let article=document.createElement('article');
 	article.className=className;
-	article.innerHTML=innerHTML;
 
 	return article;
 
