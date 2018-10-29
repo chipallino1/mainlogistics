@@ -1,8 +1,37 @@
 function loginPage() {
 	
-	let header=createHeader():
+	deleteNodes('enter');
+	let buttonSub=createButton('submit','btn btn-primary btn-block','Log in');
+
+	let divSubmit=createDiv('form-group');
+	divSubmit.appendChild();
+
+	let inputPass=createInput('password','form-control','password');
+	let labelPass=createLabel('Password');
+	let divPass=createDiv('form-group');
+	divPass.appendChild(labelPass);
+	divPass.appendChild(inputPass);
+
+	let smallEmail=createSmall('form-text text-muted',"We'll never share your email with anyone else.");
+	let inputEmail=createInput('text','form-control','email');
+	let labelEmail=createLabel('Email address');
+	let divEmail=createDiv('form-group');
+	divEmail.appendChild(labelEmail);
+	divEmail.appendChild(inputEmail);
+	divEmail.appendChild(smallEmail);
+
+	let form=createForm();
+	form.appendChild(divEmail);
+	let article=createArticle('card-body');
+	article.appendChild(form);
+	let h4=createH4('card-title mt-2','Log in');
+	let a=createA('float-right btn btn-outline-primary mt-1','Sign Up','');
+	let header=createHeader('card-header');
+	header.appendChild(a);
+	header.appendChild(h4);
 	let divCard=createDiv('card');
-	divCard.appendChild();
+	divCard.appendChild(header);
+	divCard.appendChild(article);
 	let divCol=createDiv('col-md-6');
 	divCol.appendChild(divCard);
 	let cont=document.getElementById('enter');
@@ -65,4 +94,29 @@ function createInput(type,className,placeholder){
 	input.className=className;
 	input.placeholder=placeholder;
 	return input;
+}
+function createSmall(className,innerHTML) {
+	let small=document.createElement('small');
+	small.className=className;
+	small.innerHTML=innerHTML;
+	return small;
+}
+function createButton(type,className,innerHTML) {
+	let button=document.createElement('button');
+	button.type=type;
+	button.className=className;
+	button.innerHTML=innerHTML;
+	return button;
+}
+function deleteNodes(id) {
+	
+	let myNode = document.getElementById(id);
+	if(myNode==null)
+	{
+		return;
+	}
+	while (myNode.firstChild) {
+   	 myNode.removeChild(myNode.firstChild);
+	}
+
 }
