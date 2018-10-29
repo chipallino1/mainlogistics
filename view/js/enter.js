@@ -27,7 +27,7 @@ function loginPage() {
 	let article=createArticle('card-body');
 	article.appendChild(form);
 	let h4=createH4('card-title mt-2','Log in');
-	let a=createA('float-right btn btn-outline-primary mt-1','Sign Up');
+	let a=createA('float-right btn btn-outline-primary mt-1','Sign Up',signupPage);
 	let header=createHeader('card-header');
 	header.appendChild(a);
 	header.appendChild(h4);
@@ -39,6 +39,47 @@ function loginPage() {
 	let cont=document.getElementById('enter');
 	cont.appendChild(divCol);
 
+}
+
+function signupPage() {
+	deleteNodes('enter');
+	let buttonSub=createButton('submit','btn btn-primary btn-block','Log in');
+
+	let divSubmit=createDiv('form-group');
+	divSubmit.appendChild(buttonSub);
+
+	let inputPass=createInput('password','form-control','password');
+	let labelPass=createLabel('Password');
+	let divPass=createDiv('form-group');
+	divPass.appendChild(labelPass);
+	divPass.appendChild(inputPass);
+
+	let smallEmail=createSmall('form-text text-muted',"We'll never share your email with anyone else.");
+	let inputEmail=createInput('text','form-control','email');
+	let labelEmail=createLabel('Email address');
+	let divEmail=createDiv('form-group');
+	divEmail.appendChild(labelEmail);
+	divEmail.appendChild(inputEmail);
+	divEmail.appendChild(smallEmail);
+
+	let form=createForm();
+	form.appendChild(divEmail);
+	form.appendChild(divPass);
+	form.appendChild(divSubmit);
+	let article=createArticle('card-body');
+	article.appendChild(form);
+	let h4=createH4('card-title mt-2','Log in');
+	let a=createA('float-right btn btn-outline-primary mt-1','Sign Up',signupPage);
+	let header=createHeader('card-header');
+	header.appendChild(a);
+	header.appendChild(h4);
+	let divCard=createDiv('card');
+	divCard.appendChild(header);
+	divCard.appendChild(article);
+	let divCol=createDiv('col-md-6');
+	divCol.appendChild(divCard);
+	let cont=document.getElementById('enter');
+	cont.appendChild(divCol);
 }
 
 function createDiv(className) {
@@ -55,11 +96,12 @@ function createHeader(className) {
 	return header;
 
 }
-function createA(className,innerHTML) {
+function createA(className,innerHTML,onclick) {
 	let a=document.createElement('a');
 	a.className=className;
 	a.innerHTML=innerHTML;
 	a.style.color='#007bff';
+	a.addEventListener('click',onclick);
 
 	return a;
 }
