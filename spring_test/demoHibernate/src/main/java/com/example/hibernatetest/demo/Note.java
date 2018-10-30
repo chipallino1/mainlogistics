@@ -1,6 +1,7 @@
 package com.example.hibernatetest.demo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -21,6 +22,10 @@ public class Note implements Serializable {
 
     @NotBlank
     private String title;
+
+    @Column
+    @CreatedBy
+    private String user;
 
     @NotBlank
     private String content;
