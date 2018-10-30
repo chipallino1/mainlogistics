@@ -1,3 +1,5 @@
+defaultInline1.checked=true;
+
 function loginPage() {
 	
 	deleteNodes('enter');
@@ -65,20 +67,21 @@ function signupPage() {
 	let inputLname=createInput('text','form-control','lastname');
 	let labelLname=createLabel('First name');
 	let divLname=createDiv('col form-group');
-	divLname,appendChild(labelLname);
+	divLname.appendChild(labelLname);
 	divLname.appendChild(inputLname);
 
 	let inputFname=createInput('text','form-control','firstname');
 	let labelFname=createLabel('First name');
 	let divFname=createDiv('col form-group');
-	divFname,appendChild(labelFname);
+	divFname.appendChild(labelFname);
 	divFname.appendChild(inputFname);
 
-	let divFLnames=createDiv('from-row');
+	let divFLnames=createDiv('form-row');
 	divFLnames.appendChild(divFname);
 	divFLnames.appendChild(divLname);
 
 	let form=createForm();
+	form.appendChild(divFLnames);
 	form.appendChild(divEmail);
 	form.appendChild(divPass);
 	form.appendChild(divSubmit);
