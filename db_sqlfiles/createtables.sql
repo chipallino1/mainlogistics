@@ -1,9 +1,9 @@
+drop database logistic_db; 
 create database logistic_db;
 
 create table logistic_db.firms(
 	id int not null primary key auto_increment,
     name varchar(45) not null,
-    id_address int not null,
     rating double,
     type varchar(45),
     check(rating>=0 | rating<=5)
@@ -15,15 +15,18 @@ create table logistic_db.addresses(
     street_name varchar(45) not null,
     street_num int not null,
     city varchar(45) not null,
-    country varchar(45) not null
+    country varchar(45) not null,
+    firm_id int not null
     
 );
 
 create table logistic_db.orders(
 	id int not null primary key auto_increment,
-    id_route int not null,
+    route_id int not null,
     order_date date not null,
-    payment_day date not null
+    payment_day date not null,
+    producer_id int not null,
+    consumer_id int not null
     
 );
 
@@ -31,8 +34,7 @@ create table logistic_db.routes(
 	id int not null primary key auto_increment,
     `from` varchar(45) not null,
     `to` varchar(45) not null,
-    cost int not null,
-    id_route_info int not null
+    cost int not null
 );
 
 create table logistic_db.routes_info(
@@ -40,7 +42,8 @@ create table logistic_db.routes_info(
     date_start date not null,
     date_finish date not null,
     optimality varchar(45),
-    length int not null
+    length int not null,
+    route_id int not null
 );
 
 create table logistic_db.contacts(
@@ -49,8 +52,8 @@ create table logistic_db.contacts(
     lastname varchar(45) not null,
     phone_num varchar(45) not null,
     email varchar(45),
-    id_firm int not null,
-    id_passwords int not null
+    firm_id int not null,
+    passwords_id int not null
 );
 
 create table logistic_db.passwords(
