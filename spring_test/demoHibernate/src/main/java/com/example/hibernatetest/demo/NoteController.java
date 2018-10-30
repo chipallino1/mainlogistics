@@ -4,6 +4,7 @@ import com.example.hibernatetest.demo.ResourceNotFoundException;
 import com.example.hibernatetest.demo.Note;
 import com.example.hibernatetest.demo.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -28,6 +29,8 @@ public class NoteController {
         return noteRepository.save(note);
     }
     // Get a Single Note
+
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @GetMapping("/notes/{id}")
     public Note getNoteById(@PathVariable(value = "id") Long noteId) {
         return noteRepository.findById(noteId)
