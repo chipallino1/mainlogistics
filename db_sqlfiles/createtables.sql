@@ -3,9 +3,9 @@ create database logistic_db;
 
 create table logistic_db.firms(
 	id int not null primary key auto_increment,
-    name varchar(45) not null,
+    firm_name varchar(45) not null,
     rating double,
-    type varchar(45),
+    firm_type varchar(45),
     check(rating>=0 | rating<=5)
     
 );
@@ -32,8 +32,8 @@ create table logistic_db.orders(
 
 create table logistic_db.routes(
 	id int not null primary key auto_increment,
-    `from` varchar(45) not null,
-    `to` varchar(45) not null,
+    point_from varchar(45) not null,
+    point_to varchar(45) not null,
     cost int not null
 );
 
@@ -58,6 +58,6 @@ create table logistic_db.contacts(
 
 create table logistic_db.passwords(
 	id int not null primary key auto_increment,
-    hash varchar(300),
+    pass_hash varchar(300),
     salt varchar(300)
 );
