@@ -1,7 +1,7 @@
 package com.example.logistics.controllers;
 
 import com.example.logistics.db.Route;
-import com.example.logistics.repositories.Repositories;
+import com.example.logistics.repositories.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,49 +11,48 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-public class NoteController {
+public class RouteController {
 
     @Autowired
-    Repositories routeRepository;
+    RouteRepository routeRepository;
 
     // Get All Notes
-    @GetMapping("/notes")
-    public List<Route> getAllNotes() {
+    @GetMapping("/routes")
+    public List<Route> getAllRoutes() {
         return routeRepository.findAll();
     }
 
     // Create a new Note
-    @PostMapping("/notes")
-    public Route createNote(@Valid @RequestBody Route note) {
-        return routeRepository.save(note);
+    @PostMapping("/routes")
+    public Route createRoute(@Valid @RequestBody Route route) {
+        return routeRepository.save(route);
     }
     // Get a Single Note
 
-    @GetMapping("/notes/{id}")
-    public Route getNoteById(@PathVariable(value = "id") Long noteId) {
-        return routeRepository.findById(noteId);
+    @GetMapping("/routes/{id}")
+    public Route getNoteById(@PathVariable(value = "id") Long routeId) {
+        return routeRepository.findById(routeId).get();
     }
     // Update a Note
-    @PutMapping("/notes/{id}")
-    public Route updateNote(@PathVariable(value = "id") Long noteId,
-                           @Valid @RequestBody Route noteDetails) {
+    @PutMapping("/routes/{id}")
+    public Route updateRoute(@PathVariable(value = "id") Long routeId,
+                           @Valid @RequestBody Route routeDetails) {
 
-        Route note = routeRepository.findById(noteId)
-                .orElseThrow(() -> new Exception()));
+        Route route = routeRepository.findById(routeId).get();
 
-        note.setTitle(noteDetails.getTitle());
-        note.setContent(noteDetails.getContent());
+        route.setFrom(routeDetails.getFrom());
+        route.setTo(routeDetails.getTo());
+        route.setCost(routeDetails.getCost());
 
-        Note updatedNote = noteRepository.save(note);
-        return updatedNote;
+        Route updatedRoute = routeRepository.save(route);
+        return updatedRoute;
     }
     // Delete a Note
-    @DeleteMapping("/notes/{id}")
-    public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long noteId) {
-        Note note = noteRepository.findById(noteId)
-                .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
+    @DeleteMapping("/routes/{id}")
+    public ResponseEntity<?> deleteRoute(@PathVariable(value = "id") Long routeId) {
+        Route note = routeRepository.findById(routeId).get();
 
-        noteRepository.delete(note);
+        routeRepository.deleteById(routeId);
 
         return ResponseEntity.ok().build();
     }

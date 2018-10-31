@@ -1,16 +1,19 @@
 package com.example.logistics.db;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name="routes")
-public class Route {
+public class Route implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
+    @Column
     private String from;
+    @Column
     private String to;
+    @Column
     private int cost;
 
     public int getId() {
