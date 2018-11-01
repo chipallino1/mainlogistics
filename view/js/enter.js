@@ -1,4 +1,21 @@
-defaultInline1.checked=true;
+
+
+function hide() {
+	let signup=document.getElementById('signup');	
+	let login=document.getElementById('login');
+
+
+
+	if(signup.style.display==""){
+		signup.style.display="none";
+
+		login.style.display="";
+	}
+	else{
+		signup.style.display="";
+		login.style.display="none";
+	}
+}
 
 function loginPage() {
 	
