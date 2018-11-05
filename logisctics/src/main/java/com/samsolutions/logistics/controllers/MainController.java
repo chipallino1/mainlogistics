@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class MainController {
 
-    @RequestMapping(value = {"/test1"},method = RequestMethod.GET)
+    @RequestMapping(value = {"/auth"},method = RequestMethod.GET)
     public String authenticate(){
-        return "test1";
+        return "authentication";
     }
 }
