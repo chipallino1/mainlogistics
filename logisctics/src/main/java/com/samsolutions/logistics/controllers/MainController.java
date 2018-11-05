@@ -16,7 +16,7 @@ public class MainController {
         return "authentication";
     }
 
-    @RequestMapping(value = {"/signup/{type}"},method = RequestMethod.POST)
+    @RequestMapping(value = {"/signup/firm"},method = RequestMethod.POST)
     public String register(ContactsEntity contactsEntity, BindingResult bindingResult){
 
         return "userpage";
