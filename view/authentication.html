@@ -7,6 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="styles/searchstyle.css" rel="stylesheet">
+    <link href="styles/autocomplete.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
    
   
@@ -53,7 +54,9 @@
 
 
 <div class="row justify-content-center" id="signup" >
+
 <div class="col-md-6">
+
 <div class="card">
 <header class="card-header">
   <a class="float-right btn btn-outline-primary mt-1" style="color: #007bff;" onclick="hide()">Log In</a>
@@ -61,6 +64,21 @@
 </header>
 <article class="card-body">
 <form>
+  <div class="row justify-content-center">
+      <!-- Material inline 1 -->
+    <!-- Default inline 1-->
+    <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample" onclick="showHideInputs()">
+        <label class="custom-control-label" for="defaultInline1"><b>User</b></label>
+    </div>
+
+<!-- Default inline 2-->
+    <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" class="custom-control-input" id="defaultInline2" name="inlineDefaultRadiosExample" onclick="showHideInputs()">
+       <label class="custom-control-label" for="defaultInline2"><b>Firm</b></label>
+    </div>
+     </div>
+     <div class="container" id="inputUser">
   <div class="form-row">
     <div class="col form-group">
       <label>First name </label>   
@@ -81,14 +99,32 @@
   </div> <!-- form-group end.// -->
   <div class="form-group">
       <label class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="gender" value="option1">
+      <input class="form-check-input" type="radio" name="gender" value="male">
       <span class="form-check-label"> Male </span>
     </label>
     <label class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="gender" value="option2">
+      <input class="form-check-input" type="radio" name="gender" value="female">
       <span class="form-check-label"> Female </span>
     </label>
   </div> <!-- form-group end.// -->
+  <div class="form-group">
+      <label class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="type" value="user" onclick="showHideFirms()">
+      <span class="form-check-label"> Simple user </span>
+    </label>
+    <label class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="type" value="contact" onclick="showHideFirms()">
+      <span class="form-check-label"> Contact person </span>
+    </label>
+  </div> <!-- form-group end.// -->
+  <div class="form-group" id="firms" style="display: none;">
+    <label>Choose firm</label>
+   <form autocomplete="off">
+    <div class="autocomplete" style="width:150px;">
+     <input id="myInput" class="form-control" type="text" name="myCountry" placeholder="Country">
+    </div>
+    </form>
+  </div>
   <div class="form-group">
     <label>Create password</label>
       <input class="form-control" type="password">
@@ -100,7 +136,49 @@
     <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block"> Register  </button>
     </div> <!-- form-group// -->      
-    <small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br> Terms of use and Privacy Policy.</small>                                          
+    <small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br> Terms of use and Privacy Policy.</small>         
+    </div>     
+
+
+    <div class="container" id="inputFirm" style="display: none;">
+  <div class="form-row">
+    <div class="col form-group">
+      <label>Firm name</label>
+        <input type="text" class="form-control" placeholder="firm name">
+    </div> <!-- form-group end.// -->
+  </div> <!-- form-row end.// -->
+  <div class="form-group">
+    <label>Email address</label>
+    <input type="email" class="form-control" placeholder="email address">
+  </div> <!-- form-group end.// -->
+  <div class="form-group">
+    <label>Description</label>
+    <input type="email" class="form-control" placeholder="description">
+  </div> <!-- form-group end.// -->
+  <div class="form-group">
+      <label class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="firmtype" value="simple">
+      <span class="form-check-label"> Simple </span>
+    </label>
+    <label class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="firmtype" value="logistic">
+      <span class="form-check-label"> Logistic </span>
+    </label>
+  </div> <!-- form-group end.// -->
+  
+  <div class="form-group">
+    <label>Create password</label>
+      <input class="form-control" type="password">
+  </div> <!-- form-group end.// -->  
+  <div class="form-group">
+    <label>Confirm password</label>
+      <input class="form-control" type="password">
+  </div> <!-- form-group end.// -->  
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block"> Register  </button>
+    </div> <!-- form-group// -->      
+    <small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br> Terms of use and Privacy Policy.</small>         
+    </div>                              
 </form>
 </article> <!-- card-body end .// -->
 </div> <!-- card.// -->
@@ -174,6 +252,8 @@
     <script src="js/authentication.js"></script>
 
     <script src="js/enter.js"></script>
+    <script src="js/autocomplete.js"></script>
+    <script>autocomplete(document.getElementById("myInput"), countries);</script>
   
   
   

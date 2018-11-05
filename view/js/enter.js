@@ -1,4 +1,28 @@
+defaultInline1.checked=true;
 
+function showHideInputs() {
+	if(inputUser.style.display=="")
+	{
+		inputUser.style.display="none";
+		inputFirm.style.display="";
+	}
+	else
+	{
+		inputUser.style.display="";
+		inputFirm.style.display="none";
+	}
+}
+
+function showHideFirms(){
+	if(firms.style.display=="")
+	{
+		firms.style.display="none";
+	}
+	else
+	{
+		firms.style.display="";
+	}
+}
 
 function hide() {
 	let signup=document.getElementById('signup');	
