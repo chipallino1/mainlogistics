@@ -1,15 +1,43 @@
 defaultInline1.checked=true;
 
+function sendRegisterData() {
+
+    var xhr = new XMLHttpRequest();
+    if(inputUser.style.display=="")
+	{
+		register.action="/signup/firm";
+	}
+	else
+	{
+		register.action="/signup/user";
+	}
+    xhr.open("POST", register.action, true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send("result_cat=" + result_cat);
+    xhr.onreadystatechange = function (){
+
+   		 if(xhr.readyState == 4){
+
+        	alert(xhr.responseText);   
+     		xhr.result_cat;
+
+   	 	}
+    }
+
+}
+
 function showHideInputs() {
 	if(inputUser.style.display=="")
 	{
 		inputUser.style.display="none";
 		inputFirm.style.display="";
+		register.action="signup/firm";
 	}
 	else
 	{
 		inputUser.style.display="";
 		inputFirm.style.display="none";
+		register.action="signup/user";
 	}
 }
 
