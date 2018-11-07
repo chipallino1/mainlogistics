@@ -1,15 +1,20 @@
 defaultInline1.checked=true;
-
+defaultInline11.checked=true;
 function showHideInputs() {
 	if(inputUser.style.display=="")
 	{
 		inputUser.style.display="none";
 		inputFirm.style.display="";
+		defaultInline22.checked=true;
+		defaultInline2.checked=true;
+
 	}
 	else
 	{
 		inputUser.style.display="";
 		inputFirm.style.display="none";
+		defaultInline1.checked=true;
+		defaultInline11.checked=true;
 	}
 }
 

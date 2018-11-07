@@ -1,6 +1,7 @@
 package com.samsolutions.logistics.mainlogistics.controllers;
 
 import com.samsolutions.logistics.mainlogistics.entities.ContactsEntity;
+import com.samsolutions.logistics.mainlogistics.entities.FirmsEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ public class AuthenticationController {
     public String authenticate(Model model){
 
         model.addAttribute("contactsEntity",new ContactsEntity());
+        model.addAttribute("firmsEntity",new FirmsEntity());
         return "authentication";
 
     }

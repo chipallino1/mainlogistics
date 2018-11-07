@@ -55,7 +55,7 @@
 
 <div class="row justify-content-center" id="signup" >
 
-<div class="col-md-6">
+<div class="col-md-6"  id="inputUser">
 
 <div class="card">
 <header class="card-header">
@@ -78,7 +78,7 @@
        <label class="custom-control-label" for="defaultInline2"><b>Firm</b></label>
     </div>
      </div>
-     <div class="container" id="inputUser">
+     <div class="container">
   <div class="form-row">
     <div class="col form-group">
       <label>First name </label>   
@@ -91,11 +91,11 @@
   </div> <!-- form-row end.// -->
   <div class="form-group">
     <label>Email address</label>
-    <input type="email" class="form-control" placeholder="email address">
+    <input type="email" class="form-control" placeholder="email address" th:field="*{email}">
   </div> <!-- form-group end.// -->
   <div class="form-group">
     <label>Phone Num.</label>
-    <input type="email" class="form-control" placeholder="phone number">
+    <input type="email" class="form-control" placeholder="phone number" th:field="*{phoneNum}">
   </div> <!-- form-group end.// -->
   <div class="form-group">
       <label class="form-check form-check-inline">
@@ -137,10 +137,36 @@
         <button type="submit" class="btn btn-primary btn-block"> Register  </button>
     </div> <!-- form-group// -->      
     <small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br> Terms of use and Privacy Policy.</small>         
-    </div>     
+    </div>                                 
+</form>
+</article> <!-- card-body end .// -->
+</div> <!-- card.// -->
+</div> <!-- col.//-->
 
+<div class="col-md-6"  id="inputFirm" style="display: none;">
 
-    <div class="container" id="inputFirm" style="display: none;">
+<div class="card">
+<header class="card-header">
+  <a class="float-right btn btn-outline-primary mt-1" style="color: #007bff;" onclick="hide()">Log In</a>
+  <h4 class="card-title mt-2">Sign up</h4>
+</header>
+<article class="card-body">
+<form action="/firm" method="post" th:object="${contactsEntity}">
+  <div class="row justify-content-center">
+      <!-- Material inline 1 -->
+    <!-- Default inline 1-->
+    <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" class="custom-control-input" id="defaultInline11" name="inlineDefaultRadiosExample" onclick="showHideInputs()">
+        <label class="custom-control-label" for="defaultInline1"><b>User</b></label>
+    </div>
+
+<!-- Default inline 2-->
+    <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" class="custom-control-input" id="defaultInline22" name="inlineDefaultRadiosExample" onclick="showHideInputs()">
+       <label class="custom-control-label" for="defaultInline2"><b>Firm</b></label>
+    </div>
+     </div>
+<div class="container">
   <div class="form-row">
     <div class="col form-group">
       <label>Firm name</label>
@@ -178,8 +204,8 @@
         <button type="submit" class="btn btn-primary btn-block"> Register  </button>
     </div> <!-- form-group// -->      
     <small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br> Terms of use and Privacy Policy.</small>         
-    </div>                              
-</form>
+    </div>  
+    </form>
 </article> <!-- card-body end .// -->
 </div> <!-- card.// -->
 </div> <!-- col.//-->
