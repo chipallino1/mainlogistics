@@ -63,7 +63,7 @@
   <h4 class="card-title mt-2">Sign up</h4>
 </header>
 <article class="card-body">
-<form th:action="@{/auth}" method="post" th:object="${contactsEntity}">
+<form th:action="@{/auth/contact}" method="post" th:object="${contactsEntity}">
   <div class="row justify-content-center">
       <!-- Material inline 1 -->
     <!-- Default inline 1-->
@@ -126,7 +126,10 @@
   </div> <!-- form-group end.// -->  
   <div class="form-group">
     <label>Confirm password</label>
-      <input class="form-control" type="password" th:field="*{passwordRepeat}">
+
+
+      <input class="form-control" type="password" th:text="${passwordRepeat}" >
+      <small class="text-danger" th:if="${passwordRepeat}!=*{password}" > Wrong</small>
   </div> <!-- form-group end.// -->  
     <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block"> Register  </button>
@@ -146,7 +149,7 @@
   <h4 class="card-title mt-2">Sign up</h4>
 </header>
 <article class="card-body">
-<form th:action="@{/auth}" method="post" th:object="${firmsEntity}">
+<form th:action="@{/auth/firm}" method="post" th:object="${firmsEntity}">
   <div class="row justify-content-center">
       <!-- Material inline 1 -->
     <!-- Default inline 1-->

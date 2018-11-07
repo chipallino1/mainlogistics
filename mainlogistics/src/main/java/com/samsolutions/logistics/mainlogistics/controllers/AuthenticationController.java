@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -27,33 +28,24 @@ public class AuthenticationController {
         return "authentication";
 
     }
-
-    @RequestMapping(path = "firm",method = RequestMethod.POST)
-    public String firm(@Valid FirmsEntity firmsEntity,BindingResult bindingResult, Model model) {
-
-        if(bindingResult.hasErrors()){
-
-            model.addAttribute("contactsEntity",new ContactsEntity());
-            return "authentication";
-        }
-
-        return "index";
-
-    }
-    @RequestMapping(path = "auth",method = RequestMethod.POST)
+    @RequestMapping(path = "auth/{userType}",method = RequestMethod.POST)
     public String registered(@Valid ContactsEntity contactsEntity, BindingResult bindingResultContacts,
-                             @Valid FirmsEntity firmsEntity,BindingResult bindingResultFirms, Model model) {
+                             @Valid FirmsEntity firmsEntity, BindingResult bindingResultFirms, Model model,
+                             @PathVariable String userType) {
 
-
-        if(bindingResultContacts.hasErrors()){
-            model.addAttribute("firmsEntity",new FirmsEntity());
-            return "authentication";
-        }else if(bindingResultFirms.hasErrors()){
-            model.addAttribute("contactsEntity",new ContactsEntity());
-            return "authentication";
+        if(userType.equals("contact")) {
+            if(bindingResultContacts.hasErrors()){
+                model.addAttribute("firmsEntity",new FirmsEntity());
+                return "authentication";
+            }
+            return "index";
+        }else{
+            if(bindingResultFirms.hasErrors()){
+                model.addAttribute("contactsEntity",new ContactsEntity());
+                return "authentication";
+            }
+            return "index";
         }
-
-        return "index";
 
     }
 
