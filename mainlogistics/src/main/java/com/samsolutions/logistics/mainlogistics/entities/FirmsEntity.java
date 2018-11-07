@@ -8,6 +8,8 @@ import java.util.Objects;
 public class FirmsEntity {
     private int id;
     private String firmName;
+    private String email;
+    private String description;
     private Double rating;
     private String firmType;
 
@@ -29,6 +31,27 @@ public class FirmsEntity {
 
     public void setFirmName(String firmName) {
         this.firmName = firmName;
+    }
+
+    @Basic
+    @Column(name = "email",nullable = false)
+    public String getEmail() {
+
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
+    @Basic
+    @Column(name = "description")
+    public String getDescription(){
+        return description;
+    }
+
+    public void setDescription(java.lang.String description) {
+        this.description = description;
     }
 
     @Basic
