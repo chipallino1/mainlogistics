@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="styles/searchstyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+   
+    <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
+     <script src="js/searchmaker.js" type="text/javascript"></script>
+  
+
+    <title>Logistics</title>
+  </head>
+  <body style= "background-color: rgb(245,245,245);">
+     <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">Logistics</a>
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarCollapse" style="">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="getdirection.html">Get direction<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="search.html">Search</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contacts.html">Contacts</a>
+            </li>
+             <li class="nav-item">
+              <a class="nav-link" href="authentication.html">Login|Register</a>
+            </li>
+          </ul>
+          <form class="form-inline mt-2 mt-md-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+    </header>
+    <main>
+        <div class="container py-5 mt-5 pb-0 mb-3" style="background-image: url(images/slide2.jpg);">
+    <div class="row text-center pb-4">
+        <div class="col-md-12">
+            <h2>Find the optimal direction of your shipping</h2>
+        </div>
+    </div>   
+
+                    <div class="row justify-content-center">
+                      <div class="col-md-3">
+                         <span class="input-group-addon my-2 mr-1">
+                            <input type="text" value="" class="form-control" name="custom_name" placeholder="from">
+                        </span>
+                      </div>
+                     
+                       <div class="col-md-3">
+                         <span class="input-group-addon my-2 mr-1">
+                            <input type="text" value="" class="form-control" name="custom_name" placeholder="to">
+                        </span>
+                      </div>
+                      <div class="col-md-3">
+                      <span class="input-group-addon my-2 mr-1" > 
+                        <input id="datepicker" value="" class="form-control" name="custom_name" placeholder="mm/dd/yyyy"/>
+                            <script>
+                               $('#datepicker').datepicker({
+                                      uiLibrary: 'bootstrap4'
+                                 });
+                            </script>
+                      </span>
+                    </div>
+                    <div class="col-md-3">
+                 
+                       <button class="w-100 btn btn-outline-success my-4" type="submit" onclick="getResults()">Search</button>
+                 
+                    </div>
+              
+                  </div>
+                  <div class="padding mt-5"></div>
+<div class="container p-0">
+
+  <!-- BEGIN SEARCH RESULT -->
+  
+    <div class="grid search">
+      <div class="grid-body">
+        <div class="row">
+          
+          <!-- BEGIN RESULT -->
+          <div class="col" id="resultCol">
+            <h2><i class="fa fa-file-o"></i> Give us parametrs of shipping and we'll find the best option!</h2>
+            <hr>
+            
+            <p>You get the best results of shipping by cost,time and optimal option.</p>
+            
+            <div class="padding"></div>
+          
+            
+        
+          </div>
+          <!-- END RESULT -->
+        </div>
+      </div>
+    </div>
+ 
+  <!-- END SEARCH RESULT -->
+
+</div>
+</div>
+    </main>
+  
+    <footer style="flex:0 0 auto;">
+       <article class="bg-secondary">  
+        <div class="card-body text-center">
+        <p class="h5 text-white">Logistics</p>
+        <a class="btn btn-warning" href="#"> Back to top </a>
+         </div>
+       </article>
+     </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript"
+     src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+    </script> 
+    <script type="text/javascript"
+     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+    </script>
+    <script type="text/javascript"
+     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
+    </script>
+     
+  
+  
+  
+  </body>
+</html>
