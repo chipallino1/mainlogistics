@@ -63,7 +63,7 @@
   <h4 class="card-title mt-2">Sign up</h4>
 </header>
 <article class="card-body">
-<form th:action="@{/contact}" method="post" th:object="${contactsEntity}">
+<form th:action="@{/auth}" method="post" th:object="${contactsEntity}">
   <div class="row justify-content-center">
       <!-- Material inline 1 -->
     <!-- Default inline 1-->
@@ -146,7 +146,7 @@
   <h4 class="card-title mt-2">Sign up</h4>
 </header>
 <article class="card-body">
-<form th:action="@{/firm}" method="post" th:object="${firmsEntity}">
+<form th:action="@{/auth}" method="post" th:object="${firmsEntity}">
   <div class="row justify-content-center">
       <!-- Material inline 1 -->
     <!-- Default inline 1-->
@@ -165,7 +165,7 @@
   <div class="form-row">
     <div class="col form-group">
       <label>Firm name</label>
-        <small class="text-danger" th:if="${#fields.hasErrors('firmName')}" > Empty or too small</small>
+        <small class="text-danger" th:if="${#fields.hasErrors('firmName')}"  > Empty or too small</small>
         <input type="text" class="form-control" placeholder="firm name" th:field="*{firmName}">
     </div> <!-- form-group end.// -->
   </div> <!-- form-row end.// -->
@@ -179,7 +179,7 @@
     <input type="email" class="form-control" placeholder="description" th:field="*{description}">
   </div> <!-- form-group end.// -->
   <div class="form-group">
-      <small class="text-danger" th:if="${#fields.hasErrors('firmtype')}" > Must be selected</small>
+      <small class="text-danger" th:if="${#fields.hasErrors('firmType')}" > Must be selected</small>
       <label class="form-check form-check-inline">
       <input class="form-check-input" type="radio" name="firmtype" th:field="*{firmType}" th:value="simple">
       <span class="form-check-label"> Simple </span>
