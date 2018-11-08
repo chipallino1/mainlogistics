@@ -8,6 +8,7 @@ import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.PasswordsRepository;
 import com.samsolutions.logistics.mainlogistics.security.SaltHash;
+import com.samsolutions.logistics.mainlogistics.services.ContactsService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,14 @@ public class AuthenticationController {
     private ContactsRepository contactsRepository;
     private FirmsRepository firmsRepository;
     private PasswordsRepository passwordsRepository;
+
+
+    private ContactsService<Contacts,ContactDTO> contactsService;
+
+    @Autowired
+    public void setContactsService(ContactsService contactsService) {
+        this.contactsService = contactsService;
+    }
 
     @Autowired
     public void setContactsRepository(ContactsRepository contactsRepository) {
@@ -72,8 +81,7 @@ public class AuthenticationController {
                 model.addAttribute("firmDTO",new FirmDTO());
                 return "authentication";
             }
-            ModelMapper modelMapper=new ModelMapper();
-            Contacts contacts = modelMapper.map(contactDTO,Contacts.class);
+            contactsService.setProperties(new Contacts(),contactDTO);
             String password = contactDTO.getPasswordRepeat();
             byte[] saltBytes = SaltHash.getSalt();
             String hashPass = SaltHash.get_SHA_256_SecurePassword(password,saltBytes);
@@ -81,8 +89,7 @@ public class AuthenticationController {
             passwordEntity.setPassHash(hashPass);
             passwordEntity.setSalt(SaltHash.getStringFromBytes(saltBytes));
             passwordsRepository.save(passwordEntity);
-            contacts.setPasswordsId(passwordEntity.getId());
-            contactsRepository.save(contacts);
+
             return "redirect:/index";
         }else{
             if(bindingResultFirms.hasErrors()){
