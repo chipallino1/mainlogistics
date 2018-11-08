@@ -8,7 +8,8 @@ create table logistic_db.firms(
     firm_type varchar(45),
     check(rating>=0 | rating<=5),
     description varchar(100),
-    email varchar(45) not null
+    email varchar(45) not null,
+    password_id int not null
     
 );
 
