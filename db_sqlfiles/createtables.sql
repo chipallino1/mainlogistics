@@ -6,7 +6,9 @@ create table logistic_db.firms(
     firm_name varchar(45) not null,
     rating double,
     firm_type varchar(45),
-    check(rating>=0 | rating<=5)
+    check(rating>=0 | rating<=5),
+    description varchar(100),
+    email varchar(45) not null
     
 );
 
@@ -48,11 +50,11 @@ create table logistic_db.routes_info(
 
 create table logistic_db.contacts(
 	id int not null primary key auto_increment,
-    firstname varchar(45) not null,
-    lastname varchar(45) not null,
+    first_name varchar(45) not null,
+    last_name varchar(45) not null,
     phone_num varchar(45) not null,
     email varchar(45),
-    firm_id int not null,
+    firm_id int,
     passwords_id int not null
 );
 
