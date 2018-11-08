@@ -1,6 +1,7 @@
 package com.samsolutions.logistics.mainlogistics.entities;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Addresses {
@@ -64,7 +65,7 @@ public class Addresses {
     }
 
     @Basic
-    @Column(name = "firm_id", nullable = false,insertable=false, updatable=false)
+    @Column(name = "firm_id", nullable = false)
     public Long getFirmId() {
         return firmId;
     }
@@ -77,32 +78,23 @@ public class Addresses {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Addresses addresses = (Addresses) o;
-
-        if (streetNum != addresses.streetNum) return false;
-        if (id != null ? !id.equals(addresses.id) : addresses.id != null) return false;
-        if (streetName != null ? !streetName.equals(addresses.streetName) : addresses.streetName != null) return false;
-        if (city != null ? !city.equals(addresses.city) : addresses.city != null) return false;
-        if (country != null ? !country.equals(addresses.country) : addresses.country != null) return false;
-        if (firmId != null ? !firmId.equals(addresses.firmId) : addresses.firmId != null) return false;
-
-        return true;
+        return streetNum == addresses.streetNum &&
+                Objects.equals(id, addresses.id) &&
+                Objects.equals(streetName, addresses.streetName) &&
+                Objects.equals(city, addresses.city) &&
+                Objects.equals(country, addresses.country) &&
+                Objects.equals(firmId, addresses.firmId);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (streetName != null ? streetName.hashCode() : 0);
-        result = 31 * result + streetNum;
-        result = 31 * result + (city != null ? city.hashCode() : 0);
-        result = 31 * result + (country != null ? country.hashCode() : 0);
-        result = 31 * result + (firmId != null ? firmId.hashCode() : 0);
-        return result;
+
+        return Objects.hash(id, streetName, streetNum, city, country, firmId);
     }
 
     @ManyToOne
-    @JoinColumn(name = "firm_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "firm_id", referencedColumnName = "id", nullable = false, insertable=false, updatable=false)
     public Firms getFirmsByFirmId() {
         return firmsByFirmId;
     }

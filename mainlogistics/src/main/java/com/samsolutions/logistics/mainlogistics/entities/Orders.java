@@ -2,6 +2,7 @@ package com.samsolutions.logistics.mainlogistics.entities;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Objects;
 
 @Entity
 public class Orders {
@@ -27,7 +28,7 @@ public class Orders {
     }
 
     @Basic
-    @Column(name = "route_id", nullable = false,insertable=false, updatable=false)
+    @Column(name = "route_id", nullable = false)
     public Long getRouteId() {
         return routeId;
     }
@@ -57,7 +58,7 @@ public class Orders {
     }
 
     @Basic
-    @Column(name = "producer_id", nullable = false,insertable=false, updatable=false)
+    @Column(name = "producer_id", nullable = false)
     public Long getProducerId() {
         return producerId;
     }
@@ -67,7 +68,7 @@ public class Orders {
     }
 
     @Basic
-    @Column(name = "consumer_id", nullable = false,insertable=false, updatable=false)
+    @Column(name = "consumer_id", nullable = false)
     public Long getConsumerId() {
         return consumerId;
     }
@@ -80,32 +81,23 @@ public class Orders {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Orders orders = (Orders) o;
-
-        if (id != null ? !id.equals(orders.id) : orders.id != null) return false;
-        if (routeId != null ? !routeId.equals(orders.routeId) : orders.routeId != null) return false;
-        if (orderDate != null ? !orderDate.equals(orders.orderDate) : orders.orderDate != null) return false;
-        if (paymentDay != null ? !paymentDay.equals(orders.paymentDay) : orders.paymentDay != null) return false;
-        if (producerId != null ? !producerId.equals(orders.producerId) : orders.producerId != null) return false;
-        if (consumerId != null ? !consumerId.equals(orders.consumerId) : orders.consumerId != null) return false;
-
-        return true;
+        return Objects.equals(id, orders.id) &&
+                Objects.equals(routeId, orders.routeId) &&
+                Objects.equals(orderDate, orders.orderDate) &&
+                Objects.equals(paymentDay, orders.paymentDay) &&
+                Objects.equals(producerId, orders.producerId) &&
+                Objects.equals(consumerId, orders.consumerId);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (routeId != null ? routeId.hashCode() : 0);
-        result = 31 * result + (orderDate != null ? orderDate.hashCode() : 0);
-        result = 31 * result + (paymentDay != null ? paymentDay.hashCode() : 0);
-        result = 31 * result + (producerId != null ? producerId.hashCode() : 0);
-        result = 31 * result + (consumerId != null ? consumerId.hashCode() : 0);
-        return result;
+
+        return Objects.hash(id, routeId, orderDate, paymentDay, producerId, consumerId);
     }
 
     @ManyToOne
-    @JoinColumn(name = "route_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "route_id", referencedColumnName = "id", nullable = false, insertable=false, updatable=false)
     public Routes getRoutesByRouteId() {
         return routesByRouteId;
     }
@@ -115,7 +107,7 @@ public class Orders {
     }
 
     @ManyToOne
-    @JoinColumn(name = "producer_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "producer_id", referencedColumnName = "id", nullable = false, insertable=false, updatable=false)
     public Firms getFirmsByProducerId() {
         return firmsByProducerId;
     }
@@ -125,7 +117,7 @@ public class Orders {
     }
 
     @ManyToOne
-    @JoinColumn(name = "consumer_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "consumer_id", referencedColumnName = "id", nullable = false, insertable=false, updatable=false)
     public Firms getFirmsByConsumerId() {
         return firmsByConsumerId;
     }

@@ -2,6 +2,7 @@ package com.samsolutions.logistics.mainlogistics.entities;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "routes_info", schema = "logistic_db", catalog = "")
@@ -66,7 +67,7 @@ public class RoutesInfo {
     }
 
     @Basic
-    @Column(name = "route_id", nullable = false,insertable=false, updatable=false)
+    @Column(name = "route_id", nullable = false)
     public Long getRouteId() {
         return routeId;
     }
@@ -79,32 +80,23 @@ public class RoutesInfo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         RoutesInfo that = (RoutesInfo) o;
-
-        if (length != that.length) return false;
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (dateStart != null ? !dateStart.equals(that.dateStart) : that.dateStart != null) return false;
-        if (dateFinish != null ? !dateFinish.equals(that.dateFinish) : that.dateFinish != null) return false;
-        if (optimality != null ? !optimality.equals(that.optimality) : that.optimality != null) return false;
-        if (routeId != null ? !routeId.equals(that.routeId) : that.routeId != null) return false;
-
-        return true;
+        return length == that.length &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(dateStart, that.dateStart) &&
+                Objects.equals(dateFinish, that.dateFinish) &&
+                Objects.equals(optimality, that.optimality) &&
+                Objects.equals(routeId, that.routeId);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (dateStart != null ? dateStart.hashCode() : 0);
-        result = 31 * result + (dateFinish != null ? dateFinish.hashCode() : 0);
-        result = 31 * result + (optimality != null ? optimality.hashCode() : 0);
-        result = 31 * result + length;
-        result = 31 * result + (routeId != null ? routeId.hashCode() : 0);
-        return result;
+
+        return Objects.hash(id, dateStart, dateFinish, optimality, length, routeId);
     }
 
     @ManyToOne
-    @JoinColumn(name = "route_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "route_id", referencedColumnName = "id", nullable = false, insertable=false, updatable=false)
     public Routes getRoutesByRouteId() {
         return routesByRouteId;
     }

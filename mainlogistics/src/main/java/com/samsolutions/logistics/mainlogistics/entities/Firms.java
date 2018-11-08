@@ -2,6 +2,7 @@ package com.samsolutions.logistics.mainlogistics.entities;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 public class Firms {
@@ -11,8 +12,10 @@ public class Firms {
     private String firmType;
     private String description;
     private String email;
+    private Long passwordId;
     private Collection<Addresses> addressesById;
     private Collection<Contacts> contactsById;
+    private Passwords passwordsByPasswordId;
     private Collection<Orders> ordersById;
     private Collection<Orders> ordersById_0;
 
@@ -77,32 +80,34 @@ public class Firms {
         this.email = email;
     }
 
+    @Basic
+    @Column(name = "password_id", nullable = false)
+    public Long getPasswordId() {
+        return passwordId;
+    }
+
+    public void setPasswordId(Long passwordId) {
+        this.passwordId = passwordId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Firms firms = (Firms) o;
-
-        if (id != null ? !id.equals(firms.id) : firms.id != null) return false;
-        if (firmName != null ? !firmName.equals(firms.firmName) : firms.firmName != null) return false;
-        if (rating != null ? !rating.equals(firms.rating) : firms.rating != null) return false;
-        if (firmType != null ? !firmType.equals(firms.firmType) : firms.firmType != null) return false;
-        if (description != null ? !description.equals(firms.description) : firms.description != null) return false;
-        if (email != null ? !email.equals(firms.email) : firms.email != null) return false;
-
-        return true;
+        return Objects.equals(id, firms.id) &&
+                Objects.equals(firmName, firms.firmName) &&
+                Objects.equals(rating, firms.rating) &&
+                Objects.equals(firmType, firms.firmType) &&
+                Objects.equals(description, firms.description) &&
+                Objects.equals(email, firms.email) &&
+                Objects.equals(passwordId, firms.passwordId);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (firmName != null ? firmName.hashCode() : 0);
-        result = 31 * result + (rating != null ? rating.hashCode() : 0);
-        result = 31 * result + (firmType != null ? firmType.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        return result;
+
+        return Objects.hash(id, firmName, rating, firmType, description, email, passwordId);
     }
 
     @OneToMany(mappedBy = "firmsByFirmId")
@@ -121,6 +126,16 @@ public class Firms {
 
     public void setContactsById(Collection<Contacts> contactsById) {
         this.contactsById = contactsById;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "password_id", referencedColumnName = "id", nullable = false, insertable=false, updatable=false)
+    public Passwords getPasswordsByPasswordId() {
+        return passwordsByPasswordId;
+    }
+
+    public void setPasswordsByPasswordId(Passwords passwordsByPasswordId) {
+        this.passwordsByPasswordId = passwordsByPasswordId;
     }
 
     @OneToMany(mappedBy = "firmsByProducerId")
