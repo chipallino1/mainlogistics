@@ -65,7 +65,7 @@ public class Contacts {
     }
 
     @Basic
-    @Column(name = "firm_id", nullable = false)
+    @Column(name = "firm_id", nullable = false,insertable=false, updatable=false)
     public Long getFirmId() {
         return firmId;
     }
@@ -75,7 +75,7 @@ public class Contacts {
     }
 
     @Basic
-    @Column(name = "passwords_id", nullable = false)
+    @Column(name = "passwords_id", nullable = false,insertable=false, updatable=false)
     public Long getPasswordsId() {
         return passwordsId;
     }

@@ -63,7 +63,7 @@
   <h4 class="card-title mt-2">Sign up</h4>
 </header>
 <article class="card-body">
-<form th:action="@{/auth/contact}" method="post" th:object="${contactsEntity}">
+<form th:action="@{/auth/contact}" method="post" th:object="${contactDTO}">
   <div class="row justify-content-center">
       <!-- Material inline 1 -->
     <!-- Default inline 1-->
@@ -82,13 +82,13 @@
   <div class="form-row">
     <div class="col form-group">
       <label>First name </label>
-        <small class="text-danger" th:if="${#fields.hasErrors('firstname')}" > Empty or too small</small>
-        <input type="text" class="form-control" placeholder="first name" th:field="*{firstname}">
+        <small class="text-danger" th:if="${#fields.hasErrors('firstName')}" > Empty or too small</small>
+        <input type="text" class="form-control" placeholder="first name" th:field="*{firstName}">
     </div> <!-- form-group end.// -->
     <div class="col form-group">
       <label>Last name</label>
-        <small class="text-danger" th:if="${#fields.hasErrors('lastname')}" > Empty or too small</small>
-        <input type="text" class="form-control" placeholder="last name" th:field="*{lastname}">
+        <small class="text-danger" th:if="${#fields.hasErrors('lastName')}" > Empty or too small</small>
+        <input type="text" class="form-control" placeholder="last name" th:field="*{lastName}">
     </div> <!-- form-group end.// -->
   </div> <!-- form-row end.// -->
   <div class="form-group">
@@ -151,7 +151,7 @@
   <h4 class="card-title mt-2">Sign up</h4>
 </header>
 <article class="card-body">
-<form th:action="@{/auth/firm}" method="post" th:object="${firmsEntity}">
+<form th:action="@{/auth/firm}" method="post" th:object="${firmDTO}">
   <div class="row justify-content-center">
       <!-- Material inline 1 -->
     <!-- Default inline 1-->

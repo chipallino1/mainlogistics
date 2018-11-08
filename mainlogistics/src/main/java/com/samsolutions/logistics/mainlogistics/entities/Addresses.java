@@ -63,7 +63,7 @@ public class Addresses {
     }
 
     @Basic
-    @Column(name = "firm_id", nullable = false)
+    @Column(name = "firm_id", nullable = false,insertable=false, updatable=false)
     public Long getFirmId() {
         return firmId;
     }

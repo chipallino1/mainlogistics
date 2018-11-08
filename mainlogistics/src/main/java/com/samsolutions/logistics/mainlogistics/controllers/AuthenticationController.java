@@ -1,5 +1,7 @@
 package com.samsolutions.logistics.mainlogistics.controllers;
 
+import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
+import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.PasswordsRepository;
@@ -36,8 +38,8 @@ public class AuthenticationController {
     @RequestMapping(path = "auth",method = RequestMethod.GET)
     public String authenticate(Model model){
 
-        model.addAttribute("contactsEntity",new ContactsEntity());
-        model.addAttribute("firmsEntity",new FirmsEntity());
+        model.addAttribute("contactDTO",new ContactDTO());
+        model.addAttribute("firmDTO",new FirmDTO());
 
         return "authentication";
 
@@ -51,23 +53,20 @@ public class AuthenticationController {
     }
 
     @RequestMapping(path = "auth/{userType}",method = RequestMethod.POST)
-    public String registered(@Valid ContactsEntity contactsEntity, BindingResult bindingResultContacts,
-                             @Valid FirmsEntity firmsEntity, BindingResult bindingResultFirms, Model model,
+    public String registered(@Valid ContactDTO contactDTO, BindingResult bindingResultContacts,
+                             @Valid FirmDTO firmDTO, BindingResult bindingResultFirms, Model model,
                              @PathVariable String userType) {
 
         if(userType.equals("contact")) {
             if(bindingResultContacts.hasErrors()){
-                model.addAttribute("firmsEntity",new FirmsEntity());
+                model.addAttribute("firmDTO",new FirmDTO());
                 return "authentication";
             }
-            PasswordsEntity passwordsEntity=new PasswordsEntity();
-            passwordsEntity.setPassHash("wefef");
-            passwordsEntity.setSalt("wewe");
-            passwordsRepository.save(passwordsEntity);
+
             return "index";
         }else{
             if(bindingResultFirms.hasErrors()){
-                model.addAttribute("contactsEntity",new ContactsEntity());
+                model.addAttribute("contactDTO",new ContactDTO());
                 return "authentication";
             }
 

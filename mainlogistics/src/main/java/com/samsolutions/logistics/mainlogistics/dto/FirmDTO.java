@@ -41,4 +41,59 @@ public class FirmDTO implements Serializable {
     private String password;
     private String passwordRepeat;
 
+    public String getFirmName() {
+        return firmName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public String getFirmType() {
+        return firmType;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPasswordRepeat() {
+        return passwordRepeat;
+    }
+
+    public void setFirmName(String firmName) {
+        this.firmName = firmName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public void setFirmType(String firmType) {
+        this.firmType = firmType;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPasswordRepeat(String passwordRepeat) {
+        this.passwordRepeat = passwordRepeat;
+    }
 }

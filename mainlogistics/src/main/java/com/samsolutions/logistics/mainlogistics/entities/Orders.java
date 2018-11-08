@@ -26,7 +26,7 @@ public class Orders {
     }
 
     @Basic
-    @Column(name = "route_id", nullable = false)
+    @Column(name = "route_id", nullable = false,insertable=false, updatable=false)
     public Long getRouteId() {
         return routeId;
     }
@@ -56,7 +56,7 @@ public class Orders {
     }
 
     @Basic
-    @Column(name = "producer_id", nullable = false)
+    @Column(name = "producer_id", nullable = false,insertable=false, updatable=false)
     public Long getProducerId() {
         return producerId;
     }
@@ -66,7 +66,7 @@ public class Orders {
     }
 
     @Basic
-    @Column(name = "consumer_id", nullable = false)
+    @Column(name = "consumer_id", nullable = false,insertable=false, updatable=false)
     public Long getConsumerId() {
         return consumerId;
     }

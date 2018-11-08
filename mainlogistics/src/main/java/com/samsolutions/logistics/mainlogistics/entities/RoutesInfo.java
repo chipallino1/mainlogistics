@@ -65,7 +65,7 @@ public class RoutesInfo {
     }
 
     @Basic
-    @Column(name = "route_id", nullable = false)
+    @Column(name = "route_id", nullable = false,insertable=false, updatable=false)
     public Long getRouteId() {
         return routeId;
     }
