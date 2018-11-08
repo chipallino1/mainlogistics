@@ -24,9 +24,14 @@ public class SaltHash {
         return generatedPassword;
     }
 
-    public static byte[] getSalt() throws NoSuchAlgorithmException
+    public static byte[] getSalt()
     {
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+        SecureRandom sr = null;
+        try {
+            sr = SecureRandom.getInstance("SHA1PRNG");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         byte[] salt = new byte[16];
         sr.nextBytes(salt);
         return salt;
@@ -38,6 +43,9 @@ public class SaltHash {
             sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
         }
         return sb.toString();
+    }
+    public static byte[] getBytesFromString(String string){
+        return string.getBytes();
     }
     public static boolean validate(String passwordToValidate,String storedSecurePassword,byte[] storedSalt){
 

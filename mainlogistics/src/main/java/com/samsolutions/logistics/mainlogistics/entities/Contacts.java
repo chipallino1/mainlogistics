@@ -16,6 +16,7 @@ public class Contacts {
 
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
@@ -65,7 +66,7 @@ public class Contacts {
     }
 
     @Basic
-    @Column(name = "firm_id", nullable = false,insertable=false, updatable=false)
+    @Column(name = "firm_id",insertable=false, updatable=false)
     public Long getFirmId() {
         return firmId;
     }

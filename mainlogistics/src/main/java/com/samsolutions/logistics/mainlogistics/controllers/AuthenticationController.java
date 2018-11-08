@@ -2,9 +2,13 @@ package com.samsolutions.logistics.mainlogistics.controllers;
 
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
+import com.samsolutions.logistics.mainlogistics.entities.Contacts;
+import com.samsolutions.logistics.mainlogistics.entities.Passwords;
 import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.PasswordsRepository;
+import com.samsolutions.logistics.mainlogistics.security.SaltHash;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,8 +39,14 @@ public class AuthenticationController {
         this.passwordsRepository = passwordsRepository;
     }
 
+
+    @RequestMapping(path = {"/","index"},method = RequestMethod.GET)
+    public String getHome(){
+        return "index";
+    }
+
     @RequestMapping(path = "auth",method = RequestMethod.GET)
-    public String authenticate(Model model){
+    public String getAuthenticate(Model model){
 
         model.addAttribute("contactDTO",new ContactDTO());
         model.addAttribute("firmDTO",new FirmDTO());
@@ -46,14 +56,14 @@ public class AuthenticationController {
     }
 
     @RequestMapping(path = "auth/{userType}",method =RequestMethod.GET)
-    public String redirectToAuth(@PathVariable String userType){
+    public String getRedirectToAuth(@PathVariable String userType){
 
         return "redirect:/auth";
 
     }
 
     @RequestMapping(path = "auth/{userType}",method = RequestMethod.POST)
-    public String registered(@Valid ContactDTO contactDTO, BindingResult bindingResultContacts,
+    public String getRegistered(@Valid ContactDTO contactDTO, BindingResult bindingResultContacts,
                              @Valid FirmDTO firmDTO, BindingResult bindingResultFirms, Model model,
                              @PathVariable String userType) {
 
@@ -62,15 +72,25 @@ public class AuthenticationController {
                 model.addAttribute("firmDTO",new FirmDTO());
                 return "authentication";
             }
-
-            return "index";
+            ModelMapper modelMapper=new ModelMapper();
+            Contacts contacts = modelMapper.map(contactDTO,Contacts.class);
+            String password = contactDTO.getPasswordRepeat();
+            byte[] saltBytes = SaltHash.getSalt();
+            String hashPass = SaltHash.get_SHA_256_SecurePassword(password,saltBytes);
+            Passwords passwordEntity=new Passwords();
+            passwordEntity.setPassHash(hashPass);
+            passwordEntity.setSalt(SaltHash.getStringFromBytes(saltBytes));
+            passwordsRepository.save(passwordEntity);
+            contacts.setPasswordsId(passwordEntity.getId());
+            contactsRepository.save(contacts);
+            return "redirect:/index";
         }else{
             if(bindingResultFirms.hasErrors()){
                 model.addAttribute("contactDTO",new ContactDTO());
                 return "authentication";
             }
 
-            return "index";
+            return "redirect:/index";
         }
 
     }
