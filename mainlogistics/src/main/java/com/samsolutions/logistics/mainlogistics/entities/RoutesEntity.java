@@ -6,18 +6,19 @@ import java.util.Objects;
 @Entity
 @Table(name = "routes", schema = "logistic_db", catalog = "")
 public class RoutesEntity {
-    private int id;
+    private Long id;
     private String pointFrom;
     private String pointTo;
     private int cost;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

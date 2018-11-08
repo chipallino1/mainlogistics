@@ -19,14 +19,9 @@ function showHideInputs() {
 }
 
 function showHideFirms(){
-	if(firms.style.display=="")
-	{
-		firms.style.display="none";
-	}
-	else
-	{
+	
 		firms.style.display="";
-	}
+	
 }
 
 function hide() {

@@ -7,7 +7,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "orders", schema = "logistic_db", catalog = "")
 public class OrdersEntity {
-    private int id;
+    private Long id;
     private int routeId;
     private Date orderDate;
     private Date paymentDay;
@@ -16,11 +16,12 @@ public class OrdersEntity {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

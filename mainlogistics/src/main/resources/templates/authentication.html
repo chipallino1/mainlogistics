@@ -6,13 +6,13 @@
 
     <!-- Bootstrap CSS -->
     
-      <link rel="stylesheet" type="text/css" th:href="@{/css/searchstyle.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/autocomplete.css}"/>
+      <link rel="stylesheet" type="text/css" th:href="@{/styles/searchstyle.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/autocomplete.css}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
    
   
 
-    <title>Logistics</title>
+      <title>Logistics</title>
   </head>
   <body style= "background-color: rgb(245,245,245);">
      <header>
@@ -104,11 +104,11 @@
 
   <div class="form-group">
       <label class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="type" value="user" onclick="showHideFirms()">
+      <input class="form-check-input" type="radio" name="type" id="userradio" value="user" onclick='firms.style.display="none";'>
       <span class="form-check-label"> Simple user </span>
     </label>
     <label class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="type" value="contact" onclick="showHideFirms()">
+      <input class="form-check-input" type="radio" name="type" id="contactradio" value="contact" onclick='firms.style.display="";'>
       <span class="form-check-label"> Contact person </span>
     </label>
   </div> <!-- form-group end.// -->
@@ -131,7 +131,7 @@
 
       <input class="form-control" type="password" th:field="*{passwordRepeat}" >
 
-      <small class="text-danger" th:if="${#fields.hasErrors('passwordRepeat')}" > Wrong</small>
+      <small class="text-danger" th:if="${#fields.hasErrors('passwordRepeat')}" > Passwords must be same</small>
   </div> <!-- form-group end.// -->  
     <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block"> Register  </button>
@@ -197,11 +197,12 @@
   
   <div class="form-group">
     <label>Create password</label>
-      <input class="form-control" type="password">
+      <input class="form-control" type="password" th:field="*{password}">
   </div> <!-- form-group end.// -->  
   <div class="form-group">
     <label>Confirm password</label>
-      <input class="form-control" type="password">
+      <input class="form-control" type="password" th:field="*{passwordRepeat}">
+      <small class="text-danger" th:if="${#fields.hasErrors('passwordRepeat')}" > Passwords must be same</small>
   </div> <!-- form-group end.// -->  
     <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block"> Register  </button>

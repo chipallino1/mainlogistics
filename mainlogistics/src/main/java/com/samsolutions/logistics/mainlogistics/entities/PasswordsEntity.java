@@ -6,17 +6,18 @@ import java.util.Objects;
 @Entity
 @Table(name = "passwords", schema = "logistic_db", catalog = "")
 public class PasswordsEntity {
-    private int id;
+    private Long id;
     private String passHash;
     private String salt;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

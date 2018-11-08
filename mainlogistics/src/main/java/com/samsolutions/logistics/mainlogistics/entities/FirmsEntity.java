@@ -1,5 +1,7 @@
 package com.samsolutions.logistics.mainlogistics.entities;
 
+import com.samsolutions.logistics.mainlogistics.validation.PasswordConfirm;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -9,21 +11,28 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "firms", schema = "logistic_db", catalog = "")
+@PasswordConfirm(password = "password",confirmPassword = "passwordConfirm")
 public class FirmsEntity {
-    private int id;
+    private Long id;
     private String firmName;
     private String email;
     private String description;
     private Double rating;
     private String firmType;
 
+    private String password;
+    private String passwordRepeat;
+
+
+
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -95,6 +104,23 @@ public class FirmsEntity {
 
     public void setFirmType(String firmType) {
         this.firmType = firmType;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPasswordRepeat(String passwordRepeat) {
+        this.passwordRepeat = passwordRepeat;
+    }
+
+    public String getPassword() {
+
+        return password;
+    }
+
+    public String getPasswordRepeat() {
+        return passwordRepeat;
     }
 
     @Override

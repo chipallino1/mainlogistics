@@ -2,7 +2,12 @@ package com.samsolutions.logistics.mainlogistics.controllers;
 
 import com.samsolutions.logistics.mainlogistics.entities.ContactsEntity;
 import com.samsolutions.logistics.mainlogistics.entities.FirmsEntity;
+import com.samsolutions.logistics.mainlogistics.entities.PasswordsEntity;
+import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
+import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
+import com.samsolutions.logistics.mainlogistics.repositories.PasswordsRepository;
 import com.samsolutions.logistics.mainlogistics.security.SaltHash;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +24,23 @@ import java.security.NoSuchAlgorithmException;
 @Controller
 public class AuthenticationController {
 
+    private ContactsRepository contactsRepository;
+    private FirmsRepository firmsRepository;
+    private PasswordsRepository passwordsRepository;
+
+    @Autowired
+    public void setContactsRepository(ContactsRepository contactsRepository) {
+        this.contactsRepository = contactsRepository;
+    }
+    @Autowired
+    public void setFirmsRepository(FirmsRepository firmsRepository) {
+        this.firmsRepository = firmsRepository;
+    }
+    @Autowired
+    public void setPasswordsRepository(PasswordsRepository passwordsRepository) {
+        this.passwordsRepository = passwordsRepository;
+    }
+
     @RequestMapping(path = "auth",method = RequestMethod.GET)
     public String authenticate(Model model){
 
@@ -28,6 +50,14 @@ public class AuthenticationController {
         return "authentication";
 
     }
+
+    @RequestMapping(path = "auth/{userType}",method =RequestMethod.GET)
+    public String redirectToAuth(@PathVariable String userType){
+
+        return "redirect:/auth";
+
+    }
+
     @RequestMapping(path = "auth/{userType}",method = RequestMethod.POST)
     public String registered(@Valid ContactsEntity contactsEntity, BindingResult bindingResultContacts,
                              @Valid FirmsEntity firmsEntity, BindingResult bindingResultFirms, Model model,
@@ -38,12 +68,17 @@ public class AuthenticationController {
                 model.addAttribute("firmsEntity",new FirmsEntity());
                 return "authentication";
             }
+            PasswordsEntity passwordsEntity=new PasswordsEntity();
+            passwordsEntity.setPassHash("wefef");
+            passwordsEntity.setSalt("wewe");
+            passwordsRepository.save(passwordsEntity);
             return "index";
         }else{
             if(bindingResultFirms.hasErrors()){
                 model.addAttribute("contactsEntity",new ContactsEntity());
                 return "authentication";
             }
+
             return "index";
         }
 

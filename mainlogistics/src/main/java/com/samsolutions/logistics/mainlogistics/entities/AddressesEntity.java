@@ -6,7 +6,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "addresses", schema = "logistic_db", catalog = "")
 public class AddressesEntity {
-    private int id;
+    private Long id;
     private String streetName;
     private int streetNum;
     private String city;
@@ -15,11 +15,12 @@ public class AddressesEntity {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

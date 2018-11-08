@@ -13,7 +13,7 @@ import java.util.Objects;
 @Table(name = "contacts", schema = "logistic_db", catalog = "")
 @PasswordConfirm(password = "password",confirmPassword = "passwordRepeat")
 public class ContactsEntity {
-    private int id;
+    private Long id;
     private String firstname;
     private String lastname;
     private String phoneNum;
@@ -44,11 +44,12 @@ public class ContactsEntity {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
