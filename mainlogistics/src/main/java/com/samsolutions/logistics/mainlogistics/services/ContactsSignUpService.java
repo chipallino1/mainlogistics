@@ -6,7 +6,8 @@ import com.samsolutions.logistics.mainlogistics.entities.Passwords;
 import org.springframework.stereotype.Component;
 
 @Component
-public interface ContactsService<T,V> {
+public interface ContactsSignUpService {
 
+    void savePassword();
     void save();
 }

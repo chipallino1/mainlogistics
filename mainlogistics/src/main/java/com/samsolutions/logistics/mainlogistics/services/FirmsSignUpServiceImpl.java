@@ -1,29 +1,31 @@
 package com.samsolutions.logistics.mainlogistics.services;
 
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
+import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import com.samsolutions.logistics.mainlogistics.entities.Contacts;
+import com.samsolutions.logistics.mainlogistics.entities.Firms;
 import com.samsolutions.logistics.mainlogistics.entities.Passwords;
 import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
+import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.PasswordsRepository;
 import com.samsolutions.logistics.mainlogistics.services.security.SaltHash;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
 
 @Service
-public class ContactsSignUpServiceImpl implements ContactsSignUpService {
+public class FirmsSignUpServiceImpl implements FirmsSignUpService {
 
-    private ContactsRepository contactsRepository;
+    private FirmsRepository firmsRepository;
     private PasswordsRepository passwordsRepository;
     private SaltHash saltHash;
-    private ContactDTO contactDTO;
-    private Contacts contacts;
+    private FirmDTO firmDTO;
+    private Firms firms;
     private Passwords passwords;
 
     @Autowired
-    public void setContactsRepository(ContactsRepository contactsRepository) {
-        this.contactsRepository = contactsRepository;
+    public void setFirmsRepository(FirmsRepository firmsRepository) {
+        this.firmsRepository = firmsRepository;
     }
     @Autowired
     public void setSaltHash(SaltHash saltHash) {
@@ -33,16 +35,16 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
     public void setPasswordsRepository(PasswordsRepository passwordsRepository) {
         this.passwordsRepository = passwordsRepository;
     }
-    public void setContactDTO(ContactDTO contactDTO) {
-        this.contactDTO = contactDTO;
-        contacts=new Contacts();
+    public void setFirmDTO(FirmDTO firmDTO) {
+        this.firmDTO = firmDTO;
+        firms=new Firms();
         passwords=new Passwords();
         ModelMapper modelMapper=new ModelMapper();
-        modelMapper.map(contactDTO,contacts);
+        modelMapper.map(firmDTO,firms);
 
     }
-    public Contacts getContacts(){
-        return contacts;
+    public Firms getFirms(){
+        return firms;
     }
 
     public Passwords getPasswords() {
@@ -52,7 +54,7 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
     @Override
     public void savePassword() {
 
-        String password = contactDTO.getPasswordRepeat();
+        String password = firmDTO.getPasswordRepeat();
         byte[] saltBytes = saltHash.getSalt();
         String hashPass = saltHash.get_SHA_256_SecurePassword(password,saltBytes);
         passwords.setPassHash(hashPass);
@@ -64,8 +66,8 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
     @Override
     public void save(){
 
-        contacts.setPasswordsId(passwords.getId());
-        contactsRepository.save(contacts);
+        firms.setPasswordId(passwords.getId());
+        firmsRepository.save(firms);
 
     }
 }

@@ -7,8 +7,9 @@ import com.samsolutions.logistics.mainlogistics.entities.Passwords;
 import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.PasswordsRepository;
+import com.samsolutions.logistics.mainlogistics.services.ContactsSignUpServiceImpl;
 import com.samsolutions.logistics.mainlogistics.services.security.SaltHash;
-import com.samsolutions.logistics.mainlogistics.services.ContactsService;
+import com.samsolutions.logistics.mainlogistics.services.ContactsSignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,31 +23,12 @@ import javax.validation.Valid;
 @Controller
 public class AuthenticationController {
 
-    private ContactsRepository contactsRepository;
-    private FirmsRepository firmsRepository;
-    private PasswordsRepository passwordsRepository;
-
-
-    private ContactsService<Contacts,ContactDTO> contactsService;
+    private ContactsSignUpServiceImpl contactsSignUpService;
 
     @Autowired
-    public void setContactsService(ContactsService contactsService) {
-        this.contactsService = contactsService;
+    public void setContactsSignUpService(ContactsSignUpServiceImpl contactsSignUpService) {
+        this.contactsSignUpService = contactsSignUpService;
     }
-
-    @Autowired
-    public void setContactsRepository(ContactsRepository contactsRepository) {
-        this.contactsRepository = contactsRepository;
-    }
-    @Autowired
-    public void setFirmsRepository(FirmsRepository firmsRepository) {
-        this.firmsRepository = firmsRepository;
-    }
-    @Autowired
-    public void setPasswordsRepository(PasswordsRepository passwordsRepository) {
-        this.passwordsRepository = passwordsRepository;
-    }
-
 
     @RequestMapping(path = {"/","index"},method = RequestMethod.GET)
     public String getHome(){
@@ -80,14 +62,10 @@ public class AuthenticationController {
                 model.addAttribute("firmDTO",new FirmDTO());
                 return "authentication";
             }
-            contactsService.setProperties(new Contacts(),contactDTO);
-            String password = contactDTO.getPasswordRepeat();
-            byte[] saltBytes = SaltHash.getSalt();
-            String hashPass = SaltHash.get_SHA_256_SecurePassword(password,saltBytes);
-            Passwords passwordEntity=new Passwords();
-            passwordEntity.setPassHash(hashPass);
-            passwordEntity.setSalt(SaltHash.getStringFromBytes(saltBytes));
-            passwordsRepository.save(passwordEntity);
+
+            contactsSignUpService.setContactDTO(contactDTO);
+            contactsSignUpService.savePassword();
+            contactsSignUpService.save();
 
             return "redirect:/index";
         }else{
