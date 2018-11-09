@@ -8,6 +8,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface ContactsService<T,V> {
 
-    void setProperties(T tEntity,V vDTO);
-    void save(Passwords passwords, Firms firms);
+    void save();
 }

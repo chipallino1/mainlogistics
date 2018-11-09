@@ -1,13 +1,16 @@
-package com.samsolutions.logistics.mainlogistics.security;
+package com.samsolutions.logistics.mainlogistics.services.security;
 
-import java.nio.charset.StandardCharsets;
+import org.springframework.stereotype.Service;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-public class SaltHash {
+@Service
+public class SaltHashImpl implements SaltHash {
 
-    public static String get_SHA_256_SecurePassword(String passwordToHash, byte[] salt)
+    @Override
+    public String get_SHA_256_SecurePassword(String passwordToHash, byte[] salt)
     {
         String generatedPassword = null;
         try {
@@ -23,8 +26,8 @@ public class SaltHash {
         }
         return generatedPassword;
     }
-
-    public static byte[] getSalt()
+    @Override
+    public byte[] getSalt()
     {
         SecureRandom sr = null;
         try {
@@ -36,7 +39,8 @@ public class SaltHash {
         sr.nextBytes(salt);
         return salt;
     }
-    public static String getStringFromBytes(byte[] bytes){
+    @Override
+    public String getStringFromBytes(byte[] bytes){
         StringBuilder sb = new StringBuilder();
         for(int i=0; i< bytes.length ;i++)
         {
@@ -44,10 +48,12 @@ public class SaltHash {
         }
         return sb.toString();
     }
-    public static byte[] getBytesFromString(String string){
+    @Override
+    public byte[] getBytesFromString(String string){
         return string.getBytes();
     }
-    public static boolean validate(String passwordToValidate,String storedSecurePassword,byte[] storedSalt){
+    @Override
+    public boolean validate(String passwordToValidate,String storedSecurePassword,byte[] storedSalt){
 
         if(storedSecurePassword.equals(get_SHA_256_SecurePassword(passwordToValidate,storedSalt))){
             return true;
