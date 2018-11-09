@@ -1,10 +1,13 @@
 package com.samsolutions.logistics.mainlogistics.services;
 
+import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import com.samsolutions.logistics.mainlogistics.entities.Firms;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,13 +21,24 @@ public class FirmsServiceImpl implements FirmsService {
     }
 
     @Override
-    public List<Firms> getAll() {
+    public List<FirmDTO> getAll() {
 
-        return firmsRepository.findAll();
+        return null;
     }
 
     @Override
-    public List<Firms> getAllByName(String name) {
-        return null;
+    public List<FirmDTO> getAllByName(String firmName) {
+
+       List<Firms> firmsList = firmsRepository.findDistinctTop5ByFirmName(firmName);
+       List<FirmDTO> firmDTOList = new ArrayList<>(firmsList.size());
+       ModelMapper modelMapper = new ModelMapper();
+
+       for(int i=0;i<firmsList.size();i++){
+
+            modelMapper.map(firmsList,firmDTOList);
+
+       }
+       return firmDTOList;
+
     }
 }

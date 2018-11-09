@@ -25,6 +25,20 @@ function autocomplete(inp, arr) {
   /*execute a function when someone writes in the text field:*/
   inp.addEventListener("input", function(e) {
       var a, b, i, val = this.value;
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", '/firms/'+val+'/readall', true);
+
+      //Передает правильный заголовок в запросе
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+      xhr.onreadystatechange = function() {//Вызывает функцию при смене состояния.
+        if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+          arr=[];
+          arr=JSON.parse(xhr.responseText);
+        }
+      }
+      xhr.send(null); 
+      
       /*close any already open lists of autocompleted values*/
       closeAllLists();
       if (!val) { return false;}

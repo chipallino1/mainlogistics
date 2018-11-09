@@ -9,6 +9,7 @@ import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.PasswordsRepository;
 import com.samsolutions.logistics.mainlogistics.services.ContactsSignUpServiceImpl;
+import com.samsolutions.logistics.mainlogistics.services.FirmsService;
 import com.samsolutions.logistics.mainlogistics.services.FirmsSignUpService;
 import com.samsolutions.logistics.mainlogistics.services.security.SaltHash;
 import com.samsolutions.logistics.mainlogistics.services.ContactsSignUpService;
@@ -21,12 +22,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class AuthenticationController {
 
     private ContactsSignUpService contactsSignUpService;
     private FirmsSignUpService firmsSignUpService;
+    private FirmsService firmsService;
 
     @Autowired
     public void setContactsSignUpService(ContactsSignUpService contactsSignUpService) {
@@ -35,6 +38,10 @@ public class AuthenticationController {
     @Autowired
     public void setFirmsSignUpService(FirmsSignUpService firmsSignUpService) {
         this.firmsSignUpService = firmsSignUpService;
+    }
+    @Autowired
+    public void setFirmsService(FirmsService firmsService) {
+        this.firmsService = firmsService;
     }
 
     @RequestMapping(path = {"/","index"},method = RequestMethod.GET)
@@ -47,7 +54,7 @@ public class AuthenticationController {
 
         model.addAttribute("contactDTO",new ContactDTO());
         model.addAttribute("firmDTO",new FirmDTO());
-        model.addAttribute("firms",firms);
+        model.addAttribute("firms",null);
 
         return "authentication";
 
@@ -89,6 +96,11 @@ public class AuthenticationController {
             return "redirect:/index";
         }
 
+    }
+
+    @RequestMapping(path = "/firms/{firmName}/readall",method = RequestMethod.GET)
+    public List<FirmDTO> readAllFirmsLike(@PathVariable(name = "firmName")String firmName){
+        return firmsService.getAllByName(firmName);
     }
 
 }
