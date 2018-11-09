@@ -181,7 +181,7 @@
   </div> <!-- form-group end.// -->
   <div class="form-group">
     <label>Description</label>
-    <input type="email" class="form-control" placeholder="description" th:field="*{description}">
+    <input type="text" class="form-control" placeholder="description" th:field="*{description}">
   </div> <!-- form-group end.// -->
   <div class="form-group">
       <small class="text-danger" th:if="${#fields.hasErrors('firmType')}" > Must be selected</small>
@@ -283,7 +283,7 @@
 
     <script th:src="@{/js/enter.js}"></script>
     <script th:src="@{/js/autocomplete.js}"></script>
-    <script>autocomplete(document.getElementById("myInput"), countries);</script>
+    <script th:inline="javascript">autocomplete(document.getElementById("myInput"),[[${firms}]] );</script>
   
   
   

@@ -3,6 +3,7 @@ package com.samsolutions.logistics.mainlogistics.controllers;
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import com.samsolutions.logistics.mainlogistics.entities.Contacts;
+import com.samsolutions.logistics.mainlogistics.entities.Firms;
 import com.samsolutions.logistics.mainlogistics.entities.Passwords;
 import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
@@ -46,6 +47,7 @@ public class AuthenticationController {
 
         model.addAttribute("contactDTO",new ContactDTO());
         model.addAttribute("firmDTO",new FirmDTO());
+        model.addAttribute("firms",firms);
 
         return "authentication";
 

@@ -4,6 +4,9 @@ import com.samsolutions.logistics.mainlogistics.entities.Firms;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface FirmsRepository extends JpaRepository<Firms,Long> {
+    List<Firms> findAllByFirmName();
 }
