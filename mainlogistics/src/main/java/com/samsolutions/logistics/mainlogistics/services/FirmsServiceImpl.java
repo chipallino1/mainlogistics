@@ -29,13 +29,14 @@ public class FirmsServiceImpl implements FirmsService {
     @Override
     public List<FirmDTO> getAllByName(String firmName) {
 
-       List<Firms> firmsList = firmsRepository.findDistinctTop5ByFirmName(firmName);
+       List<Firms> firmsList = firmsRepository.findDistinctTop5ByFirmNameLike(firmName+"%");
        List<FirmDTO> firmDTOList = new ArrayList<>(firmsList.size());
        ModelMapper modelMapper = new ModelMapper();
 
        for(int i=0;i<firmsList.size();i++){
 
-            modelMapper.map(firmsList,firmDTOList);
+           firmDTOList.add(new FirmDTO());
+           modelMapper.map(firmsList.get(i),firmDTOList.get(i));
 
        }
        return firmDTOList;

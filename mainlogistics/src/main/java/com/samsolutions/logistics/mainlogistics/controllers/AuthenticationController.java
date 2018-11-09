@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -99,7 +100,7 @@ public class AuthenticationController {
     }
 
     @RequestMapping(path = "/firms/{firmName}/readall",method = RequestMethod.GET)
-    public List<FirmDTO> readAllFirmsLike(@PathVariable(name = "firmName")String firmName){
+    public @ResponseBody List<FirmDTO> readAllFirmsLike(@PathVariable(value = "firmName")String firmName){
         return firmsService.getAllByName(firmName);
     }
 

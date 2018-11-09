@@ -35,6 +35,7 @@ function autocomplete(inp, arr) {
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
           arr=[];
           arr=JSON.parse(xhr.responseText);
+          alert(arr);
         }
       }
       xhr.send(null); 
