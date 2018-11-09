@@ -35,6 +35,7 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
     public void setPasswordsRepository(PasswordsRepository passwordsRepository) {
         this.passwordsRepository = passwordsRepository;
     }
+    @Override
     public void setFirmDTO(FirmDTO firmDTO) {
         this.firmDTO = firmDTO;
         firms=new Firms();

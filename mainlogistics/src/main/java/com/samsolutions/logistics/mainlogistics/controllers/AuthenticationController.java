@@ -8,6 +8,7 @@ import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.PasswordsRepository;
 import com.samsolutions.logistics.mainlogistics.services.ContactsSignUpServiceImpl;
+import com.samsolutions.logistics.mainlogistics.services.FirmsSignUpService;
 import com.samsolutions.logistics.mainlogistics.services.security.SaltHash;
 import com.samsolutions.logistics.mainlogistics.services.ContactsSignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,16 @@ import javax.validation.Valid;
 @Controller
 public class AuthenticationController {
 
-    private ContactsSignUpServiceImpl contactsSignUpService;
+    private ContactsSignUpService contactsSignUpService;
+    private FirmsSignUpService firmsSignUpService;
 
     @Autowired
-    public void setContactsSignUpService(ContactsSignUpServiceImpl contactsSignUpService) {
+    public void setContactsSignUpService(ContactsSignUpService contactsSignUpService) {
         this.contactsSignUpService = contactsSignUpService;
+    }
+    @Autowired
+    public void setFirmsSignUpService(FirmsSignUpService firmsSignUpService) {
+        this.firmsSignUpService = firmsSignUpService;
     }
 
     @RequestMapping(path = {"/","index"},method = RequestMethod.GET)
@@ -73,6 +79,10 @@ public class AuthenticationController {
                 model.addAttribute("contactDTO",new ContactDTO());
                 return "authentication";
             }
+
+            firmsSignUpService.setFirmDTO(firmDTO);
+            firmsSignUpService.savePassword();
+            firmsSignUpService.save();
 
             return "redirect:/index";
         }

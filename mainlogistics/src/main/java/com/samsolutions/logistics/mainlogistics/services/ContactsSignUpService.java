@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public interface ContactsSignUpService {
 
+    void setContactDTO(ContactDTO contactDTO);
     void savePassword();
     void save();
 }

@@ -33,6 +33,7 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
     public void setPasswordsRepository(PasswordsRepository passwordsRepository) {
         this.passwordsRepository = passwordsRepository;
     }
+    @Override
     public void setContactDTO(ContactDTO contactDTO) {
         this.contactDTO = contactDTO;
         contacts=new Contacts();
