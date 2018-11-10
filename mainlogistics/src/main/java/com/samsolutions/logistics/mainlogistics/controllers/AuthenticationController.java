@@ -86,16 +86,6 @@ public class AuthenticationController {
                 model.addAttribute("firmDTO",new FirmDTO());
                 return "authentication";
             }
-            SaltHashImpl saltHash=new SaltHashImpl();
-            byte[] salt=saltHash.getSalt();
-            String hash= saltHash.get_SHA_256_SecurePassword(contactDTO.getPasswordRepeat(),salt);
-            if(saltHash.validate(contactDTO.getPasswordRepeat(),hash ,saltHash.getBytesFromString(saltHash.getStringFromBytes( salt)))){
-                System.out.println("hui");
-
-            }
-            else{
-                System.out.println("ne hui");
-            }
 
             contactsSignUpService.setContactDTO(contactDTO);
             contactsSignUpService.savePassword();

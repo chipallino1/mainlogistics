@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Service
@@ -88,10 +89,14 @@ public class UserLogInServiceImpl implements UserLogInService {
                 return false;
             }
             Passwords passwords=firmsList.get(0).getPasswordsByPasswordId();
-            if(saltHash.validate(password,passwords.getPassHash(),saltHash.getBytesFromString(passwords.getSalt()))){
-                isFirm=true;
-                firm=firmsList.get(0);
-                return true;
+            try {
+                if(saltHash.validate(password,passwords.getPassHash(),saltHash.getBytesFromString(passwords.getSalt()))){
+                    isFirm=true;
+                    firm=firmsList.get(0);
+                    return true;
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
             return false;
         }
@@ -99,10 +104,14 @@ public class UserLogInServiceImpl implements UserLogInService {
             return false;
         }
         Passwords passwords=contactsList.get(0).getPasswordsByPasswordsId();
-        if(saltHash.validate(password,passwords.getPassHash(),saltHash.getBytesFromString(passwords.getSalt()))){
-            isContact=true;
-            contact=contactsList.get(0);
-            return true;
+        try {
+            if(saltHash.validate(password,passwords.getPassHash(),saltHash.getBytesFromString(passwords.getSalt()))){
+                isContact=true;
+                contact=contactsList.get(0);
+                return true;
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
 
