@@ -37,7 +37,6 @@ function autocomplete(inp, arr) {
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
           arr=[];
           arr=JSON.parse(xhr.responseText);
-          alert(arr);
           var a, b, i;
           /*close any already open lists of autocompleted values*/
       closeAllLists();
@@ -64,7 +63,7 @@ function autocomplete(inp, arr) {
           /*execute a function when someone clicks on the item value (DIV element):*/
               b.addEventListener("click", function(e) {
               /*insert the value for the autocomplete text field:*/
-              inp.value = curr.getElementsByTagName("input")[0].value;
+              inp.value = this.getElementsByTagName("input")[0].value;
               /*close the list of autocompleted values,
               (or any other open lists of autocompleted values:*/
               closeAllLists();

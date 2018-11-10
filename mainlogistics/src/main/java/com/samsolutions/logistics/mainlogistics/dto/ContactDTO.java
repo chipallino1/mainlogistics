@@ -42,7 +42,7 @@ public class ContactDTO implements Serializable {
             "-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\" +
             "x7f])+)\\])")
     private String email;
-
+    private String firmName;
     private String password;
     private String passwordRepeat;
 
@@ -60,6 +60,10 @@ public class ContactDTO implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setFirmName(String firmName) {
+        this.firmName = firmName;
     }
 
     public void setPasswordRepeat(String passwordRepeat) {
@@ -85,6 +89,10 @@ public class ContactDTO implements Serializable {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getFirmName() {
+        return firmName;
     }
 
     public String getPasswordRepeat() {

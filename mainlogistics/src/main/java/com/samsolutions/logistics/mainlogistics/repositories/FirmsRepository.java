@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface FirmsRepository extends JpaRepository<Firms,Long> {
-    List<Firms> findAllByFirmNameLike(String firmName);
+    List<Firms> findDistinctByFirmNameLike(String firmName);
     List<Firms> findDistinctTop5ByFirmNameLike(String firmName);
 }

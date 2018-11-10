@@ -104,11 +104,11 @@
 
   <div class="form-group">
       <label class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="type" id="userradio" value="user" onclick='firms.style.display="none";'>
+      <input class="form-check-input" type="radio" name="type" id="userradio" value="user" onclick='contactOrSimpleSelect(this)' th:field="*{firmName}" th:value="null">
       <span class="form-check-label"> Simple user </span>
     </label>
     <label class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="type" id="contactradio" value="contact" onclick='firms.style.display="";'>
+      <input class="form-check-input" type="radio" name="type" id="contactradio" value="contact" onclick='contactOrSimpleSelect(this)' >
       <span class="form-check-label"> Contact person </span>
     </label>
   </div> <!-- form-group end.// -->
@@ -116,7 +116,7 @@
     <label>Choose firm</label>
    <form autocomplete="off">
     <div class="autocomplete" style="width:150px;">
-     <input id="myInput" class="form-control" type="text" name="myCountry" placeholder="Country">
+     <input id="myInput" class="form-control" type="text" name="myCountry" placeholder="Country" th:field="*{firmName}">
     </div>
     </form>
   </div>
@@ -284,7 +284,7 @@
     <script th:src="@{/js/enter.js}"></script>
     <script th:src="@{/js/autocomplete.js}"></script>
     <script th:inline="javascript">autocomplete(document.getElementById("myInput"),[[${firms}]] );</script>
-  
+     <script th:inline="javascript">whenRegistred([[${isRegistred}]]);</script>
   
   
   </body>

@@ -18,6 +18,25 @@ function showHideInputs() {
 	}
 }
 
+function contactOrSimpleSelect(curr) {
+	if(curr.id=='userradio'){
+		contactradio.checked=false;
+		firms.style.display="none";
+	}
+	else
+	{
+		userradio.checked=false;
+		firms.style.display="";
+	}
+}
+
+function whenRegistred(isRegistred) {
+	if(isRegistred)
+	{
+		alert('hello');
+	}
+}
+
 function showHideFirms(){
 	
 		firms.style.display="";
