@@ -33,7 +33,8 @@ function contactOrSimpleSelect(curr) {
 function whenRegistred(isRegistred) {
 	if(isRegistred)
 	{
-		alert('hello');
+		let event=new Event('click');
+		onclickLogin.dispatchEvent(event);
 	}
 }
 
