@@ -55,29 +55,22 @@
 
 
 
-<div class="row justify-content-center" id="signup" >
+<div class="row justify-content-center" id="profile" >
 
-<div class="col-md-6"  id="inputUser">
+<div class="col-md-6"  id="updateUser">
 
 <div class="card">
 <header class="card-header">
-  <a class="float-right btn btn-outline-primary mt-1" id="onclickLogin" style="color: #007bff;" onclick="hide()">Log In</a>
-  <h4 class="card-title mt-2">Sign up</h4>
+  <h4 class="card-title mt-2" th:utext="${profileName}"></h4>
 </header>
 <article class="card-body">
-<form th:action="@{/auth/contact}" method="post" th:object="${contactDTO}">
+<form th:action="@{/profile/user/update}" method="post" th:object="${contactDTO}">
   <div class="row justify-content-center">
       <!-- Material inline 1 -->
     <!-- Default inline 1-->
     <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample" onclick="showHideInputs()">
-        <label class="custom-control-label" for="defaultInline1"><b>User</b></label>
-    </div>
 
-<!-- Default inline 2-->
-    <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" class="custom-control-input" id="defaultInline2" name="inlineDefaultRadiosExample" onclick="showHideInputs()">
-       <label class="custom-control-label" for="defaultInline2"><b>Firm</b></label>
+        <label class="custom-control-label"><b>User</b></label>
     </div>
      </div>
      <div class="container">
@@ -104,17 +97,7 @@
     <input type="number" class="form-control" placeholder="phone number" th:field="*{phoneNum}">
   </div> <!-- form-group end.// -->
 
-  <div class="form-group">
-      <label class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="type" id="userradio" value="user" onclick='contactOrSimpleSelect(this)' th:field="*{firmName}" th:value="null">
-      <span class="form-check-label"> Simple user </span>
-    </label>
-    <label class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="type" id="contactradio" value="contact" onclick='contactOrSimpleSelect(this)' >
-      <span class="form-check-label"> Contact person </span>
-    </label>
-  </div> <!-- form-group end.// -->
-  <div class="form-group" id="firms" style="display: none;">
+  <div class="form-group" id="firms" style="display: none;" th:if="*{firmName!=null}">
     <label>Choose firm</label>
    <form autocomplete="off">
     <div class="autocomplete" style="width:150px;">
@@ -122,30 +105,18 @@
     </div>
     </form>
   </div>
-  <div class="form-group">
-    <label>Create password</label>
-
-      <input class="form-control" type="password"  th:field="*{password}">
-  </div> <!-- form-group end.// -->  
-  <div class="form-group">
-    <label>Confirm password</label>
-
-
-      <input class="form-control" type="password" th:field="*{passwordRepeat}" >
-
-      <small class="text-danger" th:if="${#fields.hasErrors('passwordRepeat')}" > Passwords must be same</small>
-  </div> <!-- form-group end.// -->  
     <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block"> Register  </button>
+        <button class="btn btn-primary btn-block"> Update  </button>
+        <button type="submit" class="btn btn-primary btn-block"> Save  </button>
     </div> <!-- form-group// -->      
-    <small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br> Terms of use and Privacy Policy.</small>         
+
     </div>                                 
 </form>
 </article> <!-- card-body end .// -->
 </div> <!-- card.// -->
 </div> <!-- col.//-->
 
-<div class="col-md-6"  id="inputFirm" style="display: none;">
+<div class="col-md-6"  id="updateFirm" style="display: none;">
 
 <div class="card">
 <header class="card-header">
@@ -153,21 +124,7 @@
   <h4 class="card-title mt-2">Sign up</h4>
 </header>
 <article class="card-body">
-<form th:action="@{/auth/firm}" method="post" th:object="${firmDTO}">
-  <div class="row justify-content-center">
-      <!-- Material inline 1 -->
-    <!-- Default inline 1-->
-    <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" class="custom-control-input" id="defaultInline11" name="inlineDefaultRadiosExample" onclick="showHideInputs()">
-        <label class="custom-control-label" for="defaultInline1"><b>User</b></label>
-    </div>
-
-<!-- Default inline 2-->
-    <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" class="custom-control-input" id="defaultInline22" name="inlineDefaultRadiosExample" onclick="showHideInputs()">
-       <label class="custom-control-label" for="defaultInline2"><b>Firm</b></label>
-    </div>
-     </div>
+<form th:action="@{/profile/firm/update}" method="post" th:object="${firmDTO}">
 <div class="container">
   <div class="form-row">
     <div class="col form-group">
@@ -185,31 +142,12 @@
     <label>Description</label>
     <input type="text" class="form-control" placeholder="description" th:field="*{description}">
   </div> <!-- form-group end.// -->
-  <div class="form-group">
-      <small class="text-danger" th:if="${#fields.hasErrors('firmType')}" > Must be selected</small>
-      <label class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="firmtype" th:field="*{firmType}" th:value="simple">
-      <span class="form-check-label"> Simple </span>
-    </label>
-    <label class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="firmtype" th:field="*{firmType}" th:value="logistic">
-      <span class="form-check-label"> Logistic </span>
-    </label>
-  </div> <!-- form-group end.// -->
-  
-  <div class="form-group">
-    <label>Create password</label>
-      <input class="form-control" type="password" th:field="*{password}">
-  </div> <!-- form-group end.// -->  
-  <div class="form-group">
-    <label>Confirm password</label>
-      <input class="form-control" type="password" th:field="*{passwordRepeat}">
-      <small class="text-danger" th:if="${#fields.hasErrors('passwordRepeat')}" > Passwords must be same</small>
-  </div> <!-- form-group end.// -->  
     <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block"> Register  </button>
-    </div> <!-- form-group// -->      
-    <small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br> Terms of use and Privacy Policy.</small>         
+        <button class="btn btn-primary btn-block"> Update  </button>
+    </div> <!-- form-group// -->
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block"> Save  </button>
+    </div> <!-- form-group// -->
     </div>  
     </form>
 </article> <!-- card-body end .// -->
