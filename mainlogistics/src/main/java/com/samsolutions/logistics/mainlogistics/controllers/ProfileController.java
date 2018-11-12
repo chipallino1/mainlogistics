@@ -13,7 +13,7 @@ public class ProfileController {
 
     @RequestMapping(path = "profile/{type}",method = RequestMethod.GET)
     public String profilePage(Model model,@ModelAttribute("contactDTO")ContactDTO contactDTO, @ModelAttribute("firmDTO")FirmDTO firmDTO){
-        if(contactDTO!=null){
+        if(contactDTO.getEmail()!=null){
             model.addAttribute("profileName",contactDTO.getFirstName()+" "+ contactDTO.getLastName());
             return "profile";
         }
