@@ -4,6 +4,7 @@ package com.samsolutions.logistics.mainlogistics.services.security;
 import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,6 +19,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private ContactsRepository contactsRepository;
     private FirmsRepository firmsRepository;
     private DataSource dataSource;
+    @Value("${spring.queries.users-query}")
+    private String usersQuery;
     @Autowired
     public void setContactsRepository(ContactsRepository contactsRepository) {
         this.contactsRepository = contactsRepository;
