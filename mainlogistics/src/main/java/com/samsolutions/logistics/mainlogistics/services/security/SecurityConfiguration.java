@@ -4,11 +4,13 @@ package com.samsolutions.logistics.mainlogistics.services.security;
 import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
@@ -19,6 +21,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private ContactsRepository contactsRepository;
     private FirmsRepository firmsRepository;
     private DataSource dataSource;
+    private SaltHash saltHash;
     @Value("${spring.queries.users-query}")
     private String usersQuery;
     @Autowired
@@ -33,8 +36,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
-
     @Autowired
+    public void setPasswordEncoder(SaltHash saltHash) {
+        this.saltHash = saltHash;
+    }
+
+
+
 
 
     @Override
@@ -43,9 +51,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.
                 jdbcAuthentication()
                 .usersByUsernameQuery(usersQuery)
-                .authoritiesByUsernameQuery(rolesQuery)
                 .dataSource(dataSource)
-                .passwordEncoder(bCryptPasswordEncoder);
+                .passwordEncoder(saltHash);
     }
 
 }

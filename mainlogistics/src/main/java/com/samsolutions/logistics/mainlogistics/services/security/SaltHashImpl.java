@@ -1,5 +1,7 @@
 package com.samsolutions.logistics.mainlogistics.services.security;
 
+import com.samsolutions.logistics.mainlogistics.repositories.PasswordsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -12,6 +14,12 @@ import java.util.Arrays;
 
 @Service
 public class SaltHashImpl implements SaltHash {
+
+    private PasswordsRepository passwordsRepository;
+    @Autowired
+    public void setPasswordsRepository(PasswordsRepository passwordsRepository) {
+        this.passwordsRepository = passwordsRepository;
+    }
 
     @Override
     public String get_SHA_256_SecurePassword(String passwordToHash, byte[] salt)
@@ -43,6 +51,12 @@ public class SaltHashImpl implements SaltHash {
         sr.nextBytes(salt);
         return salt;
     }
+
+    @Override
+    public String getSaltByHash(String hash) {
+        return passwordsRepository.findDistinctTop1ByPassHashLike(hash).get(0).getSalt();
+    }
+
     @Override
     public String getStringFromBytes(byte[] bytes){
 
@@ -74,4 +88,13 @@ public class SaltHashImpl implements SaltHash {
     }
 
 
+    @Override
+    public String encode(CharSequence charSequence) {
+        return get_SHA_256_SecurePassword(charSequence.toString(),getSalt());
+    }
+
+    @Override
+    public boolean matches(CharSequence charSequence, String s) {
+        return validate(charSequence.toString(),s,getBytesFromString(getSaltByHash(s)));
+    }
 }
