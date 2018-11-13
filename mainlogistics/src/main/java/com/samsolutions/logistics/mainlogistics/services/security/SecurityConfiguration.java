@@ -58,19 +58,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery(rolesQuery)
                 .passwordEncoder(saltHash);
     }
-  /*  @Override
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests().anyRequest().permitAll()
-                .antMatchers("/", "/home").permitAll()
-                .anyRequest().authenticated()
+                .authorizeRequests()
+                .antMatchers("/profile/**").authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/auth")
                 .permitAll()
                 .and()
                 .logout()
                 .permitAll();
-    }*/
-
+    }
 }
