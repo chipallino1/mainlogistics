@@ -10,6 +10,7 @@ public class Contacts {
     private String lastName;
     private String phoneNum;
     private String email;
+    private String role;
     private Long firmId;
     private Long passwordsId;
     private Firms firmsByFirmId;
@@ -64,6 +65,16 @@ public class Contacts {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Basic
+    @Column(name = "role", nullable = false, length = 45)
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Basic
