@@ -14,6 +14,7 @@ import com.samsolutions.logistics.mainlogistics.services.security.SaltHash;
 import com.samsolutions.logistics.mainlogistics.services.security.SaltHashImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -57,6 +58,9 @@ public class AuthenticationController {
     @RequestMapping(path = "auth",method = RequestMethod.GET)
     public String getAuthenticate(Model model,@ModelAttribute("isRegistred") String isRegistred){
 
+        /*if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0].toString().equals("ROLE_USER")){
+            model.addAttribute("isRegistred",true);
+        }*/
         model.addAttribute("contactDTO",new ContactDTO());
         model.addAttribute("firmDTO",new FirmDTO());
         model.addAttribute("userDTO",new UserDTO());
