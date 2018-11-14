@@ -2,6 +2,7 @@ package com.samsolutions.logistics.mainlogistics.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class UserDTO {
     @NotNull
@@ -20,6 +21,7 @@ public class UserDTO {
             "x7f])+)\\])")
     private String email;
     @NotNull
+    @Size(min=8,max = 50)
     private String password;
 
     public void setEmail(String email) {

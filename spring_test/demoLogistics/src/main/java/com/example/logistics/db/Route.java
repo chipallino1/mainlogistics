@@ -8,15 +8,15 @@ import java.io.Serializable;
 public class Route implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
-    @Column
+    private Long Id;
+    @Column(name = "point_from")
     private String from;
-    @Column
+    @Column(name="point_to")
     private String to;
     @Column
     private int cost;
 
-    public int getId() {
+    public Long getId() {
         return Id;
     }
 
@@ -32,7 +32,7 @@ public class Route implements Serializable {
         return cost;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         Id = id;
     }
 

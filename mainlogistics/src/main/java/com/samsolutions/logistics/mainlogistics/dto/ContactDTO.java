@@ -43,7 +43,11 @@ public class ContactDTO implements Serializable {
             "x7f])+)\\])")
     private String email;
     private String firmName;
+    @NotNull
+    @Size(min = 8,max=50)
     private String password;
+    @NotNull
+    @Size(min = 8,max=50)
     private String passwordRepeat;
 
     public void setFirstName(String firstName) {
