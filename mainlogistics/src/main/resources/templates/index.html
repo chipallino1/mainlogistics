@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:sec=
+        "http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -80,7 +81,10 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
-
+        </div>
+        <div sec:authentication="name">
+            The value of the "name" property of the authentication object should appear here.
+        </div>
 <div class="container marketing">
 
         <!-- Three columns of text below the carousel -->
