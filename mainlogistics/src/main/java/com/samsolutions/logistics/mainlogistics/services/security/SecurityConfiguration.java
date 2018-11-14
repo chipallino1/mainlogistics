@@ -63,9 +63,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf()
                 .and()
-                //.requiresChannel()
-                //.antMatchers("/auth").requiresSecure()
-                //.and()
+                .requiresChannel()
+                .antMatchers("/auth").requiresSecure()
+                .and()
                 .authorizeRequests()
                 .antMatchers("/profile/**").authenticated()
                 .anyRequest().permitAll()
