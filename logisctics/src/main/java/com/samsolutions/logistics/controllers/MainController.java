@@ -13,11 +13,23 @@ public class MainController {
 
     @RequestMapping(value = {"/auth"},method = RequestMethod.GET)
     public String authenticationPage(){
-        return "authentication";
+        return "form";
     }
 
     @RequestMapping(value = {"/signup/firm"},method = RequestMethod.POST)
-    public String register(ContactsEntity contactsEntity, BindingResult bindingResult){
+    public String registerFirm(ContactsEntity contactsEntity, BindingResult bindingResult){
+
+        if (bindingResult.hasErrors()) {
+            return "error1";
+        }
+        return "userpage";
+    }
+    @RequestMapping(value = {"/signup/user"},method = RequestMethod.POST)
+    public String registerUser(ContactsEntity contactsEntity, BindingResult bindingResult){
+
+        if (bindingResult.hasErrors()) {
+            return "error1";
+        }
 
         return "userpage";
     }

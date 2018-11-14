@@ -1,6 +1,10 @@
 package com.samsolutions.logistics.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "contacts", schema = "logistic_db", catalog = "")
@@ -25,6 +29,9 @@ public class ContactsEntity {
 
     @Basic
     @Column(name = "firstname", nullable = false, length = 45)
+    @NotNull
+    @Size(min = 2,max=30)
+    @Pattern(regexp = "^[a-zA-z]+$")
     public String getFirstname() {
         return firstname;
     }
@@ -35,6 +42,9 @@ public class ContactsEntity {
 
     @Basic
     @Column(name = "lastname", nullable = false, length = 45)
+    @NotNull
+    @Size(min = 2,max=30)
+    @Pattern(regexp = "^[a-zA-z]+$")
     public String getLastname() {
         return lastname;
     }
@@ -45,6 +55,9 @@ public class ContactsEntity {
 
     @Basic
     @Column(name = "phone_num", nullable = false, length = 45)
+    @NotNull
+    @Size(min = 7)
+    @Pattern(regexp = "^\\d+$")
     public String getPhoneNum() {
         return phoneNum;
     }
@@ -55,6 +68,7 @@ public class ContactsEntity {
 
     @Basic
     @Column(name = "email", nullable = true, length = 45)
+    @Email
     public String getEmail() {
         return email;
     }
