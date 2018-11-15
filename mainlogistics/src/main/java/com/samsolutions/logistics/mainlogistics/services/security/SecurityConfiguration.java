@@ -61,15 +61,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf()
-                .and()
-                .requiresChannel()
-                .antMatchers("/auth").requiresSecure()
-                .and()
+               // .csrf()
+               // .and()
+               // .requiresChannel()
+               // .antMatchers("/auth").requiresSecure()
+                //.and()
                 .authorizeRequests()
                 .antMatchers("/profile/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
+                .csrf().disable()
                 .formLogin()
                 .loginPage("/auth")
                 .permitAll()

@@ -72,7 +72,7 @@ public class SaltHashImpl implements SaltHash {
     public byte[] getBytesFromString(String string) {
 
        byte[] byteArr= new BigInteger(string, 16).toByteArray();
-       return Arrays.copyOfRange(byteArr,1,byteArr.length);// byteArr;
+       return byteArr; // Arrays.copyOfRange(byteArr,1,byteArr.length);
 
 
 
