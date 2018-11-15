@@ -70,6 +70,5 @@ create table logistic_db.users(
     enabled varchar(10) not null,
     role varchar(55) not null,
     contact_id int ,
-    firm_id int ,
-    password_id int not null
+    firm_id int 
 );

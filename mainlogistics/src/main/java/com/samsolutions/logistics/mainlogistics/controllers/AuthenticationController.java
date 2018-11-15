@@ -118,7 +118,7 @@ public class AuthenticationController {
         return firmsService.getAllByName(firmName);
     }
 
-    @RequestMapping(path = "auth/login",method = RequestMethod.POST)
+   /* @RequestMapping(path = "auth/login",method = RequestMethod.POST)
     public String login(@Valid UserDTO userDTO,RedirectAttributes redirectAttributes){
 
         if(userLogInService.authorize(userDTO.getEmail(),userDTO.getPassword())) {
@@ -130,6 +130,6 @@ public class AuthenticationController {
             return "redirect:/profile/firm";
         }
         return "error";
-    }
+    }*/
 
 }

@@ -83,7 +83,7 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
                 contacts.setFirmId(firm.getId());
             }
         }
-        contacts.setRole("ROLE_USER");
+        contacts.setRole("ROLE_CONTACT_USER");
         contacts.setPasswordsId(passwords.getId());
         contactsRepository.save(contacts);
 

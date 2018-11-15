@@ -10,4 +10,5 @@ import java.util.List;
 public interface FirmsService {
     List<FirmDTO> getAll();
     List<FirmDTO> getAllByName(String firmName);
+    FirmDTO getByEmail(String email);
 }
