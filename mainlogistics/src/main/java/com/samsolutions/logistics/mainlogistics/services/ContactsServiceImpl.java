@@ -2,9 +2,7 @@ package com.samsolutions.logistics.mainlogistics.services;
 
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.entities.Contacts;
-import com.samsolutions.logistics.mainlogistics.entities.Firms;
 import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
-import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

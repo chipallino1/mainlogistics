@@ -1,13 +1,12 @@
 package com.samsolutions.logistics.mainlogistics.entities;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 public class Addresses {
     private Long id;
     private String streetName;
-    private int streetNum;
+    private Long streetNum;
     private String city;
     private String country;
     private Long firmId;
@@ -15,7 +14,6 @@ public class Addresses {
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
@@ -36,11 +34,11 @@ public class Addresses {
 
     @Basic
     @Column(name = "street_num", nullable = false)
-    public int getStreetNum() {
+    public Long getStreetNum() {
         return streetNum;
     }
 
-    public void setStreetNum(int streetNum) {
+    public void setStreetNum(Long streetNum) {
         this.streetNum = streetNum;
     }
 
@@ -78,23 +76,32 @@ public class Addresses {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Addresses addresses = (Addresses) o;
-        return streetNum == addresses.streetNum &&
-                Objects.equals(id, addresses.id) &&
-                Objects.equals(streetName, addresses.streetName) &&
-                Objects.equals(city, addresses.city) &&
-                Objects.equals(country, addresses.country) &&
-                Objects.equals(firmId, addresses.firmId);
+
+        if (id != null ? !id.equals(addresses.id) : addresses.id != null) return false;
+        if (streetName != null ? !streetName.equals(addresses.streetName) : addresses.streetName != null) return false;
+        if (streetNum != null ? !streetNum.equals(addresses.streetNum) : addresses.streetNum != null) return false;
+        if (city != null ? !city.equals(addresses.city) : addresses.city != null) return false;
+        if (country != null ? !country.equals(addresses.country) : addresses.country != null) return false;
+        if (firmId != null ? !firmId.equals(addresses.firmId) : addresses.firmId != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(id, streetName, streetNum, city, country, firmId);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (streetName != null ? streetName.hashCode() : 0);
+        result = 31 * result + (streetNum != null ? streetNum.hashCode() : 0);
+        result = 31 * result + (city != null ? city.hashCode() : 0);
+        result = 31 * result + (country != null ? country.hashCode() : 0);
+        result = 31 * result + (firmId != null ? firmId.hashCode() : 0);
+        return result;
     }
 
     @ManyToOne
-    @JoinColumn(name = "firm_id", referencedColumnName = "id", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "firm_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     public Firms getFirmsByFirmId() {
         return firmsByFirmId;
     }

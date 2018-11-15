@@ -2,20 +2,18 @@ package com.samsolutions.logistics.mainlogistics.entities;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 
 @Entity
 public class Routes {
     private Long id;
     private String pointFrom;
     private String pointTo;
-    private int cost;
+    private Long cost;
     private Collection<Orders> ordersById;
     private Collection<RoutesInfo> routesInfosById;
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
@@ -46,11 +44,11 @@ public class Routes {
 
     @Basic
     @Column(name = "cost", nullable = false)
-    public int getCost() {
+    public Long getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(Long cost) {
         this.cost = cost;
     }
 
@@ -58,17 +56,24 @@ public class Routes {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Routes routes = (Routes) o;
-        return cost == routes.cost &&
-                Objects.equals(id, routes.id) &&
-                Objects.equals(pointFrom, routes.pointFrom) &&
-                Objects.equals(pointTo, routes.pointTo);
+
+        if (id != null ? !id.equals(routes.id) : routes.id != null) return false;
+        if (pointFrom != null ? !pointFrom.equals(routes.pointFrom) : routes.pointFrom != null) return false;
+        if (pointTo != null ? !pointTo.equals(routes.pointTo) : routes.pointTo != null) return false;
+        if (cost != null ? !cost.equals(routes.cost) : routes.cost != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(id, pointFrom, pointTo, cost);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (pointFrom != null ? pointFrom.hashCode() : 0);
+        result = 31 * result + (pointTo != null ? pointTo.hashCode() : 0);
+        result = 31 * result + (cost != null ? cost.hashCode() : 0);
+        return result;
     }
 
     @OneToMany(mappedBy = "routesByRouteId")
