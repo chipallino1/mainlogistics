@@ -42,4 +42,13 @@ public class FirmsServiceImpl implements FirmsService {
        return firmDTOList;
 
     }
+
+    @Override
+    public FirmDTO getByEmail(String email) {
+        FirmDTO firmDTO=new FirmDTO();
+        Firms firm = firmsRepository.findAllByEmail(email).get(0);
+        ModelMapper modelMapper=new ModelMapper();
+        modelMapper.map(firm,firmDTO);
+        return firmDTO;
+    }
 }

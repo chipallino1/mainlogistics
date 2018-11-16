@@ -3,18 +3,8 @@ package com.samsolutions.logistics.mainlogistics.controllers;
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import com.samsolutions.logistics.mainlogistics.dto.UserDTO;
-import com.samsolutions.logistics.mainlogistics.entities.Contacts;
-import com.samsolutions.logistics.mainlogistics.entities.Firms;
-import com.samsolutions.logistics.mainlogistics.entities.Passwords;
-import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
-import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
-import com.samsolutions.logistics.mainlogistics.repositories.PasswordsRepository;
 import com.samsolutions.logistics.mainlogistics.services.*;
-import com.samsolutions.logistics.mainlogistics.services.security.SaltHash;
-import com.samsolutions.logistics.mainlogistics.services.security.SaltHashImpl;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -118,7 +108,7 @@ public class AuthenticationController {
         return firmsService.getAllByName(firmName);
     }
 
-    @RequestMapping(path = "auth/login",method = RequestMethod.POST)
+   /* @RequestMapping(path = "auth/login",method = RequestMethod.POST)
     public String login(@Valid UserDTO userDTO,RedirectAttributes redirectAttributes){
 
         if(userLogInService.authorize(userDTO.getEmail(),userDTO.getPassword())) {
@@ -130,6 +120,6 @@ public class AuthenticationController {
             return "redirect:/profile/firm";
         }
         return "error";
-    }
+    }*/
 
 }

@@ -1,11 +1,8 @@
 package com.samsolutions.logistics.mainlogistics.services;
 
-import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
-import com.samsolutions.logistics.mainlogistics.entities.Contacts;
 import com.samsolutions.logistics.mainlogistics.entities.Firms;
 import com.samsolutions.logistics.mainlogistics.entities.Passwords;
-import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.PasswordsRepository;
 import com.samsolutions.logistics.mainlogistics.services.security.SaltHash;

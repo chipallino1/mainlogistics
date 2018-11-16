@@ -23,10 +23,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private FirmsRepository firmsRepository;
     private DataSource dataSource;
     private SaltHash saltHash;
-    @Value("${spring.queries.users-query}")
-    private String usersQuery;
-    @Value("${spring.queries.roles-query}")
-    private String rolesQuery;
+    @Value("${spring.queries.users-contacts-query}")
+    private String usersContactsQuery;
+    @Value("${spring.queries.roles-contacts-query}")
+    private String rolesContactsQuery;
+    @Value("${spring.queries.users-firms-query}")
+    private String usersFirmsQuery;
+    @Value("${spring.queries.roles-firms-query}")
+    private String rolesFirmsQuery;
     @Autowired
     public void setContactsRepository(ContactsRepository contactsRepository) {
         this.contactsRepository = contactsRepository;
@@ -54,8 +58,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.
                 jdbcAuthentication()
                 .dataSource(dataSource)
-                .usersByUsernameQuery(usersQuery)
-                .authoritiesByUsernameQuery(rolesQuery)
+                .usersByUsernameQuery(usersContactsQuery)
+                //.usersByUsernameQuery(usersFirmsQuery)
+                .authoritiesByUsernameQuery(rolesContactsQuery)
+                //.authoritiesByUsernameQuery(rolesFirmsQuery)
                 .passwordEncoder(saltHash);
     }
     @Override
