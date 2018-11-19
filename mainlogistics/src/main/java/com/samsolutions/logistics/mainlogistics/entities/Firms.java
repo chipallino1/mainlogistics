@@ -18,7 +18,6 @@ public class Firms {
     private Passwords passwordsByPasswordId;
     private Collection<Orders> ordersById;
     private Collection<Orders> ordersById_0;
-    private Collection<Users> usersById;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -155,15 +154,5 @@ public class Firms {
 
     public void setOrdersById_0(Collection<Orders> ordersById_0) {
         this.ordersById_0 = ordersById_0;
-    }
-
-
-    @OneToMany(mappedBy = "firmsByFirmId")
-    public Collection<Users> getUsersById() {
-        return usersById;
-    }
-
-    public void setUsersById(Collection<Users> usersById) {
-        this.usersById = usersById;
     }
 }

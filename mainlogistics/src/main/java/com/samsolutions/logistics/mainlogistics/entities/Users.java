@@ -1,17 +1,18 @@
 package com.samsolutions.logistics.mainlogistics.entities;
 
+import org.springframework.stereotype.Controller;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 public class Users {
     private Long id;
-    private Long contactId;
     private String enabled;
-    private Long firmId;
     private String role;
-    private Firms firmsByFirmId;
-    private Contacts contactsByContactId;
+    private String email;
+    private Passwords passwordsByPasswordId;
+    private Long passwordId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,16 +26,6 @@ public class Users {
     }
 
     @Basic
-    @Column(name = "contact_id", nullable = true)
-    public Long getContactId() {
-        return contactId;
-    }
-
-    public void setContactId(Long contactId) {
-        this.contactId = contactId;
-    }
-
-    @Basic
     @Column(name = "enabled", nullable = false, length = 10)
     public String getEnabled() {
         return enabled;
@@ -45,13 +36,13 @@ public class Users {
     }
 
     @Basic
-    @Column(name = "firm_id", nullable = true)
-    public Long getFirmId() {
-        return firmId;
+    @Column(name = "password_id")
+    public Long getPasswordId() {
+        return passwordId;
     }
 
-    public void setFirmId(Long firmId) {
-        this.firmId = firmId;
+    public void setPasswordId(Long passwordId) {
+        this.passwordId = passwordId;
     }
 
     @Basic
@@ -64,24 +55,24 @@ public class Users {
         this.role = role;
     }
 
+    @Basic
+    @Column(name = "email")
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @ManyToOne
-    @JoinColumn(name = "firm_id", referencedColumnName = "id", nullable = false,insertable = false,updatable = false)
-    public Firms getFirmsByFirmId() {
-        return firmsByFirmId;
+    @JoinColumn(name = "password_id", referencedColumnName = "id", nullable = false,insertable = false,updatable = false)
+    public Passwords getPasswordsByPasswordId() {
+        return passwordsByPasswordId;
     }
 
-    public void setFirmsByFirmId(Firms firmsByFirmId) {
-        this.firmsByFirmId = firmsByFirmId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "contact_id", referencedColumnName = "id", nullable = false,insertable = false,updatable = false)
-    public Contacts getContactsByContactId() {
-        return contactsByContactId;
-    }
-
-    public void setContactsByContactId(Contacts contactsByContactId) {
-        this.contactsByContactId = contactsByContactId;
+    public void setPasswordsByPasswordId(Passwords passwordsByPasswordId) {
+        this.passwordsByPasswordId = passwordsByPasswordId;
     }
 
     @Override
@@ -90,16 +81,16 @@ public class Users {
         if (o == null || getClass() != o.getClass()) return false;
         Users users = (Users) o;
         return Objects.equals(id, users.id) &&
-                Objects.equals(contactId, users.contactId) &&
+
                 Objects.equals(enabled, users.enabled) &&
-                Objects.equals(firmId, users.firmId) &&
+
                 Objects.equals(role, users.role);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, contactId, enabled, firmId, role);
+        return Objects.hash(id, enabled, role);
     }
 
 }

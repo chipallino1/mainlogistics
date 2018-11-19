@@ -108,9 +108,10 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
     @Override
     public void saveUser() {
         users = new Users();
+        users.setEmail(contacts.getEmail());
         users.setEnabled("true");
         users.setRole(contacts.getRole());
-        users.setContactId(contacts.getId());
+        users.setPasswordId(passwords.getId());
         usersRepository.save(users);
     }
 

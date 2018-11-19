@@ -11,6 +11,7 @@ public class Passwords {
     private String salt;
     private Collection<Contacts> contactsById;
     private Collection<Firms> firmsById;
+    private Collection<Users> usersById;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,5 +76,14 @@ public class Passwords {
 
     public void setFirmsById(Collection<Firms> firmsById) {
         this.firmsById = firmsById;
+    }
+
+    @OneToMany(mappedBy = "passwordsByPasswordId")
+    public Collection<Users> getUsersById() {
+        return usersById;
+    }
+
+    public void setUsersById(Collection<Users> usersById) {
+        this.usersById = usersById;
     }
 }

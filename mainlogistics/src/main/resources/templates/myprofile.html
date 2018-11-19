@@ -64,7 +64,7 @@
 
 <div class="row justify-content-center" id="profile" >
 
-<div class="col-md-6"  id="updateUser">
+<div class="col-md-6"  id="updateContact">
 
 <div class="card">
 <header class="card-header">
@@ -85,23 +85,23 @@
     <div class="col form-group">
       <label>First name </label>
         <small class="text-danger" th:if="${#fields.hasErrors('firstName')}" > Empty or too small</small>
-        <input type="text" class="form-control" placeholder="first name" disabled="disabled" th:field="*{firstName}">
+        <input type="text" class="form-control" placeholder="first name" id="firstNameContact" disabled="disabled" th:field="*{firstName}">
     </div> <!-- form-group end.// -->
     <div class="col form-group">
       <label>Last name</label>
         <small class="text-danger" th:if="${#fields.hasErrors('lastName')}" > Empty or too small</small>
-        <input type="text" class="form-control" placeholder="last name" disabled="disabled" th:field="*{lastName}">
+        <input type="text" class="form-control" placeholder="last name" id="lastNameContact" disabled="disabled" th:field="*{lastName}">
     </div> <!-- form-group end.// -->
   </div> <!-- form-row end.// -->
   <div class="form-group">
     <label>Email address</label>
       <small class="text-danger" th:if="${#fields.hasErrors('email')}" > It's not valid email</small>
-    <input type="email" class="form-control" placeholder="email address" disabled="disabled" th:field="*{email}">
+    <input type="email" class="form-control" placeholder="email address" id="emailContact" disabled="disabled" th:field="*{email}">
   </div> <!-- form-group end.// -->
   <div class="form-group">
     <label>Phone Num.</label>
       <small class="text-danger" th:if="${#fields.hasErrors('phoneNum')}" > It's not valid num</small>
-    <input type="number" class="form-control" placeholder="phone number" disabled="disabled" th:field="*{phoneNum}">
+    <input type="number" class="form-control" placeholder="phone number" id="phoneNumContact" disabled="disabled" th:field="*{phoneNum}">
   </div> <!-- form-group end.// -->
 
   <div class="form-group" id="firms" style="display: none;" th:if="*{firmName!=null}">
@@ -113,7 +113,7 @@
     </form>
   </div>
     <div class="form-group">
-        <button class="btn btn-primary btn-block"> Update  </button>
+        <button type="button" class="btn btn-primary btn-block" onclick="makeEnabled()"> Update  </button>
         <button type="submit" class="btn btn-primary btn-block"> Save  </button>
     </div> <!-- form-group// -->      
 
@@ -136,20 +136,20 @@
     <div class="col form-group">
       <label>Firm name</label>
         <small class="text-danger" th:if="${#fields.hasErrors('firmName')}"  > Empty or too small</small>
-        <input type="text" class="form-control" placeholder="firm name" disabled="disabled" th:field="*{firmName}">
+        <input type="text" class="form-control" placeholder="firm name" id="firmNameFirm" disabled="disabled" th:field="*{firmName}">
     </div> <!-- form-group end.// -->
   </div> <!-- form-row end.// -->
   <div class="form-group">
     <label>Email address</label>
       <small class="text-danger" th:if="${#fields.hasErrors('email')}" > It's not valid email</small>
-    <input type="email" class="form-control" placeholder="email address" disabled="disabled" th:field="*{email}">
+    <input type="email" class="form-control" placeholder="email address" id="emailFirm" disabled="disabled" th:field="*{email}">
   </div> <!-- form-group end.// -->
   <div class="form-group">
     <label>Description</label>
-    <input type="text" class="form-control" placeholder="description" disabled="disabled" th:field="*{description}">
+    <input type="text" class="form-control" placeholder="description" id="descriptionFirm" disabled="disabled" th:field="*{description}">
   </div> <!-- form-group end.// -->
     <div class="form-group">
-        <button class="btn btn-primary btn-block"> Update  </button>
+        <button type="button" class="btn btn-primary btn-block" onclick="makeEnabled()"> Update  </button>
     </div> <!-- form-group// -->
     <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block"> Save  </button>
@@ -204,9 +204,12 @@
     <script th:src="@{/js/autocomplete.js}"></script>
     <script th:inline="javascript">autocomplete(document.getElementById("myInput"),[[${firms}]] );</script>
      <script th:inline="javascript">whenRegistred([[${isRegistred}]]);</script>
-     <script th:inline="javascript">if([[${contactDTO}]].email==null)
-            updateFirm.style.display="";
+     <script th:inline="javascript">if([[${contactDTO}]].email==null) {
+         updateFirm.style.display = "";
+         updateContact.style.display = "none";
+     }
      </script>
+  <script th:src="@{/js/myprofile.js}"></script>
   
   
   </body>

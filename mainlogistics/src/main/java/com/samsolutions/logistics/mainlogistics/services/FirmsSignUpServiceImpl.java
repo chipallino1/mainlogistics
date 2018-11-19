@@ -6,6 +6,7 @@ import com.samsolutions.logistics.mainlogistics.entities.Passwords;
 import com.samsolutions.logistics.mainlogistics.entities.Users;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.PasswordsRepository;
+import com.samsolutions.logistics.mainlogistics.repositories.UsersRepository;
 import com.samsolutions.logistics.mainlogistics.services.security.SaltHash;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
     private Firms firms;
     private Passwords passwords;
     private Users users;
+    private UsersRepository usersRepository;
 
     @Autowired
     public void setFirmsRepository(FirmsRepository firmsRepository) {
@@ -34,6 +36,11 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
     public void setPasswordsRepository(PasswordsRepository passwordsRepository) {
         this.passwordsRepository = passwordsRepository;
     }
+    @Autowired
+    public void setUsersRepository(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
+    }
+
     @Override
     public void setFirmDTO(FirmDTO firmDTO) {
         this.firmDTO = firmDTO;
@@ -73,8 +80,11 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
 
     @Override
     public void saveUser() {
+        users = new Users();
+        users.setEmail(firms.getEmail());
         users.setEnabled("true");
         users.setRole("ROLE_FIRM_USER");
-        users.setFirmId(firms.getId());
+        users.setPasswordId(passwords.getId());
+        usersRepository.save(users);
     }
 }
