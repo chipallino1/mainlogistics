@@ -32,4 +32,9 @@ public class ContactsServiceImpl implements ContactsService {
         modelMapper.map(contact,contactDTO);
         return contactDTO;
     }
+
+    @Override
+    public void update(ContactDTO contactDTO) {
+
+    }
 }

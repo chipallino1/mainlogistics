@@ -8,4 +8,5 @@ import java.util.List;
 public interface ContactsService {
     List<Contacts> getAllContacts();
     ContactDTO getByEmail(String email);
+    void update(ContactDTO contactDTO);
 }

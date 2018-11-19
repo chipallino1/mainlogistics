@@ -60,4 +60,16 @@ public class ProfileController {
         return "error";
     }
 
+    @RequestMapping(path = "profile/update/{type}",method = RequestMethod.POST)
+    public String updateUser(@PathVariable("type") String userType,ContactDTO contactDTO,FirmDTO firmDTO){
+
+        if(userType.equals("contact")){
+
+        }else{
+
+        }
+
+        return "redirect:profile/";
+    }
+
 }

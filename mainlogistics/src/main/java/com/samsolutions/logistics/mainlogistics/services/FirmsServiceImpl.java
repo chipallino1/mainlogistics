@@ -51,4 +51,9 @@ public class FirmsServiceImpl implements FirmsService {
         modelMapper.map(firm,firmDTO);
         return firmDTO;
     }
+
+    @Override
+    public void update(FirmDTO firmDTO) {
+
+    }
 }
