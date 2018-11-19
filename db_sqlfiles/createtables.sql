@@ -64,7 +64,6 @@ create table logistic_db.passwords(
     pass_hash varchar(300),
     salt varchar(300)
 );
-
 create table logistic_db.users(
 	id int not null primary key auto_increment,
     enabled varchar(10) not null,

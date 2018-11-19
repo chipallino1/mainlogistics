@@ -2,6 +2,7 @@ package com.samsolutions.logistics.mainlogistics.entities;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 public class Contacts {
@@ -101,37 +102,25 @@ public class Contacts {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Contacts contacts = (Contacts) o;
-
-        if (id != null ? !id.equals(contacts.id) : contacts.id != null) return false;
-        if (firstName != null ? !firstName.equals(contacts.firstName) : contacts.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(contacts.lastName) : contacts.lastName != null) return false;
-        if (phoneNum != null ? !phoneNum.equals(contacts.phoneNum) : contacts.phoneNum != null) return false;
-        if (email != null ? !email.equals(contacts.email) : contacts.email != null) return false;
-        if (firmId != null ? !firmId.equals(contacts.firmId) : contacts.firmId != null) return false;
-        if (passwordsId != null ? !passwordsId.equals(contacts.passwordsId) : contacts.passwordsId != null)
-            return false;
-        if (role != null ? !role.equals(contacts.role) : contacts.role != null) return false;
-
-        return true;
+        return Objects.equals(id, contacts.id) &&
+                Objects.equals(firstName, contacts.firstName) &&
+                Objects.equals(lastName, contacts.lastName) &&
+                Objects.equals(phoneNum, contacts.phoneNum) &&
+                Objects.equals(email, contacts.email) &&
+                Objects.equals(firmId, contacts.firmId) &&
+                Objects.equals(passwordsId, contacts.passwordsId) &&
+                Objects.equals(role, contacts.role);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (phoneNum != null ? phoneNum.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (firmId != null ? firmId.hashCode() : 0);
-        result = 31 * result + (passwordsId != null ? passwordsId.hashCode() : 0);
-        result = 31 * result + (role != null ? role.hashCode() : 0);
-        return result;
+
+        return Objects.hash(id, firstName, lastName, phoneNum, email, firmId, passwordsId, role);
     }
 
     @ManyToOne
-    @JoinColumn(name = "firm_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "firm_id", referencedColumnName = "id",insertable = false,updatable = false)
     public Firms getFirmsByFirmId() {
         return firmsByFirmId;
     }
@@ -141,7 +130,7 @@ public class Contacts {
     }
 
     @ManyToOne
-    @JoinColumn(name = "passwords_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "passwords_id", referencedColumnName = "id", nullable = false,insertable = false,updatable = false)
     public Passwords getPasswordsByPasswordsId() {
         return passwordsByPasswordsId;
     }
