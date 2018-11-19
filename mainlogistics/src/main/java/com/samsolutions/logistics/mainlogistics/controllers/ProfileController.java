@@ -47,12 +47,12 @@ public class ProfileController {
         }else if(type.equals("firm")){
             if(email.equals("me")){
                 model.addAttribute("firmDTO",firmsService.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
-                model.addAttribute("contactDTO",new FirmDTO());
+                model.addAttribute("contactDTO",new ContactDTO());
                 model.addAttribute("profileName",email);
                 return "myprofile";
             }else{
                 model.addAttribute("firmDTO",firmsService.getByEmail(email));
-                model.addAttribute("contactDTO",new FirmDTO());
+                model.addAttribute("contactDTO",new ContactDTO());
                 model.addAttribute("profileName",email);
                 return "profile";
             }
