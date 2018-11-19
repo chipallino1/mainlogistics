@@ -23,9 +23,6 @@ alter table logistic_db.firms
 add foreign key (password_id) references logistic_db.passwords(Id);
 
 alter table logistic_db.users
-add foreign key (firm_id) references logistic_db.firms(Id);
-
-alter table logistic_db.users
-add foreign key (contact_id) references logistic_db.contacts(Id);
+add foreign key (password_id) references logistic_db.passwords(Id);
 
 
