@@ -16,6 +16,7 @@ public class RoutesInfo {
     private Routes routesByRouteId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Long getId() {
         return id;

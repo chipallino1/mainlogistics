@@ -17,6 +17,7 @@ public class Orders {
     private Firms firmsByConsumerId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Long getId() {
         return id;

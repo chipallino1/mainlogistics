@@ -3,6 +3,7 @@ package com.samsolutions.logistics.mainlogistics.services;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import com.samsolutions.logistics.mainlogistics.entities.Firms;
 import com.samsolutions.logistics.mainlogistics.entities.Passwords;
+import com.samsolutions.logistics.mainlogistics.entities.Users;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.PasswordsRepository;
 import com.samsolutions.logistics.mainlogistics.services.security.SaltHash;
@@ -19,6 +20,7 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
     private FirmDTO firmDTO;
     private Firms firms;
     private Passwords passwords;
+    private Users users;
 
     @Autowired
     public void setFirmsRepository(FirmsRepository firmsRepository) {
@@ -67,5 +69,12 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
         firms.setPasswordId(passwords.getId());
         firmsRepository.save(firms);
 
+    }
+
+    @Override
+    public void saveUser() {
+        users.setEnabled("true");
+        users.setRole("ROLE_FIRM_USER");
+        users.setFirmId(firms.getId());
     }
 }

@@ -21,6 +21,7 @@ public class Firms {
     private Collection<Users> usersById;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Long getId() {
         return id;

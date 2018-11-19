@@ -9,4 +9,5 @@ public interface ContactsSignUpService {
     void setContactDTO(ContactDTO contactDTO);
     void savePassword();
     void save();
+    void saveUser();
 }

@@ -8,4 +8,5 @@ public interface FirmsSignUpService {
     void setFirmDTO(FirmDTO firmDTO);
     void savePassword();
     void save();
+    void saveUser();
 }

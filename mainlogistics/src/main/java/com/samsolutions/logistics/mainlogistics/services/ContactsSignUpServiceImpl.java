@@ -4,9 +4,11 @@ import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.entities.Contacts;
 import com.samsolutions.logistics.mainlogistics.entities.Firms;
 import com.samsolutions.logistics.mainlogistics.entities.Passwords;
+import com.samsolutions.logistics.mainlogistics.entities.Users;
 import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.PasswordsRepository;
+import com.samsolutions.logistics.mainlogistics.repositories.UsersRepository;
 import com.samsolutions.logistics.mainlogistics.services.security.SaltHash;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +22,12 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
     private ContactsRepository contactsRepository;
     private FirmsRepository firmsRepository;
     private PasswordsRepository passwordsRepository;
+    private UsersRepository usersRepository;
     private SaltHash saltHash;
     private ContactDTO contactDTO;
     private Contacts contacts;
     private Passwords passwords;
+    private Users users;
 
     @Autowired
     public void setContactsRepository(ContactsRepository contactsRepository) {
@@ -32,6 +36,11 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
     @Autowired
     public void setFirmsRepository(FirmsRepository firmsRepository) {
         this.firmsRepository = firmsRepository;
+    }
+
+    @Autowired
+    public void setUsersRepository(UsersRepository usersRepository){
+        this.usersRepository=usersRepository;
     }
 
     @Autowired
@@ -58,6 +67,14 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
 
     public Passwords getPasswords() {
         return passwords;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
     @Override
@@ -87,4 +104,15 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
         contactsRepository.save(contacts);
 
     }
+
+    @Override
+    public void saveUser() {
+        users = new Users();
+        users.setEnabled("true");
+        users.setRole(contacts.getRole());
+        users.setContactId(contacts.getId());
+        usersRepository.save(users);
+    }
+
+
 }

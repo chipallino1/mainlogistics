@@ -46,7 +46,7 @@ public class AuthenticationController {
     }
 
     @RequestMapping(path = "auth",method = RequestMethod.GET)
-    public String getAuthenticate(Model model,@ModelAttribute("isRegistred") String isRegistred){
+    public String getAuthenticate(Model model,@ModelAttribute("registred") String isRegistred){
 
         /*if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0].toString().equals("ROLE_USER")){
             model.addAttribute("isRegistred",true);
@@ -55,8 +55,10 @@ public class AuthenticationController {
         model.addAttribute("firmDTO",new FirmDTO());
         model.addAttribute("userDTO",new UserDTO());
         model.addAttribute("firms",null);
-        if(!isRegistred.equals("")){
-            model.addAttribute("isRegistred",true);
+        if(model.containsAttribute("registred")) {
+            if (!model.asMap().get("registred").equals("")) {
+                model.addAttribute("isRegistred", true);
+            }
         }
 
         return "authentication";
@@ -84,7 +86,8 @@ public class AuthenticationController {
             contactsSignUpService.setContactDTO(contactDTO);
             contactsSignUpService.savePassword();
             contactsSignUpService.save();
-            redirectAttributes.addFlashAttribute("isRegistred","true");
+            contactsSignUpService.saveUser();
+            redirectAttributes.addFlashAttribute("registred","true");
 
             return "redirect:/auth";
         }else{
@@ -96,6 +99,7 @@ public class AuthenticationController {
             firmsSignUpService.setFirmDTO(firmDTO);
             firmsSignUpService.savePassword();
             firmsSignUpService.save();
+            firmsSignUpService.saveUser();
 
             redirectAttributes.addFlashAttribute("isRegistred","true");
             return "redirect:/auth";
