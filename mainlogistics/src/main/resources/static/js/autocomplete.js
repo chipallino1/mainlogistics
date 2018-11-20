@@ -18,17 +18,19 @@ var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla"
 "Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad &amp; Tobago","Tunisia","Turkey","Turkmenistan","Turks &amp; Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates",
 "United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
 var curr;
+var path;
 function autocomplete(inp, arr,action) {
   /*the autocomplete function takes two arguments,
   the text field element and an array of possible autocompleted values:*/
 
   var currentFocus;
+  path=action;
   /*execute a function when someone writes in the text field:*/
   inp.addEventListener("input", function(e) {
       var  val = this.value;
       curr=this;
       var xhr = new XMLHttpRequest();
-      xhr.open("GET", action+val+'/readall', true);
+      xhr.open("GET", path+val+'/readall', true);
 
       //Передает правильный заголовок в запросе
       xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

@@ -10,4 +10,5 @@ public interface ContactsService {
     ContactDTO getByEmail(String email);
     void update(String email,ContactDTO contactDTO);
     void map(Object src,Object dest);
+    List<ContactDTO> getAllByName(String email);
 }

@@ -11,8 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class ProfileController {
@@ -33,6 +35,7 @@ public class ProfileController {
     public String profilePage(@PathVariable("type") String type,@PathVariable("email") String email, Model model){
 
         String profileName = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("contact",new ContactDTO());
         if(type.equals("contact")){
             if(email.equals("me")){
 
@@ -81,7 +84,12 @@ public class ProfileController {
                 return "redirect:/logout";
         }
 
+    }
 
+    @RequestMapping(path = "/contacts/{email}/readall",method = RequestMethod.GET)
+    public @ResponseBody
+    List<ContactDTO> readAllEmailsLike(@PathVariable(value = "email")String email){
+        return contactsService.getAllByName(email);
     }
 
 }
