@@ -187,7 +187,7 @@
 
     <script th:src="@{/js/enter.js}"></script>
     <script th:src="@{/js/autocomplete.js}"></script>
-    <script th:inline="javascript">autocomplete(document.getElementById("myInput"),[[${firms}]] );</script>
+    <script th:inline="javascript">autocomplete(document.getElementById("myInput"),[[${firms}]],"/firms/" );</script>
      <script th:inline="javascript">whenRegistred([[${isRegistred}]]);</script>
      <script th:inline="javascript">if([[${contactDTO}]].email==null) {
          updateFirm.style.display = "";

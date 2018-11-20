@@ -108,7 +108,7 @@
     <label>Choose firm</label>
    <form autocomplete="off">
     <div class="autocomplete" style="width:150px;">
-     <input id="myInput" class="form-control" type="text" name="myCountry" placeholder="Country" disabled="disabled" th:field="*{firmName}">
+     <input class="form-control" type="text" name="myCountry" placeholder="Country" disabled="disabled" th:field="*{firmName}">
     </div>
     </form>
   </div>
@@ -154,6 +154,20 @@
     </div> <!-- form-group// -->
     </div>  
     </form>
+    <form th:object="${contact}" th:action="/profile/firm/add/contact">
+        <div class="form-group" id="contacts" style="display: none;">
+            <label>Choose contact</label>
+            <form autocomplete="off">
+                <div class="autocomplete" style="width:150px;">
+                    <input id="myInput" class="form-control" type="text" name="myCountry" placeholder="contact email" th:field="*{email}">
+                </div>
+            </form>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block" id="submitAddContact"> Add contact  </button>
+        </div> <!-- form-group// -->
+    </form>
+
 </article> <!-- card-body end .// -->
 </div> <!-- card.// -->
 </div> <!-- col.//-->
@@ -208,6 +222,8 @@
      }
      </script>
   <script th:src="@{/js/myprofile.js}"></script>
+     <script th:src="@{/js/autocomplete.js}"></script>
+     <script th:inline="javascript">autocomplete(document.getElementById("myInput"),[[${contacts}]],"/contacts/" );</script>
   
   
   </body>
