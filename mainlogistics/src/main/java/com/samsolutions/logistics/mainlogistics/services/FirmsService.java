@@ -15,4 +15,5 @@ public interface FirmsService {
     FirmDTO getByEmail(String email);
     void update(String email, FirmDTO firmDTO);
     void map(Object src,Object dest);
+    String addContact(ContactDTO contactDTO);
 }

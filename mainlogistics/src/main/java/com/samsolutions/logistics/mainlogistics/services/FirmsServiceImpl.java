@@ -1,12 +1,16 @@
 package com.samsolutions.logistics.mainlogistics.services;
 
+import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
+import com.samsolutions.logistics.mainlogistics.entities.Contacts;
 import com.samsolutions.logistics.mainlogistics.entities.Firms;
 import com.samsolutions.logistics.mainlogistics.entities.Users;
+import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.UsersRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +21,7 @@ public class FirmsServiceImpl implements FirmsService {
 
     private FirmsRepository firmsRepository;
     private UsersRepository usersRepository;
+    private ContactsRepository contactsRepository;
 
     @Autowired
     public void setFirmsRepository(FirmsRepository firmsRepository) {
@@ -26,6 +31,9 @@ public class FirmsServiceImpl implements FirmsService {
     public void setUsersRepository(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
+
+    @Autowired
+    public void setContactsRepository(ContactsRepository contactsRepository){this.contactsRepository=contactsRepository;}
 
 
 
@@ -74,5 +82,18 @@ public class FirmsServiceImpl implements FirmsService {
     public void map(Object src, Object dest) {
         ModelMapper modelMapper=new ModelMapper();
         modelMapper.map(src,dest);
+    }
+
+    @Override
+    public String addContact(ContactDTO contactDTO) {
+        Contacts contacts = contactsRepository.findByEmail(contactDTO.getEmail());
+        Firms firms = firmsRepository.findAllByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).get(0);
+        if(firms.getId()!=contacts.getFirmId()){
+            return "Can not add this contact, cause this contact bind to another firm.";
+        }
+        contacts.setStatus("ADDED");
+        contactsRepository.save(contacts);
+        return "Added";
+
     }
 }

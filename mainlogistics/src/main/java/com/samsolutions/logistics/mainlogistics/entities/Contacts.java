@@ -14,6 +14,7 @@ public class Contacts {
     private Long firmId;
     private Long passwordsId;
     private String role;
+    private String status;
     private Firms firmsByFirmId;
     private Passwords passwordsByPasswordsId;
 
@@ -96,6 +97,16 @@ public class Contacts {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Basic
+    @Column(name = "status", nullable = false, length = 45)
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

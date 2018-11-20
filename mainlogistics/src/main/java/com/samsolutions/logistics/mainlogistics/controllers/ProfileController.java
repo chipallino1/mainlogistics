@@ -92,4 +92,10 @@ public class ProfileController {
         return contactsService.getAllByName(email);
     }
 
+    @RequestMapping(path = "/profile/firm/add/contact",method = RequestMethod.POST)
+    public String addContactToFirm(ContactDTO contact){
+        firmsService
+        return "redirect:/profile/firm/me";
+    }
+
 }
