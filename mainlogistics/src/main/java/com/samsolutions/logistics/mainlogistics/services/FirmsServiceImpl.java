@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class FirmsServiceImpl implements FirmsService {
 
-    FirmsRepository firmsRepository;
+    private FirmsRepository firmsRepository;
 
     @Autowired
     public void setFirmsRepository(FirmsRepository firmsRepository) {
@@ -47,13 +47,18 @@ public class FirmsServiceImpl implements FirmsService {
     public FirmDTO getByEmail(String email) {
         FirmDTO firmDTO=new FirmDTO();
         Firms firm = firmsRepository.findAllByEmail(email).get(0);
-        ModelMapper modelMapper=new ModelMapper();
-        modelMapper.map(firm,firmDTO);
+        map(firm,firmDTO);
         return firmDTO;
     }
 
     @Override
     public void update(FirmDTO firmDTO) {
 
+    }
+
+    @Override
+    public void map(Object src, Object dest) {
+        ModelMapper modelMapper=new ModelMapper();
+        modelMapper.map(src,dest);
     }
 }

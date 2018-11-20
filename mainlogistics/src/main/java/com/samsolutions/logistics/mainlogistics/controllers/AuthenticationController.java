@@ -3,6 +3,8 @@ package com.samsolutions.logistics.mainlogistics.controllers;
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import com.samsolutions.logistics.mainlogistics.dto.UserDTO;
+import com.samsolutions.logistics.mainlogistics.entities.Contacts;
+import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
 import com.samsolutions.logistics.mainlogistics.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
@@ -41,6 +43,7 @@ public class AuthenticationController {
     public void setUserLogInService(UserLogInService userLogInService) {
         this.userLogInService = userLogInService;
     }
+
 
     @RequestMapping(path = {"/","index"},method = RequestMethod.GET)
     public String getHome(Model model){

@@ -28,8 +28,7 @@ public class ContactsServiceImpl implements ContactsService {
     public ContactDTO getByEmail(String email) {
         Contacts contact = contactsRepository.findByEmail(email);
         ContactDTO contactDTO=new ContactDTO();
-        ModelMapper modelMapper=new ModelMapper();
-        modelMapper.map(contact,contactDTO);
+        map(contact,contactDTO);
         return contactDTO;
     }
 
@@ -37,4 +36,11 @@ public class ContactsServiceImpl implements ContactsService {
     public void update(ContactDTO contactDTO) {
 
     }
+
+    @Override
+    public void map(Object src, Object dest) {
+        ModelMapper modelMapper=new ModelMapper();
+        modelMapper.map(src,dest);
+    }
+
 }

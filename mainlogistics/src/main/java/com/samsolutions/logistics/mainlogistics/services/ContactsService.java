@@ -9,4 +9,5 @@ public interface ContactsService {
     List<Contacts> getAllContacts();
     ContactDTO getByEmail(String email);
     void update(ContactDTO contactDTO);
+    void map(Object src,Object dest);
 }
