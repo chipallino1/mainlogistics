@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class FirmsServiceImpl implements FirmsService {
@@ -88,7 +89,7 @@ public class FirmsServiceImpl implements FirmsService {
     public String addContact(ContactDTO contactDTO) {
         Contacts contacts = contactsRepository.findByEmail(contactDTO.getEmail());
         Firms firms = firmsRepository.findAllByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).get(0);
-        if(firms.getId()!=contacts.getFirmId()){
+        if(!Objects.equals(firms.getId(), contacts.getFirmId())){
             return "Can not add this contact, cause this contact bind to another firm.";
         }
         contacts.setStatus("ADDED");

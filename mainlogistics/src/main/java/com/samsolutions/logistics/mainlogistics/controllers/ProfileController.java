@@ -94,7 +94,7 @@ public class ProfileController {
 
     @RequestMapping(path = "/profile/firm/add/contact",method = RequestMethod.POST)
     public String addContactToFirm(ContactDTO contact){
-        firmsService
+        firmsService.addContact(contact);
         return "redirect:/profile/firm/me";
     }
 

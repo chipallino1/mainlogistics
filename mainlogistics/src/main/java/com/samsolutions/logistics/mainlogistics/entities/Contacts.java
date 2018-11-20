@@ -100,7 +100,7 @@ public class Contacts {
     }
 
     @Basic
-    @Column(name = "status", nullable = false, length = 45)
+    @Column(name = "status",  length = 45)
     public String getStatus() {
         return status;
     }
