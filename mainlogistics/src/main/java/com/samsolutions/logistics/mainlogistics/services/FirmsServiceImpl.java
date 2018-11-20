@@ -2,7 +2,9 @@ package com.samsolutions.logistics.mainlogistics.services;
 
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import com.samsolutions.logistics.mainlogistics.entities.Firms;
+import com.samsolutions.logistics.mainlogistics.entities.Users;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
+import com.samsolutions.logistics.mainlogistics.repositories.UsersRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +16,18 @@ import java.util.List;
 public class FirmsServiceImpl implements FirmsService {
 
     private FirmsRepository firmsRepository;
+    private UsersRepository usersRepository;
 
     @Autowired
     public void setFirmsRepository(FirmsRepository firmsRepository) {
         this.firmsRepository = firmsRepository;
     }
+    @Autowired
+    public void setUsersRepository(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
+    }
+
+
 
     @Override
     public List<FirmDTO> getAll() {
@@ -52,8 +61,13 @@ public class FirmsServiceImpl implements FirmsService {
     }
 
     @Override
-    public void update(FirmDTO firmDTO) {
-
+    public void update(String email,FirmDTO firmDTO) {
+        Firms firms = firmsRepository.findAllByEmail(email).get(0);
+        Users users = usersRepository.findByEmail(email);
+        users.setEmail(firmDTO.getEmail());
+        map(firmDTO,firms);
+        usersRepository.save(users);
+        firmsRepository.save(firms);
     }
 
     @Override

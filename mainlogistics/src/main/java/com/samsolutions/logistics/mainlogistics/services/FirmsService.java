@@ -13,6 +13,6 @@ public interface FirmsService {
     List<FirmDTO> getAll();
     List<FirmDTO> getAllByName(String firmName);
     FirmDTO getByEmail(String email);
-    void update(FirmDTO firmDTO);
+    void update(String email, FirmDTO firmDTO);
     void map(Object src,Object dest);
 }

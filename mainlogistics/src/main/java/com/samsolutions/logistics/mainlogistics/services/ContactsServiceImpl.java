@@ -2,7 +2,9 @@ package com.samsolutions.logistics.mainlogistics.services;
 
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.entities.Contacts;
+import com.samsolutions.logistics.mainlogistics.entities.Users;
 import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
+import com.samsolutions.logistics.mainlogistics.repositories.UsersRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +15,15 @@ import java.util.List;
 public class ContactsServiceImpl implements ContactsService {
 
     private ContactsRepository contactsRepository;
+    private UsersRepository usersRepository;
 
     @Autowired
     public void setContactsRepository(ContactsRepository contactsRepository) {
         this.contactsRepository = contactsRepository;
+    }
+    @Autowired
+    public void setUsersRepository(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
     }
 
     @Override
@@ -33,8 +40,13 @@ public class ContactsServiceImpl implements ContactsService {
     }
 
     @Override
-    public void update(ContactDTO contactDTO) {
-
+    public void update(String email,ContactDTO contactDTO) {
+        Contacts contacts = contactsRepository.findByEmail(email);
+        Users users = usersRepository.findByEmail(email);
+        users.setEmail(contactDTO.getEmail());
+        map(contactDTO,contacts);
+        usersRepository.save(users);
+        contactsRepository.save(contacts);
     }
 
     @Override

@@ -3,7 +3,7 @@ function makeEnabled(){
 	lastNameContact.disabled="";
 	emailContact.disabled="";
 	phoneNumContact.disabled="";
-	firmNameContact.disabled="";
+	//myInput.disabled="";
 	firmNameFirm.disabled="";
 	emailFirm.disabled="";
 	descriptionFirm.disabled="";
@@ -13,12 +13,8 @@ function makeDisabled() {
 	lastNameContact.disabled="disabled";
 	emailContact.disabled="disabled";
 	phoneNumContact.disabled="disabled";
-	firmNameContact.disabled="disabled";
+	myInput.disabled="disabled";
 	firmNameFirm.disabled="disabled";
 	emailFirm.disabled="disabled";
 	descriptionFirm.disabled="disabled";
-}
-function sendUpdated() {
-	makeDisabled();
-	submitForm.submit();
 }

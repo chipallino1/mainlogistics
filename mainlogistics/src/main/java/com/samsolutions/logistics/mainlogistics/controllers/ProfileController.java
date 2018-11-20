@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.validation.Valid;
 
 @Controller
 public class ProfileController {
@@ -31,9 +32,10 @@ public class ProfileController {
     @RequestMapping(path = "profile/{type}/{email}",method = RequestMethod.GET)
     public String profilePage(@PathVariable("type") String type,@PathVariable("email") String email, Model model){
 
+        String profileName = SecurityContextHolder.getContext().getAuthentication().getName();
         if(type.equals("contact")){
             if(email.equals("me")){
-                String profileName = SecurityContextHolder.getContext().getAuthentication().getName();
+
                 model.addAttribute("contactDTO",contactsService.getByEmail(profileName));
                 model.addAttribute("firmDTO",new FirmDTO());
                 model.addAttribute("profileName",profileName);
@@ -48,7 +50,7 @@ public class ProfileController {
             if(email.equals("me")){
                 model.addAttribute("firmDTO",firmsService.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
                 model.addAttribute("contactDTO",new ContactDTO());
-                model.addAttribute("profileName",email);
+                model.addAttribute("profileName",profileName);
                 return "myprofile";
             }else{
                 model.addAttribute("firmDTO",firmsService.getByEmail(email));
@@ -60,16 +62,26 @@ public class ProfileController {
         return "error";
     }
 
-    @RequestMapping(path = "profile/update/{type}",method = RequestMethod.POST)
+    @RequestMapping(path = "profile/{type}/update",method = RequestMethod.POST)
     public String updateUser(@PathVariable("type") String userType,ContactDTO contactDTO,FirmDTO firmDTO){
 
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
         if(userType.equals("contact")){
-
+            contactsService.update(email,contactDTO);
+            if(contactDTO.getEmail().equals(email))
+                return "redirect:/profile/contact/me";
+            else
+                return "redirect:/logout";
         }else{
-
+            firmsService.update(email,firmDTO);
+            if(firmDTO.getEmail().equals(email))
+                return "redirect:/profile/firm/me";
+            else
+                return "redirect:/logout";
         }
 
-        return "redirect:profile/";
+
     }
 
 }

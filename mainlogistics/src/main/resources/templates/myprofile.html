@@ -71,7 +71,7 @@
   <h4 class="card-title mt-2" th:utext="${profileName}"></h4>
 </header>
 <article class="card-body">
-<form th:action="@{/profile/contact/update}" method="post" th:object="${contactDTO}">
+<form th:action="@{/profile/contact/update}" method="post" th:object="${contactDTO}" id="contactForm">
   <div class="row justify-content-center">
       <!-- Material inline 1 -->
     <!-- Default inline 1-->
@@ -114,7 +114,7 @@
   </div>
     <div class="form-group">
         <button type="button" class="btn btn-primary btn-block" onclick="makeEnabled()"> Update  </button>
-        <button type="button" class="btn btn-primary btn-block" id="submitForm" onclick="sendUpdated()"> Save  </button>
+        <button type="submit" class="btn btn-primary btn-block" id="submitFormContact"> Save  </button>
     </div> <!-- form-group// -->      
 
     </div>                                 
@@ -130,7 +130,7 @@
         <h4 class="card-title mt-2" th:utext="${profileName}"></h4>
     </header>
 <article class="card-body">
-<form th:action="@{/profile/firm/update}" method="post" th:object="${firmDTO}">
+<form th:action="@{/profile/firm/update}" method="post" th:object="${firmDTO}" id="firmForm">
 <div class="container">
   <div class="form-row">
     <div class="col form-group">
@@ -150,9 +150,7 @@
   </div> <!-- form-group end.// -->
     <div class="form-group">
         <button type="button" class="btn btn-primary btn-block" onclick="makeEnabled()"> Update  </button>
-    </div> <!-- form-group// -->
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block"> Save  </button>
+        <button type="submit" class="btn btn-primary btn-block" id="submitFormFirm"> Save  </button>
     </div> <!-- form-group// -->
     </div>  
     </form>
