@@ -126,7 +126,7 @@ function getHelp(type)
 }
 
 
-function getResults() {
+function getResults(arr) {
 	deleteNodes('resultCol');
 	let result=document.getElementById('resultCol');
 	result.appendChild(createHead('Result'));
@@ -134,15 +134,10 @@ function getResults() {
 	result.appendChild(createParag('Showing all results matching'));
 	result.appendChild(createDivPad());
 	result.appendChild(createResultsDiv());
-	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
-	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
-	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
-	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
-	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
-	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
-	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
-	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
-	addResult(null,'Product 1','Its new product taht help me to test this page.',300);
+	for(let i=0;i<arr.length;i++){
+		addResult(null,arr[i].firstName+' '+arr[i].lastName,arr[i].email+' '+arr[i].phoneNum,'');
+	}
+
 }
 
 
@@ -233,3 +228,16 @@ function addResult(imgSrc,product,description,price) {
 
 }
 
+function getContacts(firmName) {
+	let xhr = new XMLHttpRequest();
+    xhr.open("GET", '/firm/contacts/readall/'+firmName, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+          arr=[];
+          arr=JSON.parse(xhr.responseText);
+          getResults(arr);
+        }
+      }
+      xhr.send(null); 
+}

@@ -18,3 +18,7 @@ function makeDisabled() {
 	emailFirm.disabled="disabled";
 	descriptionFirm.disabled="disabled";
 }
+function showContacts() {
+	getContacts.setAttribute('action','/profile/'+firmNameFirm.value+'/contactslist');
+	getContacts.submit();
+}

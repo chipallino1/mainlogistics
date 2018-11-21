@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -96,5 +97,23 @@ public class FirmsServiceImpl implements FirmsService {
         contactsRepository.save(contacts);
         return "Added";
 
+    }
+
+    @Override
+    public List<ContactDTO> getContacts(String firmName) {
+
+        List<ContactDTO> contactsDTOList = new ArrayList<>();
+        Firms firm=firmsRepository.findByFirmName(firmName);
+        Collection<Contacts> contactsCollection = firm.getContactsById();
+        Contacts[] contacts = new Contacts[contactsCollection.size()];
+        ContactDTO[] contactsDTO = new ContactDTO[contactsCollection.size()];
+        contactsCollection.toArray(contacts);
+        for(int i=0;i<contacts.length;i++){
+            contactsDTO[i]=new ContactDTO();
+            map(contacts[i],contactsDTO[i]);
+            contactsDTOList.add(contactsDTO[i]);
+        }
+
+        return  contactsDTOList;
     }
 }

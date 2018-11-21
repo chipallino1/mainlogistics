@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -97,5 +94,18 @@ public class ProfileController {
         firmsService.addContact(contact);
         return "redirect:/profile/firm/me";
     }
+
+    @RequestMapping(path = "/profile/{firmName}/contactslist",method = RequestMethod.GET)
+    public String showContactsList(@PathVariable(name = "firmName") String firmName,Model model){
+        model.addAttribute("firmName",firmName);
+        return "contactsList";
+    }
+
+    @RequestMapping(path = "/firm/contacts/readall/{firmName}",method = RequestMethod.GET)
+        public @ResponseBody
+        List<ContactDTO> readAllContactsFirm(@PathVariable(name = "firmName")String firmName){
+            return firmsService.getContacts(firmName);
+        }
+
 
 }
