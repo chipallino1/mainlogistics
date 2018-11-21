@@ -19,15 +19,22 @@ var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla"
 "United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
 var curr;
 var path;
+var inpGlobal;
+
 function autocomplete(inp, arr,action) {
   /*the autocomplete function takes two arguments,
   the text field element and an array of possible autocompleted values:*/
 
   var currentFocus;
   path=action;
+  inpGlobal=inp;
+ 
   /*execute a function when someone writes in the text field:*/
   inp.addEventListener("input", function(e) {
       var  val = this.value;
+      if(val==""){
+        return;
+      }
       curr=this;
       var xhr = new XMLHttpRequest();
       xhr.open("GET", path+val+'/readall', true);
@@ -54,23 +61,13 @@ function autocomplete(inp, arr,action) {
       /*for each item in the array...*/
       for (i = 0; i < arr.length; i++) {
         /*check if the item starts with the same letters as the text field value:*/
-        if (arr[i].firmName.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-          /*create a DIV element for each matching element:*/
-          b = document.createElement("DIV");
-          /*make the matching letters bold:*/
-          b.innerHTML = "<strong>" + arr[i].firmName.substr(0, val.length) + "</strong>";
-          b.innerHTML += arr[i].firmName.substr(val.length);
-          /*insert a input field that will hold the current array item's value:*/
-          b.innerHTML += "<input type='hidden' value='" + arr[i].firmName + "'>";
-          /*execute a function when someone clicks on the item value (DIV element):*/
-              b.addEventListener("click", function(e) {
-              /*insert the value for the autocomplete text field:*/
-              inp.value = this.getElementsByTagName("input")[0].value;
-              /*close the list of autocompleted values,
-              (or any other open lists of autocompleted values:*/
-              closeAllLists();
-          });
-          a.appendChild(b);
+        alert(arr[i].firmType);
+        if(arr[i].firmType!=undefined){
+          addDivRes(arr[i].firmName,a,val,inpGlobal,closeAllLists);
+        }
+        else{
+          alert(arr[i].email);
+          addDivRes(arr[i].email,a,val,inpGlobal,closeAllLists);
         }
       }
         }
@@ -134,4 +131,24 @@ function autocomplete(inp, arr,action) {
 document.addEventListener("click", function (e) {
     closeAllLists(e.target);
 });
+}
+function addDivRes(string,a,val,inp,closeAllLists){
+  if (string.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          /*create a DIV element for each matching element:*/
+          b = document.createElement("DIV");
+          /*make the matching letters bold:*/
+          b.innerHTML = "<strong>" + string.substr(0, val.length) + "</strong>";
+          b.innerHTML += string.substr(val.length);
+          /*insert a input field that will hold the current array item's value:*/
+          b.innerHTML += "<input type='hidden' value='" + string + "'>";
+          /*execute a function when someone clicks on the item value (DIV element):*/
+              b.addEventListener("click", function(e) {
+              /*insert the value for the autocomplete text field:*/
+              inp.value = this.getElementsByTagName("input")[0].value;
+              /*close the list of autocompleted values,
+              (or any other open lists of autocompleted values:*/
+              closeAllLists();
+          });
+          a.appendChild(b);
+        }
 }
