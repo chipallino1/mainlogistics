@@ -135,7 +135,7 @@ function getResults(arr) {
 	result.appendChild(createDivPad());
 	result.appendChild(createResultsDiv());
 	for(let i=0;i<arr.length;i++){
-		addResult(null,arr[i].firstName+' '+arr[i].lastName,arr[i].email+' '+arr[i].phoneNum,'');
+		addResult(null,arr[i].firstName+' '+arr[i].lastName,arr[i].email,'');
 	}
 
 }
@@ -197,11 +197,11 @@ function addResult(imgSrc,product,description,price) {
 	td1.className='number text-center';
 	td1.appendChild(document.createTextNode(document.getElementById('resultsCont').childNodes.length+1));
 
-	let td2=document.createElement('td');
-	td2.className='image';
-	let img=document.createElement('img');
-	img.src='https://lorempixel.com/400/300/nature/1';
-	td2.appendChild(img);
+	//let td2=document.createElement('td');
+	//td2.className='image';
+	//let img=document.createElement('img');
+	//img.src='https://lorempixel.com/400/300/nature/1';
+	//td2.appendChild(img);
 
 	let td3=document.createElement('td');
 	td3.className='product';
@@ -210,18 +210,23 @@ function addResult(imgSrc,product,description,price) {
 	let br=document.createElement('br');
 	td3.appendChild(strong);
 	td3.appendChild(br);
+	td3.name='email';
 	td3.appendChild(document.createTextNode(description));
+	let form=document.createElement('form');
+	td3.appendChild(form);
 
 	let td5=document.createElement('td');
 	td5.className='price text-right';
-	td5.appendChild(document.createTextNode('$'+price));
+	td5.appendChild(document.createTextNode(''+price));
 
 
  	let tr=document.createElement('tr');
  	tr.appendChild(td1);
- 	tr.appendChild(td2);
+ 	//tr.appendChild(td2);
  	tr.appendChild(td3);
  	tr.appendChild(td5);
+ 	tr.setAttribute('email',description);
+ 	tr.addEventListener('click',getCurrenctContactPage);
 
  	let resultsCont=document.getElementById('resultsCont');
  	resultsCont.appendChild(tr);
@@ -240,4 +245,21 @@ function getContacts(firmName) {
         }
       }
       xhr.send(null); 
+}
+function getCurrenctContactPage(e) {
+	console.log(e.target.parentNode);
+	let elem=e.target.parentNode;
+	if(elem.getAttribute('email')!=null){
+		console.log(elem.childNodes[1].childNodes[3]);
+		elem.childNodes[1].childNodes[3].action='/profile/contact/'+elem.getAttribute('email');
+		elem.childNodes[1].childNodes[3].submit();
+	}
+	else{
+		elem=elem.parentNode;
+		console.log(elem.childNodes[1].childNodes[3]);
+		elem.childNodes[1].childNodes[3].action='/profile/contact/'+elem.getAttribute('email');
+		elem.childNodes[1].childNodes[3].submit();
+
+	}
+	
 }
