@@ -21,4 +21,5 @@ function makeDisabled() {
 function showContacts() {
 	//getContacts.setAttribute('action','/profile/'+firmNameFirm.value+'/contactslist');
 	//getContacts.submit();
+	
 }

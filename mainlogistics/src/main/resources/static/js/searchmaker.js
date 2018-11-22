@@ -129,9 +129,9 @@ function getHelp(type)
 function getResults(arr) {
 	deleteNodes('resultCol');
 	let result=document.getElementById('resultCol');
-	result.appendChild(createHead('Result'));
+	result.appendChild(createHead('Contacts list'));
 	result.appendChild(document.createElement('hr'));
-	result.appendChild(createParag('Showing all results matching'));
+	result.appendChild(createParag('You can see each person who works on you.'));
 	result.appendChild(createDivPad());
 	result.appendChild(createResultsDiv());
 	for(let i=0;i<arr.length;i++){
