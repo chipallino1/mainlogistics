@@ -19,6 +19,6 @@ function makeDisabled() {
 	descriptionFirm.disabled="disabled";
 }
 function showContacts() {
-	getContacts.setAttribute('action','/profile/'+firmNameFirm.value+'/contactslist');
-	getContacts.submit();
+	//getContacts.setAttribute('action','/profile/'+firmNameFirm.value+'/contactslist');
+	//getContacts.submit();
 }
