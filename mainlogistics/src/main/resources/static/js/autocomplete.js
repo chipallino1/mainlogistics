@@ -61,12 +61,11 @@ function autocomplete(inp, arr,action) {
       /*for each item in the array...*/
       for (i = 0; i < arr.length; i++) {
         /*check if the item starts with the same letters as the text field value:*/
-        alert(arr[i].firmType);
+        
         if(arr[i].firmType!=undefined){
           addDivRes(arr[i].firmName,a,val,inpGlobal,closeAllLists);
         }
         else{
-          alert(arr[i].email);
           addDivRes(arr[i].email,a,val,inpGlobal,closeAllLists);
         }
       }

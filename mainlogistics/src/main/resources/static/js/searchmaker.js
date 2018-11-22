@@ -217,7 +217,13 @@ function addResult(imgSrc,product,description,price) {
 
 	let td5=document.createElement('td');
 	td5.className='price text-right';
-	td5.appendChild(document.createTextNode(''+price));
+	let butt=document.createElement('button');
+	butt.className='btn btn-primary btn-block';
+	butt.type='button';
+	butt.id='deleteButton';
+	butt.addEventListener('click',deleteContact);
+	butt.appendChild(document.createTextNode("--"));
+	td5.appendChild(butt);
 
 
  	let tr=document.createElement('tr');
@@ -255,6 +261,9 @@ function getCurrenctContactPage(e) {
 		elem.childNodes[1].childNodes[3].submit();
 	}
 	else{
+		if(e.target.id=='deleteButton'){
+			return;
+		}
 		elem=elem.parentNode;
 		console.log(elem.childNodes[1].childNodes[3]);
 		elem.childNodes[1].childNodes[3].action='/profile/contact/'+elem.getAttribute('email');
@@ -262,4 +271,22 @@ function getCurrenctContactPage(e) {
 
 	}
 	
+}
+function deleteContact(e) {
+	console.log(e.target);
+	let xhr = new XMLHttpRequest();
+    xhr.open("POST", '/firm/contacts/delete', true);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+          arr=[];
+          arr=JSON.parse(xhr.responseText);
+          console.log(xhr.responseText);
+          alert(arr[0].message);
+        }
+      }
+     console.log( e.target.parentNode.parentNode.childNodes[1].childNodes[2]);
+     let body = JSON.stringify({firmName:firmNameFirm.value,email:e.target.parentNode.parentNode.getAttribute('email')});
+     console.log(body);
+      xhr.send(body); 
 }

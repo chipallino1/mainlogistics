@@ -17,4 +17,5 @@ public interface FirmsService {
     void map(Object src,Object dest);
     String addContact(ContactDTO contactDTO);
     List<ContactDTO> getContacts(String firmName);
+    void deleteContact(ContactDTO contactDTO);
 }

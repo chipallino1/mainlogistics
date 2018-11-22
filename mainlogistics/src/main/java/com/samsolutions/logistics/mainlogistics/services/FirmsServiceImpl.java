@@ -106,14 +106,24 @@ public class FirmsServiceImpl implements FirmsService {
         Firms firm=firmsRepository.findByFirmName(firmName);
         Collection<Contacts> contactsCollection = firm.getContactsById();
         Contacts[] contacts = new Contacts[contactsCollection.size()];
-        ContactDTO[] contactsDTO = new ContactDTO[contactsCollection.size()];
         contactsCollection.toArray(contacts);
+        ContactDTO contactDTO;
         for(int i=0;i<contacts.length;i++){
-            contactsDTO[i]=new ContactDTO();
-            map(contacts[i],contactsDTO[i]);
-            contactsDTOList.add(contactsDTO[i]);
+            if(contacts[i].getStatus().equals("ADDED")){
+                contactDTO=new ContactDTO();
+                map(contacts[i],contactDTO);
+                contactsDTOList.add(contactDTO);
+            }
+
         }
 
         return  contactsDTOList;
+    }
+
+    @Override
+    public void deleteContact(ContactDTO contactDTO) {
+        Contacts contacts = contactsRepository.findByEmail(contactDTO.getEmail());
+        contacts.setStatus("NOT ADDED");
+        contactsRepository.save(contacts);
     }
 }
