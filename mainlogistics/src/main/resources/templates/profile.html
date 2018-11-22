@@ -126,7 +126,7 @@
     <div class="col form-group">
       <label>Firm name</label>
         <small class="text-danger" th:if="${#fields.hasErrors('firmName')}"  > Empty or too small</small>
-        <input type="text" class="form-control" placeholder="firm name" disabled="disabled" th:field="*{firmName}">
+        <input type="text" class="form-control" placeholder="firm name" id="firmNameFirm" disabled="disabled" th:field="*{firmName}">
     </div> <!-- form-group end.// -->
   </div> <!-- form-row end.// -->
   <div class="form-group">
@@ -139,6 +139,13 @@
     <input type="text" class="form-control" placeholder="description" disabled="disabled" th:field="*{description}">
   </div> <!-- form-group end.// -->
     </div>  
+    </form>
+    <form method="get" id="getContacts">
+        <div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary btn-block" onclick="showContacts()">Show all contacts</button>
+            </div>
+        </div>
     </form>
 </article> <!-- card-body end .// -->
 </div> <!-- card.// -->
@@ -187,6 +194,7 @@
 
     <script th:src="@{/js/enter.js}"></script>
     <script th:src="@{/js/autocomplete.js}"></script>
+     <script th:src="@{/js/myprofile.js}"></script>
     <script th:inline="javascript">autocomplete(document.getElementById("myInput"),[[${firms}]],"/firms/" );</script>
      <script th:inline="javascript">whenRegistred([[${isRegistred}]]);</script>
      <script th:inline="javascript">if([[${contactDTO}]].email==null) {
