@@ -26,7 +26,6 @@ public class AuthenticationController {
     private ContactsSignUpService contactsSignUpService;
     private FirmsSignUpService firmsSignUpService;
     private FirmsService firmsService;
-    private UserLogInService userLogInService;
 
     @Autowired
     public void setContactsSignUpService(ContactsSignUpService contactsSignUpService) {
@@ -41,10 +40,6 @@ public class AuthenticationController {
         this.firmsService = firmsService;
     }
 
-    @Autowired
-    public void setUserLogInService(UserLogInService userLogInService) {
-        this.userLogInService = userLogInService;
-    }
 
 
 
