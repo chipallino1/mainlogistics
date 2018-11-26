@@ -18,13 +18,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.util.List;
 
+//controller for users that want to registred
+
 @Controller
 public class AuthenticationController {
 
     private ContactsSignUpService contactsSignUpService;
     private FirmsSignUpService firmsSignUpService;
     private FirmsService firmsService;
-    private UserLogInService userLogInService;
 
     @Autowired
     public void setContactsSignUpService(ContactsSignUpService contactsSignUpService) {
@@ -39,18 +40,10 @@ public class AuthenticationController {
         this.firmsService = firmsService;
     }
 
-    @Autowired
-    public void setUserLogInService(UserLogInService userLogInService) {
-        this.userLogInService = userLogInService;
-    }
 
 
-    @RequestMapping(path = {"/","index"},method = RequestMethod.GET)
-    public String getHome(Model model){
-        model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getName());
-        return "index";
-    }
 
+    //get authorithation page
     @RequestMapping(path = "auth",method = RequestMethod.GET)
     public String getAuthenticate(Model model,@ModelAttribute("registred") String isRegistred){
 
@@ -71,6 +64,7 @@ public class AuthenticationController {
 
     }
 
+    //redirect to auth
     @RequestMapping(path = "auth/{userType}",method =RequestMethod.GET)
     public String getRedirectToAuth(@PathVariable String userType){
 
@@ -78,6 +72,7 @@ public class AuthenticationController {
 
     }
 
+    //registration of user
     @RequestMapping(path = "auth/{userType}",method = RequestMethod.POST)
     public String getRegistered(@Valid ContactDTO contactDTO, BindingResult bindingResultContacts,
                                 @Valid FirmDTO firmDTO, BindingResult bindingResultFirms, Model model,
@@ -113,23 +108,11 @@ public class AuthenticationController {
 
     }
 
+    //for autocomplete when contact person choose firm
     @RequestMapping(path = "/firms/{firmName}/readall",method = RequestMethod.GET)
     public @ResponseBody List<FirmDTO> readAllFirmsLike(@PathVariable(value = "firmName")String firmName){
         return firmsService.getAllByName(firmName);
     }
 
-   /* @RequestMapping(path = "auth/login",method = RequestMethod.POST)
-    public String login(@Valid UserDTO userDTO,RedirectAttributes redirectAttributes){
-
-        if(userLogInService.authorize(userDTO.getEmail(),userDTO.getPassword())) {
-            if (userLogInService.isContact()) {
-                redirectAttributes.addFlashAttribute("contactDTO", userLogInService.getContactDTO());
-                return "redirect:/profile/contact";
-            }
-            redirectAttributes.addFlashAttribute("firmDTO", userLogInService.getFirmDTO());
-            return "redirect:/profile/firm";
-        }
-        return "error";
-    }*/
 
 }

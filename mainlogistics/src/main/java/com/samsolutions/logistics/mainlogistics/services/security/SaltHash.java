@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
 
+//custom impl of password encoder
 @Component
 public interface SaltHash extends PasswordEncoder {
 
