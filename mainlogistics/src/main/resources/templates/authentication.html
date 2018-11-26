@@ -1,3 +1,4 @@
+<!doctype html>
 <html  xmlns:th="http://www.thymeleaf.org">
   <head>
     <!-- Required meta tags -->
@@ -24,19 +25,19 @@
         <div class="navbar-collapse collapse" id="navbarCollapse" style="">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="index.html">Home </a>
+              <a class="nav-link" th:href="@{/}">Home </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="getdirection.html">Get direction</a>
+              <a class="nav-link" th:href="@{/direction}">Get direction</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="search.html">Search</a>
+              <a class="nav-link" th:href="@{/search}">Search</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="contacts.html">Contacts</a>
+              <a class="nav-link" th:href="@{/contacts}">Contacts</a>
             </li>
              <li class="nav-item" >
-              <a class="nav-link active" href="authentication.html">Login|Register<span class="sr-only">(current)</span></a>
+              <a class="nav-link active" th:href="@{/auth}">Login|Register<span class="sr-only">(current)</span></a>
             </li>
           </ul>
           <form class="form-inline mt-2 mt-md-0">

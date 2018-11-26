@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+//for getting profile and working in current account
 @Controller
 public class ProfileController {
 
@@ -30,19 +31,25 @@ public class ProfileController {
         this.contactsService = contactsService;
     }
 
+
+    //get user
     @RequestMapping(path = "profile/{type}/{email}",method = RequestMethod.GET)
     public String profilePage(@PathVariable("type") String type,@PathVariable("email") String email, Model model){
 
         String profileName = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("contact",new ContactDTO());
+        //contact user
         if(type.equals("contact")){
+            //your profile
             if(email.equals("me")){
 
                 model.addAttribute("contactDTO",contactsService.getByEmail(profileName));
                 model.addAttribute("firmDTO",new FirmDTO());
                 model.addAttribute("profileName",profileName);
                 return "myprofile";
-            }else{
+            }
+            //another profile
+            else{
                 model.addAttribute("contactDTO",contactsService.getByEmail(email));
                 model.addAttribute("firmDTO",new FirmDTO());
                 model.addAttribute("profileName",email);
@@ -64,13 +71,16 @@ public class ProfileController {
         return "error";
     }
 
+    //for updating profile
     @RequestMapping(path = "profile/{type}/update",method = RequestMethod.POST)
     public String updateUser(@PathVariable("type") String userType,ContactDTO contactDTO,FirmDTO firmDTO){
 
 
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        //for contact
         if(userType.equals("contact")){
             contactsService.update(email,contactDTO);
+            //logout if you change email
             if(contactDTO.getEmail().equals(email))
                 return "redirect:/profile/contact/me";
             else
@@ -85,24 +95,28 @@ public class ProfileController {
 
     }
 
+    //get all contacts when firm nned to add new contact
     @RequestMapping(path = "/contacts/{email}/readall",method = RequestMethod.GET)
     public @ResponseBody
     List<ContactDTO> readAllEmailsLike(@PathVariable(value = "email")String email){
         return contactsService.getAllByName(email);
     }
 
+    //
     @RequestMapping(path = "/profile/firm/add/contact",method = RequestMethod.POST)
     public String addContactToFirm(ContactDTO contact){
         firmsService.addContact(contact);
         return "redirect:/profile/firm/me";
     }
 
+    //get all contacts for profile
     @RequestMapping(path = "/profile/{firmName}/contactslist",method = RequestMethod.GET)
     public String showContactsList(@PathVariable(name = "firmName") String firmName,Model model){
         model.addAttribute("firmName",firmName);
         return "contactsList";
     }
 
+    //get contacts that work with current firm
     @RequestMapping(path = "/firm/contacts/readall/{firmName}",method = RequestMethod.GET)
         public @ResponseBody
         List<ContactDTO> readAllContactsFirm(@PathVariable(name = "firmName")String firmName){
