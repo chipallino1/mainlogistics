@@ -16,6 +16,6 @@ public interface FirmsService {
     void update(String email, FirmDTO firmDTO);
     void map(Object src,Object dest);
     String addContact(ContactDTO contactDTO);
-    List<ContactDTO> getContacts(String firmName);
+    List<ContactDTO> getContacts(String firmName,String status);
     void deleteContact(ContactDTO contactDTO);
 }

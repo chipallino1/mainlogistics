@@ -29,10 +29,12 @@ public class FirmController {
 
 
     //get contacts that work with current firm
-    @RequestMapping(path = "/firm/contacts/readall/{firmName}",method = RequestMethod.GET)
+    @RequestMapping(path = "/firm/contacts/readall/{firmName}/{status}",method = RequestMethod.GET)
     public @ResponseBody
-    List<ContactDTO> readAllContactsFirm(@PathVariable(name = "firmName")String firmName){
-        return firmsService.getContacts(firmName);
+    List<ContactDTO> readAllContactsFirm(@PathVariable(name = "firmName")String firmName,
+                                         @PathVariable(name = "status") String status){
+
+        return firmsService.getContacts(firmName,status);
     }
 
     @RequestMapping(path = "/firm/contacts/delete",method = RequestMethod.POST)

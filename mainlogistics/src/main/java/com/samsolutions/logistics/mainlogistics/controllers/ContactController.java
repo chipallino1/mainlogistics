@@ -25,8 +25,6 @@ public class ContactController {
     @RequestMapping(path = "/contacts/{email}/{firmName}/readall",method = RequestMethod.GET)
     public @ResponseBody
     List<ContactDTO> readAllEmailsLike(@PathVariable(value = "email")String email,@PathVariable(value = "firmName") String firmName){
-       // if(email.equals("all"))
-            //return contactsService.getAll
         return contactsService.getTop5ByEmailAndStatus(email);
     }
 }

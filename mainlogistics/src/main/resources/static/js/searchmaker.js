@@ -126,16 +126,16 @@ function getHelp(type)
 }
 
 
-function getResults(arr) {
-	deleteNodes('resultCol');
-	let result=document.getElementById('resultCol');
+function getResults(arr,id,resultId) {
+	deleteNodes(id);
+	let result=document.getElementById(id);
 	result.appendChild(createHead('Contacts list'));
 	result.appendChild(document.createElement('hr'));
 	result.appendChild(createParag('You can see each person who works here.'));
 	result.appendChild(createDivPad());
-	result.appendChild(createResultsDiv());
+	result.appendChild(createResultsDiv(resultId));
 	for(let i=0;i<arr.length;i++){
-		addResult(null,arr[i].firstName+' '+arr[i].lastName,arr[i].email,'');
+		addResult(null,arr[i].firstName+' '+arr[i].lastName,arr[i].email,'',resultId);
 	}
 
 }
@@ -171,12 +171,12 @@ function createDivPad() {
 
 }
 
-function createResultsDiv() {
+function createResultsDiv(resultId) {
 	
 	
 
 	let tbody=document.createElement('tbody');
-	tbody.id='resultsCont';
+	tbody.id=resultId;
 	let table=document.createElement('table');
 	table.className='table table-hover';
 	table.appendChild(tbody);
@@ -189,13 +189,13 @@ function createResultsDiv() {
 
 }
 
-function addResult(imgSrc,product,description,price) {
+function addResult(imgSrc,product,description,price,resultId) {
 	
 
 
 	let td1=document.createElement('td');
 	td1.className='number text-center';
-	td1.appendChild(document.createTextNode(document.getElementById('resultsCont').childNodes.length+1));
+	td1.appendChild(document.createTextNode(document.getElementById(resultId).childNodes.length+1));
 
 	//let td2=document.createElement('td');
 	//td2.className='image';
@@ -234,20 +234,20 @@ function addResult(imgSrc,product,description,price) {
  	tr.setAttribute('email',description);
  	tr.addEventListener('click',getCurrenctContactPage);
 
- 	let resultsCont=document.getElementById('resultsCont');
+ 	let resultsCont=document.getElementById(resultId);
  	resultsCont.appendChild(tr);
 
 }
 
-function getContacts(firmName) {
+function getContacts(firmName,status,id,resultId) {
 	let xhr = new XMLHttpRequest();
-    xhr.open("GET", '/firm/contacts/readall/'+firmName, true);
+    xhr.open("GET", '/firm/contacts/readall/'+firmName+'/'+status, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
           arr=[];
           arr=JSON.parse(xhr.responseText);
-          getResults(arr);
+          getResults(arr,id,resultId);
         }
       }
       xhr.send(null); 

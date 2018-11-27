@@ -100,7 +100,7 @@ public class FirmsServiceImpl implements FirmsService {
     }
 
     @Override
-    public List<ContactDTO> getContacts(String firmName) {
+    public List<ContactDTO> getContacts(String firmName,String status) {
 
         List<ContactDTO> contactsDTOList = new ArrayList<>();
         Firms firm=firmsRepository.findByFirmName(firmName);
@@ -109,21 +109,20 @@ public class FirmsServiceImpl implements FirmsService {
         contactsCollection.toArray(contacts);
         ContactDTO contactDTO;
         for(int i=0;i<contacts.length;i++){
-            if(contacts[i].getStatus().equals("ADDED")){
+            if(contacts[i].getStatus().equals(status)){
                 contactDTO=new ContactDTO();
                 map(contacts[i],contactDTO);
                 contactsDTOList.add(contactDTO);
             }
 
         }
-
         return  contactsDTOList;
     }
 
     @Override
     public void deleteContact(ContactDTO contactDTO) {
         Contacts contacts = contactsRepository.findByEmail(contactDTO.getEmail());
-        contacts.setStatus("NOT ADDED");
+        contacts.setStatus("WAIT");
         contactsRepository.save(contacts);
     }
 }

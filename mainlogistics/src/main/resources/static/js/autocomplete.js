@@ -33,11 +33,19 @@ function autocomplete(inp, arr,action) {
   inp.addEventListener("input", function(e) {
       var  val = this.value;
       if(val==""){
-        return;
+        val="all";
       }
       curr=this;
       var xhr = new XMLHttpRequest();
-      xhr.open("GET", path+val+'/readall', true);
+      var firmNameFirm = document.getElementById('firmNameFirm');
+      if(firmNameFirm.value!=""){
+        console.log(firmNameFirm.value);
+        xhr.open("GET", path+val+'/'+firmNameFirm.value+'/readall', true);
+      }
+      else{
+         console.log(firmNameFirm.value);
+        xhr.open("GET", path+val+'/readall', true);
+      }
 
       //Передает правильный заголовок в запросе
       xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
