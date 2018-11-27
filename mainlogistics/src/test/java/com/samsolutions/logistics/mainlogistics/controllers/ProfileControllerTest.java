@@ -4,6 +4,10 @@ package com.samsolutions.logistics.mainlogistics.controllers;
 import com.samsolutions.logistics.mainlogistics.services.ContactsSignUpService;
 import com.samsolutions.logistics.mainlogistics.services.FirmsService;
 import com.samsolutions.logistics.mainlogistics.services.FirmsSignUpService;
+<<<<<<< HEAD
+=======
+import com.samsolutions.logistics.mainlogistics.services.UserLogInService;
+>>>>>>> 856364a5e7dc3f5f36a0d60280b2753fda726b99
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -95,7 +95,7 @@ public class ProfileController {
 
     }
 
-    //
+
     @RequestMapping(path = "/profile/firm/add/contact",method = RequestMethod.POST)
     public String addContactToFirm(ContactDTO contact){
         firmsService.addContact(contact);
@@ -108,6 +108,5 @@ public class ProfileController {
         model.addAttribute("firmName",firmName);
         return "contactsList";
     }
-
 
 }
