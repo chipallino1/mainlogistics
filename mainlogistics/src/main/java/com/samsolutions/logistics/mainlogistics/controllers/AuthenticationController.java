@@ -108,11 +108,6 @@ public class AuthenticationController {
 
     }
 
-    //for autocomplete when contact person choose firm
-    @RequestMapping(path = "/firms/{firmName}/readall",method = RequestMethod.GET)
-    public @ResponseBody List<FirmDTO> readAllFirmsLike(@PathVariable(value = "firmName")String firmName){
-        return firmsService.getAllByName(firmName);
-    }
 
 
 }

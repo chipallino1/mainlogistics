@@ -96,7 +96,7 @@
     <input type="number" class="form-control" placeholder="phone number" id="phoneNumContact" disabled="disabled" th:field="*{phoneNum}">
   </div> <!-- form-group end.// -->
 
-  <div class="form-group" id="firms" style="display: none;" th:if="*{firmName!=null}">
+  <div class="form-group" id="firms" style="display: none;" th:if="*{firmName}!=null">
     <label>Choose firm</label>
    <form autocomplete="off">
     <div class="autocomplete" style="width:150px;">

@@ -95,13 +95,6 @@ public class ProfileController {
 
     }
 
-    //get all contacts when firm nned to add new contact
-    @RequestMapping(path = "/contacts/{email}/readall",method = RequestMethod.GET)
-    public @ResponseBody
-    List<ContactDTO> readAllEmailsLike(@PathVariable(value = "email")String email){
-        return contactsService.getAllByName(email);
-    }
-
     //
     @RequestMapping(path = "/profile/firm/add/contact",method = RequestMethod.POST)
     public String addContactToFirm(ContactDTO contact){
@@ -116,21 +109,5 @@ public class ProfileController {
         return "contactsList";
     }
 
-    //get contacts that work with current firm
-    @RequestMapping(path = "/firm/contacts/readall/{firmName}",method = RequestMethod.GET)
-        public @ResponseBody
-        List<ContactDTO> readAllContactsFirm(@PathVariable(name = "firmName")String firmName){
-            return firmsService.getContacts(firmName);
-        }
-
-    @RequestMapping(path = "/firm/contacts/delete",method = RequestMethod.POST)
-    public @ResponseBody
-    String deleteContact(@RequestBody Object object){
-        ContactDTO contactDTO=new ContactDTO();
-        contactDTO.setEmail((String)((LinkedHashMap)object).get("email"));
-        contactDTO.setFirmName((String)((LinkedHashMap)object).get("firmName"));
-        firmsService.deleteContact(contactDTO);
-        return "deleted";
-    }
 
 }

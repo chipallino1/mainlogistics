@@ -58,9 +58,10 @@ public class ContactsServiceImpl implements ContactsService {
         modelMapper.map(src,dest);
     }
     @Override
-    public List<ContactDTO> getAllByName(String email) {
+    public List<ContactDTO> getTop5ByEmailAndStatus(String email) {
 
-        List<Contacts> contactsList = contactsRepository.findDistinctTop5ByEmailLike(email+"%");
+        List<Contacts> contactsList = contactsRepository.findDistinctTop5ByEmailLikeAndStatusAndFirmId(email+"%",
+                "",new Long(1));
         List<ContactDTO> contactDTOList = new ArrayList<>(contactsList.size());
         ModelMapper modelMapper = new ModelMapper();
 

@@ -10,5 +10,6 @@ import java.util.List;
 public interface ContactsRepository extends JpaRepository<Contacts,Long>{
     List<Contacts> findAllByEmail(String email);
     Contacts findByEmail(String email);
-    List<Contacts> findDistinctTop5ByEmailLike(String email);
+    List<Contacts> findDistinctTop5ByEmailLikeAndStatusAndFirmId(String email,String status,Long firmId);
+    List<Contacts> findDistinctTop5ByStatusAndFirmId(String status,Long firmId);
 }

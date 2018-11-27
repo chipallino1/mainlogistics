@@ -97,6 +97,7 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
             if(firmsList.size()>0) {
                 Firms firm = firmsList.get(0);//will throw exception (if firm does not exist)
                 contacts.setFirmId(firm.getId());
+                contacts.setStatus("WAIT");
             }
         }
         contacts.setRole("ROLE_CONTACT_USER");
