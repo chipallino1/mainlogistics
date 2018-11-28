@@ -1,6 +1,14 @@
 package com.samsolutions.logistics.mainlogistics.entities;
 
-import javax.persistence.*;
+import javax.persistence.Id;
+import javax.persistence.Basic;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.sql.Date;
 import java.util.Objects;
 
@@ -96,7 +104,7 @@ public class RoutesInfo {
     }
 
     @ManyToOne
-    @JoinColumn(name = "route_id", referencedColumnName = "id", nullable = false,insertable = false,updatable = false)
+    @JoinColumn(name = "route_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     public Routes getRoutesByRouteId() {
         return routesByRouteId;
     }

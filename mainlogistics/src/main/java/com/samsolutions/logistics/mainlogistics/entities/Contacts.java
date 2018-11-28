@@ -1,7 +1,8 @@
 package com.samsolutions.logistics.mainlogistics.entities;
 
+import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
+
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -13,8 +14,7 @@ public class Contacts {
     private String email;
     private Long firmId;
     private Long passwordsId;
-    private String role;
-    private String status;
+    private ContactState contactState;
     private Firms firmsByFirmId;
     private Passwords passwordsByPasswordsId;
 
@@ -90,23 +90,13 @@ public class Contacts {
     }
 
     @Basic
-    @Column(name = "role", nullable = false, length = 45)
-    public String getRole() {
-        return role;
+    @Column(name = "contact_state", length = 45)
+    public ContactState getContactState() {
+        return contactState;
     }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    @Basic
-    @Column(name = "status",  length = 45)
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setContactState(ContactState contactState) {
+        this.contactState = contactState;
     }
 
     @Override
@@ -120,18 +110,17 @@ public class Contacts {
                 Objects.equals(phoneNum, contacts.phoneNum) &&
                 Objects.equals(email, contacts.email) &&
                 Objects.equals(firmId, contacts.firmId) &&
-                Objects.equals(passwordsId, contacts.passwordsId) &&
-                Objects.equals(role, contacts.role);
+                Objects.equals(passwordsId, contacts.passwordsId);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, firstName, lastName, phoneNum, email, firmId, passwordsId, role);
+        return Objects.hash(id, firstName, lastName, phoneNum, email, firmId, passwordsId);
     }
 
     @ManyToOne
-    @JoinColumn(name = "firm_id", referencedColumnName = "id",insertable = false,updatable = false)
+    @JoinColumn(name = "firm_id", referencedColumnName = "id", insertable = false, updatable = false)
     public Firms getFirmsByFirmId() {
         return firmsByFirmId;
     }
@@ -141,7 +130,7 @@ public class Contacts {
     }
 
     @ManyToOne
-    @JoinColumn(name = "passwords_id", referencedColumnName = "id", nullable = false,insertable = false,updatable = false)
+    @JoinColumn(name = "passwords_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     public Passwords getPasswordsByPasswordsId() {
         return passwordsByPasswordsId;
     }

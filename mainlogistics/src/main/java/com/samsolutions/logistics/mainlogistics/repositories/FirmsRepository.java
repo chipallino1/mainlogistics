@@ -7,9 +7,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FirmsRepository extends JpaRepository<Firms,Long> {
+public interface FirmsRepository extends JpaRepository<Firms, Long> {
+
     List<Firms> findDistinctByFirmNameLike(String firmName);
+
     List<Firms> findDistinctTop5ByFirmNameLike(String firmName);
+
     List<Firms> findAllByEmail(String email);
+
     Firms findByFirmName(String firmName);
 }

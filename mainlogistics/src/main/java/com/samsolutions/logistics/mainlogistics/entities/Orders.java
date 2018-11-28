@@ -1,6 +1,13 @@
 package com.samsolutions.logistics.mainlogistics.entities;
 
-import javax.persistence.*;
+import javax.persistence.Id;
+import javax.persistence.Basic;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.sql.Date;
 import java.util.Objects;
 
@@ -97,7 +104,7 @@ public class Orders {
     }
 
     @ManyToOne
-    @JoinColumn(name = "route_id", referencedColumnName = "id", nullable = false,insertable = false,updatable = false)
+    @JoinColumn(name = "route_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     public Routes getRoutesByRouteId() {
         return routesByRouteId;
     }
@@ -107,7 +114,7 @@ public class Orders {
     }
 
     @ManyToOne
-    @JoinColumn(name = "producer_id", referencedColumnName = "id", nullable = false,insertable = false,updatable = false)
+    @JoinColumn(name = "producer_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     public Firms getFirmsByProducerId() {
         return firmsByProducerId;
     }
@@ -117,7 +124,7 @@ public class Orders {
     }
 
     @ManyToOne
-    @JoinColumn(name = "consumer_id", referencedColumnName = "id", nullable = false,insertable = false,updatable = false)
+    @JoinColumn(name = "consumer_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     public Firms getFirmsByConsumerId() {
         return firmsByConsumerId;
     }

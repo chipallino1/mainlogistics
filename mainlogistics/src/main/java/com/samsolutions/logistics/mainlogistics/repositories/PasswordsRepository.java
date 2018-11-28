@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PasswordsRepository extends JpaRepository<Passwords,Long> {
+public interface PasswordsRepository extends JpaRepository<Passwords, Long> {
+
     List<Passwords> findDistinctTop1ByPassHashLike(String passHash);
+
 }

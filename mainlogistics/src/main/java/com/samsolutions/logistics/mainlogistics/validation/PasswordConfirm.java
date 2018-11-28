@@ -14,9 +14,12 @@ import java.lang.annotation.*;
 public @interface PasswordConfirm {
 
     String password();
+
     String confirmPassword();
+
     String message() default "Passwords must be same";
 
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

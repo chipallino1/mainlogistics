@@ -1,12 +1,12 @@
-package com.samsolutions.logistics.mainlogistics.services;
+package com.samsolutions.logistics.mainlogistics.services.user.impl;
 
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
-import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import com.samsolutions.logistics.mainlogistics.entities.Contacts;
-import com.samsolutions.logistics.mainlogistics.entities.Firms;
 import com.samsolutions.logistics.mainlogistics.entities.Users;
 import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.UsersRepository;
+import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
+import com.samsolutions.logistics.mainlogistics.services.user.ContactsService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +24,7 @@ public class ContactsServiceImpl implements ContactsService {
     public void setContactsRepository(ContactsRepository contactsRepository) {
         this.contactsRepository = contactsRepository;
     }
+
     @Autowired
     public void setUsersRepository(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
@@ -37,38 +38,38 @@ public class ContactsServiceImpl implements ContactsService {
     @Override
     public ContactDTO getByEmail(String email) {
         Contacts contact = contactsRepository.findByEmail(email);
-        ContactDTO contactDTO=new ContactDTO();
-        map(contact,contactDTO);
+        ContactDTO contactDTO = new ContactDTO();
+        map(contact, contactDTO);
         return contactDTO;
     }
 
     @Override
-    public void update(String email,ContactDTO contactDTO) {
+    public void update(String email, ContactDTO contactDTO) {
         Contacts contacts = contactsRepository.findByEmail(email);
         Users users = usersRepository.findByEmail(email);
         users.setEmail(contactDTO.getEmail());
-        map(contactDTO,contacts);
+        map(contactDTO, contacts);
         usersRepository.save(users);
         contactsRepository.save(contacts);
     }
 
     @Override
     public void map(Object src, Object dest) {
-        ModelMapper modelMapper=new ModelMapper();
-        modelMapper.map(src,dest);
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.map(src, dest);
     }
+
     @Override
     public List<ContactDTO> getTop5ByEmailAndStatus(String email) {
-
-        List<Contacts> contactsList = contactsRepository.findDistinctTop5ByEmailLikeAndStatusAndFirmId(email+"%",
-                "",new Long(1));
+        List<Contacts> contactsList = contactsRepository.findDistinctTop5ByEmailLikeAndContactStateAndFirmId(email + "%",
+                ContactState.WAIT, 1L);
         List<ContactDTO> contactDTOList = new ArrayList<>(contactsList.size());
         ModelMapper modelMapper = new ModelMapper();
 
-        for(int i=0;i<contactsList.size();i++){
+        for (int i = 0; i < contactsList.size(); i++) {
 
             contactDTOList.add(new ContactDTO());
-            modelMapper.map(contactsList.get(i),contactDTOList.get(i));
+            modelMapper.map(contactsList.get(i), contactDTOList.get(i));
 
         }
         return contactDTOList;

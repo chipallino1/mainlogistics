@@ -1,6 +1,14 @@
 package com.samsolutions.logistics.mainlogistics.entities;
 
-import javax.persistence.*;
+import javax.persistence.Id;
+import javax.persistence.Basic;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.OneToMany;
+
 import java.util.Collection;
 import java.util.Objects;
 

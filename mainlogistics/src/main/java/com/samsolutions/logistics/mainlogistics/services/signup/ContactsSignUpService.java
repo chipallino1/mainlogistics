@@ -1,4 +1,4 @@
-package com.samsolutions.logistics.mainlogistics.services;
+package com.samsolutions.logistics.mainlogistics.services.signup;
 
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import org.springframework.stereotype.Component;
@@ -7,7 +7,10 @@ import org.springframework.stereotype.Component;
 public interface ContactsSignUpService {
 
     void setContactDTO(ContactDTO contactDTO);
+
     void savePassword();
+
     void save();
+
     void saveUser();
 }

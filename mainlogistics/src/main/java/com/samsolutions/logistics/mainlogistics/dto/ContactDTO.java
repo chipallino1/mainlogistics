@@ -9,16 +9,16 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 
-@PasswordConfirm(password = "password",confirmPassword = "passwordRepeat")
+@PasswordConfirm(password = "password", confirmPassword = "passwordRepeat")
 public class ContactDTO implements Serializable {
 
     @NotNull
-    @Size(min = 2,max=30)
+    @Size(min = 2, max = 30)
     @Pattern(regexp = "^[a-zA-z]+$")
     private String firstName;
 
     @NotNull
-    @Size(min = 2,max=30)
+    @Size(min = 2, max = 30)
     @Pattern(regexp = "^[a-zA-z]+$")
     private String lastName;
 
@@ -44,68 +44,65 @@ public class ContactDTO implements Serializable {
     private String email;
     private String firmName;
     @NotNull
-    @Size(min = 8,max=50)
+    @Size(min = 8, max = 50)
     private String password;
     @NotNull
-    @Size(min = 8,max=50)
+    @Size(min = 8, max = 50)
     private String passwordRepeat;
+
+    public String getFirstName() {
+        return firstName;
+    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setFirmName(String firmName) {
-        this.firmName = firmName;
-    }
-
-    public void setPasswordRepeat(String passwordRepeat) {
-        this.passwordRepeat = passwordRepeat;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getFirstName() {
-
-        return firstName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getPhoneNum() {
         return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getFirmName() {
         return firmName;
     }
 
-    public String getPasswordRepeat() {
+    public void setFirmName(String firmName) {
+        this.firmName = firmName;
+    }
 
+    public String getPasswordRepeat() {
         return passwordRepeat;
     }
 
-    public String getPassword() {
+    public void setPasswordRepeat(String passwordRepeat) {
+        this.passwordRepeat = passwordRepeat;
+    }
 
+    public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

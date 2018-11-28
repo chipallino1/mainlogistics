@@ -1,18 +1,28 @@
 package com.samsolutions.logistics.mainlogistics.entities;
 
-import org.springframework.stereotype.Controller;
+import com.samsolutions.logistics.mainlogistics.services.security.Role;
+import com.samsolutions.logistics.mainlogistics.services.security.UserState;
 
-import javax.persistence.*;
+import javax.persistence.Id;
+import javax.persistence.Basic;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
 import java.util.Objects;
 
 @Entity
 public class Users {
     private Long id;
-    private String enabled;
-    private String role;
+    private Role role;
     private String email;
     private Passwords passwordsByPasswordId;
     private Long passwordId;
+    private UserState userState;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,16 +33,6 @@ public class Users {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Basic
-    @Column(name = "enabled", nullable = false, length = 10)
-    public String getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(String enabled) {
-        this.enabled = enabled;
     }
 
     @Basic
@@ -47,11 +47,12 @@ public class Users {
 
     @Basic
     @Column(name = "role", nullable = false, length = 55)
-    public String getRole() {
+    @Enumerated(value = EnumType.STRING)
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -65,8 +66,19 @@ public class Users {
         this.email = email;
     }
 
+    @Basic
+    @Column(name = "user_state")
+    @Enumerated(value = EnumType.ORDINAL)
+    public UserState getUserState() {
+        return userState;
+    }
+
+    public void setUserState(UserState userState) {
+        this.userState = userState;
+    }
+
     @ManyToOne
-    @JoinColumn(name = "password_id", referencedColumnName = "id", nullable = false,insertable = false,updatable = false)
+    @JoinColumn(name = "password_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     public Passwords getPasswordsByPasswordId() {
         return passwordsByPasswordId;
     }
@@ -82,15 +94,13 @@ public class Users {
         Users users = (Users) o;
         return Objects.equals(id, users.id) &&
 
-                Objects.equals(enabled, users.enabled) &&
-
                 Objects.equals(role, users.role);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, enabled, role);
+        return Objects.hash(id, role);
     }
 
 }

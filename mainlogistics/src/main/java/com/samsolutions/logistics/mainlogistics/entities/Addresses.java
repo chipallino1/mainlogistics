@@ -1,6 +1,14 @@
 package com.samsolutions.logistics.mainlogistics.entities;
 
-import javax.persistence.*;
+
+import javax.persistence.Id;
+import javax.persistence.Basic;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.Objects;
 
 @Entity
@@ -94,7 +102,7 @@ public class Addresses {
     }
 
     @ManyToOne
-    @JoinColumn(name = "firm_id", referencedColumnName = "id", nullable = false,insertable = false,updatable = false)
+    @JoinColumn(name = "firm_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     public Firms getFirmsByFirmId() {
         return firmsByFirmId;
     }
