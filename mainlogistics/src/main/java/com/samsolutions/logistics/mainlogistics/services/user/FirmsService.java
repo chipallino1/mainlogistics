@@ -8,20 +8,55 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Firms service
+ */
 @Component
 public interface FirmsService {
 
+    /**
+     * Get all firms
+     * @return list dto of firms
+     */
     List<FirmDTO> getAll();
 
+    /**
+     * Get all firms
+     * @param firmName firm name
+     * @return list dto of firms
+     */
     List<FirmDTO> getAllByName(String firmName);
 
+    /**
+     * Get firm
+     * @param email firm email
+     * @return dto of firms
+     */
     FirmDTO getByEmail(String email);
 
+    /**
+     * Update firm
+     * @param email firm email
+     * @param firmDTO dto of firms
+     */
     void update(String email, FirmDTO firmDTO);
 
+    /**
+     * Map dto on entity and vice versa
+     * @param src source
+     * @param dest destination
+     */
     void map(Object src, Object dest);
 
-    String addContact(ContactDTO contactDTO);
+    /**
+     * Add new contact user to firm user
+     * @param contactDTO dto of contacts
+     */
+    void addContact(ContactDTO contactDTO);
 
-    boolean deleteContact(ContactDTO contactDTO);
+    /**
+     * Delete contact user from firm users
+     * @param contactDTO dto of contacts
+     */
+    void deleteContact(ContactDTO contactDTO);
 }

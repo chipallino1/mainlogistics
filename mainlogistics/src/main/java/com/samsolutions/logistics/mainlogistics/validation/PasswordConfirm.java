@@ -5,7 +5,10 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
-//custom annotation for check if password == passwordRepeat
+/**
+ * Custom annotation for check if password == passwordRepeat
+ */
+
 
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

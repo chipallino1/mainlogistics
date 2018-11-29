@@ -6,6 +6,9 @@ import org.apache.commons.beanutils.BeanUtils;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/**
+ * Implementation pf annotation
+ */
 public class PasswordConfirmValidator implements ConstraintValidator<PasswordConfirm, Object> {
 
     private String password;

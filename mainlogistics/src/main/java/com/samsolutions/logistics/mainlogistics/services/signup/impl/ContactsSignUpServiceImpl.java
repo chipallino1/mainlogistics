@@ -20,6 +20,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Contact user class that provided services for contact users
+ */
 @Service
 public class ContactsSignUpServiceImpl implements ContactsSignUpService {
 
@@ -32,7 +35,6 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
     private Contacts contacts;
     private Passwords passwords;
     private Users users;
-    private final String ROLE_CONTACT_USER = "ROLE_CONTACT_USER";
 
     @Autowired
     public void setContactsRepository(ContactsRepository contactsRepository) {

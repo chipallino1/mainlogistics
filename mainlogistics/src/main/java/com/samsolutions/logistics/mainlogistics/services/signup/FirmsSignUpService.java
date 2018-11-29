@@ -3,14 +3,15 @@ package com.samsolutions.logistics.mainlogistics.services.signup;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import org.springframework.stereotype.Component;
 
+/**
+ * Firms sign up service
+ */
 @Component
-public interface FirmsSignUpService {
+public interface FirmsSignUpService extends SignUpService{
 
+    /**
+     * Set Contacts and Passwords entities by mapping
+     * @param firmDTO dto of contacts
+     */
     void setFirmDTO(FirmDTO firmDTO);
-
-    void savePassword();
-
-    void save();
-
-    void saveUser();
 }

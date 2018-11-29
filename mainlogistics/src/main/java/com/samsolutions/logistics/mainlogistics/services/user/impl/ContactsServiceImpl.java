@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Contacts service
+ */
 @Service
 public class ContactsServiceImpl implements ContactsService {
 

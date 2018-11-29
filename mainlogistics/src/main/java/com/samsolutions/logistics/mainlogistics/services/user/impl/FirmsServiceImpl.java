@@ -20,6 +20,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Firms service
+ */
 @Service
 public class FirmsServiceImpl implements FirmsService {
 
@@ -90,24 +93,17 @@ public class FirmsServiceImpl implements FirmsService {
     }
 
     @Override
-    public String addContact(ContactDTO contactDTO) {
+    public void addContact(ContactDTO contactDTO) {
         Contacts contacts = contactsRepository.findByEmail(contactDTO.getEmail());
         Firms firms = firmsRepository.findAllByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).get(0);
-        if (!Objects.equals(firms.getId(), contacts.getFirmId())) {
-            return "Can not add this contact, cause this contact bind to another firm.";
-        }
         contacts.setContactState(ContactState.ADDED);
         contactsRepository.save(contacts);
-        return "Added";
     }
 
     @Override
-    public boolean deleteContact(ContactDTO contactDTO) {
+    public void deleteContact(ContactDTO contactDTO) {
         Contacts contacts = contactsRepository.findByEmail(contactDTO.getEmail());
-        if(contacts==null)
-            return false;
         contacts.setContactState(ContactState.WAIT);
         contactsRepository.save(contacts);
-        return true;
     }
 }
