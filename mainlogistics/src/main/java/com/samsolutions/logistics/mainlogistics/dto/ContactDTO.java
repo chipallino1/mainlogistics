@@ -1,6 +1,6 @@
 package com.samsolutions.logistics.mainlogistics.dto;
 
-import com.samsolutions.logistics.mainlogistics.validation.PasswordConfirm;
+import com.samsolutions.logistics.mainlogistics.validation.annotations.PasswordConfirm;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;

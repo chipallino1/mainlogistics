@@ -41,8 +41,8 @@ public class AuthenticationController {
 
     /**
      * Get authentication page
-     * @param model - model for adding attributes
-     * @param isRegistred - set true when user register
+     * @param model model for adding attributes
+     * @param isRegistred set true when user register
      * @return view
      */
     @RequestMapping(path = "auth", method = RequestMethod.GET)
@@ -79,12 +79,12 @@ public class AuthenticationController {
      * Register user
      * @param contactDTO user data for register(if type is not contact user it will object with not set fields)
      * @param bindingResultContacts if contact user has error in register data
-     * @param firmDTO
-     * @param bindingResultFirms
-     * @param model
-     * @param userType
-     * @param redirectAttributes
-     * @return
+     * @param firmDTO user data for register(if type is not firm user it will object with not set fields)
+     * @param bindingResultFirms if firm user has error in register data
+     * @param model model for adding attributes
+     * @param userType user type
+     * @param redirectAttributes for adding attributes when redirection happens
+     * @return redirection
      */
     @RequestMapping(path = "auth/{userType}", method = RequestMethod.POST)
     public String getRegistered(@Valid ContactDTO contactDTO, BindingResult bindingResultContacts,
@@ -98,9 +98,7 @@ public class AuthenticationController {
             }
 
             contactsSignUpService.setContactDTO(contactDTO);
-            contactsSignUpService.savePassword();
-            contactsSignUpService.save();
-            contactsSignUpService.saveUser();
+            contactsSignUpService.saveContact();
             redirectAttributes.addFlashAttribute("registred", "true");
 
             return "redirect:/auth";
@@ -111,9 +109,7 @@ public class AuthenticationController {
             }
 
             firmsSignUpService.setFirmDTO(firmDTO);
-            firmsSignUpService.savePassword();
-            firmsSignUpService.save();
-            firmsSignUpService.saveUser();
+            firmsSignUpService.saveFirm();
 
             redirectAttributes.addFlashAttribute("isRegistred", "true");
             return "redirect:/auth";

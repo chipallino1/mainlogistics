@@ -14,6 +14,9 @@ import com.samsolutions.logistics.mainlogistics.services.signup.FirmsSignUpServi
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 /**
  * Firm user class that provided services for firm users
  */
@@ -56,6 +59,14 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.map(firmDTO, firms);
 
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void saveFirm() {
+        savePassword();
+        save();
+        saveUser();
     }
 
     public Firms getFirms() {

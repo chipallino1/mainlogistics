@@ -1,4 +1,4 @@
-package com.samsolutions.logistics.mainlogistics.validation;
+package com.samsolutions.logistics.mainlogistics.validation.annotations;
 
 
 import org.apache.commons.beanutils.BeanUtils;

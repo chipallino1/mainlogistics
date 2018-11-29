@@ -14,9 +14,12 @@ import com.samsolutions.logistics.mainlogistics.services.security.Role;
 import com.samsolutions.logistics.mainlogistics.services.security.SaltHashEncoder.SaltHash;
 import com.samsolutions.logistics.mainlogistics.services.security.UserState;
 import com.samsolutions.logistics.mainlogistics.services.signup.ContactsSignUpService;
+import com.samsolutions.logistics.mainlogistics.validation.exceptions.FirmNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -70,6 +73,14 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
         modelMapper.map(contactDTO, contacts);
     }
 
+    @Override
+    @Transactional
+    public void saveContact() {
+        savePassword();
+        save();
+        saveUser();
+    }
+
     public Contacts getContacts() {
         return contacts;
     }
@@ -94,7 +105,6 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
         passwords.setPassHash(hashPass);
         passwords.setSalt(saltHash.getStringFromBytes(saltBytes));
         passwordsRepository.save(passwords);
-
     }
 
     @Override
@@ -106,10 +116,12 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
                 contacts.setFirmId(firm.getId());
                 contacts.setContactState(ContactState.WAIT);
             }
+            else {
+                throw new FirmNotFoundException();
+            }
         }
         contacts.setPasswordsId(passwords.getId());
         contactsRepository.save(contacts);
-
     }
 
     @Override

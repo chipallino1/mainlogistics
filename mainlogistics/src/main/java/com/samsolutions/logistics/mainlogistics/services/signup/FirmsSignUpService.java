@@ -14,4 +14,9 @@ public interface FirmsSignUpService extends SignUpService{
      * @param firmDTO dto of contacts
      */
     void setFirmDTO(FirmDTO firmDTO);
+
+    /**
+     * Save firm user
+     */
+    void saveFirm();
 }

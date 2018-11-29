@@ -14,4 +14,9 @@ public interface ContactsSignUpService extends SignUpService {
      * @param contactDTO dto of contacts
      */
     void setContactDTO(ContactDTO contactDTO);
+
+    /**
+     * Save contact user
+     */
+    void saveContact();
 }

@@ -70,7 +70,8 @@ public class FirmController {
         ContactDTO contactDTO = new ContactDTO();
         contactDTO.setEmail((String) ((LinkedHashMap) object).get("email"));
         contactDTO.setFirmName((String) ((LinkedHashMap) object).get("firmName"));
-        return firmsService.deleteContact(contactDTO);
+        firmsService.deleteContact(contactDTO);
+        return true;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.samsolutions.logistics.mainlogistics.validation;
+package com.samsolutions.logistics.mainlogistics.validation.annotations;
 
 
 import javax.validation.Constraint;
