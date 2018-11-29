@@ -11,6 +11,9 @@ import javax.persistence.ManyToOne;
 import java.sql.Date;
 import java.util.Objects;
 
+/**
+ * Entity
+ */
 @Entity
 public class Orders {
     private Long id;

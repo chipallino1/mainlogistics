@@ -1,0 +1,11 @@
+com\samsolutions\logistics\entities\PasswordsEntity.class
+com\samsolutions\logistics\entities\RoutesEntity.class
+com\samsolutions\logistics\entities\RoutesInfoEntity.class
+com\samsolutions\logistics\controllers\Contact.class
+com\samsolutions\logistics\entities\AddressesEntity.class
+com\samsolutions\logistics\controllers\PersonForm.class
+com\samsolutions\logistics\entities\FirmsEntity.class
+com\samsolutions\logistics\entities\OrdersEntity.class
+com\samsolutions\logistics\controllers\MainController.class
+com\samsolutions\logistics\entities\ContactsEntity.class
+com\samsolutions\logistics\LogisticsApplication.class

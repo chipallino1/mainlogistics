@@ -15,6 +15,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.EnumType;
 import java.util.Objects;
 
+/**
+ * Entity
+ */
 @Entity
 public class Users {
     private Long id;

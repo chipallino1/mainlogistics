@@ -5,6 +5,9 @@ import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * Entity
+ */
 @Entity
 public class Contacts {
     private Long id;

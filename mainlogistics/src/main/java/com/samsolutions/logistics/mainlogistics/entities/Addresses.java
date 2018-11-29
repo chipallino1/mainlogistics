@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.util.Objects;
 
+/**
+ * Entity
+ */
 @Entity
 public class Addresses {
     private Long id;

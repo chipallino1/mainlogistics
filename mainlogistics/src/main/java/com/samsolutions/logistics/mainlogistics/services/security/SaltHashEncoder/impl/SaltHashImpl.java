@@ -11,6 +11,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
 
+/**
+ * PasswordEncoder implementation
+ */
 @Service
 public class SaltHashImpl implements SaltHash {
 
@@ -79,12 +82,22 @@ public class SaltHashImpl implements SaltHash {
         return storedSecurePassword.equals(get_SHA_256_SecurePassword(passwordToValidate, storedSalt));
     }
 
-
+    /**
+     * Encode password
+     * @param charSequence password to validate
+     * @return encoded password
+     */
     @Override
     public String encode(CharSequence charSequence) {
         return get_SHA_256_SecurePassword(charSequence.toString(), getSalt());
     }
 
+    /**
+     * Validate password
+     * @param charSequence password to validate
+     * @param s hash from db
+     * @return true if validation was success else false
+     */
     @Override
     public boolean matches(CharSequence charSequence, String s) {
         return validate(charSequence.toString(), s, getBytesFromString(getSaltByHash(s)));

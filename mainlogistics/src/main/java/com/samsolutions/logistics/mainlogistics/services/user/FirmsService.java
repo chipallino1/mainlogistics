@@ -23,7 +23,5 @@ public interface FirmsService {
 
     String addContact(ContactDTO contactDTO);
 
-    List<ContactDTO> getContacts(String firmName, String status);
-
-    void deleteContact(ContactDTO contactDTO);
+    boolean deleteContact(ContactDTO contactDTO);
 }

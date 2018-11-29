@@ -1,0 +1,3 @@
+com\example\examplethymeleaf\ExamplethymeleafApplication.class
+com\example\examplethymeleaf\controllers\TestController.class
+com\example\examplethymeleaf\entities\PersonTestEntity.class

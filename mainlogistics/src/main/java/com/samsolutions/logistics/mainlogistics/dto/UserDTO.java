@@ -4,6 +4,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+/**
+ * DTO of users
+ */
 public class UserDTO {
     @NotNull
     @Email(regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+" +

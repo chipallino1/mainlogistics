@@ -5,11 +5,15 @@ import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 
+/**
+ * Firm user controller class for get info about firms
+ */
 @Controller
 public class FirmController {
 
@@ -20,31 +24,53 @@ public class FirmController {
         this.firmsService = firmsService;
     }
 
-    //for autocomplete when contact person choose firm
+    /**
+     * Read all firms
+     * @param firmName
+     * @return all firms like firm name
+     */
     @RequestMapping(path = "/firms/{firmName}/readall", method = RequestMethod.GET)
     public @ResponseBody
     List<FirmDTO> readAllFirmsLike(@PathVariable(value = "firmName") String firmName) {
         return firmsService.getAllByName(firmName);
     }
 
+    /**
+     * Add contact user
+     * @param contact request body
+     * @return redirection to profile page
+     */
 
-    //get contacts that work with current firm
-    @RequestMapping(path = "/firm/contacts/readall/{firmName}/{status}", method = RequestMethod.GET)
-    public @ResponseBody
-    List<ContactDTO> readAllContactsFirm(@PathVariable(name = "firmName") String firmName,
-                                         @PathVariable(name = "status") String status) {
-
-        return firmsService.getContacts(firmName, status);
+    @RequestMapping(path = "/firm/contacts/add", method = RequestMethod.POST)
+    public String addContactToFirm(ContactDTO contact) {
+        firmsService.addContact(contact);
+        return "redirect:/profile/firm/me";
     }
 
-    @RequestMapping(path = "/firm/contacts/delete", method = RequestMethod.POST)
+    /**
+     * Get contact list
+     * @param firmName firm name
+     * @param model for adding attribute
+     * @return contact list
+     */
+    @RequestMapping(path = "/firms/{firmName}/contactList", method = RequestMethod.GET)
+    public String showContactsList(@PathVariable(name = "firmName") String firmName, Model model) {
+        model.addAttribute("firmName", firmName);
+        return "contactsList";
+    }
+
+    /**
+     * Delete contact user
+     * @param object request body
+     * @return if deleted - true,else false
+     */
+    @RequestMapping(path = "/firms/contacts/delete", method = RequestMethod.POST)
     public @ResponseBody
-    String deleteContact(@RequestBody Object object) {
+    boolean deleteContact(@RequestBody Object object) {
         ContactDTO contactDTO = new ContactDTO();
         contactDTO.setEmail((String) ((LinkedHashMap) object).get("email"));
         contactDTO.setFirmName((String) ((LinkedHashMap) object).get("firmName"));
-        firmsService.deleteContact(contactDTO);
-        return "deleted";
+        return firmsService.deleteContact(contactDTO);
     }
 
 }

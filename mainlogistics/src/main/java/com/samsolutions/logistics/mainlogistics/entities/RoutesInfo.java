@@ -12,6 +12,9 @@ import javax.persistence.Table;
 import java.sql.Date;
 import java.util.Objects;
 
+/**
+ * Entity
+ */
 @Entity
 @Table(name = "routes_info", schema = "logistic_db", catalog = "")
 public class RoutesInfo {

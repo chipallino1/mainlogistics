@@ -17,7 +17,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
-//controller for users that want to registred
+/**
+ *  Controller class for users that want to register
+ *
+ */
 
 @Controller
 public class AuthenticationController {
@@ -36,7 +39,12 @@ public class AuthenticationController {
     }
 
 
-    //get authorithation page
+    /**
+     * Get authentication page
+     * @param model - model for adding attributes
+     * @param isRegistred - set true when user register
+     * @return view
+     */
     @RequestMapping(path = "auth", method = RequestMethod.GET)
     public String getAuthenticate(Model model, @ModelAttribute("registred") String isRegistred) {
 
@@ -57,13 +65,27 @@ public class AuthenticationController {
 
     }
 
-    //redirect to auth
+    /**
+     * Redirection
+     * @param userType user type
+     * @return redirect to authentication page
+     */
     @RequestMapping(path = "auth/{userType}", method = RequestMethod.GET)
     public String getRedirectToAuth(@PathVariable String userType) {
         return "redirect:/auth";
     }
 
-    //registration of user
+    /**
+     * Register user
+     * @param contactDTO user data for register(if type is not contact user it will object with not set fields)
+     * @param bindingResultContacts if contact user has error in register data
+     * @param firmDTO
+     * @param bindingResultFirms
+     * @param model
+     * @param userType
+     * @param redirectAttributes
+     * @return
+     */
     @RequestMapping(path = "auth/{userType}", method = RequestMethod.POST)
     public String getRegistered(@Valid ContactDTO contactDTO, BindingResult bindingResultContacts,
                                 @Valid FirmDTO firmDTO, BindingResult bindingResultFirms, Model model,

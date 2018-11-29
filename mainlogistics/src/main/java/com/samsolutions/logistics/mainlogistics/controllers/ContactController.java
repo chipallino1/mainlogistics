@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+/**
+ * Contact user controller class for get info about contact users
+ */
+
 @Controller
 public class ContactController {
 
@@ -20,11 +24,19 @@ public class ContactController {
     public void setContactsService(ContactsService contactsService) {
         this.contactsService = contactsService;
     }
-
-    //get all contacts when firm nned to add new contact
-    @RequestMapping(path = "/contacts/{email}/{firmName}/readall", method = RequestMethod.GET)
+    /**
+     *
+     * @param firmName
+     * @param status
+     * @return contact list
+     */
+    @RequestMapping(path = "/contacts/readall/{firmName}/{status}", method = RequestMethod.GET)
     public @ResponseBody
-    List<ContactDTO> readAllEmailsLike(@PathVariable(value = "email") String email, @PathVariable(value = "firmName") String firmName) {
-        return contactsService.getTop5ByEmailAndStatus(email);
+    List<ContactDTO> readAllContactsFirm(@PathVariable(name = "firmName") String firmName,
+                                         @PathVariable(name = "status") String status) {
+
+        return contactsService.getContactsTop5(firmName, status);
     }
+
+
 }

@@ -10,6 +10,9 @@ import javax.persistence.OneToMany;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * Entity
+ */
 @Entity
 public class Passwords {
     private Long id;

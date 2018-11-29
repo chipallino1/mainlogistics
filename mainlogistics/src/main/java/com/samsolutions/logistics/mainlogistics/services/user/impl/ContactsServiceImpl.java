@@ -31,11 +31,6 @@ public class ContactsServiceImpl implements ContactsService {
     }
 
     @Override
-    public List<Contacts> getAllContacts() {
-        return contactsRepository.findAll();
-    }
-
-    @Override
     public ContactDTO getByEmail(String email) {
         Contacts contact = contactsRepository.findByEmail(email);
         ContactDTO contactDTO = new ContactDTO();
@@ -60,20 +55,7 @@ public class ContactsServiceImpl implements ContactsService {
     }
 
     @Override
-    public List<ContactDTO> getTop5ByEmailAndStatus(String email) {
-        List<Contacts> contactsList = contactsRepository.findDistinctTop5ByEmailLikeAndContactStateAndFirmId(email + "%",
-                ContactState.WAIT, 1L);
-        List<ContactDTO> contactDTOList = new ArrayList<>(contactsList.size());
-        ModelMapper modelMapper = new ModelMapper();
-
-        for (int i = 0; i < contactsList.size(); i++) {
-
-            contactDTOList.add(new ContactDTO());
-            modelMapper.map(contactsList.get(i), contactDTOList.get(i));
-
-        }
-        return contactDTOList;
-
+    public List<ContactDTO> getContactsTop5(String firmName, String status) {
+        return null;
     }
-
 }

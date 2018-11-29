@@ -4,6 +4,9 @@ import com.samsolutions.logistics.mainlogistics.entities.Routes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Repository
+ */
 @Repository
 public interface RoutesRepository extends JpaRepository<Routes, Long> {
 }

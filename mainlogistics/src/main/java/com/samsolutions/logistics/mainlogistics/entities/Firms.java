@@ -12,6 +12,9 @@ import javax.persistence.OneToMany;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * Entity
+ */
 @Entity
 public class Firms {
     private Long id;

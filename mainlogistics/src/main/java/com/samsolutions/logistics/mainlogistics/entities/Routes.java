@@ -12,6 +12,9 @@ import javax.persistence.OneToMany;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * Entity
+ */
 @Entity
 @Table(name = "ROUTES")
 public class Routes {

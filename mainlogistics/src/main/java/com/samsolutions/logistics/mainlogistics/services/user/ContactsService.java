@@ -7,13 +7,11 @@ import java.util.List;
 
 public interface ContactsService {
 
-    List<Contacts> getAllContacts();
-
     ContactDTO getByEmail(String email);
 
     void update(String email, ContactDTO contactDTO);
 
     void map(Object src, Object dest);
 
-    List<ContactDTO> getTop5ByEmailAndStatus(String email);
+    List<ContactDTO> getContactsTop5(String firmName, String status);
 }

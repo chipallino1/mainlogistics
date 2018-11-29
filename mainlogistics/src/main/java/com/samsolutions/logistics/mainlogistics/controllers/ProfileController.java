@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-//for getting profile and working in current account
+/**
+ * Profile controller for CRUD in profile page
+ */
 @Controller
 public class ProfileController {
 
@@ -30,7 +32,13 @@ public class ProfileController {
     }
 
 
-    //get user
+    /**
+     * Get profile
+     * @param type type of profile(contact,firm)
+     * @param email email
+     * @param model for adding attributes
+     * @return view
+     */
     @RequestMapping(path = "profile/{type}/{email}", method = RequestMethod.GET)
     public String profilePage(@PathVariable("type") String type, @PathVariable("email") String email, Model model) {
         String profileName = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -68,7 +76,13 @@ public class ProfileController {
         return "error";
     }
 
-    //for updating profile
+    /**
+     * Update user
+     * @param userType type of profile(contact,firm)
+     * @param contactDTO data for updating contact(if type==firm it will be object without set fields)
+     * @param firmDTO data for updating firm(if type==contact it will be object without set fields)
+     * @return redirection to profile page
+     */
     @RequestMapping(path = "profile/{type}/update", method = RequestMethod.POST)
     public String updateUser(@PathVariable("type") String userType, ContactDTO contactDTO, FirmDTO firmDTO) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -80,7 +94,8 @@ public class ProfileController {
                 return "redirect:/profile/contact/me";
             else
                 return "redirect:/logout";
-        } else {
+        }
+        else {
             firmsService.update(email, firmDTO);
             if (firmDTO.getEmail().equals(email))
                 return "redirect:/profile/firm/me";
@@ -88,20 +103,6 @@ public class ProfileController {
                 return "redirect:/logout";
         }
 
-    }
-
-
-    @RequestMapping(path = "/profile/firm/add/contact", method = RequestMethod.POST)
-    public String addContactToFirm(ContactDTO contact) {
-        firmsService.addContact(contact);
-        return "redirect:/profile/firm/me";
-    }
-
-    //get all contacts for profile
-    @RequestMapping(path = "/profile/{firmName}/contactslist", method = RequestMethod.GET)
-    public String showContactsList(@PathVariable(name = "firmName") String firmName, Model model) {
-        model.addAttribute("firmName", firmName);
-        return "contactsList";
     }
 
 }

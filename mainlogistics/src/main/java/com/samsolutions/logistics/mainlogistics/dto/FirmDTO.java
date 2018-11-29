@@ -8,6 +8,9 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+/**
+ * DTO of firms
+ */
 @PasswordConfirm(password = "password", confirmPassword = "passwordRepeat")
 public class FirmDTO implements Serializable {
 

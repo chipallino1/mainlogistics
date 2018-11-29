@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Repository
+ */
 @Repository
 public interface PasswordsRepository extends JpaRepository<Passwords, Long> {
 
