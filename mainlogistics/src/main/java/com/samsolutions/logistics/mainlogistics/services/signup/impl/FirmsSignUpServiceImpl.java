@@ -62,7 +62,7 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.MANDATORY)
+    @Transactional
     public void saveFirm() {
         savePassword();
         save();
