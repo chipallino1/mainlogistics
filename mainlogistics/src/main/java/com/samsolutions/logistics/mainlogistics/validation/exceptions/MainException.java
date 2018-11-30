@@ -6,13 +6,22 @@ package com.samsolutions.logistics.mainlogistics.validation.exceptions;
 public class MainException extends RuntimeException {
     private static final long serialVersionUID = 1L;
     private String localizedMessage;
-    private Throwable cause;
+    private String localizedCauseMessage;
 
     @Override
-    public String getMessage() {
+    public String getLocalizedMessage() {
         return localizedMessage;
     }
-    public String getStringCause(){
-        return getCause().toString();
+
+    public void setLocalizedMessage(String localizedMessage) {
+        this.localizedMessage = localizedMessage;
+    }
+
+    public String getLocalizedCauseMessage() {
+        return localizedCauseMessage;
+    }
+
+    public void setLocalizedCauseMessage(String localizedCauseMessage) {
+        this.localizedCauseMessage = localizedCauseMessage;
     }
 }

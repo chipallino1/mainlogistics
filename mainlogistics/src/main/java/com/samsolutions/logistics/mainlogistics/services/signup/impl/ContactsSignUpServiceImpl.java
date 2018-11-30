@@ -15,6 +15,7 @@ import com.samsolutions.logistics.mainlogistics.services.security.SaltHashEncode
 import com.samsolutions.logistics.mainlogistics.services.security.UserState;
 import com.samsolutions.logistics.mainlogistics.services.signup.ContactsSignUpService;
 import com.samsolutions.logistics.mainlogistics.validation.exceptions.FirmNotFoundException;
+import com.samsolutions.logistics.mainlogistics.validation.exceptions.MainException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -112,12 +113,13 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
         if (contactDTO.getFirmName() != null) {
             List<Firms> firmsList = firmsRepository.findDistinctByFirmNameLike(contactDTO.getFirmName());
             if (firmsList.size() > 0) {
-                Firms firm = firmsList.get(0);//will throw exception (if firm does not exist)
+                Firms firm = firmsList.get(0);
                 contacts.setFirmId(firm.getId());
                 contacts.setContactState(ContactState.WAIT);
             }
             else {
-                throw new FirmNotFoundException();
+
+                throw new FirmNotFoundException("Firm you chose not found","Cause: this firm is not exists");
             }
         }
         contacts.setPasswordsId(passwords.getId());
