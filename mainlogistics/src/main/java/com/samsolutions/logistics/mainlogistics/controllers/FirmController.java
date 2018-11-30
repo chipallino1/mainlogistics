@@ -47,17 +47,6 @@ public class FirmController {
         return "redirect:/profile/firm/me";
     }
 
-    /**
-     * Get contact list
-     * @param firmName firm name
-     * @param model for adding attribute
-     * @return contact list
-     */
-    @RequestMapping(path = "/firms/{firmName}/contactList", method = RequestMethod.GET)
-    public String showContactsList(@PathVariable(name = "firmName") String firmName, Model model) {
-        model.addAttribute("firmName", firmName);
-        return "contactsList";
-    }
 
     /**
      * Delete contact user
