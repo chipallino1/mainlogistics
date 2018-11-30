@@ -1,4 +1,4 @@
-package com.samsolutions.logistics.mainlogistics.controllers;
+package com.samsolutions.logistics.mainlogistics.controllers.unit;
 
 import com.samsolutions.logistics.mainlogistics.services.signup.ContactsSignUpService;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
@@ -7,6 +7,7 @@ import com.samsolutions.logistics.mainlogistics.services.signup.FirmsSignUpServi
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -25,18 +26,17 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 @AutoConfigureMockMvc
 public class AuthenticationControllerTest {
 
+    @Autowired
     private MockMvc mockMvc;
-
     @MockBean
     private FirmsSignUpService firmsSignUpServiceMock;
     @MockBean
     private ContactsSignUpService contactsSignUpServiceMock;
-    @MockBean
-    private FirmsService firmsServiceMock;
 
-    @Before
-    public void setup() {
-        this.mockMvc = standaloneSetup(new AuthenticationController()).build();
+    @Test
+    public void shouldSetServices(){
+        assertThat(firmsSignUpServiceMock).isNotNull();
+        assertThat(contactsSignUpServiceMock).isNotNull();
     }
 
     @Test
@@ -54,13 +54,11 @@ public class AuthenticationControllerTest {
             mockMvc.perform(get("/auth/contact")).andExpect(status().is3xxRedirection());
             mockMvc.perform(get("/auth/firm")).andExpect(status().is3xxRedirection());
         } catch (Exception e) {
-            System.out.println("Error in shouldReturnHtmlAndResponseStatusOk: "+e.getMessage()+"\ncause: "+e.getCause());
+            e.printStackTrace();
         }
     }
     @Test
     public void shouldReturnOkOrRedirect(){
-        assertThat(firmsSignUpServiceMock).isNotNull();
-        assertThat(contactsSignUpServiceMock).isNotNull();
         try {
             mockMvc.perform(MockMvcRequestBuilders.post("/auth/contact"))
                     .andExpect(status().isOk());
@@ -71,15 +69,6 @@ public class AuthenticationControllerTest {
         }
 
     }
-    @Test
-    public void shouldReturnNotNullValue(){
-        String partOfFirmName="i";
-        assertThat(firmsServiceMock).isNotNull();
-        try {
-            mockMvc.perform(get("/firms/"+partOfFirmName+"/readall")).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
 }
