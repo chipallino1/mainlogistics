@@ -7,9 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(
-        SpringBootTest.WebEnvironment.MOCK,
-        classes = MainLogisticsApplication.class)
+@SpringBootTest
 @AutoConfigureMockMvc
 public class AuthenticationControllerIntegrationTest {
 }
