@@ -37,16 +37,18 @@ public class FirmController {
 
     /**
      * Add contact user
-     * @param contact request body
-     * @return redirection to profile page
+     * @param object request body
+     * @return true if contact user was added else exception
      */
 
-    @RequestMapping(path = "/firm/contacts/add", method = RequestMethod.POST)
-    public String addContactToFirm(ContactDTO contact) {
-        firmsService.addContact(contact);
-        return "redirect:/profile/firm/me";
+    @RequestMapping(path = "/firms/contacts/add", method = RequestMethod.POST)
+    public @ResponseBody boolean addContactToFirm(@RequestBody Object object) {
+        ContactDTO contactDTO = new ContactDTO();
+        contactDTO.setEmail((String) ((LinkedHashMap) object).get("email"));
+        contactDTO.setFirmName((String) ((LinkedHashMap) object).get("firmName"));
+        firmsService.addContact(contactDTO);
+        return true;
     }
-
 
     /**
      * Delete contact user
@@ -61,6 +63,20 @@ public class FirmController {
         contactDTO.setFirmName((String) ((LinkedHashMap) object).get("firmName"));
         firmsService.deleteContact(contactDTO);
         return true;
+    }
+
+    /**
+     *
+     * @param firmName firm name
+     * @param state contact user state (ADDED,WAIT)
+     * @return contact list
+     */
+    @RequestMapping(path = "/contacts/readall/{firmName}/{state}", method = RequestMethod.GET)
+    public @ResponseBody
+    List<ContactDTO> readAllContactsFirm(@PathVariable(name = "firmName") String firmName,
+                                         @PathVariable(name = "state") String state) {
+
+        return firmsService.getContactsTop5(firmName, state);
     }
 
 }

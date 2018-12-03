@@ -126,16 +126,22 @@ function getHelp(type)
 }
 
 
-function getResults(arr,id,resultId) {
+function getResults(arr,id,resultId,listName,description) {
 	deleteNodes(id);
 	let result=document.getElementById(id);
-	result.appendChild(createHead('Contacts list'));
+	result.appendChild(createHead(listName));
 	result.appendChild(document.createElement('hr'));
-	result.appendChild(createParag('You can see each person who works here.'));
+	result.appendChild(createParag(description));
 	result.appendChild(createDivPad());
 	result.appendChild(createResultsDiv(resultId));
+
+	let isWait;
+
+	if(description.indexOf('wait')>0)
+		isWait=true;
+
 	for(let i=0;i<arr.length;i++){
-		addResult(null,arr[i].firstName+' '+arr[i].lastName,arr[i].email,'',resultId);
+		addResult(null,arr[i].firstName+' '+arr[i].lastName,arr[i].email,'',resultId,isWait);
 	}
 
 }
@@ -189,7 +195,7 @@ function createResultsDiv(resultId) {
 
 }
 
-function addResult(imgSrc,product,description,price,resultId) {
+function addResult(imgSrc,product,description,price,resultId,isWait) {
 	
 
 
@@ -217,13 +223,28 @@ function addResult(imgSrc,product,description,price,resultId) {
 
 	let td5=document.createElement('td');
 	td5.className='price text-right';
-	let butt=document.createElement('button');
-	butt.className='btn btn-primary btn-block';
-	butt.type='button';
-	butt.id='deleteButton';
-	butt.addEventListener('click',deleteContact);
-	butt.appendChild(document.createTextNode("--"));
-	td5.appendChild(butt);
+
+	if(!isWait)
+	{
+		let butt=document.createElement('button');
+		butt.className='btn btn-primary btn-block';
+		butt.type='button';
+		butt.id='deleteButton';
+		butt.addEventListener('click',deleteContact);
+		butt.appendChild(document.createTextNode("--"));
+		td5.appendChild(butt);
+	}
+	else
+	{
+		let butt=document.createElement('button');
+		butt.className='btn btn-primary btn-block';
+		butt.type='button';
+		butt.id='addButton';
+		butt.addEventListener('click',addContact);
+		butt.appendChild(document.createTextNode("++"));
+		td5.appendChild(butt);
+	}
+	
 
 
  	let tr=document.createElement('tr');
@@ -241,13 +262,19 @@ function addResult(imgSrc,product,description,price,resultId) {
 
 function getContacts(firmName,status,id,resultId) {
 	let xhr = new XMLHttpRequest();
-    xhr.open("GET", '/firm/contacts/readall/'+firmName+'/'+status, true);
+    xhr.open("GET", '/contacts/readall/'+firmName+'/'+status, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
           arr=[];
+          console.log(xhr.responseText);
           arr=JSON.parse(xhr.responseText);
-          getResults(arr,id,resultId);
+          if(arr.length==0)
+          	return;
+          if(arr[0].contactState=='WAIT')
+          	getResults(arr,id,resultId,'Contacts wait list','They wait for your decision');
+          else
+          	getResults(arr,id,resultId,'Contacts list','Here you can see all contacts');
         }
       }
       xhr.send(null); 
@@ -261,7 +288,7 @@ function getCurrenctContactPage(e) {
 		elem.childNodes[1].childNodes[3].submit();
 	}
 	else{
-		if(e.target.id=='deleteButton'){
+		if(e.target.id=='deleteButton' || e.target.id=='addButton'){
 			return;
 		}
 		elem=elem.parentNode;
@@ -273,20 +300,27 @@ function getCurrenctContactPage(e) {
 	
 }
 function deleteContact(e) {
-	console.log(e.target);
+	let body = JSON.stringify({firmName:firmNameFirm.value,email:e.target.parentNode.parentNode.getAttribute('email')});
+	console.log(body);
+	post(body,'/firms/contacts/delete');
+}
+function addContact(e) {
+	let body = JSON.stringify({firmName:firmNameFirm.value,email:e.target.parentNode.parentNode.getAttribute('email')});
+	console.log(body);
+	post(body,'/firms/contacts/add');
+}
+function post(body,action) {
 	let xhr = new XMLHttpRequest();
-    xhr.open("POST", '/firm/contacts/delete', true);
+    xhr.open("POST", action, true);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.onreadystatechange = function() {
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
           arr=[];
-          arr=JSON.parse(xhr.responseText);
           console.log(xhr.responseText);
+          arr=JSON.parse(xhr.responseText);          
           alert(arr[0].message);
         }
       }
-     console.log( e.target.parentNode.parentNode.childNodes[1].childNodes[2]);
-     let body = JSON.stringify({firmName:firmNameFirm.value,email:e.target.parentNode.parentNode.getAttribute('email')});
-     console.log(body);
       xhr.send(body); 
+     
 }

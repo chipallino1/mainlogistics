@@ -10,6 +10,7 @@ import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.UsersRepository;
 import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
+import com.samsolutions.logistics.mainlogistics.validation.exceptions.FirmNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -105,5 +106,24 @@ public class FirmsServiceImpl implements FirmsService {
         Contacts contacts = contactsRepository.findByEmail(contactDTO.getEmail());
         contacts.setContactState(ContactState.WAIT);
         contactsRepository.save(contacts);
+    }
+
+    @Override
+    public List<ContactDTO> getContactsTop5(String firmName, String state) {
+        int top5 = 5;
+        Firms firms = firmsRepository.findByFirmName(firmName);
+        Collection<Contacts> contactsCollection = firms.getContactsById();
+        List<ContactDTO> contactDTOList = new ArrayList<>();
+        ContactDTO contactDTO;
+        Contacts[] contacts = new Contacts[contactsCollection.size()];
+        contactsCollection.toArray(contacts);
+        for (int i = 0; i < top5 && i < contacts.length; i++) {
+            if (contacts[i].getContactState() == ContactState.valueOf(state)) {
+                contactDTO = new ContactDTO();
+                map(contacts[i], contactDTO);
+                contactDTOList.add(contactDTO);
+            }
+        }
+        return contactDTOList;
     }
 }

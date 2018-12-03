@@ -59,4 +59,12 @@ public interface FirmsService {
      * @param contactDTO dto of contacts
      */
     void deleteContact(ContactDTO contactDTO);
+
+    /**
+     *
+     * @param firmName firm name
+     * @param status status of contact user (ADDED,WAIT)
+     * @return
+     */
+    public List<ContactDTO> getContactsTop5(String firmName, String state);
 }

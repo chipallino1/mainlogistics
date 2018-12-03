@@ -24,19 +24,7 @@ public class ContactController {
     public void setContactsService(ContactsService contactsService) {
         this.contactsService = contactsService;
     }
-    /**
-     *
-     * @param firmName
-     * @param status
-     * @return contact list
-     */
-    @RequestMapping(path = "/contacts/readall/{firmName}/{status}", method = RequestMethod.GET)
-    public @ResponseBody
-    List<ContactDTO> readAllContactsFirm(@PathVariable(name = "firmName") String firmName,
-                                         @PathVariable(name = "status") String status) {
 
-        return contactsService.getContactsTop5(firmName, status);
-    }
 
 
 }

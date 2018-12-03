@@ -3,11 +3,12 @@ package com.samsolutions.logistics.mainlogistics.dto;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * DTO of users
  */
-public class UserDTO {
+public class UserDTO implements Serializable {
     @NotNull
     @Email(regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+" +
             "(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"" +

@@ -57,8 +57,4 @@ public class ContactsServiceImpl implements ContactsService {
         modelMapper.map(src, dest);
     }
 
-    @Override
-    public List<ContactDTO> getContactsTop5(String firmName, String status) {
-        return null;
-    }
 }

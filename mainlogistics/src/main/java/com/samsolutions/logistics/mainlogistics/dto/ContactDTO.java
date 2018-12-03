@@ -1,5 +1,6 @@
 package com.samsolutions.logistics.mainlogistics.dto;
 
+import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
 import com.samsolutions.logistics.mainlogistics.validation.annotations.PasswordConfirm;
 
 import javax.validation.constraints.Email;
@@ -45,6 +46,7 @@ public class ContactDTO implements Serializable {
             "x7f])+)\\])")
     private String email;
     private String firmName;
+    private ContactState contactState;
     @NotNull
     @Size(min = 8, max = 50)
     private String password;
@@ -90,6 +92,14 @@ public class ContactDTO implements Serializable {
 
     public void setFirmName(String firmName) {
         this.firmName = firmName;
+    }
+
+    public ContactState getContactState() {
+        return contactState;
+    }
+
+    public void setContactState(ContactState contactState) {
+        this.contactState = contactState;
     }
 
     public String getPasswordRepeat() {

@@ -31,5 +31,4 @@ public interface ContactsService {
      */
     void map(Object src, Object dest);
 
-    List<ContactDTO> getContactsTop5(String firmName, String status);
 }

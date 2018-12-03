@@ -32,18 +32,15 @@ function autocomplete(inp, arr,action) {
   /*execute a function when someone writes in the text field:*/
   inp.addEventListener("input", function(e) {
       var  val = this.value;
-      if(val==""){
-        val="all";
-      }
       curr=this;
       var xhr = new XMLHttpRequest();
-      var firmNameFirm = document.getElementById('firmNameFirm');
-      if(firmNameFirm.value!=""){
-        console.log(firmNameFirm.value);
-        xhr.open("GET", path+val+'/'+firmNameFirm.value+'/readall', true);
+      var myInput = document.getElementById('myInput');
+      if(val!=""){
+        console.log(val);
+        xhr.open("GET", path+val+'/readall', true);
       }
       else{
-         console.log(firmNameFirm.value);
+         return;
         xhr.open("GET", path+val+'/readall', true);
       }
 
