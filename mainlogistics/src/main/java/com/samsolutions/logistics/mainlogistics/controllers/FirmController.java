@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Firm user controller class for get info about firms
  */
-@Controller
+@RestController
 public class FirmController {
 
     private FirmsService firmsService;
@@ -29,9 +29,8 @@ public class FirmController {
      * @param firmName
      * @return all firms like firm name
      */
-    @RequestMapping(path = "/firms/{firmName}/readall", method = RequestMethod.GET)
-    public @ResponseBody
-    List<FirmDTO> readAllFirmsLike(@PathVariable(value = "firmName") String firmName) {
+    @GetMapping(path = "/firms/{firmName}/readall")
+    public List<FirmDTO> readAllFirmsLike(@PathVariable(value = "firmName") String firmName) {
         return firmsService.getAllByName(firmName);
     }
 
@@ -41,7 +40,7 @@ public class FirmController {
      * @return true if contact user was added else exception
      */
 
-    @RequestMapping(path = "/firms/contacts/add", method = RequestMethod.POST)
+    @PostMapping(path = "/firms/contacts/add")
     public @ResponseBody boolean addContactToFirm(@RequestBody Object object) {
         ContactDTO contactDTO = new ContactDTO();
         contactDTO.setEmail((String) ((LinkedHashMap) object).get("email"));
@@ -55,9 +54,8 @@ public class FirmController {
      * @param object request body
      * @return if deleted - true,else false
      */
-    @RequestMapping(path = "/firms/contacts/delete", method = RequestMethod.POST)
-    public @ResponseBody
-    boolean deleteContact(@RequestBody Object object) {
+    @PostMapping(path = "/firms/contacts/delete")
+    public boolean deleteContact(@RequestBody Object object) {
         ContactDTO contactDTO = new ContactDTO();
         contactDTO.setEmail((String) ((LinkedHashMap) object).get("email"));
         contactDTO.setFirmName((String) ((LinkedHashMap) object).get("firmName"));
@@ -71,9 +69,8 @@ public class FirmController {
      * @param state contact user state (ADDED,WAIT)
      * @return contact list
      */
-    @RequestMapping(path = "/contacts/readall/{firmName}/{state}", method = RequestMethod.GET)
-    public @ResponseBody
-    List<ContactDTO> readAllContactsFirm(@PathVariable(name = "firmName") String firmName,
+    @GetMapping(path = "/contacts/readall/{firmName}/{state}")
+    public List<ContactDTO> readAllContactsFirm(@PathVariable(name = "firmName") String firmName,
                                          @PathVariable(name = "state") String state) {
 
         return firmsService.getContactsTop5(firmName, state);

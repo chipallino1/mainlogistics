@@ -317,8 +317,7 @@ function post(body,action) {
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
           arr=[];
           console.log(xhr.responseText);
-          arr=JSON.parse(xhr.responseText);          
-          alert(arr[0].message);
+          arr=JSON.parse(xhr.responseText);
         }
       }
       xhr.send(body); 
