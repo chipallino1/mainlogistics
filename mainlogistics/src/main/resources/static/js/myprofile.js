@@ -23,3 +23,15 @@ function showContacts() {
 	//getContacts.submit();
 	
 }
+function makeEnabledElemsInCont(elem) {
+	console.log(elem.id+' '+elem.disabled);
+	for(let i=0;i<elem.childNodes.length;i++){
+		if(elem.childNodes[i].disabled){
+            elem.childNodes[i].disabled='';
+            console.log('hui');
+		}
+		else{
+			makeEnabledElemsInCont(elem.childNodes[i]);
+		}
+	}
+}

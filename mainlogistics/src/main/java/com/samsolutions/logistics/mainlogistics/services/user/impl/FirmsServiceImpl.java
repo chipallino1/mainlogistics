@@ -9,6 +9,7 @@ import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.UsersRepository;
 import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
+import com.samsolutions.logistics.mainlogistics.services.security.Role;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
 import com.samsolutions.logistics.mainlogistics.validation.exceptions.FirmNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -98,6 +99,8 @@ public class FirmsServiceImpl implements FirmsService {
         Contacts contacts = contactsRepository.findByEmail(contactDTO.getEmail());
         Firms firms = firmsRepository.findAllByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).get(0);
         contacts.setContactState(ContactState.ADDED);
+        Users users = usersRepository.findByEmail(contactDTO.getEmail());
+        users.setRole(Role.ROLE_CONTACT_LOGISTICS_FIRM_USER);
         contactsRepository.save(contacts);
     }
 
@@ -105,6 +108,8 @@ public class FirmsServiceImpl implements FirmsService {
     public void deleteContact(ContactDTO contactDTO) {
         Contacts contacts = contactsRepository.findByEmail(contactDTO.getEmail());
         contacts.setContactState(ContactState.WAIT);
+        Users users = usersRepository.findByEmail(contactDTO.getEmail());
+        users.setRole(Role.ROLE_CONTACT_USER);
         contactsRepository.save(contacts);
     }
 
