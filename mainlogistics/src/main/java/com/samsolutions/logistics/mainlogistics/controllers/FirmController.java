@@ -2,10 +2,11 @@ package com.samsolutions.logistics.mainlogistics.controllers;
 
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
+import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
@@ -23,7 +24,6 @@ public class FirmController {
     public void setFirmsService(FirmsService firmsService) {
         this.firmsService = firmsService;
     }
-
     /**
      * Read all firms
      * @param firmName
@@ -70,10 +70,9 @@ public class FirmController {
      * @return contact list
      */
     @GetMapping(path = "/contacts/readall/{firmName}/{state}")
-    public List<ContactDTO> readAllContactsFirm(@PathVariable(name = "firmName") String firmName,
-                                         @PathVariable(name = "state") String state) {
-
-        return firmsService.getContacts(firmName, state);
+    public List<ContactDTO> readAllContactsFirm(@PageableDefault(value = 5) Pageable pageable, @PathVariable(name = "firmName") String firmName,
+                                                @PathVariable(name = "state") String state) {
+        return firmsService.getContacts(firmName, state,pageable);
     }
 
 }

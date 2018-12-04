@@ -14,6 +14,8 @@ import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
 import com.samsolutions.logistics.mainlogistics.validation.exceptions.FirmNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -114,9 +116,10 @@ public class FirmsServiceImpl implements FirmsService {
     }
 
     @Override
-    public List<ContactDTO> getContacts(String firmName, String state) {
+    public List<ContactDTO> getContacts(String firmName, String state, Pageable pageable) {
         Firms firms = firmsRepository.findByFirmName(firmName);
-        List<Contacts> contactsList=contactsRepository.findAllByContactStateAndFirmIdOrderByIdDesc(ContactState.valueOf(state),firms.getId());
+        Page<Contacts> contactsPage=contactsRepository.findAllByContactStateAndFirmIdOrderByIdDesc(ContactState.valueOf(state),firms.getId(),pageable);
+        List<Contacts> contactsList = contactsPage.getContent();
         List<ContactDTO> contactDTOList = new ArrayList<>();
         ContactDTO contactDTO;
         for (int i = 0; i < contactsList.size(); i++) {

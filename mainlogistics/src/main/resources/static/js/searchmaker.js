@@ -261,9 +261,9 @@ function addResult(imgSrc,fullName,email,price,resultId,isWait) {
 
 }
 
-function getContacts(firmName,status,id,resultId) {
+function getContacts(firmName,status,id,resultId,page,value) {
 	let xhr = new XMLHttpRequest();
-    xhr.open("GET", '/contacts/readall/'+firmName+'/'+status, true);
+    xhr.open("GET", '/contacts/readall/'+firmName+'/'+status+'?page='+page+'&value='+value, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {

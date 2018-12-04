@@ -4,6 +4,7 @@ import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import com.samsolutions.logistics.mainlogistics.entities.Contacts;
 import com.samsolutions.logistics.mainlogistics.entities.Firms;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -66,5 +67,5 @@ public interface FirmsService {
      * @param state status of contact user (ADDED,WAIT)
      * @return
      */
-    public List<ContactDTO> getContacts(String firmName, String state);
+    public List<ContactDTO> getContacts(String firmName, String state, Pageable pageable);
 }
