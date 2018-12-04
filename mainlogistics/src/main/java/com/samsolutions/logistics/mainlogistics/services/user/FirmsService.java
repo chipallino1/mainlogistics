@@ -63,8 +63,8 @@ public interface FirmsService {
     /**
      *
      * @param firmName firm name
-     * @param status status of contact user (ADDED,WAIT)
+     * @param state status of contact user (ADDED,WAIT)
      * @return
      */
-    public List<ContactDTO> getContactsTop5(String firmName, String state);
+    public List<ContactDTO> getContacts(String firmName, String state);
 }

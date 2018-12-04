@@ -35,3 +35,20 @@ function makeEnabledElemsInCont(elem) {
 		}
 	}
 }
+function sortBy(type,action) {
+
+}
+
+function get(action) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", action, true);
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+            arr=[];
+            console.log(xhr.responseText);
+            arr=JSON.parse(xhr.responseText);
+        }
+    }
+    xhr.send(null);
+
+}

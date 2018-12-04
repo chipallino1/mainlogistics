@@ -19,5 +19,5 @@ public interface ContactsRepository extends JpaRepository<Contacts, Long> {
 
     List<Contacts> findDistinctTop5ByEmailLikeAndContactStateAndFirmId(String email, ContactState contactState, Long firmId);
 
-    List<Contacts> findDistinctTop5ByContactStateAndFirmId(ContactState contactState, Long firmId);
+    List<Contacts> findAllByContactStateAndFirmIdOrderByIdDesc(ContactState contactState, Long firmId);
 }

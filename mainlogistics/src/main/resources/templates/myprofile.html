@@ -228,11 +228,18 @@
                         <!-- BEGIN RESULT -->
                         <div class="col" id="resultColQueue">
 
-                            <h2><i class="fa fa-file-o"></i> Contacts list</h2>
+                            <h2><i class="fa fa-file-o"></i> Contacts wait list</h2>
                             <hr>
 
-                            <p>You can see each person who works on you.</p>
-
+                            <p>They wait for your decision.</p>
+                            <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="checkFirstQueue" onclick="sortBy('firstName','/contacts/sort/')">
+                                    <label class="form-check-label" for="checkFirstQueue">Sort by first name</label>
+                            </div>
+                            <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="checkLastQueue" onclick="sortBy('lastName','/contacts/sort/')">
+                                    <label class="form-check-label" for="checkLastQueue">Sort by last name</label>
+                            </div>
                             <div class="padding"></div>
                         </div>
                         <!-- END RESULT -->
@@ -258,7 +265,7 @@
                                     <h2><i class="fa fa-file-o"></i> Contacts list</h2>
                                     <hr>
 
-                                    <p>You can see each person who works on you.</p>
+                                    <p>Here you can see all contacts.</p>
 
                                     <div class="padding"></div>
                                 </div>

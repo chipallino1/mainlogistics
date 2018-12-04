@@ -73,7 +73,7 @@ public class FirmController {
     public List<ContactDTO> readAllContactsFirm(@PathVariable(name = "firmName") String firmName,
                                          @PathVariable(name = "state") String state) {
 
-        return firmsService.getContactsTop5(firmName, state);
+        return firmsService.getContacts(firmName, state);
     }
 
 }

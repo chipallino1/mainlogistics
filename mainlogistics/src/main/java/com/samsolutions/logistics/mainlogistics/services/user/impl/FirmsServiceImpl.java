@@ -114,18 +114,15 @@ public class FirmsServiceImpl implements FirmsService {
     }
 
     @Override
-    public List<ContactDTO> getContactsTop5(String firmName, String state) {
-        int top5 = 5;
+    public List<ContactDTO> getContacts(String firmName, String state) {
         Firms firms = firmsRepository.findByFirmName(firmName);
-        Collection<Contacts> contactsCollection = firms.getContactsById();
+        List<Contacts> contactsList=contactsRepository.findAllByContactStateAndFirmIdOrderByIdDesc(ContactState.valueOf(state),firms.getId());
         List<ContactDTO> contactDTOList = new ArrayList<>();
         ContactDTO contactDTO;
-        Contacts[] contacts = new Contacts[contactsCollection.size()];
-        contactsCollection.toArray(contacts);
-        for (int i = 0; i < top5 && i < contacts.length; i++) {
-            if (contacts[i].getContactState() == ContactState.valueOf(state)) {
+        for (int i = 0; i < contactsList.size(); i++) {
+            if (contactsList.get(i).getContactState() == ContactState.valueOf(state)) {
                 contactDTO = new ContactDTO();
-                map(contacts[i], contactDTO);
+                map(contactsList.get(i), contactDTO);
                 contactDTOList.add(contactDTO);
             }
         }

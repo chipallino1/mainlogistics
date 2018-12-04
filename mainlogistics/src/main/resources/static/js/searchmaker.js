@@ -195,7 +195,7 @@ function createResultsDiv(resultId) {
 
 }
 
-function addResult(imgSrc,product,description,price,resultId,isWait) {
+function addResult(imgSrc,fullName,email,price,resultId,isWait) {
 	
 
 
@@ -212,12 +212,13 @@ function addResult(imgSrc,product,description,price,resultId,isWait) {
 	let td3=document.createElement('td');
 	td3.className='product';
 	let strong=document.createElement('strong');
-	strong.appendChild(document.createTextNode(product));
+	strong.name='fullName';
+	strong.appendChild(document.createTextNode(fullName));
 	let br=document.createElement('br');
 	td3.appendChild(strong);
 	td3.appendChild(br);
 	td3.name='email';
-	td3.appendChild(document.createTextNode(description));
+	td3.appendChild(document.createTextNode(email));
 	let form=document.createElement('form');
 	td3.appendChild(form);
 
@@ -252,7 +253,7 @@ function addResult(imgSrc,product,description,price,resultId,isWait) {
  	//tr.appendChild(td2);
  	tr.appendChild(td3);
  	tr.appendChild(td5);
- 	tr.setAttribute('email',description);
+ 	tr.setAttribute('email',email);
  	tr.addEventListener('click',getCurrenctContactPage);
 
  	let resultsCont=document.getElementById(resultId);
