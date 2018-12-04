@@ -126,13 +126,57 @@ function getHelp(type)
 }
 
 
+function createSearchSorting(){
+	let divCont=document.createElement('div');
+	divCont.className='container';
+
+	let divForm1=document.createElement('div');
+	divForm1.className='form-check';
+
+	let inp1=document.createElement('input');
+	inp1.type='checkbox';
+	inp1.className='form-check-input';
+	inp1.id='checkFirstQueue';
+	inp1.setAttribute('onclick',"sortBy('firstName','/contacts/sort/')");
+
+	let label1=document.createElement('label');
+	label1.className='form-check-label';
+	label1.for='checkFirstQueue';
+
+	divForm1.appendChild(inp1);
+	divForm1.appendChild(label1);
+
+	let inp2=document.createElement('input');
+	inp2.type='checkbox';
+	inp2.className='form-check-input';
+	inp2.id='checkLastQueue';
+	inp2.setAttribute('onclick',"sortBy('lastName','/contacts/sort/')");
+
+	let label2=document.createElement('label');
+	label2.className='form-check-label';
+	label2.for='checkLastQueue';
+
+	let divForm2=document.createElement('div');
+	divForm2.className='form-check';
+
+	divForm2.appendChild(inp2);
+	divForm2.appendChild(label2);
+
+	divCont.appendChild(divForm1);
+	divCont.appendChild(divForm2);
+	return divCont;
+}
+
 function getResults(arr,id,resultId,listName,description) {
-	deleteNodes(id);
+	//deleteNodes(id);
 	let result=document.getElementById(id);
-	result.appendChild(createHead(listName));
-	result.appendChild(document.createElement('hr'));
-	result.appendChild(createParag(description));
-	result.appendChild(createDivPad());
+	//result.appendChild(createHead(listName));
+	//result.appendChild(document.createElement('hr'));
+	//result.appendChild(createParag(description));
+	//result.appendChild(createSearchSorting());
+	//result.appendChild(createDivPad());
+	if(document.getElementById(resultId)!=null)
+		deleteNodes(resultId);
 	result.appendChild(createResultsDiv(resultId));
 
 	let isWait;
@@ -224,27 +268,33 @@ function addResult(imgSrc,fullName,email,price,resultId,isWait) {
 
 	let td5=document.createElement('td');
 	td5.className='price text-right';
-
-	if(!isWait)
+	let path = window.location.pathname;
+	let profile = path.substr(path.lastIndexOf('/')+1)
+	console.log(profile);
+	if(profile =='me')
 	{
-		let butt=document.createElement('button');
-		butt.className='btn btn-primary btn-block';
-		butt.type='button';
-		butt.id='deleteButton';
-		butt.addEventListener('click',deleteContact);
-		butt.appendChild(document.createTextNode("--"));
-		td5.appendChild(butt);
+		if(!isWait)
+		{
+			let butt=document.createElement('button');
+			butt.className='btn btn-primary btn-block';
+			butt.type='button';
+			butt.id='deleteButton';
+			butt.addEventListener('click',deleteContact);
+			butt.appendChild(document.createTextNode("--"));
+			td5.appendChild(butt);
+		}
+		else
+		{
+			let butt=document.createElement('button');
+			butt.className='btn btn-primary btn-block';
+			butt.type='button';
+			butt.id='addButton';
+			butt.addEventListener('click',addContact);
+			butt.appendChild(document.createTextNode("++"));
+			td5.appendChild(butt);
+		}
 	}
-	else
-	{
-		let butt=document.createElement('button');
-		butt.className='btn btn-primary btn-block';
-		butt.type='button';
-		butt.id='addButton';
-		butt.addEventListener('click',addContact);
-		butt.appendChild(document.createTextNode("++"));
-		td5.appendChild(butt);
-	}
+	
 	
 
 
