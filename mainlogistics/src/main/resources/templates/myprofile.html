@@ -217,7 +217,7 @@
 </article> <!-- card-body end .// -->
 </div> <!-- card.// -->
 </div> <!-- col.//-->
-    <div class="col-md-4" sec:authorize  id="contactQueue" style="display: none;">
+    <div class="col-md-4" id="contactQueue" style="display: none;">
 
         <div class="card">
             <article class="card-body">
@@ -234,11 +234,11 @@
                             <p>They wait for your decision.</p>
                             <div class="container">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkFirstQueue" onclick="sortBy('firstName','/contacts/sort/')">
+                                    <input type="checkbox" class="form-check-input" id="checkFirstQueue" onclick="sortBy('firstName','fullName')">
                                     <label class="form-check-label" for="checkFirstQueue">Sort by first name</label>
                                 </div>
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkLastQueue" onclick="sortBy('lastName','/contacts/sort/')">
+                                    <input type="checkbox" class="form-check-input" id="checkLastQueue" onclick="sortBy('lastName','fullName')">
                                     <label class="form-check-label" for="checkLastQueue">Sort by last name</label>
                                 </div>
                             </div>

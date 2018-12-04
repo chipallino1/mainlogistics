@@ -35,8 +35,34 @@ function makeEnabledElemsInCont(elem) {
 		}
 	}
 }
-function sortBy(type,action) {
+function sortBy(type,id) {
+	let separateNames = getSeparateNames(id);
+	if(type=='firstName'){
+		separateNames.firstNames.sort();
+		console.log(separateNames.firstNames);
+	}
+	else{
+		separateNames.lastNames.sort();
+		console.log(separateNames.lastNames);
+	}
 
+
+}
+function getSeparateNames(id) {
+    let elems=document.getElementsByName(id);
+    console.log(elems);
+    let firstNames=[];
+    let lastNames=[];
+    let currValue;
+    for(let i=0;i<elems.length;i++){
+        currValue=elems[i].innerHTML;
+        firstNames.push(currValue.substr(0,currValue.lastIndexOf(' ')));
+        lastNames.push(currValue.substr(currValue.lastIndexOf(' ')+1));
+    }
+    console.log(firstNames);
+    console.log(lastNames);
+    let separateNames={firstNames:firstNames,lastNames:lastNames};
+	return separateNames;
 }
 
 function get(action) {

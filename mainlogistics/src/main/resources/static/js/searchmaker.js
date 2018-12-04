@@ -256,12 +256,12 @@ function addResult(imgSrc,fullName,email,price,resultId,isWait) {
 	let td3=document.createElement('td');
 	td3.className='product';
 	let strong=document.createElement('strong');
-	strong.name='fullName';
+	strong.setAttribute('name','fullName');
 	strong.appendChild(document.createTextNode(fullName));
 	let br=document.createElement('br');
 	td3.appendChild(strong);
 	td3.appendChild(br);
-	td3.name='email';
+	td3.setAttribute('name','email');
 	td3.appendChild(document.createTextNode(email));
 	let form=document.createElement('form');
 	td3.appendChild(form);
