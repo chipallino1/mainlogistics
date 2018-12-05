@@ -73,9 +73,12 @@ public class FirmController {
      * @param state contact user state (ADDED,WAIT)
      * @return contact list
      */
-    @GetMapping(path = "/contacts/readall")
-    public PageDTO<ContactDTO> readAllContactsFirm(@PageableDefault(value = 5) Pageable pageable, @PathVariable(name = "firmName") String firmName,
-                                                @PathVariable(name = "state") String state) {
+    @PostMapping(path = "/contacts/readall")
+    public PageDTO<ContactDTO> readAllContactsFirm(@PageableDefault(value = 5) Pageable pageable, /*@PathVariable(name = "firmName") String firmName,
+                                                @PathVariable(name = "state") String state*/ @RequestBody Object object) {
+
+        String firmName = (String)((LinkedHashMap)object).get("firmName");
+        String state = (String)((LinkedHashMap)object).get("state");
         return firmsService.getContactsByPage(firmName, state,pageable);
     }
 

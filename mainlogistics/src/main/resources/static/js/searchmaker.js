@@ -340,18 +340,30 @@ function getContactsGet(firmName,status,id,resultId,page,value) {
       }
       xhr.send(null); 
 }
-function getContacts(curr,firmName,status,id,resultId,page,value) {
+function getContacts(curr,firmName,state,id,resultId,page,value) {
 	let orderType1=document.getElementById('checkFirstQueue');
 	let orderType2=document.getElementById('checkLastQueue');
 	let body;
 	console.log(curr);
+	let cbParams={resultId:resultId,id:id,listName:'Contacts wait list',description:'They wait for your decision'};
+	if(curr==null)
+	{
+		body={firmName:firmName,state:state,page:page,orderBy:orderType2.getAttribute('sortType'),desc:orderType2.checked};
+		body=JSON.stringify(body);
+		post(body,'/contacts/readall',getResults,cbParams);
+		console.log(body);
+	}
 	if(curr.id='checkFirstQueue'){
-		body={firmName:firmName,status:status,page:page,orderBy:orderType1.getAttribute('sortType'),desc:orderType1.checked};
+		body={firmName:firmName,state:state,page:page,orderBy:orderType1.getAttribute('sortType'),desc:orderType1.checked};
+		body=JSON.stringify(body);
+		post(body,'/contacts/readall',getResults,cbParams);
 		console.log(body);
 	}
 	else
 		if(curr.id='checkLastQueue'){
-			body={firmName:firmName,status:status,page:page,orderBy:orderType2.getAttribute('sortType'),desc:orderType2.checked};
+			body={firmName:firmName,state:state,page:page,orderBy:orderType2.getAttribute('sortType'),desc:orderType2.checked};
+			body=JSON.stringify(body);
+			post(body,'/contacts/readall',getResults,cbParams);
 			console.log(body);
 		}
 	
@@ -369,6 +381,7 @@ function getCurrenctContactPage(e) {
 			return;
 		}
 		elem=elem.parentNode;
+		console.log(elem.childNodes[1]);
 		console.log(elem.childNodes[1].childNodes[3]);
 		elem.childNodes[1].childNodes[3].action='/profile/contact/'+elem.getAttribute('email');
 		elem.childNodes[1].childNodes[3].submit();
@@ -386,7 +399,7 @@ function addContact(e) {
 	console.log(body);
 	post(body,'/firms/contacts/add');
 }
-function post(body,action) {
+function post(body,action,cb,cbParams) {
 	let xhr = new XMLHttpRequest();
     xhr.open("POST", action, true);
     xhr.setRequestHeader("Content-type", "application/json");
@@ -395,6 +408,14 @@ function post(body,action) {
           arr=[];
           console.log(xhr.responseText);
           arr=JSON.parse(xhr.responseText);
+          if(cb!=undefined){
+          	if(arr.length==0)
+          		return;
+          	if(arr.listEntitiesDTO[0].contactState=='WAIT')
+          		cb(arr.listEntitiesDTO,cbParams.id,cbParams.resultId,cbParams.listName,cbParams.description);
+         	else
+          		cb(arr.listEntitiesDTO,cbParams.id,cbParams.resultId,cbParams.listName,cbParams.description);
+          }
         }
       }
       xhr.send(body); 
