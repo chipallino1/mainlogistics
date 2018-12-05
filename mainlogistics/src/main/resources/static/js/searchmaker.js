@@ -321,7 +321,7 @@ function addResult(imgSrc,firstName,lastName,email,price,resultId,isWait) {
 
 }
 
-function getContacts(firmName,status,id,resultId,page,value) {
+function getContactsGet(firmName,status,id,resultId,page,value) {
 	let xhr = new XMLHttpRequest();
     xhr.open("GET", '/contacts/readall/'+firmName+'/'+status+'?page='+page+'&value='+value, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -339,6 +339,22 @@ function getContacts(firmName,status,id,resultId,page,value) {
         }
       }
       xhr.send(null); 
+}
+function getContacts(curr,firmName,status,id,resultId,page,value) {
+	let orderType1=document.getElementById('checkFirstQueue');
+	let orderType2=document.getElementById('checkLastQueue');
+	let body;
+	console.log(curr);
+	if(curr.id='checkFirstQueue'){
+		body={firmName:firmName,status:status,page:page,orderBy:orderType1.getAttribute('sortType'),desc:orderType1.checked};
+		console.log(body);
+	}
+	else
+		if(curr.id='checkLastQueue'){
+			body={firmName:firmName,status:status,page:page,orderBy:orderType2.getAttribute('sortType'),desc:orderType2.checked};
+			console.log(body);
+		}
+	
 }
 function getCurrenctContactPage(e) {
 	console.log(e.target.parentNode);
