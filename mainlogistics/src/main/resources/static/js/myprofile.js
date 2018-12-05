@@ -36,14 +36,28 @@ function makeEnabledElemsInCont(elem) {
 	}
 }
 function sortBy(type,id) {
-	let separateNames = getSeparateNames(id);
+	//let separateNames = getSeparateNames(id);
 	if(type=='firstName'){
-		separateNames.firstNames.sort();
-		console.log(separateNames.firstNames);
+
+		let firstNames=document.getElementsByName('firstName');
+		let firstNamesArr=[];
+		console.log(firstNames);
+		for(let i=1;i<firstNames.length;i++){
+			 firstNamesArr.push(firstNames[i].innerHTML);
+		}
+		firstNamesArr.sort();
+		console.log(firstNamesArr);
 	}
 	else{
-		separateNames.lastNames.sort();
-		console.log(separateNames.lastNames);
+		
+		let lastNames=document.getElementsByName('lastName');
+		let lastNamesArr=[];
+		console.log(lastNames);
+		for(let i=1;i<lastNames.length;i++){
+			 lastNamesArr.push(lastNames[i].innerHTML);
+		}
+		lastNamesArr.sort();
+		console.log(lastNamesArr);
 	}
 
 

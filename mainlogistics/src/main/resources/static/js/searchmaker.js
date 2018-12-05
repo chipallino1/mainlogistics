@@ -185,7 +185,7 @@ function getResults(arr,id,resultId,listName,description) {
 		isWait=true;
 
 	for(let i=0;i<arr.length;i++){
-		addResult(null,arr[i].firstName+' '+arr[i].lastName,arr[i].email,'',resultId,isWait);
+		addResult(null,arr[i].firstName,arr[i].lastName,arr[i].email,'',resultId,isWait);
 	}
 
 }
@@ -239,7 +239,7 @@ function createResultsDiv(resultId) {
 
 }
 
-function addResult(imgSrc,fullName,email,price,resultId,isWait) {
+function addResult(imgSrc,firstName,lastName,email,price,resultId,isWait) {
 	
 
 
@@ -257,7 +257,17 @@ function addResult(imgSrc,fullName,email,price,resultId,isWait) {
 	td3.className='product';
 	let strong=document.createElement('strong');
 	strong.setAttribute('name','fullName');
-	strong.appendChild(document.createTextNode(fullName));
+	let spanFirst=document.createElement('span');
+	spanFirst.setAttribute('name','firstName');
+	spanFirst.appendChild(document.createTextNode(firstName));
+	let spanSpace=document.createElement('span');
+	spanSpace.appendChild(document.createTextNode(' '));
+	let spanLast=document.createElement('span');
+	spanLast.setAttribute('name','lastName');
+	spanLast.appendChild(document.createTextNode(lastName));
+	strong.appendChild(spanFirst);
+	strong.appendChild(spanSpace);
+	strong.appendChild(spanLast);
 	let br=document.createElement('br');
 	td3.appendChild(strong);
 	td3.appendChild(br);
@@ -322,10 +332,10 @@ function getContacts(firmName,status,id,resultId,page,value) {
           arr=JSON.parse(xhr.responseText);
           if(arr.length==0)
           	return;
-          if(arr[0].contactState=='WAIT')
-          	getResults(arr,id,resultId,'Contacts wait list','They wait for your decision');
+          if(arr.listEntitiesDTO[0].contactState=='WAIT')
+          	getResults(arr.listEntitiesDTO,id,resultId,'Contacts wait list','They wait for your decision');
           else
-          	getResults(arr,id,resultId,'Contacts list','Here you can see all contacts');
+          	getResults(arr.listEntitiesDTO,id,resultId,'Contacts list','Here you can see all contacts');
         }
       }
       xhr.send(null); 
