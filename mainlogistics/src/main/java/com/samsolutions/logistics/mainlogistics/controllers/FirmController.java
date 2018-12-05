@@ -2,15 +2,19 @@ package com.samsolutions.logistics.mainlogistics.controllers;
 
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
+import com.samsolutions.logistics.mainlogistics.dto.PageDTO;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Firm user controller class for get info about firms
@@ -70,9 +74,9 @@ public class FirmController {
      * @return contact list
      */
     @GetMapping(path = "/contacts/readall/{firmName}/{state}")
-    public List<ContactDTO> readAllContactsFirm(@PageableDefault(value = 5) Pageable pageable, @PathVariable(name = "firmName") String firmName,
+    public PageDTO<ContactDTO> readAllContactsFirm(@PageableDefault(value = 5) Pageable pageable, @PathVariable(name = "firmName") String firmName,
                                                 @PathVariable(name = "state") String state) {
-        return firmsService.getContacts(firmName, state,pageable);
+        return firmsService.getContactsByPage(firmName, state,pageable);
     }
 
 }

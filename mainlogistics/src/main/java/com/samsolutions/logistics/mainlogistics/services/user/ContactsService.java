@@ -1,6 +1,9 @@
 package com.samsolutions.logistics.mainlogistics.services.user;
 
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
+import com.samsolutions.logistics.mainlogistics.entities.Contacts;
+import com.samsolutions.logistics.mainlogistics.services.utils.Converter;
+import com.samsolutions.logistics.mainlogistics.services.utils.Pagination;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -9,7 +12,7 @@ import java.util.List;
  * Contacts service
  */
 @Component
-public interface ContactsService {
+public interface ContactsService extends Converter {
     /**
      * Get contact user
      * @param email contact user email
@@ -24,11 +27,5 @@ public interface ContactsService {
      */
     void update(String email, ContactDTO contactDTO);
 
-    /**
-     * Map dto on entity and vice versa
-     * @param src source
-     * @param dest destination
-     */
-    void map(Object src, Object dest);
 
 }

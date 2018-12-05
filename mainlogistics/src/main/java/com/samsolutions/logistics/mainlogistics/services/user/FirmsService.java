@@ -2,8 +2,11 @@ package com.samsolutions.logistics.mainlogistics.services.user;
 
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
+import com.samsolutions.logistics.mainlogistics.dto.PageDTO;
 import com.samsolutions.logistics.mainlogistics.entities.Contacts;
 import com.samsolutions.logistics.mainlogistics.entities.Firms;
+import com.samsolutions.logistics.mainlogistics.services.utils.Converter;
+import com.samsolutions.logistics.mainlogistics.services.utils.Pagination;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +16,7 @@ import java.util.List;
  * Firms service
  */
 @Component
-public interface FirmsService {
+public interface FirmsService  extends Converter,Pagination<ContactDTO,Contacts> {
 
     /**
      * Get all firms
@@ -43,13 +46,6 @@ public interface FirmsService {
     void update(String email, FirmDTO firmDTO);
 
     /**
-     * Map dto on entity and vice versa
-     * @param src source
-     * @param dest destination
-     */
-    void map(Object src, Object dest);
-
-    /**
      * Add new contact user to firm user
      * @param contactDTO dto of contacts
      */
@@ -67,5 +63,5 @@ public interface FirmsService {
      * @param state status of contact user (ADDED,WAIT)
      * @return
      */
-    public List<ContactDTO> getContacts(String firmName, String state, Pageable pageable);
+    PageDTO<ContactDTO> getContactsByPage(String firmName, String state, Pageable pageable);
 }

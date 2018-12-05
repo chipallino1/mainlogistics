@@ -51,10 +51,4 @@ public class ContactsServiceImpl implements ContactsService {
         contactsRepository.save(contacts);
     }
 
-    @Override
-    public void map(Object src, Object dest) {
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.map(src, dest);
-    }
-
 }

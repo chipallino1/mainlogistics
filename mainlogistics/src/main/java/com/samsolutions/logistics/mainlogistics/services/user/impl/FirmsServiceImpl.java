@@ -2,6 +2,7 @@ package com.samsolutions.logistics.mainlogistics.services.user.impl;
 
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
+import com.samsolutions.logistics.mainlogistics.dto.PageDTO;
 import com.samsolutions.logistics.mainlogistics.entities.Contacts;
 import com.samsolutions.logistics.mainlogistics.entities.Firms;
 import com.samsolutions.logistics.mainlogistics.entities.Users;
@@ -91,12 +92,6 @@ public class FirmsServiceImpl implements FirmsService {
     }
 
     @Override
-    public void map(Object src, Object dest) {
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.map(src, dest);
-    }
-
-    @Override
     public void addContact(ContactDTO contactDTO) {
         Contacts contacts = contactsRepository.findByEmail(contactDTO.getEmail());
         Firms firms = firmsRepository.findAllByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).get(0);
@@ -116,7 +111,7 @@ public class FirmsServiceImpl implements FirmsService {
     }
 
     @Override
-    public List<ContactDTO> getContacts(String firmName, String state, Pageable pageable) {
+    public PageDTO<ContactDTO> getContactsByPage(String firmName, String state, Pageable pageable) {
         Firms firms = firmsRepository.findByFirmName(firmName);
         Page<Contacts> contactsPage=contactsRepository.findAllByContactStateAndFirmIdOrderByIdDesc(ContactState.valueOf(state),firms.getId(),pageable);
         List<Contacts> contactsList = contactsPage.getContent();
@@ -129,6 +124,7 @@ public class FirmsServiceImpl implements FirmsService {
                 contactDTOList.add(contactDTO);
             }
         }
-        return contactDTOList;
+
+        return getPage(contactDTOList,contactsPage);
     }
 }
