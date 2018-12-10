@@ -180,7 +180,7 @@ function getResults(arr,id,resultId,listName,description) {
 	result.appendChild(createResultsDiv(resultId));
 
 	let isWait;
-
+	console.log(arr+' '+id+' '+resultId+' '+listName+' '+description);
 	if(description.indexOf('wait')>0)
 		isWait=true;
 
@@ -346,6 +346,12 @@ function getContacts(curr,firmName,state,id,resultId,page,value) {
 	let body;
 	console.log(curr);
 	let cbParams={resultId:resultId,id:id,listName:'Contacts wait list',description:'They wait for your decision'};
+	if(curr==null && state=='ADDED'){
+		body={firmName:firmName,state:state,page:page,orderBy:orderType2.getAttribute('sortType'),desc:orderType2.checked};
+		body=JSON.stringify(body);
+		post(body,'/contacts/readall',getResults,cbParams);
+		console.log(body);
+	}
 	if(curr==null)
 	{
 		body={firmName:firmName,state:state,page:page,orderBy:orderType2.getAttribute('sortType'),desc:orderType2.checked};
@@ -411,10 +417,12 @@ function post(body,action,cb,cbParams) {
           if(cb!=undefined){
           	if(arr.length==0)
           		return;
-          	if(arr.listEntitiesDTO[0].contactState=='WAIT')
+          	if(arr.listEntitiesDTO[0].contactState=='WAIT'){
           		cb(arr.listEntitiesDTO,cbParams.id,cbParams.resultId,cbParams.listName,cbParams.description);
-         	else
+          	}
+         	else{
           		cb(arr.listEntitiesDTO,cbParams.id,cbParams.resultId,cbParams.listName,cbParams.description);
+         	}
           }
         }
       }
