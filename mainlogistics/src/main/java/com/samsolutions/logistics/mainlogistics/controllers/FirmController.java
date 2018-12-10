@@ -74,6 +74,7 @@ public class FirmController {
      * @return contact list
      */
     @PostMapping(path = "/contacts/readall")
+
     public PageDTO<ContactDTO> readAllContactsFirm(@PageableDefault(value = 5) Pageable pageable, /*@PathVariable(name = "firmName") String firmName,
                                                 @PathVariable(name = "state") String state*/ @RequestBody Object object) {
 
