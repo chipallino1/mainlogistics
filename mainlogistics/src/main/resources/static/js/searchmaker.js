@@ -167,7 +167,7 @@ function createSearchSorting(){
 	return divCont;
 }
 
-function getResults(arr,id,resultId,listName,description) {
+function getResults(arr,id,resultId) {
 	//deleteNodes(id);
 	let result=document.getElementById(id);
 	//result.appendChild(createHead(listName));
@@ -180,7 +180,7 @@ function getResults(arr,id,resultId,listName,description) {
 	result.appendChild(createResultsDiv(resultId));
 
 	let isWait;
-	console.log(arr+' '+id+' '+resultId+' '+listName+' '+description);
+	//console.log(arr+' '+id+' '+resultId+' '+listName+' '+description);
 	if(description.indexOf('wait')>0)
 		isWait=true;
 
@@ -341,13 +341,23 @@ function getContactsGet(firmName,status,id,resultId,page,value) {
       xhr.send(null); 
 }
 function getContacts(curr,firmName,state,id,resultId,page,value) {
-	let orderType1=document.getElementById('checkFirstQueue');
-	let orderType2=document.getElementById('checkLastQueue');
 	let body;
-	console.log(curr);
-	let cbParams={resultId:resultId,id:id,listName:'Contacts wait list',description:'They wait for your decision'};
+	let cbParams={resultId:resultId,id:id,state:state};
+	if(curr==null){
+		body={firmName:firmName,state:state,page:page,orderBy:null,desc:null};
+		body=JSON.stringify(body);
+		post(body,'/contacts/readall',getResults,cbParams);
+		console.log(body);
+	}
+	else{
+		if(curr.id.indexOf(curr.))
+		body={firmName:firmName,state:state,page:page,orderBy: ,desc:null};
+		body=JSON.stringify(body);
+		post(body,'/contacts/readall',getResults,cbParams);
+		console.log(body);
+	}
 	if(curr==null && state=='ADDED'){
-		body={firmName:firmName,state:state,page:page,orderBy:orderType2.getAttribute('sortType'),desc:orderType2.checked};
+		body={firmName:firmName,state:state,page:page,orderBy:null,desc:orderType2.checked};
 		body=JSON.stringify(body);
 		post(body,'/contacts/readall',getResults,cbParams);
 		console.log(body);
