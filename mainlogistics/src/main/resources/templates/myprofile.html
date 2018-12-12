@@ -10,7 +10,8 @@
       <link rel="stylesheet" type="text/css" th:href="@{/styles/searchstyle.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/styles/autocomplete.css}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-   
+      <meta name="_csrf" th:content="${_csrf.token}"/>
+      <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
   
 
       <title>Logistics</title>
@@ -234,11 +235,11 @@
                             <p>They wait for your decision.</p>
                             <div class="container">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkFirstQueue" sortType="firstName" onclick='getContacts(this,firmNameFirm.value,"ADDED","resultColQueue","resultContQueue",0,5)'>
+                                    <input type="checkbox" class="form-check-input" id="checkFirstQueue" sortType="firstName" onclick='getContacts(this,firmNameFirm.value,"ADDED","resultContQueue",0,5)'>
                                     <label class="form-check-label" id="checkFirstQueueLb" for="checkFirstQueue">Sort by first name</label>
                                 </div>
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkLastQueue" sortType="lastName" onclick='getContacts(this,firmNameFirm.value,"ADDED","resultColQueue","resultContQueue",0,5)'>
+                                    <input type="checkbox" class="form-check-input" id="checkLastQueue" sortType="lastName" onclick='getContacts(this,firmNameFirm.value,"ADDED","resultContQueue",0,5)'>
                                     <label class="form-check-label" id="checkLastQueueLb" for="checkLastQueue">Sort by last name</label>
                                 </div>
                             </div>
@@ -324,8 +325,8 @@
      <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
      <script th:src="@{/js/searchmaker.js}"></script>
-     <script sec:authorize="isAuthenticated() && hasRole('ROLE_FIRM_USER')">getContacts(null,firmNameFirm.value,"ADDED","resultCol","resultCont",0,5);</script>
-     <script sec:authorize="isAuthenticated() && hasRole('ROLE_FIRM_USER')">getContacts(null,firmNameFirm.value,"WAIT","resultColQueue","resultContQueue",0,5);</script>
+     <script sec:authorize="isAuthenticated() && hasRole('ROLE_FIRM_USER')">getContacts(null,firmNameFirm.value,"ADDED","resultCont",0,5);</script>
+     <script sec:authorize="isAuthenticated() && hasRole('ROLE_FIRM_USER')">getContacts(null,firmNameFirm.value,"WAIT","resultContQueue",0,5);</script>
     <script th:src="@{/js/authentication.js}"></script>
 
     <script th:src="@{/js/enter.js}"></script>

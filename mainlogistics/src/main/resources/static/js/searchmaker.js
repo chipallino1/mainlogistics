@@ -340,48 +340,15 @@ function getContactsGet(firmName,status,id,resultId,page,value) {
       }
       xhr.send(null); 
 }
-function getContacts(curr,firmName,state,id,resultId,page,value) {
+function getContacts(curr,firmName,state,resultId,page,value) {
 	let body;
-	let cbParams={resultId:resultId,id:id,state:state};
+	let cbParams={resultId:resultId,state:state};
 	if(curr==null){
 		body={firmName:firmName,state:state,page:page,orderBy:null,desc:null};
 		body=JSON.stringify(body);
 		post(body,'/contacts/readall',getResults,cbParams);
 		console.log(body);
 	}
-	else{
-		if(curr.id.indexOf(curr.))
-		body={firmName:firmName,state:state,page:page,orderBy: ,desc:null};
-		body=JSON.stringify(body);
-		post(body,'/contacts/readall',getResults,cbParams);
-		console.log(body);
-	}
-	if(curr==null && state=='ADDED'){
-		body={firmName:firmName,state:state,page:page,orderBy:null,desc:orderType2.checked};
-		body=JSON.stringify(body);
-		post(body,'/contacts/readall',getResults,cbParams);
-		console.log(body);
-	}
-	if(curr==null)
-	{
-		body={firmName:firmName,state:state,page:page,orderBy:orderType2.getAttribute('sortType'),desc:orderType2.checked};
-		body=JSON.stringify(body);
-		post(body,'/contacts/readall',getResults,cbParams);
-		console.log(body);
-	}
-	if(curr.id='checkFirstQueue'){
-		body={firmName:firmName,state:state,page:page,orderBy:orderType1.getAttribute('sortType'),desc:orderType1.checked};
-		body=JSON.stringify(body);
-		post(body,'/contacts/readall',getResults,cbParams);
-		console.log(body);
-	}
-	else
-		if(curr.id='checkLastQueue'){
-			body={firmName:firmName,state:state,page:page,orderBy:orderType2.getAttribute('sortType'),desc:orderType2.checked};
-			body=JSON.stringify(body);
-			post(body,'/contacts/readall',getResults,cbParams);
-			console.log(body);
-		}
 	
 }
 function getCurrenctContactPage(e) {
@@ -418,6 +385,9 @@ function addContact(e) {
 function post(body,action,cb,cbParams) {
 	let xhr = new XMLHttpRequest();
     xhr.open("POST", action, true);
+    let csrfToken = $("meta[name='_csrf']").attr("content");
+	let csrfHeader = $("meta[name='_csrf_header']").attr("content");
+	xhr.setRequestHeader(csrfHeader,csrfToken);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.onreadystatechange = function() {
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
@@ -425,14 +395,10 @@ function post(body,action,cb,cbParams) {
           console.log(xhr.responseText);
           arr=JSON.parse(xhr.responseText);
           if(cb!=undefined){
+
           	if(arr.length==0)
-          		return;
-          	if(arr.listEntitiesDTO[0].contactState=='WAIT'){
-          		cb(arr.listEntitiesDTO,cbParams.id,cbParams.resultId,cbParams.listName,cbParams.description);
-          	}
-         	else{
-          		cb(arr.listEntitiesDTO,cbParams.id,cbParams.resultId,cbParams.listName,cbParams.description);
-         	}
+          		return;          	
+          	cb(arr.listEntitiesDTO,cbParams);          	
           }
         }
       }
