@@ -167,25 +167,13 @@ function createSearchSorting(){
 	return divCont;
 }
 
-function getResults(arr,id,resultId) {
-	//deleteNodes(id);
-	let result=document.getElementById(id);
-	//result.appendChild(createHead(listName));
-	//result.appendChild(document.createElement('hr'));
-	//result.appendChild(createParag(description));
-	//result.appendChild(createSearchSorting());
-	//result.appendChild(createDivPad());
-	if(document.getElementById(resultId)!=null)
-		deleteNodes(resultId);
-	result.appendChild(createResultsDiv(resultId));
-
-	let isWait;
-	//console.log(arr+' '+id+' '+resultId+' '+listName+' '+description);
-	if(description.indexOf('wait')>0)
-		isWait=true;
-
+function getResults(arr,params) {
+	let result=document.getElementById(params.id);
+	if(document.getElementById(params.resultId)!=null)
+		deleteNodes(params.resultId);
+	result.appendChild(createResultsDiv(params.resultId));
 	for(let i=0;i<arr.length;i++){
-		addResult(null,arr[i].firstName,arr[i].lastName,arr[i].email,'',resultId,isWait);
+		addResult(null,arr[i].firstName,arr[i].lastName,arr[i].email,'',params.resultId,params.state);
 	}
 
 }
@@ -283,7 +271,7 @@ function addResult(imgSrc,firstName,lastName,email,price,resultId,isWait) {
 	console.log(profile);
 	if(profile =='me')
 	{
-		if(!isWait)
+		if(isWait=='ADDED')
 		{
 			let butt=document.createElement('button');
 			butt.className='btn btn-primary btn-block';
@@ -340,9 +328,9 @@ function getContactsGet(firmName,status,id,resultId,page,value) {
       }
       xhr.send(null); 
 }
-function getContacts(curr,firmName,state,resultId,page,value) {
+function getContacts(curr,firmName,state,id,resultId,page,value) {
 	let body;
-	let cbParams={resultId:resultId,state:state};
+	let cbParams={id:id,resultId:resultId,state:state};
 	if(curr==null){
 		body={firmName:firmName,state:state,page:page,orderBy:null,desc:null};
 		body=JSON.stringify(body);
