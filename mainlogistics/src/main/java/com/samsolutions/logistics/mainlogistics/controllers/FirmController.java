@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -69,17 +70,17 @@ public class FirmController {
 
     /**
      *
-     * @param firmName firm name
-     * @param state contact user state (ADDED,WAIT)
-     * @return contact list
+     * @param pageable page num and value from url path
+     * @param payload request body
+     * @return pageDto that contains contactDTOList, page num and count pages
      */
     @PostMapping(path = "/contacts/readall")
 
     public PageDTO<ContactDTO> readAllContactsFirm(@PageableDefault(value = 5) Pageable pageable, /*@PathVariable(name = "firmName") String firmName,
-                                                @PathVariable(name = "state") String state*/ @RequestBody Object object) {
+                                                @PathVariable(name = "state") String state*/ @RequestBody Map<String,Object> payload) {
 
-        String firmName = (String)((LinkedHashMap)object).get("firmName");
-        String state = (String)((LinkedHashMap)object).get("state");
+        String firmName = (String)payload.get("firmName");
+        String state = (String)payload.get("state");
         return firmsService.getContactsByPage(firmName, state,pageable);
     }
 
