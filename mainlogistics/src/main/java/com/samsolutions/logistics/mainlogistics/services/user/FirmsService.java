@@ -7,6 +7,7 @@ import com.samsolutions.logistics.mainlogistics.entities.Contacts;
 import com.samsolutions.logistics.mainlogistics.entities.Firms;
 import com.samsolutions.logistics.mainlogistics.services.utils.Converter;
 import com.samsolutions.logistics.mainlogistics.services.utils.Pagination;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -59,9 +60,12 @@ public interface FirmsService  extends Converter,Pagination<ContactDTO,Contacts>
 
     /**
      *
-     * @param firmName firm name
-     * @param state status of contact user (ADDED,WAIT)
-     * @return
+     * @param firmName name of firm wired with contact
+     * @param state state of contact
+     * @param orderBy order
+     * @param desc true or false
+     * @param pageable for pagination
+     * @return pageDto that contains contactDTOList, page num and count pages
      */
-    PageDTO<ContactDTO> getContactsByPage(String firmName, String state, Pageable pageable);
+    PageDTO<ContactDTO> getContactsByPage(String firmName, String state, String orderBy, boolean desc, Pageable pageable);
 }

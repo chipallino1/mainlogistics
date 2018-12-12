@@ -20,10 +20,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.util.*;
 
 /**
  * Firms service
@@ -34,6 +33,8 @@ public class FirmsServiceImpl implements FirmsService {
     private FirmsRepository firmsRepository;
     private UsersRepository usersRepository;
     private ContactsRepository contactsRepository;
+
+    private enum OrderTypes { ORDER_BY_FIRST_NAME,ORDER_BY_LAST_NAME,ORDER_BY_MODIFIRIED_DATE };
 
     @Autowired
     public void setFirmsRepository(FirmsRepository firmsRepository) {
@@ -111,9 +112,18 @@ public class FirmsServiceImpl implements FirmsService {
     }
 
     @Override
-    public PageDTO<ContactDTO> getContactsByPage(String firmName, String state, Pageable pageable) {
+    public PageDTO<ContactDTO> getContactsByPage(String firmName, String state, String orderBy,boolean desc, Pageable pageable) {
         Firms firms = firmsRepository.findByFirmName(firmName);
-        Page<Contacts> contactsPage=contactsRepository.findAllByContactStateAndFirmIdOrderByIdDesc(ContactState.valueOf(state),firms.getId(),pageable);
+        Page<Contacts> contactsPage=null;
+        Map<String,String> map=new HashMap<>();
+        map.put(firmName,state);
+        if(orderBy==null)
+            contactsPage=contactsRepository.findAllByContactStateAndFirmIdOrderByIdDesc(ContactState.valueOf(state),firms.getId(),pageable);
+        else{
+            getOrderPage(map,orderBy,desc,pageable);
+
+        }
+
         List<Contacts> contactsList = contactsPage.getContent();
         List<ContactDTO> contactDTOList = new ArrayList<>();
         ContactDTO contactDTO;
@@ -124,7 +134,29 @@ public class FirmsServiceImpl implements FirmsService {
                 contactDTOList.add(contactDTO);
             }
         }
-
         return getPage(contactDTOList,contactsPage);
     }
+    @Override
+    public Page<Contacts> getOrderPage(Map<String,String> samples, String orderBy, boolean desc,Pageable pageable) {
+        Page<Contacts> contactsPage=null;
+        try {
+            Class persistentClass = (Class)
+                    ((ParameterizedType)getClass().getGenericSuperclass())
+                            .getActualTypeArguments()[0];
+            Method method = FirmsServiceImpl.class.getMethod("getOrderPage",Map.class,String.class,boolean.class,Pageable.class);
+            String genericReturnType = method.getGenericReturnType().getTypeName();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        String sample = (String) samples.values().toArray()[0];
+        Long firmId = (Long) samples.values().toArray()[1];
+        if(OrderTypes.ORDER_BY_FIRST_NAME==OrderTypes.valueOf(orderBy)){
+            if(desc)
+                contactsPage=contactsRepository.findAllByContactStateAndFirmIdOrderByFirstNameDesc(ContactState.valueOf(sample),firmId,pageable);
+            else
+                contactsPage=contactsRepository.findAllByContactStateAndFirmIdOrderByFirstName(ContactState.valueOf(sample),firmId,pageable);
+        }
+        return contactsPage;
+    }
+
 }

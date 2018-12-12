@@ -28,4 +28,10 @@ public interface ContactsRepository extends JpaRepository<Contacts, Long> {
     Page<Contacts> findAllByContactStateAndFirmIdOrderByFirstNameDesc(ContactState contactState, Long firmId, Pageable pageable);
 
     Page<Contacts> findAllByContactStateAndFirmIdOrderByLastNameDesc(ContactState contactState, Long firmId, Pageable pageable);
+
+    Page<Contacts> findAllByContactStateAndFirmIdOrderByFirstName(ContactState contactState, Long firmId, Pageable pageable);
+
+    Page<Contacts> findAllByContactStateAndFirmIdOrderByLastName(ContactState contactState, Long firmId, Pageable pageable);
+
+    //Page<Contacts> findAllByContactStateAndFirmIdOrderByLastNameDesc(ContactState contactState, Long firmId, Pageable pageable);
 }
