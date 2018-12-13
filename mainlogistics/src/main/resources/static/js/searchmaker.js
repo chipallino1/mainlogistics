@@ -171,7 +171,8 @@ function getResults(arr,params) {
 	let result=document.getElementById(params.id);
 	if(document.getElementById(params.resultId)!=null)
 		deleteNodes(params.resultId);
-	result.appendChild(createResultsDiv(params.resultId));
+	else
+		result.appendChild(createResultsDiv(params.resultId));
 	for(let i=0;i<arr.length;i++){
 		addResult(null,arr[i].firstName,arr[i].lastName,arr[i].email,'',params.resultId,params.state);
 	}
@@ -333,6 +334,12 @@ function getContacts(curr,firmName,state,id,resultId,page,value) {
 	let cbParams={id:id,resultId:resultId,state:state};
 	if(curr==null){
 		body={firmName:firmName,state:state,page:page,orderBy:null,desc:null};
+		body=JSON.stringify(body);
+		post(body,'/contacts/readall',getResults,cbParams);
+		console.log(body);
+	}
+	else{
+		body={firmName:firmName,state:state,page:page,orderBy:curr.orderBy,desc:curr.desc};
 		body=JSON.stringify(body);
 		post(body,'/contacts/readall',getResults,cbParams);
 		console.log(body);

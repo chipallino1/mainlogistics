@@ -160,10 +160,12 @@ public class FirmsServiceImpl implements FirmsService {
                 }
                 methodName=methodName+stringKeys[i]+"And";
             }
-            if(desc)
-                methodName=methodName+"OrderBy"+orderBy+"Desc";
-            else
-                methodName=methodName+"OrderBy"+orderBy+"Asc";
+            if(orderBy!=null) {
+                if (desc)
+                    methodName = methodName + "OrderBy" + orderBy + "Desc";
+                else
+                    methodName = methodName + "OrderBy" + orderBy + "Asc";
+            }
             String packagePath = getPackagePath(PackageType.REPOSITORIES_PACKAGE);
             Method methodFind = Class.forName(packagePath+"."+genericReturnType).getMethod(methodName,ContactState.class,Long.class,Pageable.class);
             samples.put("Pageable",pageable);

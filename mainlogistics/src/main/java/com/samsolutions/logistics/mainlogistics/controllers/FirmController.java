@@ -81,9 +81,11 @@ public class FirmController {
 
         String firmName = (String)payload.get("firmName");
         String state = (String)payload.get("state");
-        //String orderBy = (String)payload.get("orderBy");
-        //boolean desc = (boolean)payload.get("desc");
-        return firmsService.getContactsByPage(firmName, state,"FirstName",false, pageable);
+        String orderBy = (String)payload.get("orderBy");
+        boolean desc=false;
+        if(orderBy!=null)
+            desc = (boolean)payload.get("desc");
+        return firmsService.getContactsByPage(firmName, state,orderBy,desc, pageable);
     }
 
 }

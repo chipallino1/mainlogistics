@@ -23,6 +23,8 @@ public interface ContactsRepository extends JpaRepository<Contacts, Long> {
 
    // List<Contacts> findAllByContactStateAndFirmIdOrderByIdDesc(ContactState contactState, Long firmId);
 
+    Page<Contacts> findAllByContactStateAndFirmId(ContactState contactState, Long firmId, Pageable pageable);
+
     Page<Contacts> findAllByContactStateAndFirmIdOrderByIdDesc(ContactState contactState, Long firmId, Pageable pageable);
 
     Page<Contacts> findAllByContactStateAndFirmIdOrderByFirstNameDesc(ContactState contactState, Long firmId, Pageable pageable);
@@ -33,7 +35,7 @@ public interface ContactsRepository extends JpaRepository<Contacts, Long> {
 
     Page<Contacts> findAllByContactStateAndFirmIdOrderByFirstNameAsc(ContactState contactState, Long firmId, Pageable pageable);
 
-    Page<Contacts> findAllByContactStateAndFirmIdOrderByLastName(ContactState contactState, Long firmId, Pageable pageable);
+    Page<Contacts> findAllByContactStateAndFirmIdOrderByLastNameAsc(ContactState contactState, Long firmId, Pageable pageable);
 
     //Page<Contacts> findAllByContactStateAndFirmIdOrderByLastNameDesc(ContactState contactState, Long firmId, Pageable pageable);
 }

@@ -235,11 +235,11 @@
                             <p>They wait for your decision.</p>
                             <div class="container">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkFirstQueue" sortType="firstName" onclick='getContacts(this,firmNameFirm.value,"WAIT","resultColQueue","resultContQueue",0,5)'>
+                                    <input type="checkbox" class="form-check-input" id="checkFirstQueue" sortType="firstName" onclick='getContacts({orderBy:"FirstName",desc:false},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue",0,5)'>
                                     <label class="form-check-label" id="checkFirstQueueLb" for="checkFirstQueue">Sort by first name</label>
                                 </div>
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkLastQueue" sortType="lastName" onclick='getContacts(this,firmNameFirm.value,"WAIT","resultColQueue","resultContQueue",0,5)'>
+                                    <input type="checkbox" class="form-check-input" id="checkLastQueue" sortType="lastName" onclick='getContacts({orderBy:"LastName",desc:false},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue",0,5)'>
                                     <label class="form-check-label" id="checkLastQueueLb" for="checkLastQueue">Sort by last name</label>
                                 </div>
                             </div>
