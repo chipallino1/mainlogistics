@@ -171,8 +171,10 @@ function getResults(arr,params) {
 	let result=document.getElementById(params.id);
 	if(document.getElementById(params.resultId)!=null)
 		deleteNodes(params.resultId);
-	else
+	else{
 		result.appendChild(createResultsDiv(params.resultId));
+		result.appendChild(createPageNums());
+	}
 	for(let i=0;i<arr.length;i++){
 		addResult(null,arr[i].firstName,arr[i].lastName,arr[i].email,'',params.resultId,params.state);
 	}
@@ -180,7 +182,26 @@ function getResults(arr,params) {
 }
 
 
+function createButtonBlue(id,text) {
+	let butt=document.createElement('button');
+	butt.className='btn btn-primary btn-block';
+	butt.type='button';
+	butt.id=id;
+	butt.addEventListener('click',addContact);
+	butt.appendChild(document.createTextNode(text));
+	return butt;
+}
 
+function createPageNums(pageCount) {
+	let divCont=document.createElement('div');
+	divCont.className='col form-group';
+	divCont.appendChild(createButtonBlue('prevPage','<<'));
+	divCont.appendChild(createButtonBlue('firstPage','1'));
+	divCont.appendChild(createButtonBlue('lastPage',"2"));
+	divCont.appendChild(createButtonBlue('nextPage','>>'));	
+	return divCont;
+
+}
 
 
 function createHead(text) {
