@@ -103,11 +103,8 @@ public class FirmsServiceImpl implements FirmsService {
     @Override
     public void addContact(ContactDTO contactDTO) {
         Contacts contacts = contactsRepository.findByEmail(contactDTO.getEmail());
-        Firms firms = firmsRepository.findAllByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).get(0);
         contacts.setContactState(ContactState.ADDED);
-        Timestamp timestamp=new Timestamp(System.currentTimeMillis());
         Date date = new Date(System.currentTimeMillis());
-       // String simpleDateFormat=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss ZZZ").format(date);
         contacts.setModifiedTime(date);
         Users users = usersRepository.findByEmail(contactDTO.getEmail());
         users.setRole(Role.ROLE_CONTACT_LOGISTICS_FIRM_USER);
@@ -118,6 +115,8 @@ public class FirmsServiceImpl implements FirmsService {
     public void deleteContact(ContactDTO contactDTO) {
         Contacts contacts = contactsRepository.findByEmail(contactDTO.getEmail());
         contacts.setContactState(ContactState.WAIT);
+        Date date = new Date(System.currentTimeMillis());
+        contacts.setModifiedTime(date);
         Users users = usersRepository.findByEmail(contactDTO.getEmail());
         users.setRole(Role.ROLE_CONTACT_USER);
         contactsRepository.save(contacts);

@@ -235,6 +235,10 @@
                             <p>They wait for your decision.</p>
                             <div class="container">
                                 <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="checkTimeQueue" sortType="modifiedTime" onclick='getContacts({orderBy:"ModifiedTime",desc:true},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue",0,5)'>
+                                    <label class="form-check-label" id="checkTimeQueueLb" for="checkFirstQueue">Sort by modified time</label>
+                                </div>
+                                <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="checkFirstQueue" sortType="firstName" onclick='getContacts({orderBy:"FirstName",desc:false},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue",0,5)'>
                                     <label class="form-check-label" id="checkFirstQueueLb" for="checkFirstQueue">Sort by first name</label>
                                 </div>
