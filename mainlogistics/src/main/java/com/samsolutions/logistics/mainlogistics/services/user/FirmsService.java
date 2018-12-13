@@ -6,6 +6,7 @@ import com.samsolutions.logistics.mainlogistics.dto.PageDTO;
 import com.samsolutions.logistics.mainlogistics.entities.Contacts;
 import com.samsolutions.logistics.mainlogistics.entities.Firms;
 import com.samsolutions.logistics.mainlogistics.services.utils.Converter;
+import com.samsolutions.logistics.mainlogistics.services.utils.Packagable;
 import com.samsolutions.logistics.mainlogistics.services.utils.Pagination;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +18,7 @@ import java.util.List;
  * Firms service
  */
 @Component
-public interface FirmsService  extends Converter,Pagination<ContactDTO,Contacts> {
+public interface FirmsService  extends Converter,Packagable,Pagination<ContactDTO,Contacts> {
 
     /**
      * Get all firms

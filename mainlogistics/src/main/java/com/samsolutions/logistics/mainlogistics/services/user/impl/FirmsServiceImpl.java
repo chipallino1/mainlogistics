@@ -12,6 +12,7 @@ import com.samsolutions.logistics.mainlogistics.repositories.UsersRepository;
 import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
 import com.samsolutions.logistics.mainlogistics.services.security.Role;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
+import com.samsolutions.logistics.mainlogistics.services.utils.PackageType;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -22,7 +23,6 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
 /**
@@ -36,7 +36,7 @@ public class FirmsServiceImpl implements FirmsService {
     private ContactsRepository contactsRepository;
     private ApplicationContext applicationContext;
 
-    private enum OrderTypes { ORDER_BY_FIRST_NAME,ORDER_BY_LAST_NAME,ORDER_BY_MODIFIRIED_DATE };
+    private enum OrderTypes { ORDER_BY_FIRST_NAME,ORDER_BY_LAST_NAME,ORDER_BY_MODIFIED_DATE };
 
     @Autowired
     public void setFirmsRepository(FirmsRepository firmsRepository) {
@@ -119,19 +119,10 @@ public class FirmsServiceImpl implements FirmsService {
     @Override
     public PageDTO<ContactDTO> getContactsByPage(String firmName, String state, String orderBy,boolean desc, Pageable pageable) {
         Firms firms = firmsRepository.findByFirmName(firmName);
-        Page<Contacts> contactsPage=null;
         Map<String,Object> map=new LinkedHashMap<>();
-        map.put("ContactState",ContactState.WAIT);
-        map.put("FirmId",1L);
-
-
-        if(orderBy==null)
-            contactsPage=contactsRepository.findAllByContactStateAndFirmIdOrderByIdDesc(ContactState.valueOf(state),firms.getId(),pageable);
-        else{
-            getOrderPage(map,orderBy,desc,pageable);
-
-        }
-
+        map.put("ContactState",ContactState.valueOf(state));
+        map.put("FirmId",firms.getId());
+        Page<Contacts> contactsPage = getOrderPage(map,orderBy,desc,pageable,applicationContext);
         List<Contacts> contactsList = contactsPage.getContent();
         List<ContactDTO> contactDTOList = new ArrayList<>();
         ContactDTO contactDTO;
@@ -144,17 +135,21 @@ public class FirmsServiceImpl implements FirmsService {
         }
         return getPage(contactDTOList,contactsPage);
     }
+
     @Override
-    public Page<Contacts> getOrderPage(Map<String,Object> samples, String orderBy, boolean desc,Pageable pageable) {
+    public Page<Contacts> getOrderPage(Map<String,Object> samples, String orderBy, boolean desc,Pageable pageable,ApplicationContext applicationContext) {
         Page<Contacts> contactsPage=null;
         Set<String> stringSetKeys = samples.keySet();
         try {
-            Method method = FirmsServiceImpl.class.getMethod("getOrderPage",Map.class,String.class,boolean.class,Pageable.class);
+            Method method = this.getClass().getMethod("getOrderPage",Map.class,String.class,boolean.class,Pageable.class,ApplicationContext.class);
             String genericReturnType = method.getGenericReturnType().getTypeName();
-            genericReturnType = genericReturnType.substring(genericReturnType.lastIndexOf('.')+1,genericReturnType.lastIndexOf('>'));
-            genericReturnType = genericReturnType.toLowerCase()+"Repository";
-            ContactsRepository contactsRepository1 = (ContactsRepository)applicationContext.getBean(genericReturnType);
-            contactsRepository1.findAll();
+            genericReturnType = genericReturnType.substring(genericReturnType.lastIndexOf('<')+1,genericReturnType.lastIndexOf('>'));
+            if(genericReturnType.contains(".")){
+                genericReturnType=genericReturnType.substring(genericReturnType.lastIndexOf('.')+1);
+            }
+            String beanName = genericReturnType.toLowerCase();
+            beanName=beanName+"Repository";
+            genericReturnType = genericReturnType+"Repository";
             String methodName = "findAllBy";
             String[] stringKeys=new String[stringSetKeys.size()];
             stringSetKeys.toArray(stringKeys);
@@ -167,11 +162,12 @@ public class FirmsServiceImpl implements FirmsService {
             }
             if(desc)
                 methodName=methodName+"OrderBy"+orderBy+"Desc";
-            methodName=methodName+"OrderBy"+orderBy+"Asc";
-            Method methodFind = Class.forName("com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository").getMethod(methodName,ContactState.class,Long.class,Pageable.class);
+            else
+                methodName=methodName+"OrderBy"+orderBy+"Asc";
+            String packagePath = getPackagePath(PackageType.REPOSITORIES_PACKAGE);
+            Method methodFind = Class.forName(packagePath+"."+genericReturnType).getMethod(methodName,ContactState.class,Long.class,Pageable.class);
             samples.put("Pageable",pageable);
-            methodFind.invoke(applicationContext.getBean(genericReturnType),samples.values().toArray());
-
+            contactsPage = (Page)methodFind.invoke(applicationContext.getBean(beanName),samples.values().toArray());
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -180,14 +176,6 @@ public class FirmsServiceImpl implements FirmsService {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
-        }
-        String sample = (String) samples.values().toArray()[0];
-        Long firmId = (Long) samples.values().toArray()[1];
-        if(OrderTypes.ORDER_BY_FIRST_NAME==OrderTypes.valueOf(orderBy)){
-            if(desc)
-                contactsPage=contactsRepository.findAllByContactStateAndFirmIdOrderByFirstNameDesc(ContactState.valueOf(sample),firmId,pageable);
-            else
-                contactsPage=contactsRepository.findAllByContactStateAndFirmIdOrderByFirstName(ContactState.valueOf(sample),firmId,pageable);
         }
         return contactsPage;
     }
