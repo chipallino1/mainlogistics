@@ -55,6 +55,7 @@ create table logistic_db.contacts(
     last_name varchar(45) not null,
     phone_num varchar(45) not null,
     email varchar(45),
+    contact_state int,
     firm_id int,
     passwords_id int not null
 );
