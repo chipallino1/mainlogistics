@@ -27,15 +27,15 @@ public interface ContactsRepository extends JpaRepository<Contacts, Long> {
 
     Page<Contacts> findAllByContactStateAndFirmIdOrderByIdDesc(ContactState contactState, Long firmId, Pageable pageable);
 
-    Page<Contacts> findAllByContactStateAndFirmIdOrderByFirstNameDesc(ContactState contactState, Long firmId, Pageable pageable);
-
-    Page<Contacts> findAllByContactStateAndFirmIdOrderByLastNameDesc(ContactState contactState, Long firmId, Pageable pageable);
-
     Page<Contacts> findAllByContactStateAndFirmIdOrderByFirstName(ContactState contactState, Long firmId, Pageable pageable);
 
     Page<Contacts> findAllByContactStateAndFirmIdOrderByFirstNameAsc(ContactState contactState, Long firmId, Pageable pageable);
 
+    Page<Contacts> findAllByContactStateAndFirmIdOrderByFirstNameDesc(ContactState contactState, Long firmId, Pageable pageable);
+
     Page<Contacts> findAllByContactStateAndFirmIdOrderByLastNameAsc(ContactState contactState, Long firmId, Pageable pageable);
+
+    Page<Contacts> findAllByContactStateAndFirmIdOrderByLastNameDesc(ContactState contactState, Long firmId, Pageable pageable);
 
     Page<Contacts> findAllByContactStateAndFirmIdOrderByModifiedTimeAsc(ContactState contactState, Long firmId, Pageable pageable);
 

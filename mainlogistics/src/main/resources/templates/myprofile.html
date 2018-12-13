@@ -235,19 +235,30 @@
                             <p>They wait for your decision.</p>
                             <div class="container">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkTimeQueue" sortType="modifiedTime" onclick='getContacts({orderBy:"ModifiedTime",desc:true},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue",0,5)'>
-                                    <label class="form-check-label" id="checkTimeQueueLb" for="checkFirstQueue">Sort by modified time</label>
+                                    <input type="checkbox" class="form-check-input" id="checkTimeQueue" sortType="modifiedTime" onclick='if(this.checked) {checkLastQueue.checked=false;checkFirstQueue.checked=false;getContacts({orderBy:"ModifiedTime",desc:isDesc},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue",0,5)}'>
+                                    <label class="form-check-label" id="checkTimeQueueLb" for="checkTimeQueue">Sort by modified time</label>
                                 </div>
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkFirstQueue" sortType="firstName" onclick='getContacts({orderBy:"FirstName",desc:false},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue",0,5)'>
+                                    <input type="checkbox" class="form-check-input" id="checkFirstQueue" sortType="firstName" onclick='if(this.checked){checkTimeQueue.checked=false;checkLastQueue.checked=false;getContacts({orderBy:"FirstName",desc:isDesc},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue",0,5)}'>
                                     <label class="form-check-label" id="checkFirstQueueLb" for="checkFirstQueue">Sort by first name</label>
                                 </div>
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkLastQueue" sortType="lastName" onclick='getContacts({orderBy:"LastName",desc:false},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue",0,5)'>
+                                    <input type="checkbox" class="form-check-input" id="checkLastQueue" sortType="lastName" onclick='if(this.checked){checkTimeQueue.checked=false;checkFirstQueue.checked=false;getContacts({orderBy:"LastName",desc:isDesc},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue",0,5)}'>
                                     <label class="form-check-label" id="checkLastQueueLb" for="checkLastQueue">Sort by last name</label>
                                 </div>
                             </div>
 
+                            <div class="padding"></div>
+                            <div class="container">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="desc" onclick='if(this.checked){isDesc=true;asc.checked=false;checkTimeQueue.checked=false;checkFirstQueue.checked=false;checkLastQueue.checked=false;}'>
+                                    <label class="form-check-label"  for="desc">Desc</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="asc" onclick='if(this.checked){isDesc=false;desc.checked=false;checkTimeQueue.checked=false;checkFirstQueue.checked=false;checkLastQueue.checked=false;}'>
+                                    <label class="form-check-label"  for="asc">Asc</label>
+                                </div>
+                            </div>
                             <div class="padding"></div>
                             <div class="container" id="res">
 

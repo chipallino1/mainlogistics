@@ -330,6 +330,7 @@ function getContactsGet(firmName,status,id,resultId,page,value) {
       xhr.send(null); 
 }
 function getContacts(curr,firmName,state,id,resultId,page,value) {
+
 	let body;
 	let cbParams={id:id,resultId:resultId,state:state};
 	if(curr==null){

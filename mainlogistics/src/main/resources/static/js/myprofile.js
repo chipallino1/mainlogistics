@@ -1,3 +1,6 @@
+
+var isDesc=false;
+
 function makeEnabled(){
 	firstNameContact.disabled="";
 	lastNameContact.disabled="";
