@@ -23,6 +23,9 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -102,6 +105,10 @@ public class FirmsServiceImpl implements FirmsService {
         Contacts contacts = contactsRepository.findByEmail(contactDTO.getEmail());
         Firms firms = firmsRepository.findAllByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).get(0);
         contacts.setContactState(ContactState.ADDED);
+        Timestamp timestamp=new Timestamp(System.currentTimeMillis());
+        Date date = new Date(System.currentTimeMillis());
+       // String simpleDateFormat=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss ZZZ").format(date);
+        contacts.setModifiedTime(date);
         Users users = usersRepository.findByEmail(contactDTO.getEmail());
         users.setRole(Role.ROLE_CONTACT_LOGISTICS_FIRM_USER);
         contactsRepository.save(contacts);

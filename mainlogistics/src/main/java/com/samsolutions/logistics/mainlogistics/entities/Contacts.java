@@ -3,6 +3,7 @@ package com.samsolutions.logistics.mainlogistics.entities;
 import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -18,6 +19,7 @@ public class Contacts {
     private Long firmId;
     private Long passwordsId;
     private ContactState contactState;
+    private Date modifiedTime;
     private Firms firmsByFirmId;
     private Passwords passwordsByPasswordsId;
 
@@ -93,13 +95,23 @@ public class Contacts {
     }
 
     @Basic
-    @Column(name = "contact_state", length = 45)
+    @Column(name = "CONTACT_STATE", length = 45)
     public ContactState getContactState() {
         return contactState;
     }
 
     public void setContactState(ContactState contactState) {
         this.contactState = contactState;
+    }
+
+    @Basic
+    @Column(name = "modified_time")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    public Date getModifiedTime() {
+        return modifiedTime;
+    }
+    public void setModifiedTime(Date modifiedTime) {
+        this.modifiedTime = modifiedTime;
     }
 
     @Override
