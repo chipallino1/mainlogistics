@@ -1,3 +1,5 @@
+var isDesc=false;
+var orderBy="ModifiedTime";
 function radioClick(curr) {
 	
 	let getElem=document.getElementById('searchCont');
@@ -168,41 +170,101 @@ function createSearchSorting(){
 }
 
 function getResults(arr,params) {
+	let pageNumber=arr.pageNumber;
+	let pageCount=arr.pageCount;
+	arr=arr.listEntitiesDTO;
 	let result=document.getElementById(params.id);
 	if(document.getElementById(params.resultId)!=null)
 		deleteNodes(params.resultId);
 	else{
 		result.appendChild(createResultsDiv(params.resultId));
-		result.appendChild(createPageNums());
+		if(pageCount>0)
+			result.appendChild(createPageNums(pageCount,params.state,pageNumber));
 	}
 	for(let i=0;i<arr.length;i++){
-		addResult(null,arr[i].firstName,arr[i].lastName,arr[i].email,'',params.resultId,params.state);
+		addResult(null,arr[i].firstName,arr[i].lastName,arr[i].email,'',params.resultId,params.state,pageNumber,i);
 	}
 
 }
 
 
-function createButtonBlue(id,text) {
+function createButtonBlue(id,text,state) {
 	let butt=document.createElement('button');
 	butt.className='btn btn-primary btn-block';
 	butt.type='button';
 	butt.id=id;
-	butt.addEventListener('click',addContact);
+	butt.setAttribute('state',state);
+	butt.addEventListener('click',getPage);
 	butt.appendChild(document.createTextNode(text));
 	return butt;
 }
 
-function createPageNums(pageCount) {
-	let divCont=document.createElement('div');
-	divCont.className='col form-group';
-	divCont.appendChild(createButtonBlue('prevPage','<<'));
-	divCont.appendChild(createButtonBlue('firstPage','1'));
-	divCont.appendChild(createButtonBlue('lastPage',"2"));
-	divCont.appendChild(createButtonBlue('nextPage','>>'));	
-	return divCont;
+function getPage(e) {
+	let innerText = e.target.innerHTML;
+	let body;
+	let cbParams;
+	body={firmName:firmNameFirm.value,state:e.target.getAttribute('state'),orderBy:orderBy,desc:isDesc};
+	body=JSON.stringify(body);
+	if(e.target.getAttribute('state')=='WAIT')
+		cbParams={id:'resultColQueue',resultId:'resultContQueue',state:e.target.getAttribute('state')};
+	else
+		cbParams={id:'resultCol',resultId:'resultCont',state:e.target.getAttribute('state')};
+
+	if(e.target.id=='prevPage' && (Number(currPage.innerHTML)*1-1)>0){	
+		currPage.innerHTML=Number(currPage.innerHTML)-1;
+		console.log(currPage.innerHTML);
+		let prev=Number(currPage.innerHTML)-1;
+		post(body,'/contacts/readall?page='+prev,getResults,cbParams);
+		return;
+	}
+	if(e.target.id=='nextPage' && (Number(currPage.innerHTML)*1+1)<=lastPage.innerHTML){
+		currPage.innerHTML=Number(currPage.innerHTML)+1;
+		console.log(currPage.innerHTML);
+		let next=Number(currPage.innerHTML)-1;
+		post(body,'/contacts/readall?page='+next,getResults,cbParams);
+		return;
+	}
+	if(e.target.id=='firstPage'){
+		currPage.innerHTML=firstPage.innerHTML;
+		post(body,'/contacts/readall?page='+0,getResults,cbParams);
+		return;
+	}
+	if(e.target.id=='lastPage'){
+		currPage.innerHTML=lastPage.innerHTML;
+		let last=Number(currPage.innerHTML)-1;
+		post(body,'/contacts/readall?page='+last,getResults,cbParams);
+		return;
+	}
 
 }
 
+function createPageNums(pageCount,state,pageNumber) {
+	console.log('Page count: '+pageCount);
+	let divCont=document.createElement('div');
+	divCont.className='form-row';
+	if(pageCount>2)
+		divCont.appendChild(createDivClassName('col form-group',createButtonBlue('prevPage','<<',state)));
+	divCont.appendChild(createDivClassName('col form-group',createButtonBlue('firstPage','1',state)));
+	if(pageCount>2){
+		
+		divCont.appendChild(createDivClassName('col form-group',createButtonBlue('currPage',pageNumber+1,state)));
+		
+	}
+	if(pageCount>1)
+		divCont.appendChild(createDivClassName('col form-group',createButtonBlue('lastPage',pageCount,state)));
+	if(pageCount>2)
+		divCont.appendChild(createDivClassName('col form-group',createButtonBlue('nextPage','>>',state)));
+	
+	return divCont;
+}
+
+function createDivClassName(className,elem) {
+	let div = document.createElement('div');
+	div.className=className;
+	if(elem!=undefined)
+		div.appendChild(elem);
+	return div;
+}
 
 function createHead(text) {
 	
@@ -249,14 +311,15 @@ function createResultsDiv(resultId) {
 
 }
 
-function addResult(imgSrc,firstName,lastName,email,price,resultId,isWait) {
+function addResult(imgSrc,firstName,lastName,email,price,resultId,isWait,pageNumber,currNum) {
 	
 
 
 	let td1=document.createElement('td');
 	td1.className='number text-center';
-	td1.appendChild(document.createTextNode(document.getElementById(resultId).childNodes.length+1));
-
+	//console.log(document.getElementById(resultId).childNodes.length);
+	//console.log('page num: '+pageNumber);
+	td1.appendChild(document.createTextNode(/*document.getElementById(resultId).childNodes.length*/5*pageNumber+currNum+1));
 	//let td2=document.createElement('td');
 	//td2.className='image';
 	//let img=document.createElement('img');
@@ -400,6 +463,7 @@ function addContact(e) {
 	post(body,'/firms/contacts/add');
 }
 function post(body,action,cb,cbParams) {
+	console.log(body);
 	let xhr = new XMLHttpRequest();
     xhr.open("POST", action, true);
     let csrfToken = $("meta[name='_csrf']").attr("content");
@@ -415,7 +479,7 @@ function post(body,action,cb,cbParams) {
 
           	if(arr.length==0)
           		return;          	
-          	cb(arr.listEntitiesDTO,cbParams);          	
+          	cb(arr,cbParams);          	
           }
         }
       }

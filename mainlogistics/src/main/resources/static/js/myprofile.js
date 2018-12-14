@@ -1,5 +1,5 @@
 
-var isDesc=false;
+
 
 function makeEnabled(){
 	firstNameContact.disabled="";

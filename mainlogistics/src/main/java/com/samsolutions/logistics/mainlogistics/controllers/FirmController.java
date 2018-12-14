@@ -46,7 +46,7 @@ public class FirmController {
      */
 
     @PostMapping(path = "/firms/contacts/add")
-    public @ResponseBody boolean addContactToFirm(@RequestBody Object object) {
+    public boolean addContactToFirm(@RequestBody Object object) {
         ContactDTO contactDTO = new ContactDTO();
         contactDTO.setEmail((String) ((LinkedHashMap) object).get("email"));
         contactDTO.setFirmName((String) ((LinkedHashMap) object).get("firmName"));
