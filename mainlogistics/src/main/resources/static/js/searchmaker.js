@@ -192,7 +192,7 @@ function createButtonBlue(id,text,state) {
 	let butt=document.createElement('button');
 	butt.className='btn btn-primary btn-block';
 	butt.type='button';
-	butt.id=id;
+	butt.id=id+state;
 	butt.setAttribute('state',state);
 	butt.addEventListener('click',getPage);
 	butt.appendChild(document.createTextNode(text));
@@ -203,35 +203,51 @@ function getPage(e) {
 	let innerText = e.target.innerHTML;
 	let body;
 	let cbParams;
+	state=e.target.getAttribute('state');
 	body={firmName:firmNameFirm.value,state:e.target.getAttribute('state'),orderBy:orderBy,desc:isDesc};
 	body=JSON.stringify(body);
+	let currP=document.getElementById('currPage'+state);
+	let firstP=document.getElementById('firstPage'+state);
+	let lastP=document.getElementById('lastPage'+state);
+	let prevP=document.getElementById('prevPage'+state);
+	let nextP=document.getElementById('nextPage'+state);
 	if(e.target.getAttribute('state')=='WAIT')
 		cbParams={id:'resultColQueue',resultId:'resultContQueue',state:e.target.getAttribute('state')};
 	else
 		cbParams={id:'resultCol',resultId:'resultCont',state:e.target.getAttribute('state')};
 
-	if(e.target.id=='prevPage' && (Number(currPage.innerHTML)*1-1)>0){	
-		currPage.innerHTML=Number(currPage.innerHTML)-1;
-		console.log(currPage.innerHTML);
-		let prev=Number(currPage.innerHTML)-1;
+	if(e.target.id=='prevPage'+state && (Number(currP.innerHTML)*1-1)>0){	
+		console.log('prevPage'+state);
+		currP.innerHTML=Number(currP.innerHTML)-1;
+		let prev=Number(currP.innerHTML)-1;
 		post(body,'/contacts/readall?page='+prev,getResults,cbParams);
 		return;
 	}
-	if(e.target.id=='nextPage' && (Number(currPage.innerHTML)*1+1)<=lastPage.innerHTML){
-		currPage.innerHTML=Number(currPage.innerHTML)+1;
-		console.log(currPage.innerHTML);
-		let next=Number(currPage.innerHTML)-1;
+	if(e.target.id=='nextPage'+state && (Number(currP.innerHTML)*1+1)<=Number(lastP.innerHTML)){
+		console.log('nextPage'+state);
+		currP.innerHTML=Number(currP.innerHTML)+1;
+		let next=Number(currP.innerHTML)-1;
 		post(body,'/contacts/readall?page='+next,getResults,cbParams);
 		return;
 	}
-	if(e.target.id=='firstPage'){
-		currPage.innerHTML=firstPage.innerHTML;
+	if(e.target.id=='firstPage'+state){
+		console.log('firstPage'+state);
+		if(currP!=null)
+			currP.innerHTML=firstP.innerHTML;
 		post(body,'/contacts/readall?page='+0,getResults,cbParams);
 		return;
 	}
-	if(e.target.id=='lastPage'){
-		currPage.innerHTML=lastPage.innerHTML;
-		let last=Number(currPage.innerHTML)-1;
+	if(e.target.id=='lastPage'+state){
+		console.log('lastPage'+state);
+		let last;
+		if(currP!=null){
+			currP.innerHTML=lastP.innerHTML;
+			last=Number(curr.innerHTML)-1;
+			
+		}
+		else{
+			last=Number(lastP.innerHTML)-1;
+		}
 		post(body,'/contacts/readall?page='+last,getResults,cbParams);
 		return;
 	}
