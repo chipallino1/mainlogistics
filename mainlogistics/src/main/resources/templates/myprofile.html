@@ -251,12 +251,12 @@
                             <div class="padding"></div>
                             <div class="container">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="desc" onclick='if(this.checked){isDesc=true;asc.checked=false;checkTimeQueue.checked=false;checkFirstQueue.checked=false;checkLastQueue.checked=false;}'>
-                                    <label class="form-check-label"  for="desc">Desc</label>
+                                    <input type="checkbox" class="form-check-input" id="descQueue" onclick='if(this.checked){isDesc=true;ascQueue.checked=false;checkTimeQueue.checked=false;checkFirstQueue.checked=false;checkLastQueue.checked=false;}'>
+                                    <label class="form-check-label"  for="descQueue">Desc</label>
                                 </div>
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="asc" onclick='if(this.checked){isDesc=false;desc.checked=false;checkTimeQueue.checked=false;checkFirstQueue.checked=false;checkLastQueue.checked=false;}'>
-                                    <label class="form-check-label"  for="asc">Asc</label>
+                                    <input type="checkbox" class="form-check-input" id="ascQueue" onclick='if(this.checked){isDesc=false;descQueue.checked=false;checkTimeQueue.checked=false;checkFirstQueue.checked=false;checkLastQueue.checked=false;}'>
+                                    <label class="form-check-label"  for="ascQueue">Asc</label>
                                 </div>
                             </div>
                             <div class="padding"></div>
@@ -289,6 +289,33 @@
 
                                     <p>Here you can see all contacts.</p>
 
+                                    <div class="padding"></div>
+                                    <div class="container">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="checkTime" sortType="modifiedTime" onclick='if(this.checked) {checkLast.checked=false;checkFirst.checked=false;orderBy="ModifiedTime";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"ADDED","resultCol","resultCont",0,5)}'>
+                                            <label class="form-check-label" id="checkTimeLb" for="checkTime">Sort by modified time</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="checkFirst" sortType="firstName" onclick='if(this.checked){checkTime.checked=false;checkLast.checked=false;orderBy="FirstName";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"ADDED","resultCol","resultCont",0,5)}'>
+                                            <label class="form-check-label" id="checkFirstLb" for="checkFirst">Sort by first name</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="checkLast" sortType="lastName" onclick='if(this.checked){checkTime.checked=false;checkFirst.checked=false;orderBy="LastName";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"ADDED","resultCol","resultCont",0,5)}'>
+                                            <label class="form-check-label" id="checkLastLb" for="checkLast">Sort by last name</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="padding"></div>
+                                    <div class="container">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="desc" onclick='if(this.checked){isDesc=true;asc.checked=false;checkTime.checked=false;checkFirst.checked=false;checkLast.checked=false;}'>
+                                            <label class="form-check-label"  for="desc">Desc</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="asc" onclick='if(this.checked){isDesc=false;desc.checked=false;checkTime.checked=false;checkFirst.checked=false;checkLast.checked=false;}'>
+                                            <label class="form-check-label"  for="asc">Asc</label>
+                                        </div>
+                                    </div>
                                     <div class="padding"></div>
                                 </div>
                                 <!-- END RESULT -->

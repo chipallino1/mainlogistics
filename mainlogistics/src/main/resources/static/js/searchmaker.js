@@ -242,7 +242,7 @@ function getPage(e) {
 		let last;
 		if(currP!=null){
 			currP.innerHTML=lastP.innerHTML;
-			last=Number(curr.innerHTML)-1;
+			last=Number(currP.innerHTML)-1;
 			
 		}
 		else{
