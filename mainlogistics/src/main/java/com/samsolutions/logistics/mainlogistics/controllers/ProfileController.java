@@ -58,7 +58,7 @@ public class ProfileController {
                 model.addAttribute("contactDTO", contactsService.getByEmail(email));
                 model.addAttribute("firmDTO", new FirmDTO());
                 model.addAttribute("profileName", email);
-                return "profile";
+                return "myprofile";
             }
         } else if (type.equals("firm")) {
             if (email.equals("me")) {
@@ -70,7 +70,7 @@ public class ProfileController {
                 model.addAttribute("firmDTO", firmsService.getByEmail(email));
                 model.addAttribute("contactDTO", new ContactDTO());
                 model.addAttribute("profileName", email);
-                return "profile";
+                return "myprofile";
             }
         }
         return "error";

@@ -178,8 +178,10 @@ function getResults(arr,params) {
 		deleteNodes(params.resultId);
 	else{
 		result.appendChild(createResultsDiv(params.resultId));
-		if(pageCount>0)
+		if(pageCount>0){
+			result.appendChild(createDivPad());
 			result.appendChild(createPageNums(pageCount,params.state,pageNumber));
+		}
 	}
 	for(let i=0;i<arr.length;i++){
 		addResult(null,arr[i].firstName,arr[i].lastName,arr[i].email,'',params.resultId,params.state,pageNumber,i);
