@@ -67,7 +67,7 @@
   <h4 class="card-title mt-2">Sign up</h4>
 </header>
 <article class="card-body">
-<form th:action="@{/auth/contact}" method="post" th:object="${contactDTO}">
+<form th:action="@{/auth/contact}" method="post" th:object="${contactDTO}" enctype="multipart/form-data">
   <div class="row justify-content-center">
       <!-- Material inline 1 -->
     <!-- Default inline 1-->
@@ -101,10 +101,14 @@
     <input type="email" class="form-control" placeholder="email address" th:field="*{email}">
   </div> <!-- form-group end.// -->
   <div class="form-group">
-    <label>Phone Num.</label>
-      <small class="text-danger" th:if="${#fields.hasErrors('phoneNum')}" > It's not valid num</small>
-    <input type="number" class="form-control" placeholder="phone number" th:field="*{phoneNum}">
-  </div> <!-- form-group end.// -->
+         <label>Phone Num.</label>
+         <small class="text-danger" th:if="${#fields.hasErrors('phoneNum')}" > It's not valid num</small>
+         <input type="number" class="form-control" placeholder="phone number" th:field="*{phoneNum}">
+     </div> <!-- form-group end.// -->
+         <div class="form-group">
+             <label>Choose photo</label>
+             <input type="file" class="form-control" placeholder="file" name="file" th:field="*{image}" accept="image/*">
+         </div> <!-- form-group end.// -->
 
   <div class="form-group">
       <label class="form-check form-check-inline">
@@ -155,7 +159,7 @@
   <h4 class="card-title mt-2">Sign up</h4>
 </header>
 <article class="card-body">
-<form th:action="@{/auth/firm}" method="post" th:object="${firmDTO}">
+<form th:action="@{/auth/firm}" method="post" th:object="${firmDTO}" enctype="multipart/form-data">
   <div class="row justify-content-center">
       <!-- Material inline 1 -->
     <!-- Default inline 1-->
@@ -198,6 +202,10 @@
       <span class="form-check-label"> Logistic </span>
     </label>
   </div> <!-- form-group end.// -->
+    <div class="form-group">
+        <label>Choose photo</label>
+        <input type="file" class="form-control" placeholder="file" name="file" th:field="*{image}" accept="image/*">
+    </div> <!-- form-group end.// -->
   
   <div class="form-group">
     <label>Create password</label>

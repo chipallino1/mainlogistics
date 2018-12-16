@@ -11,11 +11,15 @@ import com.samsolutions.logistics.mainlogistics.services.security.Role;
 import com.samsolutions.logistics.mainlogistics.services.security.SaltHashEncoder.SaltHash;
 import com.samsolutions.logistics.mainlogistics.services.security.UserState;
 import com.samsolutions.logistics.mainlogistics.services.signup.FirmsSignUpService;
+import com.samsolutions.logistics.mainlogistics.services.utils.FileStorageService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Date;
 
 /**
  * Firm user class that provided services for firm users
@@ -30,6 +34,7 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
     private Firms firms;
     private Passwords passwords;
     private UsersRepository usersRepository;
+    private FileStorageService fileStorageService;
 
     @Autowired
     public void setFirmsRepository(FirmsRepository firmsRepository) {
@@ -51,6 +56,11 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
         this.usersRepository = usersRepository;
     }
 
+    @Autowired
+    public void setFileStorageService(FileStorageService fileStorageService) {
+        this.fileStorageService = fileStorageService;
+    }
+
     @Override
     public void setFirmDTO(FirmDTO firmDTO) {
         this.firmDTO = firmDTO;
@@ -66,6 +76,7 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
     public void saveFirm() {
         savePassword();
         save();
+        saveAvatar(firmDTO.getImage());
         saveUser();
     }
 
@@ -91,6 +102,7 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
     @Override
     public void save() {
         firms.setPasswordId(passwords.getId());
+        firms.setCreatedAt(new Date(System.currentTimeMillis()));
         firmsRepository.save(firms);
 
     }
@@ -103,5 +115,12 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
         users.setRole(Role.ROLE_FIRM_USER);
         users.setPasswordId(passwords.getId());
         usersRepository.save(users);
+    }
+
+    @Override
+    public void saveAvatar(MultipartFile file) {
+        String avatarPath = fileStorageService.storeFile(file,firmDTO.getEmail());
+        firms.setAvatarPath(avatarPath);
+        firmsRepository.save(firms);
     }
 }

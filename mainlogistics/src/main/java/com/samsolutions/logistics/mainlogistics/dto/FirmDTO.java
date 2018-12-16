@@ -1,6 +1,7 @@
 package com.samsolutions.logistics.mainlogistics.dto;
 
 import com.samsolutions.logistics.mainlogistics.validation.annotations.PasswordConfirm;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -40,6 +41,10 @@ public class FirmDTO implements Serializable {
 
     @NotNull
     private String firmType;
+
+    private MultipartFile image;
+
+    private String avatarPath;
 
     private String password;
     private String passwordRepeat;
@@ -98,5 +103,21 @@ public class FirmDTO implements Serializable {
 
     public void setPasswordRepeat(String passwordRepeat) {
         this.passwordRepeat = passwordRepeat;
+    }
+
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
 }

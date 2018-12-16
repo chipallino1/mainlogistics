@@ -14,6 +14,7 @@ import com.samsolutions.logistics.mainlogistics.services.security.Role;
 import com.samsolutions.logistics.mainlogistics.services.security.SaltHashEncoder.SaltHash;
 import com.samsolutions.logistics.mainlogistics.services.security.UserState;
 import com.samsolutions.logistics.mainlogistics.services.signup.ContactsSignUpService;
+import com.samsolutions.logistics.mainlogistics.services.utils.FileStorageService;
 import com.samsolutions.logistics.mainlogistics.validation.exceptions.FirmNotFoundException;
 import com.samsolutions.logistics.mainlogistics.validation.exceptions.MainException;
 import org.modelmapper.ModelMapper;
@@ -21,7 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,10 +38,12 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
     private PasswordsRepository passwordsRepository;
     private UsersRepository usersRepository;
     private SaltHash saltHash;
+    private FileStorageService fileStorageService;
     private ContactDTO contactDTO;
     private Contacts contacts;
     private Passwords passwords;
     private Users users;
+
 
     @Autowired
     public void setContactsRepository(ContactsRepository contactsRepository) {
@@ -64,6 +69,10 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
     public void setPasswordsRepository(PasswordsRepository passwordsRepository) {
         this.passwordsRepository = passwordsRepository;
     }
+    @Autowired
+    public void setFileStorageService(FileStorageService fileStorageService) {
+        this.fileStorageService = fileStorageService;
+    }
 
     @Override
     public void setContactDTO(ContactDTO contactDTO) {
@@ -79,6 +88,7 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
     public void saveContact() {
         savePassword();
         save();
+        saveAvatar(contactDTO.getImage());
         saveUser();
     }
 
@@ -118,11 +128,12 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
                 contacts.setContactState(ContactState.WAIT);
             }
             else {
-
                 throw new FirmNotFoundException("Firm you chose not found","Cause: this firm is not exists");
             }
         }
         contacts.setPasswordsId(passwords.getId());
+        contacts.setCreatedAt(new Date(System.currentTimeMillis()));
+        contacts.setModifiedTime(new Date(System.currentTimeMillis()));
         contactsRepository.save(contacts);
     }
 
@@ -134,6 +145,13 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
         users.setRole(Role.ROLE_CONTACT_USER);
         users.setPasswordId(passwords.getId());
         usersRepository.save(users);
+    }
+
+    @Override
+    public void saveAvatar(MultipartFile file) {
+        String avatarPath=fileStorageService.storeFile(file,contactDTO.getEmail());
+        contacts.setAvatarPath(avatarPath);
+        contactsRepository.save(contacts);
     }
 
 

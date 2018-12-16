@@ -20,6 +20,8 @@ public class Contacts {
     private Long passwordsId;
     private ContactState contactState;
     private Date modifiedTime;
+    private Date createdAt;
+    private String avatarPath;
     private Firms firmsByFirmId;
     private Passwords passwordsByPasswordsId;
 
@@ -112,6 +114,25 @@ public class Contacts {
     }
     public void setModifiedTime(Date modifiedTime) {
         this.modifiedTime = modifiedTime;
+    }
+
+    @Basic
+    @Column(name = "created_at")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @Basic
+    @Column(name = "avatar_path")
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
 
     @Override

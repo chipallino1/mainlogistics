@@ -2,6 +2,7 @@ package com.samsolutions.logistics.mainlogistics.dto;
 
 import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
 import com.samsolutions.logistics.mainlogistics.validation.annotations.PasswordConfirm;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -53,6 +54,10 @@ public class ContactDTO implements Serializable {
     @NotNull
     @Size(min = 8, max = 50)
     private String passwordRepeat;
+
+    private MultipartFile image;
+
+    private String avatarPath;
 
     public String getFirstName() {
         return firstName;
@@ -116,5 +121,21 @@ public class ContactDTO implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
 }

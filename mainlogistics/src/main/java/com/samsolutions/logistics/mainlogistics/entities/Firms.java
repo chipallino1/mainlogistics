@@ -1,15 +1,8 @@
 package com.samsolutions.logistics.mainlogistics.entities;
 
-import javax.persistence.Id;
-import javax.persistence.Basic;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -24,6 +17,8 @@ public class Firms {
     private String description;
     private String email;
     private Long passwordId;
+    private Date createdAt;
+    private String avatarPath;
     private Collection<Addresses> addressesById;
     private Collection<Contacts> contactsById;
     private Passwords passwordsByPasswordId;
@@ -92,6 +87,17 @@ public class Firms {
     }
 
     @Basic
+    @Column(name = "created_at")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @Basic
     @Column(name = "password_id", nullable = false)
     public Long getPasswordId() {
         return passwordId;
@@ -99,6 +105,16 @@ public class Firms {
 
     public void setPasswordId(Long passwordId) {
         this.passwordId = passwordId;
+    }
+
+    @Basic
+    @Column(name="avatar_path")
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
 
     @Override
