@@ -149,7 +149,7 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
 
     @Override
     public void saveAvatar(MultipartFile file) {
-        String avatarPath=fileStorageService.storeFile(file,contactDTO.getEmail());
+        String avatarPath=fileStorageService.storeFile(file);
         contacts.setAvatarPath(avatarPath);
         contactsRepository.save(contacts);
     }

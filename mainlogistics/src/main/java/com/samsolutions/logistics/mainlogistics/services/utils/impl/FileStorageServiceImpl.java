@@ -44,7 +44,7 @@ public class FileStorageServiceImpl implements FileStorageService{
         }
     }
 
-    public String storeFile(MultipartFile file,String email) {
+    public String storeFile(MultipartFile file) {
         // Normalize file name
         String fileName = StringUtils.cleanPath(System.currentTimeMillis()+file.getOriginalFilename());
 

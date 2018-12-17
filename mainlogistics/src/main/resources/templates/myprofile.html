@@ -127,6 +127,9 @@
                     <div class="container">
                         <div class="form-row">
                             <div class="col form-group">
+                                <img class="d-block w-100" th:src="*{avatarPath}" alt="Second slide">
+                            </div> <!-- form-group end.// -->
+                            <div class="col form-group">
                                 <label>First name </label>
                                 <small class="text-danger" th:if="${#fields.hasErrors('firstName')}" > Empty or too small</small>
                                 <input type="text" class="form-control" placeholder="first name" id="firstNameContactLogistics" disabled="disabled" th:field="*{firstName}">

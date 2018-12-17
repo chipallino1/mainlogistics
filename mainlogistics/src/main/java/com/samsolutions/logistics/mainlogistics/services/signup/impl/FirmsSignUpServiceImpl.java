@@ -119,7 +119,7 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
 
     @Override
     public void saveAvatar(MultipartFile file) {
-        String avatarPath = fileStorageService.storeFile(file,firmDTO.getEmail());
+        String avatarPath = fileStorageService.storeFile(file);
         firms.setAvatarPath(avatarPath);
         firmsRepository.save(firms);
     }
