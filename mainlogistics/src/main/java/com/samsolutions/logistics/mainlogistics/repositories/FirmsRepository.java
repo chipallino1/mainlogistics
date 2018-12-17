@@ -22,4 +22,6 @@ public interface FirmsRepository extends JpaRepository<Firms, Long> {
     List<Firms> findAllByEmail(String email);
 
     Firms findByFirmName(String firmName);
+
+    Firms findByEmail(String email);
 }

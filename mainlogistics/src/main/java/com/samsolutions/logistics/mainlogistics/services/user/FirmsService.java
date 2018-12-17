@@ -69,4 +69,5 @@ public interface FirmsService  extends Converter,Packagable,Pagination<ContactDT
      * @return pageDto that contains contactDTOList, page num and count pages
      */
     PageDTO<ContactDTO> getContactsByPage(String firmName, String state, String orderBy, boolean desc, Pageable pageable);
+
 }

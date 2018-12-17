@@ -218,9 +218,9 @@ function getPage(e) {
 	let prevP=document.getElementById('prevPage'+state);
 	let nextP=document.getElementById('nextPage'+state);
 	if(e.target.getAttribute('state')=='WAIT')
-		cbParams={id:'resultColQueue',resultId:'resultContQueue',state:e.target.getAttribute('state')};
+		cbParams={id:'resultColQueue',resultId:'resultContQueue',pagesId:'pageNumsWAIT',state:e.target.getAttribute('state')};
 	else
-		cbParams={id:'resultCol',resultId:'resultCont',state:e.target.getAttribute('state')};
+		cbParams={id:'resultCol',resultId:'resultCont',pagesId:'pageNumsADDED',state:e.target.getAttribute('state')};
 
 	if(e.target.id=='prevPage'+state && (Number(currP.innerHTML)*1-1)>0){	
 		console.log('prevPage'+state);

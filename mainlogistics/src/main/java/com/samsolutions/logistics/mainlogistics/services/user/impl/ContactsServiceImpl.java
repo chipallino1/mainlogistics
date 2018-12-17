@@ -6,6 +6,7 @@ import com.samsolutions.logistics.mainlogistics.entities.Users;
 import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.UsersRepository;
 import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
+import com.samsolutions.logistics.mainlogistics.services.security.Role;
 import com.samsolutions.logistics.mainlogistics.services.user.ContactsService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,6 @@ public class ContactsServiceImpl implements ContactsService {
         DateFormat dateFormat=new SimpleDateFormat("yyyy/MM");
         return dateFormat.format(contacts.getCreatedAt());
     }
+
 
 }
