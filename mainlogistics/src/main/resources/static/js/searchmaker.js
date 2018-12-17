@@ -174,8 +174,12 @@ function getResults(arr,params) {
 	let pageCount=arr.pageCount;
 	arr=arr.listEntitiesDTO;
 	let result=document.getElementById(params.id);
-	if(document.getElementById(params.resultId)!=null)
-		deleteNodes(params.resultId);
+	if(document.getElementById(params.resultId)!=null){
+			deleteNodes(params.resultId);
+			console.log(params.pagesId);
+			document.getElementById(params.pagesId).remove();
+			result.appendChild(createPageNums(pageCount,params.state,pageNumber));
+		}
 	else{
 		result.appendChild(createResultsDiv(params.resultId));
 		if(pageCount>0){
@@ -260,6 +264,7 @@ function createPageNums(pageCount,state,pageNumber) {
 	console.log('Page count: '+pageCount);
 	let divCont=document.createElement('div');
 	divCont.className='form-row';
+	divCont.id='pageNums'+state;
 	if(pageCount>2)
 		divCont.appendChild(createDivClassName('col form-group',createButtonBlue('prevPage','<<',state)));
 	divCont.appendChild(createDivClassName('col form-group',createButtonBlue('firstPage','1',state)));
@@ -431,10 +436,11 @@ function getContactsGet(firmName,status,id,resultId,page,value) {
       }
       xhr.send(null); 
 }
-function getContacts(curr,firmName,state,id,resultId,page,value) {
+function getContacts(curr,firmName,state,id,resultId,pagesId,page,value) {
 
 	let body;
-	let cbParams={id:id,resultId:resultId,state:state};
+	console.log(pagesId);
+	let cbParams={id:id,resultId:resultId,pagesId:pagesId,state:state};
 	if(curr==null){
 		body={firmName:firmName,state:state,page:page,orderBy:null,desc:null};
 		body=JSON.stringify(body);
@@ -473,12 +479,12 @@ function getCurrenctContactPage(e) {
 function deleteContact(e) {
 	let body = JSON.stringify({firmName:firmNameFirm.value,email:e.target.parentNode.parentNode.getAttribute('email')});
 	console.log(body);
-	post(body,'/firms/contacts/delete');
+	post(body,'/firms/contacts/delete',updateLists,null);
 }
 function addContact(e) {
 	let body = JSON.stringify({firmName:firmNameFirm.value,email:e.target.parentNode.parentNode.getAttribute('email')});
 	console.log(body);
-	post(body,'/firms/contacts/add');
+	post(body,'/firms/contacts/add',updateLists,null);
 }
 function post(body,action,cb,cbParams) {
 	console.log(body);
@@ -503,4 +509,21 @@ function post(body,action,cb,cbParams) {
       }
       xhr.send(body); 
      
+}
+
+function updateLists(arr,params){
+	console.log('callback');
+	getContacts(null,firmNameFirm.value,"ADDED","resultCol","resultCont","pageNumsADDED",0,5);
+	getContacts(null,firmNameFirm.value,"WAIT","resultColQueue","resultContQueue","pageNumsWAIT",0,5);
+}
+
+Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+}
+NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
 }

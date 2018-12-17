@@ -229,15 +229,15 @@
                             <p>They wait for your decision.</p>
                             <div class="container">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkTimeQueue" sortType="modifiedTime" onclick='if(this.checked) {checkLastQueue.checked=false;checkFirstQueue.checked=false;orderBy="ModifiedTime";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue",0,5)}'>
+                                    <input type="checkbox" class="form-check-input" id="checkTimeQueue" sortType="modifiedTime" onclick='if(this.checked) {checkLastQueue.checked=false;checkFirstQueue.checked=false;orderBy="ModifiedTime";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue","pagesNumWAIT",0,5)}'>
                                     <label class="form-check-label" id="checkTimeQueueLb" for="checkTimeQueue">Sort by modified time</label>
                                 </div>
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkFirstQueue" sortType="firstName" onclick='if(this.checked){checkTimeQueue.checked=false;checkLastQueue.checked=false;orderBy="FirstName";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue",0,5)}'>
+                                    <input type="checkbox" class="form-check-input" id="checkFirstQueue" sortType="firstName" onclick='if(this.checked){checkTimeQueue.checked=false;checkLastQueue.checked=false;orderBy="FirstName";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue","pagesNumWAIT",0,5)}'>
                                     <label class="form-check-label" id="checkFirstQueueLb" for="checkFirstQueue">Sort by first name</label>
                                 </div>
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkLastQueue" sortType="lastName" onclick='if(this.checked){checkTimeQueue.checked=false;checkFirstQueue.checked=false;orderBy="LastName";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue",0,5)}'>
+                                    <input type="checkbox" class="form-check-input" id="checkLastQueue" sortType="lastName" onclick='if(this.checked){checkTimeQueue.checked=false;checkFirstQueue.checked=false;orderBy="LastName";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue","pagesNumWAIT",0,5)}'>
                                     <label class="form-check-label" id="checkLastQueueLb" for="checkLastQueue">Sort by last name</label>
                                 </div>
                             </div>
@@ -286,15 +286,15 @@
                                     <div class="padding"></div>
                                     <div class="container">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="checkTime" sortType="modifiedTime" onclick='if(this.checked) {checkLast.checked=false;checkFirst.checked=false;orderBy="ModifiedTime";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"ADDED","resultCol","resultCont",0,5)}'>
+                                            <input type="checkbox" class="form-check-input" id="checkTime" sortType="modifiedTime" onclick='if(this.checked) {checkLast.checked=false;checkFirst.checked=false;orderBy="ModifiedTime";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"ADDED","resultCol","resultCont","pagesNumADDED",0,5)}'>
                                             <label class="form-check-label" id="checkTimeLb" for="checkTime">Sort by modified time</label>
                                         </div>
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="checkFirst" sortType="firstName" onclick='if(this.checked){checkTime.checked=false;checkLast.checked=false;orderBy="FirstName";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"ADDED","resultCol","resultCont",0,5)}'>
+                                            <input type="checkbox" class="form-check-input" id="checkFirst" sortType="firstName" onclick='if(this.checked){checkTime.checked=false;checkLast.checked=false;orderBy="FirstName";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"ADDED","resultCol","resultCont","pagesNumADDED",0,5)}'>
                                             <label class="form-check-label" id="checkFirstLb" for="checkFirst">Sort by first name</label>
                                         </div>
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="checkLast" sortType="lastName" onclick='if(this.checked){checkTime.checked=false;checkFirst.checked=false;orderBy="LastName";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"ADDED","resultCol","resultCont",0,5)}'>
+                                            <input type="checkbox" class="form-check-input" id="checkLast" sortType="lastName" onclick='if(this.checked){checkTime.checked=false;checkFirst.checked=false;orderBy="LastName";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"ADDED","resultCol","resultCont","pagesNumADDED",0,5)}'>
                                             <label class="form-check-label" id="checkLastLb" for="checkLast">Sort by last name</label>
                                         </div>
                                     </div>
@@ -361,8 +361,8 @@
      <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
      <script th:src="@{/js/searchmaker.js}"></script>
-     <script sec:authorize="isAuthenticated() && hasRole('ROLE_FIRM_USER')">getContacts(null,firmNameFirm.value,"ADDED","resultCol","resultCont",0,5);</script>
-     <script sec:authorize="isAuthenticated() && hasRole('ROLE_FIRM_USER')">getContacts(null,firmNameFirm.value,"WAIT","resultColQueue","resultContQueue",0,5);</script>
+     <script sec:authorize="isAuthenticated() && hasRole('ROLE_FIRM_USER')">getContacts(null,firmNameFirm.value,"ADDED","resultCol","resultCont","pagesNumADDED",0,5);</script>
+     <script sec:authorize="isAuthenticated() && hasRole('ROLE_FIRM_USER')">getContacts(null,firmNameFirm.value,"WAIT","resultColQueue","resultContQueue","pagesNumWAIT",0,5);</script>
     <script th:src="@{/js/authentication.js}"></script>
 
     <script th:src="@{/js/enter.js}"></script>
