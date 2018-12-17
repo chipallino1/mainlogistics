@@ -1,5 +1,7 @@
 package com.samsolutions.logistics.mainlogistics.controllers;
 
+import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
+import com.samsolutions.logistics.mainlogistics.services.user.ContactsService;
 import com.samsolutions.logistics.mainlogistics.services.utils.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -17,27 +19,30 @@ import java.io.IOException;
 public class FileController {
 
     private FileStorageService fileStorageService;
+    private ContactsService contactsService;
 
     @Autowired
     public void setFileStorageService(FileStorageService fileStorageService) {
         this.fileStorageService = fileStorageService;
     }
+    @Autowired
+    public void setContactsService(ContactsService contactsService) {
+        this.contactsService = contactsService;
+    }
 
-    @GetMapping("/file")
-    public ResponseEntity<Resource> downloadFile(@RequestParam String fileName, HttpServletRequest request) {
+    @GetMapping("/image")
+    public ResponseEntity<Resource> getFile(@RequestParam String fileName,@RequestParam String email, HttpServletRequest request) {
         // Load file as Resource
-        Resource resource = fileStorageService.loadFileAsResource(fileName);
+        Resource resource = fileStorageService.loadFileAsResource(fileName,contactsService.getCreatedAt(email));
         HttpHeaders headers = new HttpHeaders();
-
         // Try to determine file's content type
         String contentType = null;
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
-
-
         // Fallback to the default content type if type could not be determined
         if(contentType == null) {
             contentType = "application/octet-stream";

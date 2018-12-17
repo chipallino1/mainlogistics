@@ -6,6 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public interface FileStorageService {
-    String storeFile(MultipartFile file);
-    Resource loadFileAsResource(String fileName);
+    String storeFile(MultipartFile file,String createdAt,String email);
+    Resource loadFileAsResource(String fileName,String createdAt);
 }

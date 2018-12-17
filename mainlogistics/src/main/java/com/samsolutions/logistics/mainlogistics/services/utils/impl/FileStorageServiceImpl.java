@@ -35,16 +35,14 @@ public class FileStorageServiceImpl implements FileStorageService{
         try {
             DateFormat dateFormat=new SimpleDateFormat("yyyy/MM");
             String folderName=dateFormat.format(new Date());
-            year=folderName.substring(0,folderName.lastIndexOf('/'));
-            month=folderName.substring(folderName.lastIndexOf('/')+1);
-            this.fileStorageLocation = Paths.get(this.fileStorageLocation+"/"+folderName).toAbsolutePath().normalize();
-            Files.createDirectories(this.fileStorageLocation);
+            folderName=this.fileStorageLocation+"/"+folderName;
+            Files.createDirectories(Paths.get(folderName).toAbsolutePath().normalize());
         } catch (Exception ex) {
             throw new FileStorageException("Could not create the directory where the uploaded files will be stored.", ex);
         }
     }
 
-    public String storeFile(MultipartFile file) {
+    public String storeFile(MultipartFile file,String createdAt,String email) {
         // Normalize file name
         String fileName = StringUtils.cleanPath(System.currentTimeMillis()+file.getOriginalFilename());
 
@@ -55,18 +53,19 @@ public class FileStorageServiceImpl implements FileStorageService{
             }
 
             // Copy file to the target location (Replacing existing file with the same name)
-            Path targetLocation = this.fileStorageLocation.resolve(fileName);
+            Path targetLocation = Paths.get(this.fileStorageLocation+"/"+createdAt+"/"+fileName).toAbsolutePath().normalize();
+           // targetLocation=Paths.get(this.fileStorageLocation+"/"+createdAt).toAbsolutePath().normalize();
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            return "uploads/"+year+"/"+month+"/"+fileName;
+            return "/image?fileName="+fileName+"&email="+email;
         } catch (IOException ex) {
             throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
         }
     }
 
-    public Resource loadFileAsResource(String fileName) {
+    public Resource loadFileAsResource(String fileName,String createdAt) {
         try {
-            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+            Path filePath =Paths.get(this.fileStorageLocation+"/"+createdAt+"/"+fileName).toAbsolutePath().normalize();
             Resource resource = new UrlResource(filePath.toUri());
             if(resource.exists()) {
                 return resource;

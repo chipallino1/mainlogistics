@@ -24,6 +24,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -149,7 +153,9 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
 
     @Override
     public void saveAvatar(MultipartFile file) {
-        String avatarPath=fileStorageService.storeFile(file);
+        DateFormat dateFormat=new SimpleDateFormat("yyyy/MM") ;
+        String createdAt=dateFormat.format(contacts.getCreatedAt());
+        String avatarPath=fileStorageService.storeFile(file,createdAt,contacts.getEmail());
         contacts.setAvatarPath(avatarPath);
         contactsRepository.save(contacts);
     }

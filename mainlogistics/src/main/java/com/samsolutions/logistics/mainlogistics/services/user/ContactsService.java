@@ -27,5 +27,12 @@ public interface ContactsService extends Converter {
      */
     void update(String email, ContactDTO contactDTO);
 
+    /**
+     * Get a creation year and month
+     * @param email by email
+     * @return string yyyy/MM
+     */
+    String getCreatedAt(String email);
+
 
 }

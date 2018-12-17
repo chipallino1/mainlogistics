@@ -65,7 +65,7 @@
 
 <div class="row justify-content-center" id="profile" >
 
-<div class="col-md-6"  id="updateContact" sec:authorize="!(isAuthenticated() && hasRole('ROLE_CONTACT_LOGISTICS_FIRM_USER'))">
+<div class="col-md-8"  id="updateContact" sec:authorize="!(isAuthenticated() && hasRole('ROLE_CONTACT_LOGISTICS_FIRM_USER'))">
 
 <div class="card">
 <header class="card-header">
@@ -74,6 +74,9 @@
 <article class="card-body">
 <form th:action="@{/profile/contact/update}" method="post" th:object="${contactDTO}" id="contactForm">
      <div class="container">
+         <div class="justify-content-center" align="center">
+             <img class="d-block w-100" th:src="*{avatarPath}">
+         </div>
   <div class="form-row">
     <div class="col form-group">
       <label>First name </label>
@@ -116,7 +119,7 @@
 </div> <!-- card.// -->
 </div> <!-- col.//-->
 
-    <div sec:authorize="isAuthenticated() && hasRole('ROLE_CONTACT_LOGISTICS_FIRM_USER')" class="col-md-4"  id="updateContactLogistics">
+    <div sec:authorize="isAuthenticated() && hasRole('ROLE_CONTACT_LOGISTICS_FIRM_USER')" class="col-md"  id="updateContactLogistics">
 
         <div class="card">
             <header class="card-header">
@@ -125,10 +128,10 @@
             <article class="card-body">
                 <form th:action="@{/profile/contact/update}" method="post" th:object="${contactDTO}" id="contactLogisticsForm">
                     <div class="container">
+                        <div  th:if="*{avatarPath}!=null" class="justify-content-center" align="center">
+                            <img class="d-block w-100" th:src="*{avatarPath}">
+                        </div>
                         <div class="form-row">
-                            <div class="col form-group">
-                                <img class="d-block w-100" th:src="*{avatarPath}" alt="Second slide">
-                            </div> <!-- form-group end.// -->
                             <div class="col form-group">
                                 <label>First name </label>
                                 <small class="text-danger" th:if="${#fields.hasErrors('firstName')}" > Empty or too small</small>
@@ -170,7 +173,7 @@
         </div> <!-- card.// -->
     </div> <!-- col.//-->
 
-<div class="col-md-4"  id="updateFirm" style="display: none;">
+<div class="col-md"  id="updateFirm" style="display: none;">
 
 <div class="card">
     <header class="card-header">
@@ -179,6 +182,9 @@
 <article class="card-body">
 <form th:action="@{/profile/firm/update}" method="post" th:object="${firmDTO}" id="firmForm">
 <div class="container">
+    <div th:if="*{avatarPath}!=null" class="justify-content-center" align="center">
+        <img class="d-block w-100" th:src="*{avatarPath}">
+    </div>
   <div class="form-row">
     <div class="col form-group">
       <label>Firm name</label>
@@ -201,27 +207,12 @@
     </div> <!-- form-group// -->
     </div>  
     </form>
-    <form  th:action="@{/profile/firm/add/contact}" th:object="${contact}" method="post">
-        <div>
-            <div class="form-group" id="contacts">
-                <label>Choose contact</label>
-                <form autocomplete="off">
-                    <div class="autocomplete" style="width:150px;">
-                        <input id="myInput" class="form-control" type="text" name="myCountry" placeholder="contact email" th:field="*{email}">
-                    </div>
-                </form>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block"> Add contact  </button>
-            </div> <!-- form-group// -->
-        </div>
 
-    </form>
 
 </article> <!-- card-body end .// -->
 </div> <!-- card.// -->
 </div> <!-- col.//-->
-    <div class="col-md-4" id="contactQueue" style="display: none;" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}">
+    <div class="col-md" id="contactQueue" style="display: none;" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}">
 
         <div class="card">
             <article class="card-body">
@@ -276,7 +267,7 @@
             </article> <!-- card-body end .// -->
         </div> <!-- card.// -->
     </div> <!-- col.//-->
-    <div class="col-md-4"  id="contactList" style="display: none;" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}">
+    <div class="col-md"  id="contactList" style="display: none;" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}">
 
         <div class="card">
             <article class="card-body">

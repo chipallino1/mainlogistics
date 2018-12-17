@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -119,7 +121,8 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
 
     @Override
     public void saveAvatar(MultipartFile file) {
-        String avatarPath = fileStorageService.storeFile(file);
+        DateFormat dateFormat=new SimpleDateFormat("yyyy/MM");
+        String avatarPath = fileStorageService.storeFile(file,dateFormat.format(firms.getCreatedAt()),firms.getEmail());
         firms.setAvatarPath(avatarPath);
         firmsRepository.save(firms);
     }

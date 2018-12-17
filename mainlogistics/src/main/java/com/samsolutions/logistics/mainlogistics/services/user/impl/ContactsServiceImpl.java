@@ -11,6 +11,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +51,13 @@ public class ContactsServiceImpl implements ContactsService {
         map(contactDTO, contacts);
         usersRepository.save(users);
         contactsRepository.save(contacts);
+    }
+
+    @Override
+    public String getCreatedAt(String email) {
+        Contacts contacts = contactsRepository.findByEmail(email);
+        DateFormat dateFormat=new SimpleDateFormat("yyyy/MM");
+        return dateFormat.format(contacts.getCreatedAt());
     }
 
 }
