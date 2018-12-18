@@ -119,7 +119,7 @@
 </div> <!-- card.// -->
 </div> <!-- col.//-->
 
-<div class="col-md"  id="updateFirm" style="display: none;">
+<div class="col-md"  id="updateFirm" style="display: none;" >
 
 <div class="card">
     <header class="card-header">
@@ -213,7 +213,7 @@
             </article> <!-- card-body end .// -->
         </div> <!-- card.// -->
     </div> <!-- col.//-->
-    <div class="col-md"  id="contactList" style="display: none;" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}">
+    <div class="col-md"  id="contactList" style="display: none;">
 
         <div class="card">
             <article class="card-body">
@@ -314,12 +314,16 @@
     <script th:src="@{/js/enter.js}"></script>
     <script th:src="@{/js/autocomplete.js}"></script>
      <script th:inline="javascript">whenRegistred([[${isRegistred}]]);</script>
-     <script th:inline="javascript">if([[${contactDTO}]].email==null) {
+     <script th:inline="javascript">
+         if([[${contactDTO}]].email==null) {
          updateFirm.style.display = "";
          contactList.style.display = "";
-         contactQueue.style.display="";
+
+         if(document.getElementById('contactQueue')!=null)
+            contactQueue.style.display="";
          updateContact.style.display = "none";
      }
+         console.log( updateContact.style.display);
      </script>
   <script th:src="@{/js/myprofile.js}"></script>
      <script th:inline="javascript">autocomplete(document.getElementById("myInput"),[[${contacts}]],'/contacts/' );</script>

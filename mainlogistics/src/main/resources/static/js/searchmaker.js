@@ -471,8 +471,16 @@ function getCurrenctContactPage(e) {
 		elem=elem.parentNode;
 		console.log(elem.childNodes[1]);
 		console.log(elem.childNodes[1].childNodes[3]);
-		elem.childNodes[1].childNodes[3].action='/profile/contact/'+elem.getAttribute('email');
+		if(elem.parentNode.getAttribute('email')==null){
+			elem.childNodes[1].childNodes[3].action='/profile/contact/'+elem.getAttribute('email');
 		elem.childNodes[1].childNodes[3].submit();
+		}
+		else{
+			elem=elem.parentNode;
+			elem.childNodes[1].childNodes[3].action='/profile/contact/'+elem.getAttribute('email');
+		elem.childNodes[1].childNodes[3].submit();
+		}
+		
 
 	}
 	
