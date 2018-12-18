@@ -177,7 +177,8 @@ function getResults(arr,params) {
 	if(document.getElementById(params.resultId)!=null){
 			deleteNodes(params.resultId);
 			console.log(params.pagesId);
-			document.getElementById(params.pagesId).remove();
+			console.log(document.getElementById(params.pagesId));
+			document.getElementById(params.pagesId).remove()
 			result.appendChild(createPageNums(pageCount,params.state,pageNumber));
 		}
 	else{

@@ -24,8 +24,6 @@ import java.util.Date;
 public class FileStorageServiceImpl implements FileStorageService{
 
     private Path fileStorageLocation;
-    private String year;
-    private String month;
 
     @Autowired
     public FileStorageServiceImpl(FileStorageProperties fileStorageProperties) {
@@ -43,18 +41,13 @@ public class FileStorageServiceImpl implements FileStorageService{
     }
 
     public String storeFile(MultipartFile file,String createdAt,String email) {
-        // Normalize file name
         String fileName = StringUtils.cleanPath(System.currentTimeMillis()+file.getOriginalFilename());
 
         try {
-            // Check if the file's name contains invalid characters
             if(fileName.contains("..")) {
                 throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
             }
-
-            // Copy file to the target location (Replacing existing file with the same name)
             Path targetLocation = Paths.get(this.fileStorageLocation+"/"+createdAt+"/"+fileName).toAbsolutePath().normalize();
-           // targetLocation=Paths.get(this.fileStorageLocation+"/"+createdAt).toAbsolutePath().normalize();
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
             return "/image?fileName="+fileName+"&email="+email;

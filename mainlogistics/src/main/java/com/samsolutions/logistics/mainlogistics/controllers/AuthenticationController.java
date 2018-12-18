@@ -108,7 +108,6 @@ public class AuthenticationController {
 
             firmsSignUpService.setFirmDTO(firmDTO);
             firmsSignUpService.saveFirm();
-
             redirectAttributes.addFlashAttribute("isRegistred", "true");
             return "redirect:/auth";
         }
