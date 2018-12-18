@@ -65,7 +65,7 @@
 
 <div class="row justify-content-center" id="profile" >
 
-<div class="col-md-8"  id="updateContact">
+<div class="col-md-6"  id="updateContact">
 
 <div class="card">
 <header class="card-header">
@@ -109,8 +109,7 @@
     </form>
   </div>
     <div class="form-group" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}">
-        <button  sec:authorize="!(isAuthenticated() && hasRole('ROLE_FIRM_USER'))" type="button" class="btn btn-primary btn-block" onclick="makeEnabled()"> Update  </button>
-        <button  sec:authorize="!(isAuthenticated() && hasRole('ROLE_FIRM_USER'))" type="submit" class="btn btn-primary btn-block" id="submitFormContact"> Save  </button>
+        <button th:if="${#authentication.getPrincipal().getUsername()}==${profileName}"  sec:authorize="!(isAuthenticated() && hasRole('ROLE_CONTACT_LOGISTICS_FIRM_USER'))" type="submit" class="btn btn-primary btn-block" id="submitFormContact"> Create route  </button>
     </div> <!-- form-group// -->      
 
     </div>                                 
@@ -224,7 +223,7 @@
                                 <!-- BEGIN RESULT -->
                                 <div class="col" id="resultCol">
 
-                                    <h2><i class="fa fa-file-o"></i> Contacts list</h2>
+                                    <h2><i class="fa fa-file-o"></i>Contacts list</h2>
                                     <hr>
 
                                     <p>Here you can see all contacts.</p>
@@ -267,8 +266,115 @@
             </article> <!-- card-body end .// -->
         </div> <!-- card.// -->
     </div> <!-- col.//-->
+    <div class="col-md-6"  id="routeList"  th:if="${#authentication.getPrincipal().getUsername()}==${profileName}"  sec:authorize="!(isAuthenticated() && hasRole('ROLE_FIRM_USER'))">
+
+        <div class="card">
+            <article class="card-body">
+
+                <div class="grid-body">
+                    <div class="row">
+
+                        <!-- BEGIN RESULT -->
+                        <div class="col" id="resultRouteCol">
+
+                            <h2><i class="fa fa-file-o"></i> Routes list</h2>
+                            <hr>
+
+                            <p>Here you can see all routes.</p>
+
+                            <div class="padding"></div>
+                            <div class="container">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="checkTimeRoute" sortType="modifiedTime" onclick='if(this.checked) {checkLastRoute.checked=false;checkFirstRoute.checked=false;orderBy="ModifiedTime";}'>
+                                    <label class="form-check-label" id="checkTimeLbRoute" for="checkTimeRoute">Sort by modified time</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="checkFirstRoute" sortType="firstName" onclick='if(this.checked){checkTimeRoute.checked=false;checkLastRoute.checked=false;orderBy="FirstName";}'>
+                                    <label class="form-check-label" id="checkFirstLbRoute" for="checkFirstRoute">Sort by first name</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="checkLastRoute" sortType="lastName" onclick='if(this.checked){checkTimeRoute.checked=false;checkFirstRoute.checked=false;orderBy="LastName";}'>
+                                    <label class="form-check-label" id="checkLastLbRoute" for="checkLastRoute">Sort by last name</label>
+                                </div>
+                            </div>
+
+                            <div class="padding"></div>
+                            <div class="container">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="descRoute" onclick='if(this.checked){isDesc=true;ascRoute.checked=false;checkTimeRoute.checked=false;checkFirstRoute.checked=false;checkLastRoute.checked=false;}'>
+                                    <label class="form-check-label"  for="descRoute">Desc</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="ascRoute" onclick='if(this.checked){isDesc=false;descRoute.checked=false;checkTimeRoute.checked=false;checkFirstRoute.checked=false;checkLastRoute.checked=false;}'>
+                                    <label class="form-check-label"  for="ascRoute">Asc</label>
+                                </div>
+                            </div>
+                            <div class="padding"></div>
+                        </div>
+                        <!-- END RESULT -->
+                    </div>
+                </div>
+
+                <!-- END SEARCH RESULT -->
+
+            </article> <!-- card-body end .// -->
+        </div> <!-- card.// -->
+    </div> <!-- col.//-->
 
 </div> <!-- row.//-->
+<div class="row justify-content-center" id="route" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}"  sec:authorize="!(isAuthenticated() && hasRole('ROLE_FIRM_USER'))">
+    <div class="col-md-8"  id="createRoute">
+
+        <div class="card">
+            <header class="card-header">
+                <h4 class="card-title mt-2" >Create route</h4>
+            </header>
+            <article class="card-body">
+                <form id="routeForm">
+                    <div class="container">
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label>From </label>
+                                <input type="text" class="form-control" placeholder="from" >
+                            </div> <!-- form-group end.// -->
+                            <div class="col form-group">
+                                <label>To</label>
+                                <input type="text" class="form-control" placeholder="to">
+                            </div> <!-- form-group end.// -->
+                        </div> <!-- form-row end.// -->
+                        <div class="form-group">
+                            <label>Car name</label>
+                            <input type="email" class="form-control" placeholder="car name">
+                        </div> <!-- form-group end.// -->
+                        <div class="form-group">
+                            <label>Volume, m3</label>
+                            <input type="number" class="form-control" placeholder="volume">
+                        </div> <!-- form-group end.// -->
+                        <div class="form-group">
+                            <label>Capacity, tons</label>
+                            <input type="number" class="form-control" placeholder="capacity">
+                        </div> <!-- form-group end.// -->
+                        <div class="form-group">
+                            <label>Length</label>
+                            <input type="number" class="form-control" placeholder="length" disabled="disabled">
+                        </div> <!-- form-group end.// -->
+                        <div class="form-group">
+                            <label>Cost</label>
+                            <input type="number" class="form-control" placeholder="cost">
+                        </div> <!-- form-group end.// -->
+                        <div class="form-group" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}">
+                            <button  sec:authorize="!(isAuthenticated() && hasRole('ROLE_FIRM_USER'))" type="button" class="btn btn-primary btn-block" onclick="makeEnabled()"> Update  </button>
+                            <button  sec:authorize="!(isAuthenticated() && hasRole('ROLE_FIRM_USER'))" type="submit" class="btn btn-primary btn-block" id="submitFormRoute"> Save  </button>
+                        </div> <!-- form-group// -->
+
+                    </div>
+                </form>
+            </article> <!-- card-body end .// -->
+        </div> <!-- card.// -->
+    </div> <!-- col.//-->
+</div><!-- row.//-->
+
+
 
 
 </div> 
