@@ -114,7 +114,12 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
         Users users = new Users();
         users.setEmail(firms.getEmail());
         users.setUserState(UserState.ENABLED);
-        users.setRole(Role.ROLE_FIRM_USER);
+        if(firms.getFirmType().equals("logistic")){
+            users.setRole(Role.ROLE_LOGISTIC_FIRM_USER);
+        }
+        else {
+            users.setRole(Role.ROLE_SIMPLE_FIRM_USER);
+        }
         users.setPasswordId(passwords.getId());
         usersRepository.save(users);
     }

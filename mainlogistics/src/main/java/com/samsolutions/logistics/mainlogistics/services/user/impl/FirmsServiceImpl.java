@@ -25,6 +25,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -140,6 +141,13 @@ public class FirmsServiceImpl implements FirmsService {
             }
         }
         return getPage(contactDTOList,contactsPage);
+    }
+
+    @Override
+    public String getCreatedAt(String email) {
+        Firms firms = firmsRepository.findByEmail(email);
+        DateFormat dateFormat=new SimpleDateFormat("yyyy/MM");
+        return dateFormat.format(firms.getCreatedAt());
     }
 
     @Override

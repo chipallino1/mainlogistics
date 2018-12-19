@@ -17,7 +17,6 @@ public class FirmDTO implements Serializable {
 
     @NotNull
     @Size(min = 2, max = 30)
-    @Pattern(regexp = "^[a-zA-z]+$")
     private String firmName;
 
     @NotNull

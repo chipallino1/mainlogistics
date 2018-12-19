@@ -60,6 +60,7 @@ public interface FirmsService  extends Converter,Packagable,Pagination<ContactDT
     void deleteContact(ContactDTO contactDTO);
 
     /**
+    /**
      *
      * @param firmName name of firm wired with contact
      * @param state state of contact
@@ -70,4 +71,10 @@ public interface FirmsService  extends Converter,Packagable,Pagination<ContactDT
      */
     PageDTO<ContactDTO> getContactsByPage(String firmName, String state, String orderBy, boolean desc, Pageable pageable);
 
+    /**
+     * Get a creation year and month
+     * @param email by email
+     * @return string yyyy/MM
+     */
+    String getCreatedAt(String email);
 }
