@@ -12,8 +12,10 @@ import java.util.Objects;
 @Table(name = "ROUTES")
 public class Routes {
     private Long id;
-    private String pointFrom;
-    private String pointTo;
+    private Long pointFromId;
+    private Long pointToId;
+    private Points pointsByPointFromId;
+    private Points pointsByPointToId;
     private Collection<Orders> ordersById;
     private Collection<RoutesInfo> routesInfosById;
     private Collection<RoutesOnCarriers> routesOnCarriersByRoutesId;
@@ -30,23 +32,23 @@ public class Routes {
     }
 
     @Basic
-    @Column(name = "point_from", nullable = false, length = 45)
-    public String getPointFrom() {
-        return pointFrom;
+    @Column(name = "point_from_id")
+    public Long getPointFromId() {
+        return pointFromId;
     }
 
-    public void setPointFrom(String pointFrom) {
-        this.pointFrom = pointFrom;
+    public void setPointFromId(Long pointFromId) {
+        this.pointFromId = pointFromId;
     }
 
     @Basic
-    @Column(name = "point_to", nullable = false, length = 45)
-    public String getPointTo() {
-        return pointTo;
+    @Column(name = "point_to_id")
+    public Long getPointToId() {
+        return pointToId;
     }
 
-    public void setPointTo(String pointTo) {
-        this.pointTo = pointTo;
+    public void setPointToId(Long pointToId) {
+        this.pointToId = pointToId;
     }
 
 
@@ -56,13 +58,13 @@ public class Routes {
         if (o == null || getClass() != o.getClass()) return false;
         Routes routes = (Routes) o;
         return Objects.equals(id, routes.id) &&
-                Objects.equals(pointFrom, routes.pointFrom) &&
-                Objects.equals(pointTo, routes.pointTo);
+                Objects.equals(pointFromId, routes.pointFromId) &&
+                Objects.equals(pointToId, routes.pointToId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, pointFrom, pointTo);
+        return Objects.hash(id, pointFromId, pointToId);
     }
 
     @OneToMany(mappedBy = "routesByRouteId")
@@ -90,5 +92,25 @@ public class Routes {
 
     public void setRoutesOnCarriersByRoutesId(Collection<RoutesOnCarriers> routesOnCarriersByRoutesId) {
         this.routesOnCarriersByRoutesId = routesOnCarriersByRoutesId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "point_from_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public Points getPointsByPointFromId() {
+        return pointsByPointFromId;
+    }
+
+    public void setPointsByPointFromId(Points pointsByPointFromId) {
+        this.pointsByPointFromId = pointsByPointFromId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "point_to_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public Points getPointsByPointToId() {
+        return pointsByPointToId;
+    }
+
+    public void setPointsByPointToId(Points pointsByPointToId) {
+        this.pointsByPointToId = pointsByPointToId;
     }
 }
