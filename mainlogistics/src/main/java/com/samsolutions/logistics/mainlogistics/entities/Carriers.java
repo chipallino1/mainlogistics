@@ -9,10 +9,11 @@ public class Carriers {
 
     private Long id;
     private String carName;
+    private String carrierFullName;
     private Long volume;
     private Long capacity;
     private Long cost;
-    private Collection<Routes> routesById;
+    Collection<RoutesOnCarriers> routesOnCarriersByCarriersId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +34,16 @@ public class Carriers {
 
     public void setCarName(String carName) {
         this.carName = carName;
+    }
+
+    @Basic
+    @Column(name = "carrier_full_name")
+    public String getCarrierFullName() {
+        return carrierFullName;
+    }
+
+    public void setCarrierFullName(String carrierFullName) {
+        this.carrierFullName = carrierFullName;
     }
 
     @Basic
@@ -64,12 +75,13 @@ public class Carriers {
     public void setCost(Long cost) {
         this.cost = cost;
     }
+
     @OneToMany(mappedBy = "carriersByCarriersId")
-    public Collection<Routes> getCarriersById() {
-        return routesById;
+    public Collection<RoutesOnCarriers> getRoutesOnCarriersByCarriersId() {
+        return routesOnCarriersByCarriersId;
     }
 
-    public void setCarriersById(Collection<Routes> routesById) {
-        this.routesById = routesById;
+    public void setRoutesOnCarriersByCarriersId(Collection<RoutesOnCarriers> routesOnCarriersByCarriersId) {
+        this.routesOnCarriersByCarriersId = routesOnCarriersByCarriersId;
     }
 }

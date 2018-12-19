@@ -14,10 +14,9 @@ public class Routes {
     private Long id;
     private String pointFrom;
     private String pointTo;
-    private Carriers carriersByCarriersId;
-    private Long carriersId;
     private Collection<Orders> ordersById;
     private Collection<RoutesInfo> routesInfosById;
+    private Collection<RoutesOnCarriers> routesOnCarriersByRoutesId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,26 +49,6 @@ public class Routes {
         this.pointTo = pointTo;
     }
 
-    @Basic
-    @Column(name = "carriers_id",nullable = false)
-    public Long getCarriersId() {
-        return carriersId;
-    }
-
-    public void setCarriersId(Long carriersId) {
-        this.carriersId = carriersId;
-    }
-
-
-    @ManyToOne
-    @JoinColumn(name = "carriers_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    public Carriers getCarriersByCarriersId() {
-        return carriersByCarriersId;
-    }
-
-    public void setCarriersByCarriersId(Carriers carriersByCarriersId) {
-        this.carriersByCarriersId = carriersByCarriersId;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -83,7 +62,6 @@ public class Routes {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(id, pointFrom, pointTo);
     }
 
@@ -103,5 +81,14 @@ public class Routes {
 
     public void setRoutesInfosById(Collection<RoutesInfo> routesInfosById) {
         this.routesInfosById = routesInfosById;
+    }
+
+    @OneToMany(mappedBy = "routesByRoutesId")
+    public Collection<RoutesOnCarriers> getRoutesOnCarriersByRoutesId() {
+        return routesOnCarriersByRoutesId;
+    }
+
+    public void setRoutesOnCarriersByRoutesId(Collection<RoutesOnCarriers> routesOnCarriersByRoutesId) {
+        this.routesOnCarriersByRoutesId = routesOnCarriersByRoutesId;
     }
 }
