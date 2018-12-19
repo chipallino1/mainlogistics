@@ -1,13 +1,6 @@
 package com.samsolutions.logistics.mainlogistics.entities;
 
-import javax.persistence.Id;
-import javax.persistence.Basic;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -21,7 +14,8 @@ public class Routes {
     private Long id;
     private String pointFrom;
     private String pointTo;
-    private Long cost;
+    private Carriers carriersByCarriersId;
+    private Long carriersId;
     private Collection<Orders> ordersById;
     private Collection<RoutesInfo> routesInfosById;
 
@@ -57,13 +51,24 @@ public class Routes {
     }
 
     @Basic
-    @Column(name = "cost", nullable = false)
-    public Long getCost() {
-        return cost;
+    @Column(name = "carriers_id",nullable = false)
+    public Long getCarriersId() {
+        return carriersId;
     }
 
-    public void setCost(Long cost) {
-        this.cost = cost;
+    public void setCarriersId(Long carriersId) {
+        this.carriersId = carriersId;
+    }
+
+
+    @ManyToOne
+    @JoinColumn(name = "carriers_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public Carriers getCarriersByCarriersId() {
+        return carriersByCarriersId;
+    }
+
+    public void setCarriersByCarriersId(Carriers carriersByCarriersId) {
+        this.carriersByCarriersId = carriersByCarriersId;
     }
 
     @Override
@@ -73,14 +78,13 @@ public class Routes {
         Routes routes = (Routes) o;
         return Objects.equals(id, routes.id) &&
                 Objects.equals(pointFrom, routes.pointFrom) &&
-                Objects.equals(pointTo, routes.pointTo) &&
-                Objects.equals(cost, routes.cost);
+                Objects.equals(pointTo, routes.pointTo);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, pointFrom, pointTo, cost);
+        return Objects.hash(id, pointFrom, pointTo);
     }
 
     @OneToMany(mappedBy = "routesByRouteId")
