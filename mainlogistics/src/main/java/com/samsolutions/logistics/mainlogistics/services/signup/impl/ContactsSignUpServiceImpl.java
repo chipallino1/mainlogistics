@@ -124,7 +124,7 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
 
     @Override
     public void save() {
-        if (contactDTO.getFirmName() != null) {
+        if (!contactDTO.getFirmName().equals("")) {
             List<Firms> firmsList = firmsRepository.findDistinctByFirmNameLike(contactDTO.getFirmName());
             if (firmsList.size() > 0) {
                 Firms firm = firmsList.get(0);
