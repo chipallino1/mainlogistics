@@ -176,8 +176,6 @@ function getResults(arr,params) {
 	let result=document.getElementById(params.id);
 	if(document.getElementById(params.resultId)!=null){
 			deleteNodes(params.resultId);
-			console.log(params.pagesId);
-			console.log(document.getElementById(params.pagesId));
 			document.getElementById(params.pagesId).remove()
 			result.appendChild(createPageNums(pageCount,params.state,pageNumber));
 		}
@@ -189,6 +187,7 @@ function getResults(arr,params) {
 		}
 	}
 	for(let i=0;i<arr.length;i++){
+		console.log("Result "+params.state+" elem added to list.");
 		addResult(null,arr[i].firstName,arr[i].lastName,arr[i].email,'',params.resultId,params.state,pageNumber,i);
 	}
 
@@ -440,19 +439,18 @@ function getContactsGet(firmName,status,id,resultId,page,value) {
 function getContacts(curr,firmName,state,id,resultId,pagesId,page,value) {
 
 	let body;
-	console.log(pagesId);
 	let cbParams={id:id,resultId:resultId,pagesId:pagesId,state:state};
 	if(curr==null){
 		body={firmName:firmName,state:state,page:page,orderBy:null,desc:null};
 		body=JSON.stringify(body);
 		post(body,'/contacts/readall',getResults,cbParams);
-		console.log(body);
+		console.log("Request body: "+body);
 	}
 	else{
 		body={firmName:firmName,state:state,page:page,orderBy:curr.orderBy,desc:curr.desc};
 		body=JSON.stringify(body);
 		post(body,'/contacts/readall',getResults,cbParams);
-		console.log(body);
+		console.log("Request body: "+body);
 	}
 	
 }
@@ -506,7 +504,7 @@ function post(body,action,cb,cbParams) {
     xhr.onreadystatechange = function() {
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
           arr=[];
-          console.log(xhr.responseText);
+          console.log("Response text: "+xhr.responseText);
           arr=JSON.parse(xhr.responseText);
           if(cb!=undefined){
 

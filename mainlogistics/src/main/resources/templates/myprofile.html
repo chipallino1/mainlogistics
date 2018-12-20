@@ -43,7 +43,7 @@
                 <li class="nav-item" sec:authorize="isAuthenticated() && (hasRole('ROLE_CONTACT_USER') || hasRole('ROLE_CONTACT_LOGISTICS_FIRM_USER'))">
                     <a  class="nav-link" id="profilePageContact" th:href="@{profile/contact/me}" sec:authentication="name">Name of user page<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item" sec:authorize="isAuthenticated() && hasRole('ROLE_FIRM_USER')">
+                <li class="nav-item" sec:authorize="isAuthenticated() && (hasRole('ROLE_FIRM_USER') || hasRole('ROLE_LOGISTIC_FIRM_USER') || hasRole('ROLE_SIMPLE_FIRM_USER'))">
                     <a  class="nav-link" id="profilePageFirm" th:href="@{profile/firm/me}" sec:authentication="name">Name of user page<span class="sr-only">(current)</span></a>
                 </li>
             </ul>
@@ -427,8 +427,8 @@
      <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
      <script th:src="@{/js/searchmaker.js}"></script>
-     <script th:if="${role}==1">getContacts(null,firmNameFirm.value,"ADDED","resultCol","resultCont","pagesNumADDED",0,5);</script>
-     <script th:if="${role}==1">getContacts(null,firmNameFirm.value,"WAIT","resultColQueue","resultContQueue","pagesNumWAIT",0,5);</script>
+     <script th:if="${role}==1 OR ${role}==2">getContacts(null,firmNameFirm.value,"ADDED","resultCol","resultCont","pagesNumADDED",0,5);</script>
+     <script th:if="${role}==1 OR ${role}==2">getContacts(null,firmNameFirm.value,"WAIT","resultColQueue","resultContQueue","pagesNumWAIT",0,5);</script>
     <script th:src="@{/js/authentication.js}"></script>
 
     <script th:src="@{/js/enter.js}"></script>

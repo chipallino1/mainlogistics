@@ -4,6 +4,7 @@ import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.services.security.Role;
 import com.samsolutions.logistics.mainlogistics.services.user.ContactsService;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
+import com.samsolutions.logistics.mainlogistics.services.user.UserService;
 import com.samsolutions.logistics.mainlogistics.services.utils.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -26,6 +27,7 @@ public class FileController {
     private FileStorageService fileStorageService;
     private ContactsService contactsService;
     private FirmsService firmsService;
+    private UserService userService;
 
     @Autowired
     public void setFileStorageService(FileStorageService fileStorageService) {
@@ -39,14 +41,18 @@ public class FileController {
     public void setFirmsService(FirmsService firmsService) {
         this.firmsService = firmsService;
     }
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/image")
     public ResponseEntity<Resource> getFile(@RequestParam String fileName,@RequestParam String email, HttpServletRequest request) {
         // Load file as Resource
-        Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>)SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        String role = ((SimpleGrantedAuthority)authorities.toArray()[0]).getAuthority();
+        //Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>)SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        Role role = userService.getRoleByEmail(email);
         Resource resource=null;
-        if(Role.valueOf(role)==Role.ROLE_SIMPLE_FIRM_USER || Role.valueOf(role)==Role.ROLE_LOGISTIC_FIRM_USER)
+        if(role==Role.ROLE_SIMPLE_FIRM_USER || role==Role.ROLE_LOGISTIC_FIRM_USER)
             resource = fileStorageService.loadFileAsResource(fileName,firmsService.getCreatedAt(email));
         else{
             resource = fileStorageService.loadFileAsResource(fileName,contactsService.getCreatedAt(email));
