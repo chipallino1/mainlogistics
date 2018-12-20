@@ -170,21 +170,27 @@ function createSearchSorting(){
 }
 
 function getResults(arr,params) {
+	console.log('------------------');
 	let pageNumber=arr.pageNumber;
 	let pageCount=arr.pageCount;
 	arr=arr.listEntitiesDTO;
 	let result=document.getElementById(params.id);
 	if(document.getElementById(params.resultId)!=null){
 			deleteNodes(params.resultId);
-			document.getElementById(params.pagesId).remove()
-			result.appendChild(createPageNums(pageCount,params.state,pageNumber));
+			if(document.getElementById(params.pagesId)!=null)
+				document.getElementById(params.pagesId).remove();
+			if(result!=null)
+				result.appendChild(createPageNums(pageCount,params.state,pageNumber));
 		}
 	else{
-		result.appendChild(createResultsDiv(params.resultId));
+		if(result!=null)
+			result.appendChild(createResultsDiv(params.resultId));
 		if(pageCount>0){
 			result.appendChild(createDivPad());
+			console.log('create pages///');
 			result.appendChild(createPageNums(pageCount,params.state,pageNumber));
 		}
+
 	}
 	for(let i=0;i<arr.length;i++){
 		console.log("Result "+params.state+" elem added to list.");
@@ -508,8 +514,11 @@ function post(body,action,cb,cbParams) {
           arr=JSON.parse(xhr.responseText);
           if(cb!=undefined){
 
-          	if(arr.length==0)
-          		return;          	
+          	if(arr.length==0){
+          		return; 
+          	}
+          
+
           	cb(arr,cbParams);          	
           }
         }
@@ -533,4 +542,12 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
             this[i].parentElement.removeChild(this[i]);
         }
     }
+}
+function removeElement(id) {
+	console.log('-start-');
+    var elem = document.getElementById(id);
+    console.log('-medium-');
+    console.log(elem);
+    elem.parentNode.removeChild(elem);
+    console.log('-finish-');
 }

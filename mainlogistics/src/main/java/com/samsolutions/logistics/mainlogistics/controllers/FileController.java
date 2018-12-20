@@ -49,7 +49,6 @@ public class FileController {
     @GetMapping("/image")
     public ResponseEntity<Resource> getFile(@RequestParam String fileName,@RequestParam String email, HttpServletRequest request) {
         // Load file as Resource
-        //Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>)SecurityContextHolder.getContext().getAuthentication().getAuthorities();
         Role role = userService.getRoleByEmail(email);
         Resource resource=null;
         if(role==Role.ROLE_SIMPLE_FIRM_USER || role==Role.ROLE_LOGISTIC_FIRM_USER)
