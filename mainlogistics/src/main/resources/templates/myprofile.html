@@ -331,7 +331,7 @@
                 <h4 class="card-title mt-2" >Create route</h4>
             </header>
             <article class="card-body">
-                <form id="routeForm">
+                <form id="routeForm" th:object="${routeDTO}">
                     <div class="container">
                         <div class="form-row">
                             <div class="col form-group">
@@ -339,6 +339,7 @@
                                 <input type="text" class="form-control" placeholder="country" >
                             </div> <!-- form-group end.// -->
                             <div class="col form-group">
+                                <label>Point</label>
                                 <input type="text" class="form-control" placeholder="region">
                             </div> <!-- form-group end.// -->
                         </div> <!-- form-row end.// -->
@@ -351,6 +352,7 @@
                                 <input type="text" class="form-control" placeholder="country" >
                             </div> <!-- form-group end.// -->
                             <div class="col form-group">
+                                <label>Point</label>
                                 <input type="text" class="form-control" placeholder="region">
                             </div> <!-- form-group end.// -->
                         </div> <!-- form-row end.// -->
@@ -371,7 +373,7 @@
                         </div> <!-- form-group end.// -->
                         <div class="form-group">
                             <label>Length</label>
-                            <input type="number" class="form-control" placeholder="length" disabled="disabled">
+                            <input type="number" class="form-control" placeholder="length">
                         </div> <!-- form-group end.// -->
                         <div class="form-group">
                             <label>Cost</label>
