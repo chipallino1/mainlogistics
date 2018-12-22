@@ -336,28 +336,28 @@
                         <div class="form-row">
                             <div class="col form-group">
                                 <label>From </label>
-                                <input type="text" class="form-control" placeholder="country" >
+                                <input type="text" class="form-control" placeholder="country" id="countryFrom">
                             </div> <!-- form-group end.// -->
                             <div class="col form-group">
                                 <label>Point</label>
-                                <input type="text" class="form-control" placeholder="region">
+                                <input type="text" class="form-control" placeholder="region" id="regionFrom">
                             </div> <!-- form-group end.// -->
                         </div> <!-- form-row end.// -->
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="city">
+                            <input type="text" class="form-control" placeholder="city" id="cityFrom">
                         </div> <!-- form-group end.// -->
                         <div class="form-row">
                             <div class="col form-group">
                                 <label>To </label>
-                                <input type="text" class="form-control" placeholder="country" >
+                                <input type="text" class="form-control" placeholder="country" id="countryTo">
                             </div> <!-- form-group end.// -->
                             <div class="col form-group">
                                 <label>Point</label>
-                                <input type="text" class="form-control" placeholder="region">
+                                <input type="text" class="form-control" placeholder="region" id="regionTo">
                             </div> <!-- form-group end.// -->
                         </div> <!-- form-row end.// -->
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="city">
+                            <input type="text" class="form-control" placeholder="city" id="cityTo">
                         </div> <!-- form-group end.// -->
                         <div class="form-group">
                             <label>Car name</label>
@@ -373,7 +373,7 @@
                         </div> <!-- form-group end.// -->
                         <div class="form-group">
                             <label>Length</label>
-                            <input type="number" class="form-control" placeholder="length">
+                            <input type="number" class="form-control" placeholder="length" id="lengthRoute">
                         </div> <!-- form-group end.// -->
                         <div class="form-group">
                             <label>Cost</label>
@@ -433,6 +433,7 @@
      <script th:if="${role}==1 OR ${role}==2">getContacts(null,firmNameFirm.value,"WAIT","resultColQueue","resultContQueue","pagesNumWAIT",0,5);</script>
     <script th:src="@{/js/authentication.js}"></script>
 
+     <script th:src="@{/js/routes.js}"></script>
     <script th:src="@{/js/enter.js}"></script>
     <script th:src="@{/js/autocomplete.js}"></script>
      <script th:inline="javascript">whenRegistred([[${isRegistred}]]);</script>

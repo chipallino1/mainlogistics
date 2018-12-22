@@ -15,13 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class GetPagesController {
 
-    private GeoCoderService geoCoderService;
-
-    @Autowired
-    public void setGeoCoderService(GeoCoderService geoCoderService) {
-        this.geoCoderService = geoCoderService;
-    }
-
     /**
      * Get home page
      * @param model for adding attributes
@@ -30,8 +23,6 @@ public class GetPagesController {
     @RequestMapping(path = {"/", "index"}, method = RequestMethod.GET)
     public String getHome(Model model) {
         model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getName());
-        GeocoderGeometry geometry = geoCoderService.locationToCoordinate("Lida Belarus");
-        System.out.println(geometry.toString());
         return "index";
     }
 
