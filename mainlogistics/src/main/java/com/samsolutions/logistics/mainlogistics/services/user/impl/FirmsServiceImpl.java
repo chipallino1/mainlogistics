@@ -94,6 +94,9 @@ public class FirmsServiceImpl implements FirmsService {
     @Override
     public void update(String email, FirmDTO firmDTO) {
         Firms firms = firmsRepository.findAllByEmail(email).get(0);
+        if(firmDTO.getAvatarPath()==null){
+            firmDTO.setAvatarPath(firms.getAvatarPath());
+        }
         Users users = usersRepository.findByEmail(email);
         users.setEmail(firmDTO.getEmail());
         map(firmDTO, firms);

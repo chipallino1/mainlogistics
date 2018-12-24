@@ -13,7 +13,7 @@ public class Carriers {
     private Long volume;
     private Long capacity;
     private Long cost;
-    Collection<RoutesOnCarriers> routesOnCarriersByCarriersId;
+    private Collection<RoutesOnCarriers> routesOnCarriersByCarriersId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

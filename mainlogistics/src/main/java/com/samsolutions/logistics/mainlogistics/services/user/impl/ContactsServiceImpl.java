@@ -47,6 +47,9 @@ public class ContactsServiceImpl implements ContactsService {
     @Override
     public void update(String email, ContactDTO contactDTO) {
         Contacts contacts = contactsRepository.findByEmail(email);
+        if(contactDTO.getAvatarPath()==null){
+            contactDTO.setAvatarPath(contacts.getAvatarPath());
+        }
         Users users = usersRepository.findByEmail(email);
         users.setEmail(contactDTO.getEmail());
         map(contactDTO, contacts);
