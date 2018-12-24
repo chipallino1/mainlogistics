@@ -2,6 +2,7 @@
 
 
 function makeEnabled(){
+	console.log(contactImage.value);
 	firstNameContact.disabled="";
 	lastNameContact.disabled="";
 	emailContact.disabled="";

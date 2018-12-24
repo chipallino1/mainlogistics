@@ -7,10 +7,12 @@ import com.samsolutions.logistics.mainlogistics.repositories.ContactsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.UsersRepository;
 import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
 import com.samsolutions.logistics.mainlogistics.services.security.Role;
+import com.samsolutions.logistics.mainlogistics.services.signup.ContactsSignUpService;
 import com.samsolutions.logistics.mainlogistics.services.user.ContactsService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,6 +28,8 @@ public class ContactsServiceImpl implements ContactsService {
     private ContactsRepository contactsRepository;
     private UsersRepository usersRepository;
 
+    private ContactsSignUpService contactsSignUpService;
+
     @Autowired
     public void setContactsRepository(ContactsRepository contactsRepository) {
         this.contactsRepository = contactsRepository;
@@ -34,6 +38,11 @@ public class ContactsServiceImpl implements ContactsService {
     @Autowired
     public void setUsersRepository(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
+    }
+
+    @Autowired
+    public void setContactsSignUpService(ContactsSignUpService contactsSignUpService) {
+        this.contactsSignUpService = contactsSignUpService;
     }
 
     @Override
@@ -45,16 +54,26 @@ public class ContactsServiceImpl implements ContactsService {
     }
 
     @Override
+    @Transactional
     public void update(String email, ContactDTO contactDTO) {
         Contacts contacts = contactsRepository.findByEmail(email);
         if(contactDTO.getAvatarPath()==null){
             contactDTO.setAvatarPath(contacts.getAvatarPath());
+            Users users = usersRepository.findByEmail(email);
+            users.setEmail(contactDTO.getEmail());
+            map(contactDTO, contacts);
+            usersRepository.save(users);
+            contactsRepository.save(contacts);
         }
-        Users users = usersRepository.findByEmail(email);
-        users.setEmail(contactDTO.getEmail());
-        map(contactDTO, contacts);
-        usersRepository.save(users);
-        contactsRepository.save(contacts);
+        else{
+
+            contactsSignUpService.updateContact(email);
+            contactsSignUpService.setContactDTO(contactDTO);
+            contactsSignUpService.save();
+            contactsSignUpService.saveAvatar(contactDTO.getImage());
+            contactsSignUpService.saveUser();
+        }
+
     }
 
     @Override

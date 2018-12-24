@@ -204,12 +204,12 @@
   </div> <!-- form-group end.// -->
     <div class="form-group">
         <label>Choose photo</label>
-        <input type="file" class="form-control" placeholder="file" name="file" th:field="*{image}" accept="image/*">
+        <input type="file" class="form-control" placeholder="file" name="file" id="firmImage" th:field="*{image}" accept="image/*">
     </div> <!-- form-group end.// -->
   
   <div class="form-group">
     <label>Create password</label>
-      <input class="form-control" type="password" th:field="*{password}">
+      <input class="form-control" type="password" th:field="*{password}" onclick="console.log(firmImage.value);">
   </div> <!-- form-group end.// -->  
   <div class="form-group">
     <label>Confirm password</label>

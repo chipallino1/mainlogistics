@@ -78,11 +78,22 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
         this.fileStorageService = fileStorageService;
     }
 
+
+    @Override
+    public void updateContact(String email) {
+        this.contacts=contactsRepository.findByEmail(email);
+        this.passwords=passwordsRepository.findById(this.contacts.getPasswordsId()).get();
+    }
+
+    @Override
+    public void createNewContact() {
+        contacts = new Contacts();
+        passwords = new Passwords();
+    }
+
     @Override
     public void setContactDTO(ContactDTO contactDTO) {
         this.contactDTO = contactDTO;
-        contacts = new Contacts();
-        passwords = new Passwords();
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.map(contactDTO, contacts);
     }

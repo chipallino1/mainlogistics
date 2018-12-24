@@ -94,7 +94,7 @@ public class AuthenticationController {
                 model.addAttribute("firmDTO", new FirmDTO());
                 return "authentication";
             }
-
+            contactsSignUpService.createNewContact();
             contactsSignUpService.setContactDTO(contactDTO);
             contactsSignUpService.saveContact();
             redirectAttributes.addFlashAttribute("registred", "true");

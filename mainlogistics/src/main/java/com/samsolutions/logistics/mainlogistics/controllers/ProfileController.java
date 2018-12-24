@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
  * Profile controller for CRUD in profile page
@@ -91,7 +93,7 @@ public class ProfileController {
      * @return redirection to profile page
      */
     @RequestMapping(path = "profile/{type}/update", method = RequestMethod.POST)
-    public String updateUser(@PathVariable("type") String userType, ContactDTO contactDTO, FirmDTO firmDTO) {
+    public String updateUser(ContactDTO contactDTO, @PathVariable("type") String userType, FirmDTO firmDTO) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         //for contact
         if (userType.equals("contact")) {
