@@ -33,7 +33,7 @@ public class RoutesMatrixImpl implements RoutesMatrix {
                     routes[i][j]=Integer.MAX_VALUE;
                     continue;
                 }
-                routes[i][j]=Math.abs(random.nextInt()%1000000);
+                routes[i][j]=Math.abs(random.nextInt()%10);
             }
         }
     }
@@ -100,7 +100,7 @@ public class RoutesMatrixImpl implements RoutesMatrix {
         List<MarkRoutes> markRoutesList=new ArrayList<>();
         MarkRoutes markRoutes;
         for (int i=0;i<this.size;i++){
-            for(int j=0;j<this.size;i++){
+            for(int j=0;j<this.size;j++){
                 if(this.routes[i][j]==0){
                     markRoutes=new MarkRoutes();
                     markRoutes.setI(i);
@@ -129,7 +129,7 @@ public class RoutesMatrixImpl implements RoutesMatrix {
     public int getMinCol(int colNum,int excludeI, int excludeJ){
         int min = Integer.MAX_VALUE;
         for(int i=0;i<this.size;i++){
-            if(colNum==excludeI && i==excludeJ){
+            if(i==excludeI && colNum==excludeJ){
                 continue;
             }
             if(this.routes[i][colNum]<min){

@@ -1,4 +1,5 @@
 import java.lang.reflect.Array;
+import java.util.List;
 
 public class Main {
 
@@ -17,7 +18,14 @@ public class Main {
         for(int i=0;i<routesMatrix.getSize();i++){
             target=target+rowConsts[i]+columnConsts[i];
         }
+        routesMatrix.setTarget(target);
         System.out.println("Target: "+target);
+        List<MarkRoutes> markRoutesList = routesMatrix.getMarksRoutes();
+        for (int i=0;i<markRoutesList.size();i++){
+            System.out.println(markRoutesList.get(i).getMark());
+        }
+        //System.out.println("Min mark of zero: "+MarkRoutes.getMinMarkRoutes().getMark());
+
 
     }
 }

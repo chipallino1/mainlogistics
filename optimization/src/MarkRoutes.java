@@ -29,7 +29,7 @@ public class MarkRoutes {
         this.mark = mark;
     }
 
-    public MarkRoutes getMinMarkRoutes(List<MarkRoutes> markRoutesList){
+    public static MarkRoutes getMinMarkRoutes(List<MarkRoutes> markRoutesList){
         int min=Integer.MAX_VALUE;
         MarkRoutes markRoutes=null;
         for(int i=0;i<markRoutesList.size();i++){
