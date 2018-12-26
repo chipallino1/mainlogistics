@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class RoutesMatrixImpl implements RoutesMatrix {
@@ -11,6 +12,8 @@ public class RoutesMatrixImpl implements RoutesMatrix {
     private int target;
     private int[] rowConsts;
     private int[] columnConsts;
+    private Map<Integer,Integer> rowsMapping;
+    private Map<Integer,Integer> colsMapping;
 
     public int[][] getRoutes() {
         return routes;
@@ -150,6 +153,7 @@ public class RoutesMatrixImpl implements RoutesMatrix {
         if(replaceTarget>deleteTarget){
             this.target = deleteTarget;
             deleteRowCol(row,col);
+
         }
         else {
             this.target = replaceTarget;
