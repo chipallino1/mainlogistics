@@ -10,7 +10,7 @@ public class Main {
         routesMatrix.setRoutes();
         routesMatrix.showMatrix();
         routesMatrix.redRow();
-        routesMatrix.showMatrix();
+        //routesMatrix.showMatrix();
         routesMatrix.redColumn();
         routesMatrix.showMatrix();
         int target=0;
@@ -21,12 +21,11 @@ public class Main {
         }
         routesMatrix.setTarget(target);
         System.out.println("Target: "+target);
-        List<MarkRoutes> markRoutesList = routesMatrix.getMarksRoutes();
-        for (int i=0;i<markRoutesList.size();i++){
-            System.out.println(markRoutesList.get(i).getMark());
-        }
-        //System.out.println("Min mark of zero: "+MarkRoutes.getMinMarkRoutes().getMark());
-
-
+        System.out.println("Max mark of zero: "+MarkRoutes.getMaxMarkRoutes(routesMatrix.getMarksRoutes()).getMark());
+        System.out.println("Row of zero: "+MarkRoutes.getMaxMarkRoutes(routesMatrix.getMarksRoutes()).getI());
+        System.out.println("Col of zero: "+MarkRoutes.getMaxMarkRoutes(routesMatrix.getMarksRoutes()).getJ());
+        MarkRoutes maxMarkRoutes = MarkRoutes.getMaxMarkRoutes(routesMatrix.getMarksRoutes());
+        routesMatrix.chooseRoute(maxMarkRoutes.getI(),maxMarkRoutes.getJ());
+        routesMatrix.showMatrix();
     }
 }

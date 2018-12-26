@@ -40,5 +40,17 @@ public class MarkRoutes {
         }
         return markRoutes;
     }
+    public static MarkRoutes getMaxMarkRoutes(List<MarkRoutes> markRoutesList){
+        int max=Integer.MIN_VALUE;
+        MarkRoutes markRoutes=null;
+        for(int i=0;i<markRoutesList.size();i++){
+            if(markRoutesList.get(i).getMark()>max){
+                max=markRoutesList.get(i).getMark();
+                markRoutes=markRoutesList.get(i);
+            }
+        }
+        return markRoutes;
+    }
+
 
 }

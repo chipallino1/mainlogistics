@@ -5,7 +5,9 @@ import java.util.Random;
 public class RoutesMatrixImpl implements RoutesMatrix {
 
     private int[][] routes;
+    private int[][] tempRoutes;
     private int size;
+    private int tempSize;
     private int target;
     private int[] rowConsts;
     private int[] columnConsts;
@@ -113,7 +115,7 @@ public class RoutesMatrixImpl implements RoutesMatrix {
         return markRoutesList;
     }
 
-    public int getMinRow(int rowNum,int excludeI, int excludeJ){
+    private int getMinRow(int rowNum,int excludeI, int excludeJ){
         int min = Integer.MAX_VALUE;
         for(int j=0;j<this.size;j++){
             if(rowNum==excludeI && j==excludeJ){
@@ -126,7 +128,7 @@ public class RoutesMatrixImpl implements RoutesMatrix {
         return min;
     }
 
-    public int getMinCol(int colNum,int excludeI, int excludeJ){
+    private int getMinCol(int colNum,int excludeI, int excludeJ){
         int min = Integer.MAX_VALUE;
         for(int i=0;i<this.size;i++){
             if(i==excludeI && colNum==excludeJ){
@@ -137,6 +139,70 @@ public class RoutesMatrixImpl implements RoutesMatrix {
             }
         }
         return min;
+    }
+    public void chooseRoute(int row,int col){
+        this.tempRoutes=this.routes;
+        this.tempSize=this.size;
+        int replaceTarget=this.replaceOnInfinityAndCalc(row,col);
+        int deleteTarget=this.deleteRowColAndCalc(row,col);
+        this.routes = this.tempRoutes;
+        this.size=this.tempSize;
+        if(replaceTarget>deleteTarget){
+            this.target = deleteTarget;
+            deleteRowCol(row,col);
+        }
+        else {
+            this.target = replaceTarget;
+            replaceOnInfinity(row,col);
+        }
+    }
+
+    private int replaceOnInfinityAndCalc(int row,int col){
+        replaceOnInfinity(row,col);
+        redRow();
+        redColumn();
+        int[] rowConsts = this.getRowConsts();
+        int[] columnConsts = this.getColumnConsts();
+        int target=0;
+        for(int i=0;i<this.getSize();i++){
+            target=target+rowConsts[i]+columnConsts[i];
+        }
+        return target;
+    }
+
+    private void replaceOnInfinity(int row,int col){
+        this.routes[row][col]=Integer.MAX_VALUE;
+    }
+
+
+    private int deleteRowColAndCalc(int row,int col){
+        deleteRowCol(row,col);
+        redRow();
+        redColumn();
+        int[] rowConsts = this.getRowConsts();
+        int[] columnConsts = this.getColumnConsts();
+        int target=0;
+        for(int i=0;i<this.getSize();i++){
+            target=target+rowConsts[i]+columnConsts[i];
+        }
+        return target;
+    }
+
+    private void deleteRowCol(int row,int col){
+        this.size=this.size-1;
+        this.routes = new int[this.size][this.size];
+        int routesI=0;
+        int routesJ=0;
+        for(int i=0;i<this.size;i++,routesI++){
+            routesJ=0;
+            if(i==row)
+                routesI=routesJ+1;
+            for(int j=0;j<this.size;j++,routesJ++){
+                if(j==col)
+                    routesJ=routesJ+1;
+                this.routes[i][j]=this.tempRoutes[routesI][routesJ];
+            }
+        }
     }
 
     @Override
