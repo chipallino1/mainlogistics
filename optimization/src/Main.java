@@ -10,6 +10,7 @@ public class Main {
         routesMatrix.setRoutes();
         routesMatrix.showMatrix();
         routesMatrix.redRow();
+        routesMatrix.showMatrix();
         routesMatrix.redColumn();
         routesMatrix.showMatrix();
         int target=0;

@@ -62,9 +62,9 @@ public class RoutesMatrixImpl implements RoutesMatrix {
             for (int j = 0; j < this.size; j++) {
                 if (this.routes[rowNum][j] < min) {
                     min = this.routes[rowNum][j];
-                    this.rowConsts[j]=min;
                 }
             }
+            this.rowConsts[rowNum]=min;
             for (int j = 0; j < this.size; j++) {
                 this.routes[rowNum][j] = this.routes[rowNum][j] - min;
             }
@@ -79,9 +79,9 @@ public class RoutesMatrixImpl implements RoutesMatrix {
             for (int i = 0; i < this.size; i++) {
                 if (this.routes[i][columnNum] < min) {
                     min = this.routes[i][columnNum];
-                    this.columnConsts[i]=min;
                 }
             }
+            this.columnConsts[columnNum]=min;
             for (int i = 0; i < this.size; i++) {
                 this.routes[i][columnNum] = this.routes[i][columnNum] - min;
             }
