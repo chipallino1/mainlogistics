@@ -83,12 +83,14 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
     public void updateContact(String email) {
         this.contacts=contactsRepository.findByEmail(email);
         this.passwords=passwordsRepository.findById(this.contacts.getPasswordsId()).get();
+        this.users=usersRepository.findByEmail(email);
     }
 
     @Override
     public void createNewContact() {
         contacts = new Contacts();
         passwords = new Passwords();
+        users = new Users();
     }
 
     @Override
@@ -154,7 +156,6 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
 
     @Override
     public void saveUser() {
-        users = new Users();
         users.setEmail(contacts.getEmail());
         users.setUserState(UserState.ENABLED);
         users.setRole(Role.ROLE_CONTACT_USER);

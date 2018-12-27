@@ -57,7 +57,7 @@ public class ContactsServiceImpl implements ContactsService {
     @Transactional
     public void update(String email, ContactDTO contactDTO) {
         Contacts contacts = contactsRepository.findByEmail(email);
-        if(contactDTO.getAvatarPath()==null){
+        if(contactDTO.getImage()==null){
             contactDTO.setAvatarPath(contacts.getAvatarPath());
             Users users = usersRepository.findByEmail(email);
             users.setEmail(contactDTO.getEmail());
@@ -71,7 +71,7 @@ public class ContactsServiceImpl implements ContactsService {
             contactsSignUpService.setContactDTO(contactDTO);
             contactsSignUpService.save();
             contactsSignUpService.saveAvatar(contactDTO.getImage());
-            contactsSignUpService.saveUser();
+            //contactsSignUpService.saveUser();
         }
 
     }

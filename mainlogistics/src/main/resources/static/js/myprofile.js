@@ -8,6 +8,7 @@ function makeEnabled(){
 	emailContact.disabled="";
 	phoneNumContact.disabled="";
 	contactImage.disabled="";
+	firmNameContact.disabled="";
 	firmImage.disabled="";
 	//myInput.disabled="";
 	firmNameFirm.disabled="";
