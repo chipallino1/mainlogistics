@@ -62,12 +62,20 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
     public void setFileStorageService(FileStorageService fileStorageService) {
         this.fileStorageService = fileStorageService;
     }
+    @Override
+    public void updateFirm(String email){
+        this.firms = firmsRepository.findAllByEmail(email).get(0);
+        this.passwords = passwordsRepository.findById(this.firms.getId()).get();
+    }
+    @Override
+    public void createNew(){
+        firms = new Firms();
+        passwords = new Passwords();
+    }
 
     @Override
     public void setFirmDTO(FirmDTO firmDTO) {
         this.firmDTO = firmDTO;
-        firms = new Firms();
-        passwords = new Passwords();
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.map(firmDTO, firms);
 

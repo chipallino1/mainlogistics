@@ -105,7 +105,7 @@ public class AuthenticationController {
                 model.addAttribute("contactDTO", new ContactDTO());
                 return "authentication";
             }
-
+            firmsSignUpService.createNew();
             firmsSignUpService.setFirmDTO(firmDTO);
             firmsSignUpService.saveFirm();
             redirectAttributes.addFlashAttribute("isRegistred", "true");

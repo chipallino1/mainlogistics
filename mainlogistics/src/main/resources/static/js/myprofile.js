@@ -2,7 +2,6 @@
 
 
 function makeEnabled(){
-	console.log(contactImage.value);
 	firstNameContact.disabled="";
 	lastNameContact.disabled="";
 	emailContact.disabled="";
@@ -14,6 +13,13 @@ function makeEnabled(){
 	firmNameFirm.disabled="";
 	emailFirm.disabled="";
 	descriptionFirm.disabled="";
+}
+function makeFirmEnabled(){
+    firmImage.disabled="";
+    //myInput.disabled="";
+    firmNameFirm.disabled="";
+    emailFirm.disabled="";
+    descriptionFirm.disabled="";
 }
 function makeDisabled() {
 	firstNameContact.disabled="disabled";

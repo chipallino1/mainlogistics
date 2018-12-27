@@ -59,21 +59,19 @@ public class ContactsServiceImpl implements ContactsService {
         Contacts contacts = contactsRepository.findByEmail(email);
         if(contactDTO.getImage()==null){
             contactDTO.setAvatarPath(contacts.getAvatarPath());
-            Users users = usersRepository.findByEmail(email);
-            users.setEmail(contactDTO.getEmail());
             map(contactDTO, contacts);
-            usersRepository.save(users);
             contactsRepository.save(contacts);
         }
         else{
-
             contactsSignUpService.updateContact(email);
             contactsSignUpService.setContactDTO(contactDTO);
             contactsSignUpService.save();
             contactsSignUpService.saveAvatar(contactDTO.getImage());
             //contactsSignUpService.saveUser();
         }
-
+        Users users = usersRepository.findByEmail(email);
+        users.setEmail(contactDTO.getEmail());
+        usersRepository.save(users);
     }
 
     @Override

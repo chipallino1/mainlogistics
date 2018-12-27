@@ -11,6 +11,7 @@ import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.UsersRepository;
 import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
 import com.samsolutions.logistics.mainlogistics.services.security.Role;
+import com.samsolutions.logistics.mainlogistics.services.signup.FirmsSignUpService;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
 import com.samsolutions.logistics.mainlogistics.services.utils.PackageType;
 import org.modelmapper.ModelMapper;
@@ -35,12 +36,18 @@ import java.util.*;
 @Service
 public class FirmsServiceImpl implements FirmsService {
 
+    private FirmsSignUpService firmsSignUpService;
     private FirmsRepository firmsRepository;
     private UsersRepository usersRepository;
     private ContactsRepository contactsRepository;
     private ApplicationContext applicationContext;
 
     private enum OrderTypes { ORDER_BY_FIRST_NAME,ORDER_BY_LAST_NAME,ORDER_BY_MODIFIED_DATE };
+
+    @Autowired
+    public void setFirmsSignUpService(FirmsSignUpService firmsSignUpService) {
+        this.firmsSignUpService = firmsSignUpService;
+    }
 
     @Autowired
     public void setFirmsRepository(FirmsRepository firmsRepository) {
@@ -94,8 +101,14 @@ public class FirmsServiceImpl implements FirmsService {
     @Override
     public void update(String email, FirmDTO firmDTO) {
         Firms firms = firmsRepository.findAllByEmail(email).get(0);
-        if(firmDTO.getAvatarPath()==null){
+        if(firmDTO.getImage()==null){
             firmDTO.setAvatarPath(firms.getAvatarPath());
+        }
+        else{
+            firmsSignUpService.updateFirm(email);
+            firmsSignUpService.setFirmDTO(firmDTO);
+            firmsSignUpService.save();
+            firmsSignUpService.saveAvatar(firmDTO.getImage());
         }
         Users users = usersRepository.findByEmail(email);
         users.setEmail(firmDTO.getEmail());

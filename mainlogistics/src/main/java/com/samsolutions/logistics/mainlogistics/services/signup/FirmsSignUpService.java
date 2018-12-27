@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public interface FirmsSignUpService extends SignUpService{
 
+    void updateFirm(String email);
+    void createNew();
     /**
      * Set Contacts and Passwords entities by mapping
      * @param firmDTO dto of contacts
