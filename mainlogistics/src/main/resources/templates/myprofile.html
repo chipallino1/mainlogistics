@@ -103,7 +103,7 @@
   </div> <!-- form-group end.// -->
          <div class="form-group">
              <label>Choose another photo</label>
-             <input type="file" class="form-control" placeholder="file" id="contactImage" name="file" th:field="*{image}" accept="image/*">
+             <input type="file" class="form-control" placeholder="file" id="contactImage" disabled="disabled" name="file" th:field="*{image}" accept="image/*">
          </div> <!-- form-group end.// -->
   <div class="form-group" id="firms" style="display: none;" th:if="*{firmName}!=null">
     <label>Choose firm</label>
@@ -131,7 +131,7 @@
         <h4 class="card-title mt-2" th:utext="${profileName}"></h4>
     </header>
 <article class="card-body">
-<form th:action="@{/profile/firm/update}" method="post" th:object="${firmDTO}" id="firmForm">
+<form th:action="@{/profile/firm/update}" method="post" th:object="${firmDTO}" id="firmForm"  enctype="multipart/form-data">
 <div class="container">
     <div th:if="*{avatarPath}!=null" class="justify-content-center" align="center">
         <img class="d-block w-100" th:src="*{avatarPath}">
@@ -152,6 +152,11 @@
     <label>Description</label>
     <input type="text" class="form-control" placeholder="description" id="descriptionFirm" disabled="disabled" th:field="*{description}">
   </div> <!-- form-group end.// -->
+    <div class="form-group">
+    <label>Choose another photo</label>
+    <input type="file" class="form-control" placeholder="file" id="firmImage" disabled="disabled" name="file" th:field="*{image}" accept="image/*">
+</div> <!-- form-group end.// -->
+
     <div class="form-group">
         <button type="button" class="btn btn-primary btn-block" onclick="makeEnabled()"> Update  </button>
         <button type="submit" class="btn btn-primary btn-block" id="submitFormFirm"> Save  </button>
@@ -272,130 +277,130 @@
             </article> <!-- card-body end .// -->
         </div> <!-- card.// -->
     </div> <!-- col.//-->
-    <div class="col-md-6"  id="routeList"  th:if="${#authentication.getPrincipal().getUsername()}==${profileName}"  sec:authorize="(isAuthenticated() && hasRole('ROLE_CONTACT_LOGISTICS_FIRM_USER'))">
+    <div class="col-md-6" id="route" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}"  sec:authorize="(isAuthenticated() && hasRole('ROLE_CONTACT_LOGISTICS_FIRM_USER'))">
+        <div class="col-md"  id="createRoute">
 
-        <div class="card">
-            <article class="card-body">
+            <div class="card">
+                <header class="card-header">
+                    <h4 class="card-title mt-2" >Create route</h4>
+                </header>
+                <article class="card-body">
+                    <form id="routeForm" th:object="${routeDTO}">
+                        <div class="container">
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label>From </label>
+                                    <input type="text" class="form-control" placeholder="country" id="countryFrom">
+                                </div> <!-- form-group end.// -->
+                                <div class="col form-group">
+                                    <label>Point</label>
+                                    <input type="text" class="form-control" placeholder="region" id="regionFrom">
+                                </div> <!-- form-group end.// -->
+                            </div> <!-- form-row end.// -->
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="city" id="cityFrom">
+                            </div> <!-- form-group end.// -->
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label>To </label>
+                                    <input type="text" class="form-control" placeholder="country" id="countryTo">
+                                </div> <!-- form-group end.// -->
+                                <div class="col form-group">
+                                    <label>Point</label>
+                                    <input type="text" class="form-control" placeholder="region" id="regionTo">
+                                </div> <!-- form-group end.// -->
+                            </div> <!-- form-row end.// -->
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="city" id="cityTo">
+                            </div> <!-- form-group end.// -->
+                            <div class="form-group">
+                                <label>Car name</label>
+                                <input type="text" class="form-control" placeholder="car name">
+                            </div> <!-- form-group end.// -->
+                            <div class="form-group">
 
-                <div class="grid-body">
-                    <div class="row">
+                                <label>Volume, m3</label>
+                                <input type="number" class="form-control" placeholder="volume">
+                            </div> <!-- form-group end.// -->
+                            <div class="form-group">
+                                <label>Capacity, tons</label>
+                                <input type="number" class="form-control" placeholder="capacity">
+                            </div> <!-- form-group end.// -->
+                            <div class="form-group">
+                                <label>Length</label>
+                                <input type="number" class="form-control" placeholder="length" id="lengthRoute">
+                            </div> <!-- form-group end.// -->
+                            <div class="form-group">
+                                <label>Cost</label>
+                                <input type="number" class="form-control" placeholder="cost">
+                            </div> <!-- form-group end.// -->
+                            <div class="form-group" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}">
+                                <button  sec:authorize="!(isAuthenticated() && hasRole('ROLE_FIRM_USER'))" type="submit" class="btn btn-primary btn-block" id="submitFormRoute"> Create route </button>
+                            </div> <!-- form-group// -->
 
-                        <!-- BEGIN RESULT -->
-                        <div class="col" id="resultRouteCol">
-
-                            <h2><i class="fa fa-file-o"></i> Routes list</h2>
-                            <hr>
-
-                            <p>Here you can see all routes.</p>
-
-                            <div class="padding"></div>
-                            <div class="container">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkTimeRoute" sortType="modifiedTime" onclick='if(this.checked) {checkLastRoute.checked=false;checkFirstRoute.checked=false;orderBy="ModifiedTime";}'>
-                                    <label class="form-check-label" id="checkTimeLbRoute" for="checkTimeRoute">Sort by modified time</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkFirstRoute" sortType="firstName" onclick='if(this.checked){checkTimeRoute.checked=false;checkLastRoute.checked=false;orderBy="FirstName";}'>
-                                    <label class="form-check-label" id="checkFirstLbRoute" for="checkFirstRoute">Sort by first name</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkLastRoute" sortType="lastName" onclick='if(this.checked){checkTimeRoute.checked=false;checkFirstRoute.checked=false;orderBy="LastName";}'>
-                                    <label class="form-check-label" id="checkLastLbRoute" for="checkLastRoute">Sort by last name</label>
-                                </div>
-                            </div>
-
-                            <div class="padding"></div>
-                            <div class="container">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="descRoute" onclick='if(this.checked){isDesc=true;ascRoute.checked=false;checkTimeRoute.checked=false;checkFirstRoute.checked=false;checkLastRoute.checked=false;}'>
-                                    <label class="form-check-label"  for="descRoute">Desc</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="ascRoute" onclick='if(this.checked){isDesc=false;descRoute.checked=false;checkTimeRoute.checked=false;checkFirstRoute.checked=false;checkLastRoute.checked=false;}'>
-                                    <label class="form-check-label"  for="ascRoute">Asc</label>
-                                </div>
-                            </div>
-                            <div class="padding"></div>
                         </div>
-                        <!-- END RESULT -->
-                    </div>
-                </div>
-
-                <!-- END SEARCH RESULT -->
-
-            </article> <!-- card-body end .// -->
-        </div> <!-- card.// -->
-    </div> <!-- col.//-->
-
+                    </form>
+                </article> <!-- card-body end .// -->
+            </div> <!-- card.// -->
+        </div> <!-- col.//-->
+    </div><!-- row.//-->
 </div> <!-- row.//-->
-<div class="row justify-content-center" id="route" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}"  sec:authorize="(isAuthenticated() && hasRole('ROLE_CONTACT_LOGISTICS_FIRM_USER'))">
-    <div class="col-md-8"  id="createRoute">
+          <br>
+          <div class="row justify-content-center"  id="routeList"  th:if="${#authentication.getPrincipal().getUsername()}==${profileName}"  sec:authorize="(isAuthenticated() && hasRole('ROLE_CONTACT_LOGISTICS_FIRM_USER'))">
+              <div class="col-md-8">
+              <div class="card">
+                  <article class="card-body">
 
-        <div class="card">
-            <header class="card-header">
-                <h4 class="card-title mt-2" >Create route</h4>
-            </header>
-            <article class="card-body">
-                <form id="routeForm" th:object="${routeDTO}">
-                    <div class="container">
-                        <div class="form-row">
-                            <div class="col form-group">
-                                <label>From </label>
-                                <input type="text" class="form-control" placeholder="country" id="countryFrom">
-                            </div> <!-- form-group end.// -->
-                            <div class="col form-group">
-                                <label>Point</label>
-                                <input type="text" class="form-control" placeholder="region" id="regionFrom">
-                            </div> <!-- form-group end.// -->
-                        </div> <!-- form-row end.// -->
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="city" id="cityFrom">
-                        </div> <!-- form-group end.// -->
-                        <div class="form-row">
-                            <div class="col form-group">
-                                <label>To </label>
-                                <input type="text" class="form-control" placeholder="country" id="countryTo">
-                            </div> <!-- form-group end.// -->
-                            <div class="col form-group">
-                                <label>Point</label>
-                                <input type="text" class="form-control" placeholder="region" id="regionTo">
-                            </div> <!-- form-group end.// -->
-                        </div> <!-- form-row end.// -->
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="city" id="cityTo">
-                        </div> <!-- form-group end.// -->
-                        <div class="form-group">
-                            <label>Car name</label>
-                            <input type="text" class="form-control" placeholder="car name">
-                        </div> <!-- form-group end.// -->
-                        <div class="form-group">
+                      <div class="grid-body">
+                          <div class="row">
 
-                            <label>Volume, m3</label>
-                            <input type="number" class="form-control" placeholder="volume">
-                        </div> <!-- form-group end.// -->
-                        <div class="form-group">
-                            <label>Capacity, tons</label>
-                            <input type="number" class="form-control" placeholder="capacity">
-                        </div> <!-- form-group end.// -->
-                        <div class="form-group">
-                            <label>Length</label>
-                            <input type="number" class="form-control" placeholder="length" id="lengthRoute">
-                        </div> <!-- form-group end.// -->
-                        <div class="form-group">
-                            <label>Cost</label>
-                            <input type="number" class="form-control" placeholder="cost">
-                        </div> <!-- form-group end.// -->
-                        <div class="form-group" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}">
-                            <button  sec:authorize="!(isAuthenticated() && hasRole('ROLE_FIRM_USER'))" type="submit" class="btn btn-primary btn-block" id="submitFormRoute"> Create route </button>
-                        </div> <!-- form-group// -->
+                              <!-- BEGIN RESULT -->
+                              <div class="col" id="resultRouteCol">
 
-                    </div>
-                </form>
-            </article> <!-- card-body end .// -->
-        </div> <!-- card.// -->
-    </div> <!-- col.//-->
-</div><!-- row.//-->
+                                  <h2><i class="fa fa-file-o"></i> Routes list</h2>
+                                  <hr>
 
+                                  <p>Here you can see all routes.</p>
+
+                                  <div class="padding"></div>
+                                  <div class="container">
+                                      <div class="form-check">
+                                          <input type="checkbox" class="form-check-input" id="checkTimeRoute" sortType="modifiedTime" onclick='if(this.checked) {checkLastRoute.checked=false;checkFirstRoute.checked=false;orderBy="ModifiedTime";}'>
+                                          <label class="form-check-label" id="checkTimeLbRoute" for="checkTimeRoute">Sort by modified time</label>
+                                      </div>
+                                      <div class="form-check">
+                                          <input type="checkbox" class="form-check-input" id="checkFirstRoute" sortType="firstName" onclick='if(this.checked){checkTimeRoute.checked=false;checkLastRoute.checked=false;orderBy="FirstName";}'>
+                                          <label class="form-check-label" id="checkFirstLbRoute" for="checkFirstRoute">Sort by first name</label>
+                                      </div>
+                                      <div class="form-check">
+                                          <input type="checkbox" class="form-check-input" id="checkLastRoute" sortType="lastName" onclick='if(this.checked){checkTimeRoute.checked=false;checkFirstRoute.checked=false;orderBy="LastName";}'>
+                                          <label class="form-check-label" id="checkLastLbRoute" for="checkLastRoute">Sort by last name</label>
+                                      </div>
+                                  </div>
+
+                                  <div class="padding"></div>
+                                  <div class="container">
+                                      <div class="form-check">
+                                          <input type="checkbox" class="form-check-input" id="descRoute" onclick='if(this.checked){isDesc=true;ascRoute.checked=false;checkTimeRoute.checked=false;checkFirstRoute.checked=false;checkLastRoute.checked=false;}'>
+                                          <label class="form-check-label"  for="descRoute">Desc</label>
+                                      </div>
+                                      <div class="form-check">
+                                          <input type="checkbox" class="form-check-input" id="ascRoute" onclick='if(this.checked){isDesc=false;descRoute.checked=false;checkTimeRoute.checked=false;checkFirstRoute.checked=false;checkLastRoute.checked=false;}'>
+                                          <label class="form-check-label"  for="ascRoute">Asc</label>
+                                      </div>
+                                  </div>
+                                  <div class="padding"></div>
+                              </div>
+                              <!-- END RESULT -->
+                          </div>
+                      </div>
+
+                      <!-- END SEARCH RESULT -->
+
+                  </article> <!-- card-body end .// -->
+              </div> <!-- card.// -->
+              </div>
+          </div> <!-- col.//-->
 
 
 
