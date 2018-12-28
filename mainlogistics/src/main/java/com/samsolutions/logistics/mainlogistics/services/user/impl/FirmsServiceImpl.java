@@ -101,8 +101,16 @@ public class FirmsServiceImpl implements FirmsService {
     @Override
     public void update(String email, FirmDTO firmDTO) {
         Firms firms = firmsRepository.findAllByEmail(email).get(0);
-        if(firmDTO.getImage()==null){
-            firmDTO.setAvatarPath(firms.getAvatarPath());
+        if(firmDTO.getImage().getOriginalFilename().equals("")){
+            if(email.equals(firmDTO.getEmail()))
+                firmDTO.setAvatarPath(firms.getAvatarPath());
+            else{
+                String newAvatarPath = firms.getAvatarPath().substring(0,firms.getAvatarPath().lastIndexOf('=')+1);
+                newAvatarPath = newAvatarPath + firmDTO.getEmail();
+                firmDTO.setAvatarPath(newAvatarPath);
+            }
+            map(firmDTO, firms);
+            firmsRepository.save(firms);
         }
         else{
             firmsSignUpService.updateFirm(email);
@@ -112,9 +120,8 @@ public class FirmsServiceImpl implements FirmsService {
         }
         Users users = usersRepository.findByEmail(email);
         users.setEmail(firmDTO.getEmail());
-        map(firmDTO, firms);
         usersRepository.save(users);
-        firmsRepository.save(firms);
+
     }
 
     @Override

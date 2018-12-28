@@ -57,8 +57,14 @@ public class ContactsServiceImpl implements ContactsService {
     @Transactional
     public void update(String email, ContactDTO contactDTO) {
         Contacts contacts = contactsRepository.findByEmail(email);
-        if(contactDTO.getImage()==null){
-            contactDTO.setAvatarPath(contacts.getAvatarPath());
+        if(contactDTO.getImage().getOriginalFilename().equals("")){
+            if(email.equals(contactDTO.getEmail()))
+                contactDTO.setAvatarPath(contacts.getAvatarPath());
+            else{
+                String newAvatarPath = contacts.getAvatarPath().substring(0,contacts.getAvatarPath().lastIndexOf('=')+1);
+                newAvatarPath = newAvatarPath + contactDTO.getEmail();
+                contactDTO.setAvatarPath(newAvatarPath);
+            }
             map(contactDTO, contacts);
             contactsRepository.save(contacts);
         }

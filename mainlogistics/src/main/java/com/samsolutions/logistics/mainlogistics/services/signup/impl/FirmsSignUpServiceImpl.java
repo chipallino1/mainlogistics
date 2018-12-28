@@ -65,7 +65,7 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
     @Override
     public void updateFirm(String email){
         this.firms = firmsRepository.findAllByEmail(email).get(0);
-        this.passwords = passwordsRepository.findById(this.firms.getId()).get();
+        this.passwords = passwordsRepository.findById(this.firms.getPasswordId()).get();
     }
     @Override
     public void createNew(){
