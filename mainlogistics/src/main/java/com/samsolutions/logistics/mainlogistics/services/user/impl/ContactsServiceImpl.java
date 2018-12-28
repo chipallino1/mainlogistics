@@ -54,6 +54,11 @@ public class ContactsServiceImpl implements ContactsService {
 
 
     @Override
+    public ContactState getContactState(String email) {
+        return contactsRepository.findByEmail(email).getContactState();
+    }
+
+    @Override
     public ContactDTO getByEmail(String email) {
         Contacts contact = contactsRepository.findByEmail(email);
         ContactDTO contactDTO = new ContactDTO();

@@ -273,7 +273,7 @@
             </article> <!-- card-body end .// -->
         </div> <!-- card.// -->
     </div> <!-- col.//-->
-    <div class="col-md-6" id="route" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}"  sec:authorize="(isAuthenticated() && hasRole('ROLE_CONTACT_LOGISTICS_FIRM_USER'))">
+    <div class="col-md-6" id="route" th:if="${#authentication.getPrincipal().getUsername()}==${profileName} and ${added}==${contactState}"  sec:authorize="(isAuthenticated() && hasRole('ROLE_CONTACT_LOGISTICS_FIRM_USER'))">
         <div class="col-md"  id="createRoute">
 
             <div class="card">
@@ -342,7 +342,7 @@
     </div><!-- row.//-->
 </div> <!-- row.//-->
           <br>
-          <div class="row justify-content-center"  id="routeList"  th:if="${#authentication.getPrincipal().getUsername()}==${profileName}"  sec:authorize="(isAuthenticated() && hasRole('ROLE_CONTACT_LOGISTICS_FIRM_USER'))">
+          <div class="row justify-content-center"  id="routeList"  th:if="${#authentication.getPrincipal().getUsername()}==${profileName} and ${added}==${contactState}"  sec:authorize="(isAuthenticated() && hasRole('ROLE_CONTACT_LOGISTICS_FIRM_USER'))">
               <div class="col-md-8">
               <div class="card">
                   <article class="card-body">

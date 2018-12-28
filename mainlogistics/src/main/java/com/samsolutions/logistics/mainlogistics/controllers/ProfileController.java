@@ -56,12 +56,16 @@ public class ProfileController {
             if (email.equals("me")) {
                 model.addAttribute("contactDTO", contactsService.getByEmail(profileName));
                 model.addAttribute("role",userService.getRoleByEmail(profileName).ordinal());
+                model.addAttribute("contactState",contactsService.getContactState(profileName).ordinal());
+                model.addAttribute("added",1);
                 model.addAttribute("profileName", profileName);
             }
             //another profile
             else {
                 model.addAttribute("contactDTO", contactsService.getByEmail(email));
                 model.addAttribute("role",userService.getRoleByEmail(email).ordinal());
+                model.addAttribute("contactState",0);
+                model.addAttribute("added",1);
                 model.addAttribute("profileName", email);
             }
             model.addAttribute("firmDTO", new FirmDTO());
@@ -71,12 +75,16 @@ public class ProfileController {
             if (email.equals("me")) {
                 model.addAttribute("firmDTO", firmsService.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
                 model.addAttribute("role",userService.getRoleByEmail(profileName).ordinal());
+                model.addAttribute("contactState",0);
+                model.addAttribute("added",1);
                 model.addAttribute("profileName", profileName);
 
             }
             else {
                 model.addAttribute("firmDTO", firmsService.getByEmail(email));
                 model.addAttribute("role",userService.getRoleByEmail(email).ordinal());
+                model.addAttribute("contactState",0);
+                model.addAttribute("added",1);
                 model.addAttribute("profileName", email);
             }
             model.addAttribute("contactDTO", new ContactDTO());
