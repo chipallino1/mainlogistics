@@ -142,7 +142,8 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
             if (firmsList.size() > 0) {
                 Firms firm = firmsList.get(0);
                 contacts.setFirmId(firm.getId());
-                contacts.setContactState(ContactState.WAIT);
+                if(contacts.getContactState()==null)
+                    contacts.setContactState(ContactState.WAIT);
             }
             else {
                 throw new FirmNotFoundException("Firm you chose not found","Cause: this firm is not exists");

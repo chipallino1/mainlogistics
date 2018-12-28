@@ -57,6 +57,7 @@ public class ContactsServiceImpl implements ContactsService {
     @Transactional
     public void update(String email, ContactDTO contactDTO) {
         Contacts contacts = contactsRepository.findByEmail(email);
+        contactDTO.setContactState(contacts.getContactState());
         if(contactDTO.getImage().getOriginalFilename().equals("")){
             if(email.equals(contactDTO.getEmail()))
                 contactDTO.setAvatarPath(contacts.getAvatarPath());
