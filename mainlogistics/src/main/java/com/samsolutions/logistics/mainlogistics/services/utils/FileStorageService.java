@@ -8,4 +8,5 @@ import org.springframework.web.multipart.MultipartFile;
 public interface FileStorageService {
     String storeFile(MultipartFile file,String createdAt,String email);
     Resource loadFileAsResource(String fileName,String createdAt);
+    String updateFilePath(String avatarPath,String newEmail);
 }

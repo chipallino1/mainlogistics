@@ -9,6 +9,7 @@ import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
 import com.samsolutions.logistics.mainlogistics.services.security.Role;
 import com.samsolutions.logistics.mainlogistics.services.signup.ContactsSignUpService;
 import com.samsolutions.logistics.mainlogistics.services.user.ContactsService;
+import com.samsolutions.logistics.mainlogistics.services.utils.FileStorageService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class ContactsServiceImpl implements ContactsService {
 
     private ContactsRepository contactsRepository;
     private UsersRepository usersRepository;
+    private FileStorageService fileStorageService;
 
     private ContactsSignUpService contactsSignUpService;
 
@@ -41,9 +43,15 @@ public class ContactsServiceImpl implements ContactsService {
     }
 
     @Autowired
+    public void setFileStorageService(FileStorageService fileStorageService) {
+        this.fileStorageService = fileStorageService;
+    }
+
+    @Autowired
     public void setContactsSignUpService(ContactsSignUpService contactsSignUpService) {
         this.contactsSignUpService = contactsSignUpService;
     }
+
 
     @Override
     public ContactDTO getByEmail(String email) {
@@ -62,9 +70,7 @@ public class ContactsServiceImpl implements ContactsService {
             if(email.equals(contactDTO.getEmail()))
                 contactDTO.setAvatarPath(contacts.getAvatarPath());
             else{
-                String newAvatarPath = contacts.getAvatarPath().substring(0,contacts.getAvatarPath().lastIndexOf('=')+1);
-                newAvatarPath = newAvatarPath + contactDTO.getEmail();
-                contactDTO.setAvatarPath(newAvatarPath);
+                contactDTO.setAvatarPath(fileStorageService.updateFilePath(contacts.getAvatarPath(),contactDTO.getEmail()));
             }
             map(contactDTO, contacts);
             contactsRepository.save(contacts);

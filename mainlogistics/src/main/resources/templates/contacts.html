@@ -38,10 +38,10 @@
                   <a class="nav-link" th:href="@{/auth}">Login|Register</a>
               </li>
               <li class="nav-item" sec:authorize="isAuthenticated() && (hasRole('ROLE_CONTACT_USER') || hasRole('ROLE_CONTACT_LOGISTICS_FIRM_USER'))">
-                  <a  class="nav-link" id="profilePageContact" th:href="@{profile/contact/me}" sec:authentication="name">Name of user page</a>
+                  <a  class="nav-link" id="profilePageContact" th:href="@{/profile/contact/me}" sec:authentication="name">Name of user page</a>
               </li>
               <li class="nav-item" sec:authorize="isAuthenticated() && (hasRole('ROLE_FIRM_USER') || hasRole('ROLE_LOGISTIC_FIRM_USER') || hasRole('ROLE_SIMPLE_FIRM_USER'))">
-                  <a  class="nav-link" id="profilePageFirm" th:href="@{profile/firm/me}" sec:authentication="name">Name of user page</a>
+                  <a  class="nav-link" id="profilePageFirm" th:href="@{/profile/firm/me}" sec:authentication="name">Name of user page</a>
               </li>
           </ul>
           <form class="form-inline mt-2 mt-md-0">

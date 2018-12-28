@@ -40,6 +40,7 @@ public class FileStorageServiceImpl implements FileStorageService{
         }
     }
 
+    @Override
     public String storeFile(MultipartFile file,String createdAt,String email) {
         String fileName = StringUtils.cleanPath(System.currentTimeMillis()+file.getOriginalFilename());
 
@@ -56,6 +57,7 @@ public class FileStorageServiceImpl implements FileStorageService{
         }
     }
 
+    @Override
     public Resource loadFileAsResource(String fileName,String createdAt) {
         try {
             Path filePath =Paths.get(this.fileStorageLocation+"/"+createdAt+"/"+fileName).toAbsolutePath().normalize();
@@ -69,5 +71,12 @@ public class FileStorageServiceImpl implements FileStorageService{
         } catch (MalformedURLException ex) {
             throw new MyFileNotFoundException("File not found " + fileName, ex);
         }
+    }
+
+    @Override
+    public String updateFilePath(String avatarPath,String newEmail) {
+        String newAvatarPath = avatarPath.substring(0,avatarPath.lastIndexOf('=')+1);
+        newAvatarPath = newAvatarPath + newEmail;
+        return newAvatarPath;
     }
 }

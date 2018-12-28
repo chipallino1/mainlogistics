@@ -102,14 +102,14 @@ public class ProfileController {
             if (contactDTO.getEmail().equals(email))
                 return "redirect:/profile/contact/me";
             else
-                return "redirect:/logout";
+                return "redirect:/auth/logout";
         }
         else {
             firmsService.update(email, firmDTO);
             if (firmDTO.getEmail().equals(email))
                 return "redirect:/profile/firm/me";
             else
-                return "redirect:/logout";
+                return "redirect:/auth/logout";
         }
 
     }
