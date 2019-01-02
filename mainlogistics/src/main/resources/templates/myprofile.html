@@ -313,6 +313,16 @@
                                 <label>Car name</label>
                                 <input type="text" class="form-control" placeholder="car name">
                             </div> <!-- form-group end.// -->
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label>Start date and time</label>
+                                    <input type="text" pattern="^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))\s[0-23]{1,2}:[0-59]{1,2}$" title="Date or time have errors" placeholder="yyyy-mm-dd hh:mm" class="form-control"id="startTime">
+                                </div> <!-- form-group end.// -->
+                                <div class="col form-group">
+                                    <label>Finish date and time</label>
+                                    <input type="text" class="form-control" placeholder="country" id="finishDate">
+                                </div> <!-- form-group end.// -->
+                            </div> <!-- form-row end.// -->
                             <div class="form-group">
 
                                 <label>Volume, m3</label>
@@ -331,7 +341,7 @@
                                 <input type="number" class="form-control" placeholder="cost">
                             </div> <!-- form-group end.// -->
                             <div class="form-group" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}">
-                                <button  sec:authorize="!(isAuthenticated() && hasRole('ROLE_FIRM_USER'))" type="submit" class="btn btn-primary btn-block" id="submitFormRoute"> Create route </button>
+                                <button  sec:authorize="!(isAuthenticated() && hasRole('ROLE_FIRM_USER'))" type="submit" class="btn btn-primary btn-block"> Create route </button>
                             </div> <!-- form-group// -->
 
                         </div>
