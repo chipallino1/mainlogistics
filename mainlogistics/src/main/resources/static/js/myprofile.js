@@ -105,6 +105,18 @@ function get(action) {
     xhr.send(null);
 
 }
+function createRouteSubmit() {
+	let dateTimeStart=startDateTime.value;
+	let dateTimeFinish=finishDateTime.value;
+	let dateStart=new Date(dateTimeStart);
+    let dateFinish=new Date(dateTimeFinish);
+    startDateTime.value=dateStart.toIsoString();
+    finishDateTime.value=dateFinish.toIsoString();
+    console.log(startDateTime.value);
+    console.log(finishDateTime.value);
+    routeForm.submit();
+}
+
 
 Date.prototype.toIsoString = function() {
     var tzo = -this.getTimezoneOffset(),
@@ -119,8 +131,8 @@ Date.prototype.toIsoString = function() {
         'T' + pad(this.getHours()) +
         ':' + pad(this.getMinutes()) +
         ':' + pad(this.getSeconds()) +
-        dif + pad(tzo / 60) +
-        ':' + pad(tzo % 60);
+        dif + pad(tzo / 60)
+         + pad(tzo % 60);
 }
 
 var dt = new Date();

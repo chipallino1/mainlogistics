@@ -2,6 +2,7 @@ package com.samsolutions.logistics.mainlogistics.controllers;
 
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
+import com.samsolutions.logistics.mainlogistics.dto.RouteDTO;
 import com.samsolutions.logistics.mainlogistics.services.user.ContactsService;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
 import com.samsolutions.logistics.mainlogistics.services.user.UserService;
@@ -50,6 +51,7 @@ public class ProfileController {
     @RequestMapping(path = "profile/{type}/{email}", method = RequestMethod.GET)
     public String profilePage(@PathVariable("type") String type, @PathVariable("email") String email, Model model) {
         String profileName = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("routeDTO",new RouteDTO());
         //contact user
         if (type.equals("contact")) {
             //your profile
