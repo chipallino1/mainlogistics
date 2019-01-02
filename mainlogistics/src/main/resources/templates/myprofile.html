@@ -286,32 +286,32 @@
                             <div class="form-row">
                                 <div class="col form-group">
                                     <label>From </label>
-                                    <input type="text" class="form-control" placeholder="country" id="countryFrom">
+                                    <input type="text" class="form-control" placeholder="country" id="countryFrom" th:field="*{countryFrom}">
                                 </div> <!-- form-group end.// -->
                                 <div class="col form-group">
                                     <label>Point</label>
-                                    <input type="text" class="form-control" placeholder="region" id="regionFrom">
+                                    <input type="text" class="form-control" placeholder="region" id="regionFrom" th:field="*{regionFrom}">
                                 </div> <!-- form-group end.// -->
                             </div> <!-- form-row end.// -->
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="city" id="cityFrom">
+                                <input type="text" class="form-control" placeholder="city" id="cityFrom" th:field="*{cityFrom}">
                             </div> <!-- form-group end.// -->
                             <div class="form-row">
                                 <div class="col form-group">
                                     <label>To </label>
-                                    <input type="text" class="form-control" placeholder="country" id="countryTo">
+                                    <input type="text" class="form-control" placeholder="country" id="countryTo" th:field="*{countryTo}">
                                 </div> <!-- form-group end.// -->
                                 <div class="col form-group">
                                     <label>Point</label>
-                                    <input type="text" class="form-control" placeholder="region" id="regionTo">
+                                    <input type="text" class="form-control" placeholder="region" id="regionTo" th:field="*{regionTo}">
                                 </div> <!-- form-group end.// -->
                             </div> <!-- form-row end.// -->
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="city" id="cityTo">
+                                <input type="text" class="form-control" placeholder="city" id="cityTo" th:field="*{cityTo}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group">
                                 <label>Car name</label>
-                                <input type="text" class="form-control" placeholder="car name">
+                                <input type="text" class="form-control" placeholder="car name" th:field="*{carName}">
                             </div> <!-- form-group end.// -->
                             <div class="form-row">
                                 <div class="col form-group">
@@ -326,19 +326,19 @@
                             <div class="form-group">
 
                                 <label>Volume, m3</label>
-                                <input type="number" class="form-control" placeholder="volume">
+                                <input type="number" class="form-control" placeholder="volume" th:field="*{volume}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group">
                                 <label>Capacity, tons</label>
-                                <input type="number" class="form-control" placeholder="capacity">
+                                <input type="number" class="form-control" placeholder="capacity" th:field="*{capacity}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group">
                                 <label>Length</label>
-                                <input type="number" class="form-control" placeholder="length" id="lengthRoute">
+                                <input type="number" class="form-control" placeholder="length" id="lengthRoute" th:field="*{length}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group">
                                 <label>Cost</label>
-                                <input type="number" class="form-control" placeholder="cost">
+                                <input type="number" class="form-control" placeholder="cost" th:field="*{cost}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}">
                                 <button  sec:authorize="!(isAuthenticated() && hasRole('ROLE_FIRM_USER'))" type="button" class="btn btn-primary btn-block" onclick="createRouteSubmit()"> Create route </button>

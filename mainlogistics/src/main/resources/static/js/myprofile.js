@@ -117,6 +117,22 @@ function createRouteSubmit() {
     routeForm.submit();
 }
 
+function post(action,body) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/routes/create", true);
+    let csrfToken = $("meta[name='_csrf']").attr("content");
+    let csrfHeader = $("meta[name='_csrf_header']").attr("content");
+    xhr.setRequestHeader(csrfHeader,csrfToken);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+            console.log(xhr.responseText);
+            let distance=JSON.parse(xhr.responseText).distance;
+            console.log(distance);
+        }
+    }
+    xhr.send(body);
+}
 
 Date.prototype.toIsoString = function() {
     var tzo = -this.getTimezoneOffset(),

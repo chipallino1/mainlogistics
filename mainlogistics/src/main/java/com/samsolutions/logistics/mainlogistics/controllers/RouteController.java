@@ -33,7 +33,7 @@ public class RouteController {
             e.printStackTrace();
         }
         java.sql.Timestamp timeStampDate = new java.sql.Timestamp(date.getTime());
-        dateConverter.getDateFromString("");
+        dateConverter.getDateFromString(routeDTO.getDateStart());
         return true;
     }
 
