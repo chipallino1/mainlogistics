@@ -281,7 +281,7 @@
                     <h4 class="card-title mt-2" >Create route</h4>
                 </header>
                 <article class="card-body">
-                    <form id="routeForm" th:object="${routeDTO}">
+                    <form id="routeForm" th:object="${routeDTO}" th:action="@{/routes/create}" method="post">
                         <div class="container">
                             <div class="form-row">
                                 <div class="col form-group">
@@ -320,7 +320,7 @@
                                 </div> <!-- form-group end.// -->
                                 <div class="col form-group">
                                     <label>Finish date and time</label>
-                                    <input type="text" class="form-control" placeholder="country" id="finishDate">
+                                    <input type="text" pattern="^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))\s[0-23]{1,2}:[0-59]{1,2}$" title="Date or time have errors" placeholder="yyyy-mm-dd hh:mm" class="form-control" id="finishDate">
                                 </div> <!-- form-group end.// -->
                             </div> <!-- form-row end.// -->
                             <div class="form-group">
