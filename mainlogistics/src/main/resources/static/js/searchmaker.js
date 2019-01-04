@@ -500,7 +500,7 @@ function addContact(e) {
 	post(body,'/firms/contacts/add',updateLists,null);
 }
 function post(body,action,cb,cbParams) {
-	console.log(body);
+	console.log("searchmaker"+body);
 	let xhr = new XMLHttpRequest();
     xhr.open("POST", action, true);
     let csrfToken = $("meta[name='_csrf']").attr("content");

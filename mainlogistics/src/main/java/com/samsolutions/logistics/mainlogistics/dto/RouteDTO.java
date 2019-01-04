@@ -29,11 +29,14 @@ public class RouteDTO implements Serializable {
     @Size(min = 2)
     private String carName;
     @NotNull
-    @Pattern(regexp = "^([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))T[0-23]{1,2}:[0-59]{1,2}:[0-59]{1,2}(\\+|-)\\d{4}$")
-    private String dateStart;
+    @Size(min = 2)
+    private String carrierName;
     @NotNull
     @Pattern(regexp = "^([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))T[0-23]{1,2}:[0-59]{1,2}:[0-59]{1,2}(\\+|-)\\d{4}$")
-    private String dateFinish;
+    private String dateA;
+    @NotNull
+    @Pattern(regexp = "^([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))T[0-23]{1,2}:[0-59]{1,2}:[0-59]{1,2}(\\+|-)\\d{4}$")
+    private String dateB;
     @NotNull
     @Size(min = 1)
     private Long volume;
@@ -49,6 +52,14 @@ public class RouteDTO implements Serializable {
     @NotNull
     @Size(min=1)
     private Long cost;
+
+    public String getCarrierName() {
+        return carrierName;
+    }
+
+    public void setCarrierName(String carrierName) {
+        this.carrierName = carrierName;
+    }
 
     public String getCountryFrom() {
         return countryFrom;
@@ -106,20 +117,20 @@ public class RouteDTO implements Serializable {
         this.carName = carName;
     }
 
-    public String getDateStart() {
-        return dateStart;
+    public String getDateA() {
+        return dateA;
     }
 
-    public void setDateStart(String dateStart) {
-        this.dateStart = dateStart;
+    public void setDateA(String dateA) {
+        this.dateA = dateA;
     }
 
-    public String getDateFinish() {
-        return dateFinish;
+    public String getDateB() {
+        return dateB;
     }
 
-    public void setDateFinish(String dateFinish) {
-        this.dateFinish = dateFinish;
+    public void setDateB(String dateB) {
+        this.dateB = dateB;
     }
 
     public Long getVolume() {

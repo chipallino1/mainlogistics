@@ -122,18 +122,20 @@ function createRouteSubmit() {
         regionTo:regionTo.value,
         cityTo:cityTo.value,
         carName:carName.value,
-        dateStart:startDateTime.value,
-        dateFinish:finishDateTime.value,
+        carrierName:carrierName.value,
+        dateA:startDateTime.value,
+        dateB:finishDateTime.value,
         volume:volume.value,
+        capacity:capacity.value,
         length:lengthRoute.value,
         duration:durationRoute.value,
         cost:cost.value
     };
     console.log(body);
-    post('/routes/create',body);
+    post1('/routes/create',body);
 }
 
-function post(action,body) {
+function post1(action,body) {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", action, true);
     let csrfToken = $("meta[name='_csrf']").attr("content");

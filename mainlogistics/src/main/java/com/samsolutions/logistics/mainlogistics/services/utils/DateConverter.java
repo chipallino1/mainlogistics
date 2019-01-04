@@ -20,7 +20,7 @@ public interface DateConverter {
         formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZ");
         Date date = null;
         try {
-            date = (Date) formatter.parse(dateStr);
+            date = formatter.parse(dateStr);
         } catch (ParseException e) {
             e.printStackTrace();
         }

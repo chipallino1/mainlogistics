@@ -1,15 +1,7 @@
 package com.samsolutions.logistics.mainlogistics.entities;
 
-import javax.persistence.Id;
-import javax.persistence.Basic;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import java.sql.Date;
+import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -21,7 +13,6 @@ public class RoutesInfo {
     private Long id;
     private Date dateStart;
     private Date dateFinish;
-    private String optimality;
     private Long length;
     private Long duration;
     private Long routeId;
@@ -40,6 +31,7 @@ public class RoutesInfo {
 
     @Basic
     @Column(name = "date_start", nullable = false)
+    @Temporal(value = TemporalType.TIMESTAMP)
     public Date getDateStart() {
         return dateStart;
     }
@@ -50,22 +42,13 @@ public class RoutesInfo {
 
     @Basic
     @Column(name = "date_finish", nullable = false)
+    @Temporal(value = TemporalType.TIMESTAMP)
     public Date getDateFinish() {
         return dateFinish;
     }
 
     public void setDateFinish(Date dateFinish) {
         this.dateFinish = dateFinish;
-    }
-
-    @Basic
-    @Column(name = "optimality", nullable = true, length = 45)
-    public String getOptimality() {
-        return optimality;
-    }
-
-    public void setOptimality(String optimality) {
-        this.optimality = optimality;
     }
 
     @Basic
@@ -106,7 +89,6 @@ public class RoutesInfo {
         return Objects.equals(id, that.id) &&
                 Objects.equals(dateStart, that.dateStart) &&
                 Objects.equals(dateFinish, that.dateFinish) &&
-                Objects.equals(optimality, that.optimality) &&
                 Objects.equals(length, that.length) &&
                 Objects.equals(routeId, that.routeId);
     }
@@ -114,7 +96,7 @@ public class RoutesInfo {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, dateStart, dateFinish, optimality, length, routeId);
+        return Objects.hash(id, dateStart, dateFinish, length, routeId);
     }
 
     @ManyToOne

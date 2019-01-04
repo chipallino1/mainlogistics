@@ -12,20 +12,5 @@ public interface Converter {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.map(src, dest);
     }
-    default <T> void mapPayload(Class<T> dto, Map payload){
-        Field[] fields = dto.getDeclaredFields();
-        for(int i=0;i<fields.length;i++){
-            String fieldName = fields[i].getName();
-            if(payload.containsKey(fieldName)){
-                try {
-                    fields[i].setAccessible(true);
-                    fields[i].set( fields[i].getType().newInstance() ,payload.get(fieldName));
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+
 }

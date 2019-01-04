@@ -1,6 +1,7 @@
 package com.samsolutions.logistics.mainlogistics.controllers;
 
 import com.samsolutions.logistics.mainlogistics.dto.RouteDTO;
+import com.samsolutions.logistics.mainlogistics.services.routes.RoutesService;
 import com.samsolutions.logistics.mainlogistics.services.user.ContactsService;
 import com.samsolutions.logistics.mainlogistics.services.utils.DateConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +20,17 @@ import java.util.Map;
 @RestController
 public class RouteController {
 
-    @Autowired
-    DateConverter dateConverter;
-    @Autowired
-    private ContactsService contactsService;
+    private RoutesService routesService;
 
+    @Autowired
+    public void setRoutesService(RoutesService routesService) {
+        this.routesService = routesService;
+    }
 
     @PostMapping("/routes/create")
-    public boolean createRoute(@RequestBody Map<String, Object> payloadRouteDTO){
+    public boolean createRoute(@RequestBody RouteDTO routeDTO){
 
-        DateFormat formatter;
-        formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZ");
-        Date date = null;
-        contactsService.mapPayload(RouteDTO.class,payloadRouteDTO);
-
+        routesService.createRoute(routeDTO);
         return true;
     }
 
