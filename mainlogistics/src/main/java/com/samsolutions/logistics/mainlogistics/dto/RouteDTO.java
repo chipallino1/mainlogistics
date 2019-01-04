@@ -44,6 +44,9 @@ public class RouteDTO implements Serializable {
     @Size(min = 1)
     private Long length;
     @NotNull
+    @Size(min = 1)
+    private Long duration;
+    @NotNull
     @Size(min=1)
     private Long cost;
 
@@ -141,6 +144,14 @@ public class RouteDTO implements Serializable {
 
     public void setLength(Long length) {
         this.length = length;
+    }
+
+    public Long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Long duration) {
+        this.duration = duration;
     }
 
     public Long getCost() {

@@ -119,7 +119,7 @@ function createRouteSubmit() {
 
 function post(action,body) {
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "/routes/create", true);
+    xhr.open("POST", action, true);
     let csrfToken = $("meta[name='_csrf']").attr("content");
     let csrfHeader = $("meta[name='_csrf_header']").attr("content");
     xhr.setRequestHeader(csrfHeader,csrfToken);

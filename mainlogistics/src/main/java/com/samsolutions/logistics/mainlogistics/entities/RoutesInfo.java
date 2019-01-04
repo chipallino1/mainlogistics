@@ -23,6 +23,7 @@ public class RoutesInfo {
     private Date dateFinish;
     private String optimality;
     private Long length;
+    private Long duration;
     private Long routeId;
     private Routes routesByRouteId;
 
@@ -75,6 +76,16 @@ public class RoutesInfo {
 
     public void setLength(Long length) {
         this.length = length;
+    }
+
+    @Basic
+    @Column(name = "duration", nullable = false)
+    public Long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Long duration) {
+        this.duration = duration;
     }
 
     @Basic
