@@ -311,7 +311,7 @@
                             </div> <!-- form-group end.// -->
                             <div class="form-group">
                                 <label>Car name</label>
-                                <input type="text" class="form-control" placeholder="car name" th:field="*{carName}">
+                                <input type="text" class="form-control" placeholder="car name" id="carName" th:field="*{carName}">
                             </div> <!-- form-group end.// -->
                             <div class="form-row">
                                 <div class="col form-group">
@@ -326,11 +326,11 @@
                             <div class="form-group">
 
                                 <label>Volume, m3</label>
-                                <input type="number" class="form-control" placeholder="volume" th:field="*{volume}">
+                                <input type="number" class="form-control" placeholder="volume" id="volume" th:field="*{volume}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group">
                                 <label>Capacity, tons</label>
-                                <input type="number" class="form-control" placeholder="capacity" th:field="*{capacity}">
+                                <input type="number" class="form-control" placeholder="capacity" id="capacity" th:field="*{capacity}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group">
                                 <label id="labelLength">Length </label>
@@ -342,7 +342,7 @@
                             </div> <!-- form-group end.// -->
                             <div class="form-group">
                                 <label>Cost</label>
-                                <input type="number" class="form-control" placeholder="cost" th:field="*{cost}">
+                                <input type="number" class="form-control" placeholder="cost" id="cost" th:field="*{cost}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}">
                                 <button  sec:authorize="!(isAuthenticated() && hasRole('ROLE_FIRM_USER'))" type="button" class="btn btn-primary btn-block" onclick="createRouteSubmit()"> Create route </button>

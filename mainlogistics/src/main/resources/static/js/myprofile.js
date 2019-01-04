@@ -114,7 +114,23 @@ function createRouteSubmit() {
     finishDateTime.value=dateFinish.toIsoString();
     console.log(startDateTime.value);
     console.log(finishDateTime.value);
-    routeForm.submit();
+    let body={
+        countryFrom:countryFrom.value,
+        regionFrom:regionFrom.value,
+        cityFrom:cityFrom.value,
+        countryTo: countryTo.value,
+        regionTo:regionTo.value,
+        cityTo:cityTo.value,
+        carName:carName.value,
+        dateStart:startDateTime.value,
+        dateFinish:finishDateTime.value,
+        volume:volume.value,
+        length:lengthRoute.value,
+        duration:durationRoute.value,
+        cost:cost.value
+    };
+    console.log(body);
+    post('/routes/create',body);
 }
 
 function post(action,body) {
@@ -127,11 +143,10 @@ function post(action,body) {
     xhr.onreadystatechange = function() {
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
             console.log(xhr.responseText);
-            let distance=JSON.parse(xhr.responseText).distance;
-            console.log(distance);
+            console.log('route created');
         }
     }
-    xhr.send(body);
+    xhr.send(JSON.stringify(body));
 }
 
 Date.prototype.toIsoString = function() {
