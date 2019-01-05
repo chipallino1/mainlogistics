@@ -55,35 +55,63 @@ public class RoutesServiceImpl implements RoutesService{
     @Override
     @Transactional
     public void createRoute(RouteDTO routeDto) {
+        Long pointFromId = createPointsFrom(routeDto).getId();
+        Long pointToId = createPointsTo(routeDto).getId();
+        Long routeId = createRoutes(pointFromId,pointToId).getId();
+        createRoutesInfo(routeDto,routeId);
+        Long carrierId = createCarriers(routeDto).getId();
+        createRoutesOnCarriers(routeId,carrierId);
+    }
+
+    private RoutesInfo createRoutesInfo(RouteDTO routeDto,Long routeId){
         Date dateStart = dateConverter.getDateFromString(routeDto.getDateA());
         Date dateFinish = dateConverter.getDateFromString(routeDto.getDateB());
         RoutesInfo routesInfo = new RoutesInfo();
         routesInfo.setDateStart(dateStart);
         routesInfo.setDateFinish(dateFinish);
         map(routeDto,routesInfo);
-        Points pointsFrom=new Points();
-        pointsFrom.setCity(routeDto.getCityFrom());
-        pointsFrom.setRegion(routeDto.getRegionFrom());
-        pointsFrom.setCountry(routeDto.getCountryFrom());
-        Points pointsTo=new Points();
-        pointsTo.setCity(routeDto.getCityTo());
-        pointsTo.setRegion(routeDto.getRegionTo());
-        pointsTo.setCountry(routeDto.getCountryTo());
-        Long pointFromId = pointsRepository.save(pointsFrom).getId();
-        Long pointToId = pointsRepository.save(pointsTo).getId();
+        routesInfo.setRouteId(routeId);
+        return routesInfoRepository.save(routesInfo);
+    }
+    private Carriers createCarriers(RouteDTO routeDto){
+        Carriers carriers = new Carriers();
+        map(routeDto,carriers);
+        Carriers carriersStored = carriersRepository.findByCarrierName(carriers.getCarrierName());
+        if(carriersStored!=null)
+            return carriersStored;
+        return carriersRepository.save(carriers);
+    }
+    private Points createPointsFrom(RouteDTO routeDto){
+        Points points=new Points();
+        points.setCity(routeDto.getCityFrom());
+        points.setRegion(routeDto.getRegionFrom());
+        points.setCountry(routeDto.getCountryFrom());
+        Points pointsStored=pointsRepository.findByCountryAndCityAndRegion(points.getCountry(),points.getCity(),points.getRegion());
+        if(pointsStored!=null)
+            return pointsStored;
+        return  pointsRepository.save(points);
+    }
+    private Points createPointsTo(RouteDTO routeDto){
+        Points points=new Points();
+        points.setCity(routeDto.getCityTo());
+        points.setRegion(routeDto.getRegionTo());
+        points.setCountry(routeDto.getCountryTo());
+        Points pointsStored=pointsRepository.findByCountryAndCityAndRegion(points.getCountry(),points.getCity(),points.getRegion());
+        if(pointsStored!=null)
+            return pointsStored;
+        return  pointsRepository.save(points);
+    }
+    private Routes createRoutes(Long pointFromId,Long pointToId){
         Routes routes=new Routes();
         routes.setPointFromId(pointFromId);
         routes.setPointToId(pointToId);
         routes.setContactsId(contactsRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
-        Long routeId = routesRepository.save(routes).getId();
-        routesInfo.setRouteId(routeId);
-        routesInfoRepository.save(routesInfo);
-        Carriers carriers = new Carriers();
-        map(routeDto,carriers);
-        Long carrierId = carriersRepository.save(carriers).getId();
+        return routesRepository.save(routes);
+    }
+    private RoutesOnCarriers createRoutesOnCarriers(Long routeId,Long carrierId){
         RoutesOnCarriers routesOnCarriers = new RoutesOnCarriers();
         routesOnCarriers.setRoutesId(routeId);
         routesOnCarriers.setCarriersId(carrierId);
-        routesOnCarriersRepository.save(routesOnCarriers);
+        return routesOnCarriersRepository.save(routesOnCarriers);
     }
 }

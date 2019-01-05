@@ -9,7 +9,7 @@ public class Carriers {
 
     private Long id;
     private String carName;
-    private String carrierFullName;
+    private String carrierName;
     private Long volume;
     private Long capacity;
     private Long cost;
@@ -37,13 +37,13 @@ public class Carriers {
     }
 
     @Basic
-    @Column(name = "carrier_full_name",unique = true)
-    public String getCarrierFullName() {
-        return carrierFullName;
+    @Column(name = "carrier_name",unique = true)
+    public String getCarrierName() {
+        return carrierName;
     }
 
-    public void setCarrierFullName(String carrierFullName) {
-        this.carrierFullName = carrierFullName;
+    public void setCarrierName(String carrierName) {
+        this.carrierName = carrierName;
     }
 
     @Basic

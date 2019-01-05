@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PointsRepository extends JpaRepository<Points,Long> {
+    Points findByCountryAndCityAndRegion(String country,String city, String region);
 }
