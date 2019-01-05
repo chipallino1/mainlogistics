@@ -16,6 +16,8 @@ public class Routes {
     private Long pointToId;
     private Points pointsByPointFromId;
     private Points pointsByPointToId;
+    private Long contactsId;
+    private Contacts contactsByContactsId;
     private Collection<Orders> ordersById;
     private Collection<RoutesInfo> routesInfosById;
     private Collection<RoutesOnCarriers> routesOnCarriersByRoutesId;
@@ -51,6 +53,15 @@ public class Routes {
         this.pointToId = pointToId;
     }
 
+    @Basic
+    @Column(name = "contacts_id")
+    public Long getContactsId() {
+        return contactsId;
+    }
+
+    public void setContactsId(Long contactsId) {
+        this.contactsId = contactsId;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -112,5 +123,15 @@ public class Routes {
 
     public void setPointsByPointToId(Points pointsByPointToId) {
         this.pointsByPointToId = pointsByPointToId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "contacts_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public Contacts getContactsByContactsId() {
+        return contactsByContactsId;
+    }
+
+    public void setContactsByContactsId(Contacts contactsByContactsId) {
+        this.contactsByContactsId = contactsByContactsId;
     }
 }

@@ -6,6 +6,7 @@ import com.samsolutions.logistics.mainlogistics.repositories.*;
 import com.samsolutions.logistics.mainlogistics.services.routes.RoutesService;
 import com.samsolutions.logistics.mainlogistics.services.utils.DateConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ public class RoutesServiceImpl implements RoutesService{
     private PointsRepository pointsRepository;
     private CarriersRepository carriersRepository;
     private RoutesOnCarriersRepository routesOnCarriersRepository;
+    private ContactsRepository contactsRepository;
 
     @Autowired
     public void setDateConverter(DateConverter dateConverter) {
@@ -45,6 +47,10 @@ public class RoutesServiceImpl implements RoutesService{
     public void setRoutesOnCarriersRepository(RoutesOnCarriersRepository routesOnCarriersRepository) {
         this.routesOnCarriersRepository = routesOnCarriersRepository;
     }
+    @Autowired
+    public void setContactsRepository(ContactsRepository contactsRepository) {
+        this.contactsRepository = contactsRepository;
+    }
 
     @Override
     @Transactional
@@ -68,6 +74,7 @@ public class RoutesServiceImpl implements RoutesService{
         Routes routes=new Routes();
         routes.setPointFromId(pointFromId);
         routes.setPointToId(pointToId);
+        routes.setContactsId(contactsRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         Long routeId = routesRepository.save(routes).getId();
         routesInfo.setRouteId(routeId);
         routesInfoRepository.save(routesInfo);

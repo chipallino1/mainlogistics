@@ -3,6 +3,7 @@ package com.samsolutions.logistics.mainlogistics.entities;
 import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
 
@@ -24,6 +25,7 @@ public class Contacts {
     private String avatarPath;
     private Firms firmsByFirmId;
     private Passwords passwordsByPasswordsId;
+    private Collection<Routes> contactsById;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -175,4 +177,12 @@ public class Contacts {
         this.passwordsByPasswordsId = passwordsByPasswordsId;
     }
 
+    @OneToMany(mappedBy = "contactsByContactsId")
+    public Collection<Routes> getContactsById() {
+        return contactsById;
+    }
+
+    public void setContactsById(Collection<Routes> contactsById) {
+        this.contactsById = contactsById;
+    }
 }

@@ -28,7 +28,7 @@ public class RouteController {
     }
 
     @PostMapping("/routes/create")
-    public boolean createRoute(@RequestBody RouteDTO routeDTO){
+    public Boolean createRoute(@RequestBody RouteDTO routeDTO){
 
         routesService.createRoute(routeDTO);
         return true;
