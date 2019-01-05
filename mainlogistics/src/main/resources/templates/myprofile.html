@@ -153,8 +153,8 @@
     <input type="file" class="form-control" placeholder="file" id="firmImage" disabled="disabled" name="file" th:field="*{image}" accept="image/*">
 </div> <!-- form-group end.// -->
 
-    <div class="form-group">
-        <button type="button" class="btn btn-primary btn-block" onclick="makeFirmEnabled()"> Update  </button>
+    <div class="form-group" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}">
+        <button type="button" class="btn btn-primary btn-block" onclick="makeFirmEnabled()" > Update  </button>
         <button type="submit" class="btn btn-primary btn-block" id="submitFormFirm"> Save  </button>
     </div> <!-- form-group// -->
     </div>  
