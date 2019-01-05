@@ -135,7 +135,7 @@ function createRouteSubmit() {
     post1('/routes/create',body);
 }
 
-function post1(action,body) {
+function post1(action,body,cb) {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", action, true);
     let csrfToken = $("meta[name='_csrf']").attr("content");
@@ -146,12 +146,31 @@ function post1(action,body) {
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
             console.log(xhr.responseText);
             console.log('route created');
+            if(cb!=null){
+
+            }
         }
     }
     xhr.send(JSON.stringify(body));
 }
 
+function getUserRoutes(action) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", action, true);
+    let csrfToken = $("meta[name='_csrf']").attr("content");
+    let csrfHeader = $("meta[name='_csrf_header']").attr("content");
+    xhr.setRequestHeader(csrfHeader,csrfToken);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+            console.log(xhr.responseText);
+            if(cb!=null){
 
+            }
+        }
+    }
+    xhr.send(null);
+}
 
 Date.prototype.toIsoString = function() {
     var tzo = -this.getTimezoneOffset(),

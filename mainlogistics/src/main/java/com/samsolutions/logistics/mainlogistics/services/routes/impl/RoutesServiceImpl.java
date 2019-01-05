@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class RoutesServiceImpl implements RoutesService{
@@ -61,6 +62,12 @@ public class RoutesServiceImpl implements RoutesService{
         createRoutesInfo(routeDto,routeId);
         Long carrierId = createCarriers(routeDto).getId();
         createRoutesOnCarriers(routeId,carrierId);
+    }
+
+    @Override
+    public List<RouteDTO> getAllCreatedRoutes() {
+        Route
+        return ;
     }
 
     private RoutesInfo createRoutesInfo(RouteDTO routeDto,Long routeId){
