@@ -19,7 +19,6 @@ public class Firms {
     private Long passwordId;
     private Date createdAt;
     private String avatarPath;
-    private Collection<Addresses> addressesById;
     private Collection<Contacts> contactsById;
     private Passwords passwordsByPasswordId;
     private Collection<Orders> ordersById;
@@ -37,7 +36,7 @@ public class Firms {
     }
 
     @Basic
-    @Column(name = "firm_name", nullable = false, length = 45)
+    @Column(name = "firm_name", nullable = false, length = 45,unique = true)
     public String getFirmName() {
         return firmName;
     }
@@ -77,7 +76,7 @@ public class Firms {
     }
 
     @Basic
-    @Column(name = "email", nullable = false, length = 45)
+    @Column(name = "email", nullable = false, length = 45,unique = true)
     public String getEmail() {
         return email;
     }
@@ -135,15 +134,6 @@ public class Firms {
     public int hashCode() {
 
         return Objects.hash(id, firmName, rating, firmType, description, email, passwordId);
-    }
-
-    @OneToMany(mappedBy = "firmsByFirmId")
-    public Collection<Addresses> getAddressesById() {
-        return addressesById;
-    }
-
-    public void setAddressesById(Collection<Addresses> addressesById) {
-        this.addressesById = addressesById;
     }
 
     @OneToMany(mappedBy = "firmsByFirmId")

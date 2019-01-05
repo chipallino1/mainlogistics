@@ -1,5 +1,6 @@
 package com.samsolutions.logistics.mainlogistics.controllers.exceptions;
 
+import com.samsolutions.logistics.mainlogistics.dto.ErrorDTO;
 import com.samsolutions.logistics.mainlogistics.validation.exceptions.MainException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -15,5 +16,9 @@ public interface ExceptionInfoCreator {
         redirectAttributes.addFlashAttribute("errorMsg",exception.getLocalizedMessage());
         if(exception.getCause()!=null)
              redirectAttributes.addFlashAttribute("errorCause",exception.getCause().toString());
+    }
+    default void addExceptionInfo(Exception exception, ErrorDTO errorDTO){
+        errorDTO.setErrorMsg(exception.getLocalizedMessage());
+        errorDTO.setCause(exception.getCause().toString());
     }
 }

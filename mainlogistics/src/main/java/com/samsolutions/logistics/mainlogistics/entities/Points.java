@@ -26,7 +26,7 @@ public class Points {
     }
 
     @Basic
-    @Column(name="country")
+    @Column(name="country",unique = true)
     public String getCountry() {
         return country;
     }

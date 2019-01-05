@@ -57,7 +57,7 @@ public class Contacts {
     }
 
     @Basic
-    @Column(name = "phone_num", nullable = false, length = 45)
+    @Column(name = "phone_num", nullable = false, length = 45,unique = true)
     public String getPhoneNum() {
         return phoneNum;
     }
@@ -67,7 +67,7 @@ public class Contacts {
     }
 
     @Basic
-    @Column(name = "email", nullable = true, length = 45)
+    @Column(name = "email", nullable = true, length = 45,unique = true)
     public String getEmail() {
         return email;
     }
