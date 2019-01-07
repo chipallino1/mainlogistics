@@ -457,7 +457,7 @@
      <script th:src="@{/js/searchmaker.js}"></script>
      <script th:if="${role}==1 OR ${role}==2">getContacts(null,firmNameFirm.value,"ADDED","resultCol","resultCont","pagesNumADDED",0,5);</script>
      <script th:if="${role}==1 OR ${role}==2">getContacts(null,firmNameFirm.value,"WAIT","resultColQueue","resultContQueue","pagesNumWAIT",0,5);</script>
-     <script th:if="${role}==3">getUserRoutes("/routes/readAll")</script>
+
     <script th:src="@{/js/authentication.js}"></script>
 
      <script th:src="@{/js/routes.js}"></script>
@@ -476,6 +476,7 @@
          console.log( updateContact.style.display);
      </script>
   <script th:src="@{/js/myprofile.js}"></script>
+     <script th:if="${role}==3">getUserRoutes("/routes/readAll");</script>
      <script th:inline="javascript">autocomplete(document.getElementById("myInput"),[[${contacts}]],'/contacts/' );</script>
   
   

@@ -1,17 +1,24 @@
 package com.samsolutions.logistics.mainlogistics.services.routes.impl;
 
+import com.samsolutions.logistics.mainlogistics.dto.PageDTO;
 import com.samsolutions.logistics.mainlogistics.dto.RouteDTO;
 import com.samsolutions.logistics.mainlogistics.entities.*;
 import com.samsolutions.logistics.mainlogistics.repositories.*;
 import com.samsolutions.logistics.mainlogistics.services.routes.RoutesService;
+import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
 import com.samsolutions.logistics.mainlogistics.services.utils.DateConverter;
+import com.samsolutions.logistics.mainlogistics.services.utils.PackageType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
 
 @Service
 public class RoutesServiceImpl implements RoutesService{
@@ -23,6 +30,7 @@ public class RoutesServiceImpl implements RoutesService{
     private CarriersRepository carriersRepository;
     private RoutesOnCarriersRepository routesOnCarriersRepository;
     private ContactsRepository contactsRepository;
+    private ApplicationContext applicationContext;
 
     @Autowired
     public void setDateConverter(DateConverter dateConverter) {
@@ -52,6 +60,11 @@ public class RoutesServiceImpl implements RoutesService{
     public void setContactsRepository(ContactsRepository contactsRepository) {
         this.contactsRepository = contactsRepository;
     }
+    @Autowired
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
+
 
     @Override
     @Transactional
@@ -65,9 +78,19 @@ public class RoutesServiceImpl implements RoutesService{
     }
 
     @Override
-    public List<RouteDTO> getAllCreatedRoutes() {
-        Route
-        return ;
+    public PageDTO<RouteDTO> getRoutesByPage(String email, String orderBy, boolean desc, Pageable pageable) {
+        Contacts contacts = null;
+        pointsRepository.findAllPag("Belarus",pageable);
+        Map<String,Object> map=new LinkedHashMap<>();
+        if(email.equals("ALL")){
+            map.put("ContactsId","ALL");
+        }
+        else {
+            contacts = contactsRepository.findByEmail(email);
+            map("ContactsId",contacts.getId());
+        }
+        //Page<Routes> routesPage=getOrderPage(map,orderBy,desc,pageable,applicationContext);
+        return new PageDTO<>();
     }
 
     private RoutesInfo createRoutesInfo(RouteDTO routeDto,Long routeId){
@@ -120,5 +143,51 @@ public class RoutesServiceImpl implements RoutesService{
         routesOnCarriers.setRoutesId(routeId);
         routesOnCarriers.setCarriersId(carrierId);
         return routesOnCarriersRepository.save(routesOnCarriers);
+    }
+
+    @Override
+    public Page<Routes> getOrderPage(Map samples, String orderBy, boolean desc, Pageable pageable, ApplicationContext applicationContext) {
+        Page<Routes> routesPage=null;
+        Set<String> stringSetKeys = samples.keySet();
+        try {
+            Method method = this.getClass().getMethod("getOrderPage",Map.class,String.class,boolean.class,Pageable.class,ApplicationContext.class);
+            String genericReturnType = method.getGenericReturnType().getTypeName();
+            genericReturnType = genericReturnType.substring(genericReturnType.lastIndexOf('<')+1,genericReturnType.lastIndexOf('>'));
+            if(genericReturnType.contains(".")){
+                genericReturnType=genericReturnType.substring(genericReturnType.lastIndexOf('.')+1);
+            }
+            String beanName = genericReturnType.toLowerCase();
+            beanName=beanName+"Repository";
+            genericReturnType = genericReturnType+"Repository";
+            String methodName = "findAllBy";
+            String[] stringKeys=new String[stringSetKeys.size()];
+            stringSetKeys.toArray(stringKeys);
+            for (int i=0;i<stringKeys.length;i++){
+                if(i==stringKeys.length-1){
+                    methodName=methodName+stringKeys[i];
+                    break;
+                }
+                methodName=methodName+stringKeys[i]+"And";
+            }
+            if(orderBy!=null) {
+                if (desc)
+                    methodName = methodName + "OrderBy" + orderBy + "Desc";
+                else
+                    methodName = methodName + "OrderBy" + orderBy + "Asc";
+            }
+            String packagePath = getPackagePath(PackageType.REPOSITORIES_PACKAGE);
+            Method methodFind = Class.forName(packagePath+"."+genericReturnType).getMethod(methodName,ContactState.class,Long.class,Pageable.class);
+            samples.put("Pageable",pageable);
+            routesPage = (Page)methodFind.invoke(applicationContext.getBean(beanName),samples.values().toArray());
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return routesPage;
     }
 }

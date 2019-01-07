@@ -5,16 +5,16 @@ import com.samsolutions.logistics.mainlogistics.services.routes.RoutesService;
 import com.samsolutions.logistics.mainlogistics.services.user.ContactsService;
 import com.samsolutions.logistics.mainlogistics.services.utils.DateConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +37,9 @@ public class RouteController {
     }
 
     @GetMapping("/routes/readAll")
-    public List<RouteDTO> getAllRoutes(){
-        return
+    public List<RouteDTO> getAllRoutes(@PageableDefault(value = 5) Pageable pageable){
+        routesService.getRoutesByPage("ALL","country",true,pageable);
+        return new ArrayList<>();
     }
 
 }
