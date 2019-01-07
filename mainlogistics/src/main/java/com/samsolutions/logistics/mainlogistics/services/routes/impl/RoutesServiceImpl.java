@@ -80,6 +80,7 @@ public class RoutesServiceImpl implements RoutesService{
     @Override
     public PageDTO<RouteDTO> getRoutesByPage(String email, String orderBy, boolean desc, Pageable pageable) {
         Contacts contacts = null;
+        routesOnCarriersRepository.findAllRoutesOrderByDateStart(pageable);
         pointsRepository.findAllPag("Belarus",pageable);
         Map<String,Object> map=new LinkedHashMap<>();
         if(email.equals("ALL")){
