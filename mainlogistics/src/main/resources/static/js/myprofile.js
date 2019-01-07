@@ -155,41 +155,32 @@ function post1(action,body,cb) {
 }
 
 function getRoutePage(e) {
-    let innerText = e.target.innerHTML;
-    let body;
-    let cbParams;
     state=e.target.getAttribute('state');
-    body={firmName:firmNameFirm.value,state:e.target.getAttribute('state'),orderBy:orderBy,desc:isDesc};
-    body=JSON.stringify(body);
     let currP=document.getElementById('currPage'+state);
     let firstP=document.getElementById('firstPage'+state);
     let lastP=document.getElementById('lastPage'+state);
     let prevP=document.getElementById('prevPage'+state);
     let nextP=document.getElementById('nextPage'+state);
-    if(e.target.getAttribute('state')=='WAIT')
-        cbParams={id:'resultColQueue',resultId:'resultContQueue',pagesId:'pageNumsWAIT',state:e.target.getAttribute('state')};
-    else
-        cbParams={id:'resultCol',resultId:'resultCont',pagesId:'pageNumsADDED',state:e.target.getAttribute('state')};
 
     if(e.target.id=='prevPage'+state && (Number(currP.innerHTML)*1-1)>0){
         console.log('prevPage'+state);
         currP.innerHTML=Number(currP.innerHTML)-1;
         let prev=Number(currP.innerHTML)-1;
-        post(body,'/contacts/readall?page='+prev,getResults,cbParams);
+        getUserRoutes("/routes/readAll?page="+prev,getRoutesResult);
         return;
     }
     if(e.target.id=='nextPage'+state && (Number(currP.innerHTML)*1+1)<=Number(lastP.innerHTML)){
         console.log('nextPage'+state);
         currP.innerHTML=Number(currP.innerHTML)+1;
         let next=Number(currP.innerHTML)-1;
-        post(body,'/contacts/readall?page='+next,getResults,cbParams);
+        getUserRoutes("/routes/readAll?page="+next,getRoutesResult);
         return;
     }
     if(e.target.id=='firstPage'+state){
         console.log('firstPage'+state);
         if(currP!=null)
             currP.innerHTML=firstP.innerHTML;
-        post(body,'/contacts/readall?page='+0,getResults,cbParams);
+        getUserRoutes("/routes/readAll?page="+0,getRoutesResult);
         return;
     }
     if(e.target.id=='lastPage'+state){
@@ -203,7 +194,7 @@ function getRoutePage(e) {
         else{
             last=Number(lastP.innerHTML)-1;
         }
-        post(body,'/contacts/readall?page='+last,getResults,cbParams);
+        getUserRoutes("/routes/readAll?page="+last,getRoutesResult);
         return;
     }
 
