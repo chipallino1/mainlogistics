@@ -166,21 +166,30 @@ function getRoutePage(e) {
         console.log('prevPage'+state);
         currP.innerHTML=Number(currP.innerHTML)-1;
         let prev=Number(currP.innerHTML)-1;
-        getUserRoutes("/routes/readAll?page="+prev,getRoutesResult);
+        if(window.location.pathname=="me")
+            getUserRoutes("/routes/readAll?page="+prev+"&email=me&orderBy=DateStart&isDesc=true",getRoutesResult);
+        else
+            getUserRoutes("/routes/readAll?page="+prev+"&email=ALL&orderBy=DateStart&isDesc=true",getRoutesResult);
         return;
     }
     if(e.target.id=='nextPage'+state && (Number(currP.innerHTML)*1+1)<=Number(lastP.innerHTML)){
         console.log('nextPage'+state);
         currP.innerHTML=Number(currP.innerHTML)+1;
         let next=Number(currP.innerHTML)-1;
-        getUserRoutes("/routes/readAll?page="+next,getRoutesResult);
+        if(window.location.pathname=="me")
+            getUserRoutes("/routes/readAll?page="+next+"&email=me&orderBy=DateStart&isDesc=true",getRoutesResult);
+        else
+            getUserRoutes("/routes/readAll?page="+next+"&email=ALL&orderBy=DateStart&isDesc=true",getRoutesResult);
         return;
     }
     if(e.target.id=='firstPage'+state){
         console.log('firstPage'+state);
         if(currP!=null)
             currP.innerHTML=firstP.innerHTML;
-        getUserRoutes("/routes/readAll?page="+0,getRoutesResult);
+        if(window.location.pathname=="me")
+            getUserRoutes("/routes/readAll?page="+0+"&email=me&orderBy=DateStart&isDesc=true",getRoutesResult);
+        else
+            getUserRoutes("/routes/readAll?page="+0+"&email=ALL&orderBy=DateStart&isDesc=true",getRoutesResult);
         return;
     }
     if(e.target.id=='lastPage'+state){
@@ -194,7 +203,10 @@ function getRoutePage(e) {
         else{
             last=Number(lastP.innerHTML)-1;
         }
-        getUserRoutes("/routes/readAll?page="+last,getRoutesResult);
+        if(window.location.pathname=="me")
+            getUserRoutes("/routes/readAll?page="+last+"&email=me&orderBy=DateStart&isDesc=true",getRoutesResult);
+        else
+            getUserRoutes("/routes/readAll?page="+last+"&email=ALL&orderBy=DateStart&isDesc=true",getRoutesResult);
         return;
     }
 

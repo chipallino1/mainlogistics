@@ -8,6 +8,7 @@ import com.samsolutions.logistics.mainlogistics.services.utils.DateConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -38,9 +39,11 @@ public class RouteController {
     }
 
     @GetMapping("/routes/readAll")
-    public PageDTO<RouteDTO> getAllRoutes(@PageableDefault(value = 5) Pageable pageable){
-
-        return routesService.getRoutesByPage("kosy@mail.ru","CountryFrom",true,pageable);
+    public PageDTO<RouteDTO> getAllRoutes(@PageableDefault(value = 5) Pageable pageable,@RequestParam("email") String email,
+                                          @RequestParam("orderBy") String orderBy,@RequestParam("isDesc") boolean isDesc){
+        if(email.equals("me"))
+            email=SecurityContextHolder.getContext().getAuthentication().getName();
+        return routesService.getRoutesByPage(email,orderBy,isDesc,pageable);
     }
 
 }

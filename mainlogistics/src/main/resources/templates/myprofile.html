@@ -379,16 +379,16 @@
                                   <div class="padding"></div>
                                   <div class="container">
                                       <div class="form-check">
-                                          <input type="checkbox" class="form-check-input" id="checkTimeRoute" sortType="modifiedTime" onclick='if(this.checked) {checkLastRoute.checked=false;checkFirstRoute.checked=false;orderBy="ModifiedTime";}'>
-                                          <label class="form-check-label" id="checkTimeLbRoute" for="checkTimeRoute">Sort by modified time</label>
+                                          <input type="checkbox" class="form-check-input" id="checkTimeRoute" sortType="modifiedTime" onclick='if(this.checked) {checkLastRoute.checked=false;checkFirstRoute.checked=false;orderBy="DateStart";getUserRoutes("/routes/readAll?email=me&orderBy="+orderBy+"&isDesc="+isDesc,getRoutesResult);}'>
+                                          <label class="form-check-label" id="checkTimeLbRoute" for="checkTimeRoute">Sort by date start</label>
                                       </div>
                                       <div class="form-check">
-                                          <input type="checkbox" class="form-check-input" id="checkFirstRoute" sortType="firstName" onclick='if(this.checked){checkTimeRoute.checked=false;checkLastRoute.checked=false;orderBy="FirstName";}'>
-                                          <label class="form-check-label" id="checkFirstLbRoute" for="checkFirstRoute">Sort by first name</label>
+                                          <input type="checkbox" class="form-check-input" id="checkFirstRoute" sortType="firstName" onclick='if(this.checked){checkTimeRoute.checked=false;checkLastRoute.checked=false;orderBy="CountryFrom";getUserRoutes("/routes/readAll?email=me&orderBy="+orderBy+"&isDesc="+isDesc,getRoutesResult);}'>
+                                          <label class="form-check-label" id="checkFirstLbRoute" for="checkFirstRoute">Sort by country from</label>
                                       </div>
                                       <div class="form-check">
-                                          <input type="checkbox" class="form-check-input" id="checkLastRoute" sortType="lastName" onclick='if(this.checked){checkTimeRoute.checked=false;checkFirstRoute.checked=false;orderBy="LastName";}'>
-                                          <label class="form-check-label" id="checkLastLbRoute" for="checkLastRoute">Sort by last name</label>
+                                          <input type="checkbox" class="form-check-input" id="checkLastRoute" sortType="lastName" onclick='if(this.checked){checkTimeRoute.checked=false;checkFirstRoute.checked=false;orderBy="CityFrom";getUserRoutes("/routes/readAll?email=me&orderBy="+orderBy+"&isDesc="+isDesc,getRoutesResult);}'>
+                                          <label class="form-check-label" id="checkLastLbRoute" for="checkLastRoute">Sort by city from</label>
                                       </div>
                                   </div>
 
@@ -481,7 +481,7 @@
          console.log( updateContact.style.display);
      </script>
   <script th:src="@{/js/myprofile.js}"></script>
-     <script th:if="${role}==3">getUserRoutes("/routes/readAll",getRoutesResult);</script>
+     <script th:if="${role}==3">getUserRoutes("/routes/readAll?email=me&orderBy=DateStart&isDesc=true",getRoutesResult);</script>
      <script th:inline="javascript">autocomplete(document.getElementById("myInput"),[[${contacts}]],'/contacts/' );</script>
   
   
