@@ -153,9 +153,6 @@ function post1(action,body,cb) {
     }
     xhr.send(JSON.stringify(body));
 }
-function openRoutePage() {
-
-}
 function getRoutePage(e) {
     state=e.target.getAttribute('state');
     let currP=document.getElementById('currPage'+state);
@@ -270,12 +267,29 @@ function addRouteToResultCont(routeId,pointFrom,pointTo,dateStart,dateFinish,cos
 
     let tr=document.createElement('tr');
     tr.setAttribute("routeId",routeId);
+    tr.addEventListener('click',openRoutePage,tr);
     tr.appendChild(td1);
     tr.appendChild(td3);
     tr.appendChild(td5);
 
     let resultsCont=document.getElementById('routesResultCont');
     resultsCont.appendChild(tr);
+}
+function openRoutePage(e,tr) {
+    console.log(e);
+    console.log(tr);
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "/routes/read?routeId="+e.target.getAttribute("routeId"), true);
+    let csrfToken = $("meta[name='_csrf']").attr("content");
+    let csrfHeader = $("meta[name='_csrf_header']").attr("content");
+    xhr.setRequestHeader(csrfHeader,csrfToken);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+            console.log(xhr.responseText);
+        }
+    }
+    xhr.send(null);
 }
 function getUserRoutes(action,cb) {
     let xhr = new XMLHttpRequest();
