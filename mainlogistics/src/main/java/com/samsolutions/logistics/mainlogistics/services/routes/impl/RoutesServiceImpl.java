@@ -81,7 +81,7 @@ public class RoutesServiceImpl implements RoutesService{
     public PageDTO<RouteDTO> getRoutesByPage(String email, String orderBy, boolean desc, Pageable pageable) {
         Contacts contacts = null;
         routesOnCarriersRepository.findAllRoutesOrderByDateStart(pageable);
-        pointsRepository.findAllPag("Belarus",pageable);
+        //pointsRepository.findAllPag("Belarus",pageable);
         Map<String,Object> map=new LinkedHashMap<>();
         if(email.equals("ALL")){
             map.put("ContactsId","ALL");
@@ -90,7 +90,7 @@ public class RoutesServiceImpl implements RoutesService{
             contacts = contactsRepository.findByEmail(email);
             map("ContactsId",contacts.getId());
         }
-        //Page<Routes> routesPage=getOrderPage(map,orderBy,desc,pageable,applicationContext);
+        Page<Object> routesPage=getOrderPage(map,"CountryFrom",desc,pageable,applicationContext);
         return new PageDTO<>();
     }
 
@@ -147,8 +147,8 @@ public class RoutesServiceImpl implements RoutesService{
     }
 
     @Override
-    public Page<Routes> getOrderPage(Map samples, String orderBy, boolean desc, Pageable pageable, ApplicationContext applicationContext) {
-        Page<Routes> routesPage=null;
+    public Page<Object> getOrderPage(Map samples, String orderBy, boolean desc, Pageable pageable, ApplicationContext applicationContext) {
+        Page<Object> routesPage=null;
         Set<String> stringSetKeys = samples.keySet();
         try {
             Method method = this.getClass().getMethod("getOrderPage",Map.class,String.class,boolean.class,Pageable.class,ApplicationContext.class);
@@ -158,11 +158,13 @@ public class RoutesServiceImpl implements RoutesService{
                 genericReturnType=genericReturnType.substring(genericReturnType.lastIndexOf('.')+1);
             }
             String beanName = genericReturnType.toLowerCase();
-            beanName=beanName+"Repository";
-            genericReturnType = genericReturnType+"Repository";
-            String methodName = "findAllBy";
+            beanName="routesOnCarriersRepository";
+            genericReturnType = "RoutesOnCarriersRepository";
+            String methodName = "findAllRoutes";
             String[] stringKeys=new String[stringSetKeys.size()];
             stringSetKeys.toArray(stringKeys);
+            if(stringKeys.length>0)
+                methodName=methodName+"By";
             for (int i=0;i<stringKeys.length;i++){
                 if(i==stringKeys.length-1){
                     methodName=methodName+stringKeys[i];
@@ -177,7 +179,13 @@ public class RoutesServiceImpl implements RoutesService{
                     methodName = methodName + "OrderBy" + orderBy + "Asc";
             }
             String packagePath = getPackagePath(PackageType.REPOSITORIES_PACKAGE);
-            Method methodFind = Class.forName(packagePath+"."+genericReturnType).getMethod(methodName,ContactState.class,Long.class,Pageable.class);
+            Method methodFind = null;
+            if(samples.size()>0){
+                methodFind = Class.forName(packagePath+"."+genericReturnType).getMethod(methodName,String.class, Pageable.class);
+            }
+            else {
+                methodFind = Class.forName(packagePath+"."+genericReturnType).getMethod(methodName,Pageable.class);
+            }
             samples.put("Pageable",pageable);
             routesPage = (Page)methodFind.invoke(applicationContext.getBean(beanName),samples.values().toArray());
         } catch (NoSuchMethodException e) {
