@@ -200,7 +200,7 @@ function getResults(arr,params) {
 }
 
 
-function createButtonBlue(id,text,state) {
+function createButtonBlue(id,text,state,getPage) {
 	let butt=document.createElement('button');
 	butt.className='btn btn-primary btn-block';
 	butt.type='button';
@@ -272,17 +272,17 @@ function createPageNums(pageCount,state,pageNumber) {
 	divCont.className='form-row';
 	divCont.id='pageNums'+state;
 	if(pageCount>2)
-		divCont.appendChild(createDivClassName('col form-group',createButtonBlue('prevPage','<<',state)));
-	divCont.appendChild(createDivClassName('col form-group',createButtonBlue('firstPage','1',state)));
+		divCont.appendChild(createDivClassName('col form-group',createButtonBlue('prevPage','<<',state,getPage)));
+	divCont.appendChild(createDivClassName('col form-group',createButtonBlue('firstPage','1',state,getPage)));
 	if(pageCount>2){
 		
-		divCont.appendChild(createDivClassName('col form-group',createButtonBlue('currPage',pageNumber+1,state)));
+		divCont.appendChild(createDivClassName('col form-group',createButtonBlue('currPage',pageNumber+1,state,getPage)));
 		
 	}
 	if(pageCount>1)
-		divCont.appendChild(createDivClassName('col form-group',createButtonBlue('lastPage',pageCount,state)));
+		divCont.appendChild(createDivClassName('col form-group',createButtonBlue('lastPage',pageCount,state,getPage)));
 	if(pageCount>2)
-		divCont.appendChild(createDivClassName('col form-group',createButtonBlue('nextPage','>>',state)));
+		divCont.appendChild(createDivClassName('col form-group',createButtonBlue('nextPage','>>',state,getPage)));
 	
 	return divCont;
 }

@@ -404,6 +404,11 @@
                                       </div>
                                   </div>
                                   <div class="padding"></div>
+                                  <table class="table table-hover">
+                                      <tbody id="routesResultCont">
+
+                                      </tbody>
+                                  </table>
                               </div>
                               <!-- END RESULT -->
                           </div>
@@ -476,7 +481,7 @@
          console.log( updateContact.style.display);
      </script>
   <script th:src="@{/js/myprofile.js}"></script>
-     <script th:if="${role}==3">getUserRoutes("/routes/readAll");</script>
+     <script th:if="${role}==3">getUserRoutes("/routes/readAll",getRoutesResult);</script>
      <script th:inline="javascript">autocomplete(document.getElementById("myInput"),[[${contacts}]],'/contacts/' );</script>
   
   

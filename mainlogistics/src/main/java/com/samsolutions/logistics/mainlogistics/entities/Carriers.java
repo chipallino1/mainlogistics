@@ -37,7 +37,7 @@ public class Carriers {
     }
 
     @Basic
-    @Column(name = "carrier_name",unique = true)
+    @Column(name = "carrier_name")
     public String getCarrierName() {
         return carrierName;
     }

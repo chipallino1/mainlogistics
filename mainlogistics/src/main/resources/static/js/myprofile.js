@@ -154,7 +154,124 @@ function post1(action,body,cb) {
     xhr.send(JSON.stringify(body));
 }
 
-function getUserRoutes(action) {
+function getRoutePage(e) {
+    let innerText = e.target.innerHTML;
+    let body;
+    let cbParams;
+    state=e.target.getAttribute('state');
+    body={firmName:firmNameFirm.value,state:e.target.getAttribute('state'),orderBy:orderBy,desc:isDesc};
+    body=JSON.stringify(body);
+    let currP=document.getElementById('currPage'+state);
+    let firstP=document.getElementById('firstPage'+state);
+    let lastP=document.getElementById('lastPage'+state);
+    let prevP=document.getElementById('prevPage'+state);
+    let nextP=document.getElementById('nextPage'+state);
+    if(e.target.getAttribute('state')=='WAIT')
+        cbParams={id:'resultColQueue',resultId:'resultContQueue',pagesId:'pageNumsWAIT',state:e.target.getAttribute('state')};
+    else
+        cbParams={id:'resultCol',resultId:'resultCont',pagesId:'pageNumsADDED',state:e.target.getAttribute('state')};
+
+    if(e.target.id=='prevPage'+state && (Number(currP.innerHTML)*1-1)>0){
+        console.log('prevPage'+state);
+        currP.innerHTML=Number(currP.innerHTML)-1;
+        let prev=Number(currP.innerHTML)-1;
+        post(body,'/contacts/readall?page='+prev,getResults,cbParams);
+        return;
+    }
+    if(e.target.id=='nextPage'+state && (Number(currP.innerHTML)*1+1)<=Number(lastP.innerHTML)){
+        console.log('nextPage'+state);
+        currP.innerHTML=Number(currP.innerHTML)+1;
+        let next=Number(currP.innerHTML)-1;
+        post(body,'/contacts/readall?page='+next,getResults,cbParams);
+        return;
+    }
+    if(e.target.id=='firstPage'+state){
+        console.log('firstPage'+state);
+        if(currP!=null)
+            currP.innerHTML=firstP.innerHTML;
+        post(body,'/contacts/readall?page='+0,getResults,cbParams);
+        return;
+    }
+    if(e.target.id=='lastPage'+state){
+        console.log('lastPage'+state);
+        let last;
+        if(currP!=null){
+            currP.innerHTML=lastP.innerHTML;
+            last=Number(currP.innerHTML)-1;
+
+        }
+        else{
+            last=Number(lastP.innerHTML)-1;
+        }
+        post(body,'/contacts/readall?page='+last,getResults,cbParams);
+        return;
+    }
+
+}
+function createRoutesPagination(pageCount,pageNumber,state) {
+    let divCont=document.createElement('div');
+    divCont.className='form-row';
+    divCont.id='pageNums'+state;
+    if(pageCount>2)
+        divCont.appendChild(createDivClassName('col form-group',createButtonBlue('prevPage','<<',state,getRoutePage)));
+    divCont.appendChild(createDivClassName('col form-group',createButtonBlue('firstPage','1',state,getRoutePage)));
+    if(pageCount>2){
+
+        divCont.appendChild(createDivClassName('col form-group',createButtonBlue('currPage',pageNumber+1,state,getRoutePage)));
+
+    }
+    if(pageCount>1)
+        divCont.appendChild(createDivClassName('col form-group',createButtonBlue('lastPage',pageCount,state,getRoutePage)));
+    if(pageCount>2)
+        divCont.appendChild(createDivClassName('col form-group',createButtonBlue('nextPage','>>',state,getRoutePage)));
+
+    return divCont;
+}
+function getRoutesResult(routes) {
+    let listRoutes = routes.listEntitiesDTO;
+    deleteNodes("routesResultCont");
+    deleteLastNode("resultRouteCol");
+    for(let i=0;i<listRoutes.length;i++){
+        addRouteToResultCont(listRoutes[i].countryFrom+" "+listRoutes[i].regionFrom+" "+listRoutes[i].cityFrom,
+            listRoutes[i].countryTo+" "+listRoutes[i].regionTo+" "+listRoutes[i].cityTo,
+            listRoutes[i].dateA,listRoutes[i].dateB,listRoutes[i].cost,routes.pageNumber,i);
+    }
+    document.getElementById("resultRouteCol").appendChild(createRoutesPagination(routes.pageCount,routes.pageNumber,'routes'));
+}
+function addRouteToResultCont(pointFrom,pointTo,dateStart,dateFinish,cost,pageNumber,currNum) {
+    let td1=document.createElement('td');
+    td1.className='number text-center';
+    td1.appendChild(document.createTextNode(5*pageNumber+currNum+1));
+    let td3=document.createElement('td');
+    td3.className='product';
+    let strong=document.createElement('strong');
+    let spanFrom=document.createElement('span');
+    spanFrom.appendChild(document.createTextNode(pointFrom));
+    let spanSpace=document.createElement('span');
+    spanSpace.appendChild(document.createTextNode(' -> '));
+    let spanTo=document.createElement('span');
+    spanTo.appendChild(document.createTextNode(pointTo));
+    strong.appendChild(spanFrom);
+    strong.appendChild(spanSpace);
+    strong.appendChild(spanTo);
+    let br=document.createElement('br');
+    td3.appendChild(strong);
+    td3.appendChild(br);
+    td3.appendChild(document.createTextNode(dateStart+' -> '+dateFinish));
+
+    let td5=document.createElement('td');
+    td5.className='price text-right';
+    td5.appendChild(document.createTextNode(cost+'$'));
+
+    let tr=document.createElement('tr');
+    tr.appendChild(td1);
+    tr.appendChild(td3);
+    tr.appendChild(td5);
+
+    let resultsCont=document.getElementById('routesResultCont');
+    resultsCont.appendChild(tr);
+}
+function getUserRoutes(action,cb) {
     let xhr = new XMLHttpRequest();
     xhr.open("GET", action, true);
     let csrfToken = $("meta[name='_csrf']").attr("content");
@@ -164,8 +281,9 @@ function getUserRoutes(action) {
     xhr.onreadystatechange = function() {
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
             console.log(xhr.responseText);
+            let routes=JSON.parse(xhr.responseText);
             if(cb!=null){
-
+                cb(routes);
             }
         }
     }
