@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 public class RouteDTO implements Serializable {
 
+    private Long routeId;
     @NotNull
     @Size(min = 2)
     private String countryFrom;
@@ -52,6 +53,14 @@ public class RouteDTO implements Serializable {
     @NotNull
     @Size(min=1)
     private Long cost;
+
+    public Long getRouteId() {
+        return routeId;
+    }
+
+    public void setRouteId(Long routeId) {
+        this.routeId = routeId;
+    }
 
     public String getCarrierName() {
         return carrierName;

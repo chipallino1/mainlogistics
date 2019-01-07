@@ -1,0 +1,214 @@
+<html  xmlns:th="http://www.thymeleaf.org" xmlns:sec=
+        "http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+    <!-- Required meta tags -->
+      <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    
+      <link rel="stylesheet" type="text/css" th:href="@{/styles/searchstyle.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/autocomplete.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <meta name="_csrf" th:content="${_csrf.token}"/>
+      <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  
+
+      <title>Logistics</title>
+  </head>
+  <body style= "background-color: rgb(245,245,245);">
+     <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">Logistics</a>
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarCollapse" style="">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Home </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/direction}"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/search}">Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/contacts}">Contacts</a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" th:href="@{/auth}">Login|Register</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated() && (hasRole('ROLE_CONTACT_USER') || hasRole('ROLE_CONTACT_LOGISTICS_FIRM_USER'))">
+                    <a  class="nav-link" id="profilePageContact" th:href="@{/profile/contact/me}" sec:authentication="name">Name of user page<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated() && (hasRole('ROLE_FIRM_USER') || hasRole('ROLE_LOGISTIC_FIRM_USER') || hasRole('ROLE_SIMPLE_FIRM_USER'))">
+                    <a  class="nav-link" id="profilePageFirm" th:href="@{/profile/firm/me}" sec:authentication="name">Name of user page<span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+          <form class="form-inline mt-2 mt-md-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class="container">
+<br>
+          <br>
+          <br>
+<hr>
+
+
+
+<div class="row justify-content-center" id="profile" >
+
+<div class="col-md-6"  id="updateContact">
+
+<div class="card">
+<header class="card-header">
+  <h4 class="card-title mt-2">Route</h4>
+</header>
+<article class="card-body">
+<form th:action="@{/profile/contact/update}" method="post" th:object="${routeDTO}" id="contactForm">
+     <div class="container">
+         <div class="form-row">
+    <div class="col form-group">
+      <label>Country from </label>
+        <input type="text" class="form-control" placeholder="first name" id="firstNameContact" disabled="disabled" th:field="*{countryFrom}">
+    </div> <!-- form-group end.// -->
+    <div class="col form-group">
+      <label>Region from</label>
+        <input type="text" class="form-control" placeholder="last name" id="lastNameContact" disabled="disabled" th:field="*{regionFrom}">
+    </div> <!-- form-group end.// -->
+  </div> <!-- form-row end.// -->
+  <div class="form-group">
+    <label>City from</label>
+    <input type="text" class="form-control" placeholder="email address" id="emailContact" disabled="disabled" th:field="*{cityFrom}">
+  </div> <!-- form-group end.// -->
+         <div class="form-row">
+             <div class="col form-group">
+                 <label>Country to </label>
+                 <input type="text" class="form-control" placeholder="first name"  disabled="disabled" th:field="*{countryTo}">
+             </div> <!-- form-group end.// -->
+             <div class="col form-group">
+                 <label>Region to</label>
+                 <input type="text" class="form-control" placeholder="last name"  disabled="disabled" th:field="*{regionTo}">
+             </div> <!-- form-group end.// -->
+         </div> <!-- form-row end.// -->
+         <div class="form-group">
+             <label>City to</label>
+             <input type="text" class="form-control" placeholder="email address"  disabled="disabled" th:field="*{cityTo}">
+         </div> <!-- form-group end.// -->
+  <div class="form-group">
+    <label>Date start</label>
+    <input type="number" class="form-control" placeholder="phone number" id="phoneNumContact" disabled="disabled" th:field="*{dateA}">
+  </div> <!-- form-group end.// -->
+         <div class="form-group">
+             <label>Date finish</label>
+             <input type="number" class="form-control" placeholder="phone number" disabled="disabled" th:field="*{dateB}">
+         </div> <!-- form-group end.// -->
+         <div class="form-group">
+             <label>Carrier name</label>
+             <input type="text" class="form-control"  disabled="disabled"  th:field="*{carrierName}">
+         </div> <!-- form-group end.// -->
+         <div class="form-group">
+             <label>Car name</label>
+             <input type="text" class="form-control"  disabled="disabled"  th:field="*{carName}">
+         </div> <!-- form-group end.// -->
+  <div class="form-group">
+    <label>Length</label>
+     <input class="form-control" type="text" name="myCountry" placeholder="Country" id="firmNameContact" disabled="disabled" th:field="*{length}">
+  </div>
+         <div class="form-group">
+             <label>Duration</label>
+             <input type="text" class="form-control"  disabled="disabled"  th:field="*{duration}">
+         </div> <!-- form-group end.// -->
+         <div class="form-group">
+             <label>Capacity</label>
+             <input type="text" class="form-control"  disabled="disabled"  th:field="*{capacity}">
+         </div> <!-- form-group end.// -->
+         <div class="form-group">
+             <label>Volume</label>
+             <input type="text" class="form-control"  disabled="disabled"  th:field="*{volume}">
+         </div> <!-- form-group end.// -->
+         <div class="form-group">
+             <label>Cost</label>
+             <input type="text" class="form-control"  disabled="disabled"  th:field="*{cost}">
+         </div> <!-- form-group end.// -->
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block" id="submitFormContact"> Save  </button>
+    </div> <!-- form-group// -->      
+
+    </div>                                 
+</form>
+</article> <!-- card-body end .// -->
+</div> <!-- card.// -->
+</div> <!-- col.//-->
+</div>
+      </div>
+<!--container end.//-->
+
+
+
+    </main>
+
+    <hr>
+    <br>
+  
+    <footer style="flex:0 0 auto;">
+       <article class="bg-secondary">  
+        <div class="card-body text-center">
+        <p class="h5 text-white">Logistics</p>
+        <a class="btn btn-warning" href="#"> Back to top </a>
+         </div>
+       </article>
+     </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript"
+     src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+    </script> 
+    <script type="text/javascript"
+     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+    </script>
+    <script type="text/javascript"
+     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
+    </script>
+     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZdKOB5yggOzmMtpExsaUdXR1xYXDn__c"></script>
+    <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+     <script th:src="@{/js/searchmaker.js}"></script>
+     <script th:if="${role}==1 OR ${role}==2">getContacts(null,firmNameFirm.value,"ADDED","resultCol","resultCont","pagesNumADDED",0,5);</script>
+     <script th:if="${role}==1 OR ${role}==2">getContacts(null,firmNameFirm.value,"WAIT","resultColQueue","resultContQueue","pagesNumWAIT",0,5);</script>
+
+    <script th:src="@{/js/authentication.js}"></script>
+
+     <script th:src="@{/js/routes.js}"></script>
+    <script th:src="@{/js/enter.js}"></script>
+    <script th:src="@{/js/autocomplete.js}"></script>
+     <script th:inline="javascript">whenRegistred([[${isRegistred}]]);</script>
+     <script th:inline="javascript">
+         if([[${contactDTO}]].email==null) {
+         updateFirm.style.display = "";
+         contactList.style.display = "";
+
+         if(document.getElementById('contactQueue')!=null)
+            contactQueue.style.display="";
+         updateContact.style.display = "none";
+     }
+         console.log( updateContact.style.display);
+     </script>
+  <script th:src="@{/js/myprofile.js}"></script>
+     <script th:if="${role}==3">getUserRoutes("/routes/readAll?email=me&orderBy=DateStart&isDesc=true",getRoutesResult);</script>
+     <script th:inline="javascript">autocomplete(document.getElementById("myInput"),[[${contacts}]],'/contacts/' );</script>
+  
+  
+  </body>
+</html>

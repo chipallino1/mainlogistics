@@ -95,6 +95,15 @@ public class RoutesServiceImpl implements RoutesService{
         return getPage(routeDTOList,routesPage);
     }
 
+    @Override
+    public RouteDTO getRouteById(Long routeId) {
+        List<Object> objectList = new ArrayList<>();
+        List<RouteDTO> routeDTOList = new ArrayList<>();
+        objectList.add(routesOnCarriersRepository.findRoute(routeId));
+        map(objectList,routeDTOList);
+        return routeDTOList.get(0);
+    }
+
     private RoutesInfo createRoutesInfo(RouteDTO routeDto,Long routeId){
         Date dateStart = dateConverter.getDateFromString(routeDto.getDateA());
         Date dateFinish = dateConverter.getDateFromString(routeDto.getDateB());
@@ -147,6 +156,7 @@ public class RoutesServiceImpl implements RoutesService{
         RouteDTO routeDTO;
         for(int i=0;i<routeList.size();i++){
             routeDTO=new RouteDTO();
+            routeDTO.setRouteId(((BigInteger)((Map) routeList.get(i)).get("ID")).longValue());
             routeDTO.setCountryFrom((String) ((Map) routeList.get(i)).get("COUNTRY_FROM"));
             routeDTO.setRegionFrom((String) ((Map) routeList.get(i)).get("REGION_FROM"));
             routeDTO.setCityFrom((String) ((Map) routeList.get(i)).get("CITY_FROM"));

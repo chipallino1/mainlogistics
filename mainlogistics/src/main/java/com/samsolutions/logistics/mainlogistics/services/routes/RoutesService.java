@@ -17,4 +17,6 @@ public interface RoutesService extends Converter,Pagination<RouteDTO,Routes>,Pac
     void createRoute(RouteDTO routeDto);
 
     PageDTO<RouteDTO> getRoutesByPage(String email, String orderBy, boolean desc, Pageable pageable);
+
+    RouteDTO getRouteById(Long routeId);
 }

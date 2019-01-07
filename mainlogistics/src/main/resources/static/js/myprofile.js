@@ -153,7 +153,9 @@ function post1(action,body,cb) {
     }
     xhr.send(JSON.stringify(body));
 }
+function openRoutePage() {
 
+}
 function getRoutePage(e) {
     state=e.target.getAttribute('state');
     let currP=document.getElementById('currPage'+state);
@@ -235,13 +237,13 @@ function getRoutesResult(routes) {
     deleteNodes("routesResultCont");
     deleteLastNode("resultRouteCol");
     for(let i=0;i<listRoutes.length;i++){
-        addRouteToResultCont(listRoutes[i].countryFrom+" "+listRoutes[i].regionFrom+" "+listRoutes[i].cityFrom,
+        addRouteToResultCont(listRoutes[i].routeId, listRoutes[i].countryFrom+" "+listRoutes[i].regionFrom+" "+listRoutes[i].cityFrom,
             listRoutes[i].countryTo+" "+listRoutes[i].regionTo+" "+listRoutes[i].cityTo,
             listRoutes[i].dateA,listRoutes[i].dateB,listRoutes[i].cost,routes.pageNumber,i);
     }
     document.getElementById("resultRouteCol").appendChild(createRoutesPagination(routes.pageCount,routes.pageNumber,'routes'));
 }
-function addRouteToResultCont(pointFrom,pointTo,dateStart,dateFinish,cost,pageNumber,currNum) {
+function addRouteToResultCont(routeId,pointFrom,pointTo,dateStart,dateFinish,cost,pageNumber,currNum) {
     let td1=document.createElement('td');
     td1.className='number text-center';
     td1.appendChild(document.createTextNode(5*pageNumber+currNum+1));
@@ -267,6 +269,7 @@ function addRouteToResultCont(pointFrom,pointTo,dateStart,dateFinish,cost,pageNu
     td5.appendChild(document.createTextNode(cost+'$'));
 
     let tr=document.createElement('tr');
+    tr.setAttribute("routeId",routeId);
     tr.appendChild(td1);
     tr.appendChild(td3);
     tr.appendChild(td5);
