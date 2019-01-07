@@ -12,12 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.query.AbstractJpaQuery;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -81,16 +85,14 @@ public class RoutesServiceImpl implements RoutesService{
     public PageDTO<RouteDTO> getRoutesByPage(String email, String orderBy, boolean desc, Pageable pageable) {
         Contacts contacts = null;
         routesOnCarriersRepository.findAllRoutesOrderByDateStart(pageable);
-        //pointsRepository.findAllPag("Belarus",pageable);
         Map<String,Object> map=new LinkedHashMap<>();
-        if(email.equals("ALL")){
-            map.put("ContactsId","ALL");
+        if(!email.equals("ALL")){
+            map.put("EmailCreator",email);
         }
-        else {
-            contacts = contactsRepository.findByEmail(email);
-            map("ContactsId",contacts.getId());
-        }
-        Page<Object> routesPage=getOrderPage(map,"CountryFrom",desc,pageable,applicationContext);
+        Page<Object> routesPage=getOrderPage(map,orderBy,desc,pageable,applicationContext);
+        List<Object> objectList=routesPage.getContent();
+        List<RouteDTO> routeDTOList=new ArrayList<>();
+        map(objectList,routeDTOList);
         return new PageDTO<>();
     }
 
@@ -107,9 +109,6 @@ public class RoutesServiceImpl implements RoutesService{
     private Carriers createCarriers(RouteDTO routeDto){
         Carriers carriers = new Carriers();
         map(routeDto,carriers);
-        Carriers carriersStored = carriersRepository.findByCarrierName(carriers.getCarrierName());
-        if(carriersStored!=null)
-            return carriersStored;
         return carriersRepository.save(carriers);
     }
     private Points createPointsFrom(RouteDTO routeDto){
@@ -145,7 +144,27 @@ public class RoutesServiceImpl implements RoutesService{
         routesOnCarriers.setCarriersId(carrierId);
         return routesOnCarriersRepository.save(routesOnCarriers);
     }
-
+    private void map(List routeList,List<RouteDTO> routeDTOList){
+        RouteDTO routeDTO;
+        for(int i=0;i<routeList.size();i++){
+            routeDTO=new RouteDTO();
+            routeDTO.setCountryFrom((String) ((Map) routeList.get(i)).get("COUNTRY_FROM"));
+            routeDTO.setRegionFrom((String) ((Map) routeList.get(i)).get("REGION_FROM"));
+            routeDTO.setCityFrom((String) ((Map) routeList.get(i)).get("CITY_FROM"));
+            routeDTO.setCountryTo((String) ((Map) routeList.get(i)).get("COUNTRY_TO"));
+            routeDTO.setRegionTo((String) ((Map) routeList.get(i)).get("REGION_TO"));
+            routeDTO.setCityTo((String) ((Map) routeList.get(i)).get("CITY_TO"));
+            routeDTO.setCarName((String) ((Map) routeList.get(i)).get("CAR_NAME"));
+            routeDTO.setCarrierName((String) ((Map) routeList.get(i)).get("CARRIER_NAME"));
+            routeDTO.setVolume(((BigInteger)((Map) routeList.get(i)).get("VOLUME")).longValue());
+            routeDTO.setCapacity(((BigInteger)((Map) routeList.get(i)).get("CAPACITY")).longValue());
+            routeDTO.setLength(((BigInteger)((Map) routeList.get(i)).get("LENGTH")).longValue());
+            routeDTO.setDuration(((BigInteger)((Map) routeList.get(i)).get("DURATION")).longValue());
+            routeDTO.setCost(((BigInteger)((Map) routeList.get(i)).get("COST")).longValue());
+            routeDTO.setDateA(dateConverter.getStringFromDate((Date) ((Map) routeList.get(i)).get("DATE_START")));
+            routeDTO.setDateB(dateConverter.getStringFromDate((Date) ((Map) routeList.get(i)).get("DATE_FINISH")));
+        }
+    }
     @Override
     public Page<Object> getOrderPage(Map samples, String orderBy, boolean desc, Pageable pageable, ApplicationContext applicationContext) {
         Page<Object> routesPage=null;

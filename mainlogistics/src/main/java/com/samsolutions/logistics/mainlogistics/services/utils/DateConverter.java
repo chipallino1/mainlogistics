@@ -26,4 +26,8 @@ public interface DateConverter {
         }
         return date;
     }
+    default String getStringFromDate(Date date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm ZZZZ");
+        return dateFormat.format(date);
+    }
 }

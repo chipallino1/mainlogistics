@@ -38,7 +38,7 @@ public class RouteController {
 
     @GetMapping("/routes/readAll")
     public List<RouteDTO> getAllRoutes(@PageableDefault(value = 5) Pageable pageable){
-        routesService.getRoutesByPage("ALL","country",true,pageable);
+        routesService.getRoutesByPage("kosy@mail.ru","CountryFrom",true,pageable);
         return new ArrayList<>();
     }
 

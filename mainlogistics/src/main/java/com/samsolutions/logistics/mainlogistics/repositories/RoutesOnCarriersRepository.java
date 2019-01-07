@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 @Repository
 public interface RoutesOnCarriersRepository extends JpaRepository<RoutesOnCarriers,Long> {
     @Query(value = "SELECT PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
@@ -117,7 +119,7 @@ public interface RoutesOnCarriersRepository extends JpaRepository<RoutesOnCarrie
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Object> findAllRoutesByEmailCreatorOrderByCountryFrom(String  email,Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByCountryFrom(String  email, Pageable pageable);
     @Query(value = "SELECT PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
             "PT.COUNTRY COUNTRY_TO,PT.REGION REGION_TO,PT.CITY CITY_TO, CA.CARRIER_NAME,CA.CAR_NAME,CA.VOLUME,CA.CAPACITY,CA.COST,RI.DATE_START,RI.DATE_FINISH,RI.LENGTH,RI.DURATION FROM ROUTES_ON_CARRIERS ROC" +
             " INNER JOIN ROUTES R INNER JOIN CONTACTS CON ON R.CONTACTS_ID=CON.ID INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
@@ -143,7 +145,7 @@ public interface RoutesOnCarriersRepository extends JpaRepository<RoutesOnCarrie
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Object> findAllRoutesByEmailCreatorOrderByCountryFromDesc(String  email,Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByCountryFromDesc(String  email,Pageable pageable);
 
     @Query(value = "SELECT PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
             "PT.COUNTRY COUNTRY_TO,PT.REGION REGION_TO,PT.CITY CITY_TO, CA.CARRIER_NAME,CA.CAR_NAME,CA.VOLUME,CA.CAPACITY,CA.COST,RI.DATE_START,RI.DATE_FINISH,RI.LENGTH,RI.DURATION FROM ROUTES_ON_CARRIERS ROC" +
