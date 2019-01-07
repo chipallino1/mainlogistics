@@ -89,11 +89,11 @@ public class RoutesServiceImpl implements RoutesService{
         if(!email.equals("ALL")){
             map.put("EmailCreator",email);
         }
-        Page<Object> routesPage=getOrderPage(map,orderBy,desc,pageable,applicationContext);
+        Page routesPage=getOrderPage(map,orderBy,desc,pageable,applicationContext);
         List<Object> objectList=routesPage.getContent();
         List<RouteDTO> routeDTOList=new ArrayList<>();
         map(objectList,routeDTOList);
-        return new PageDTO<>();
+        return getPage(routeDTOList,routesPage);
     }
 
     private RoutesInfo createRoutesInfo(RouteDTO routeDto,Long routeId){
@@ -163,6 +163,7 @@ public class RoutesServiceImpl implements RoutesService{
             routeDTO.setCost(((BigInteger)((Map) routeList.get(i)).get("COST")).longValue());
             routeDTO.setDateA(dateConverter.getStringFromDate((Date) ((Map) routeList.get(i)).get("DATE_START")));
             routeDTO.setDateB(dateConverter.getStringFromDate((Date) ((Map) routeList.get(i)).get("DATE_FINISH")));
+            routeDTOList.add(routeDTO);
         }
     }
     @Override

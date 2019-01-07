@@ -24,7 +24,7 @@ public interface RoutesOnCarriersRepository extends JpaRepository<RoutesOnCarrie
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Object> findAllRoutesOrderByCityFrom(Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesOrderByCityFrom(Pageable pageable);
     @Query(value = "SELECT PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
             "PT.COUNTRY COUNTRY_TO,PT.REGION REGION_TO,PT.CITY CITY_TO, CA.CARRIER_NAME,CA.CAR_NAME,CA.VOLUME,CA.CAPACITY,CA.COST,RI.DATE_START,RI.DATE_FINISH,RI.LENGTH,RI.DURATION FROM ROUTES_ON_CARRIERS ROC" +
             " INNER JOIN ROUTES R INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
@@ -37,7 +37,7 @@ public interface RoutesOnCarriersRepository extends JpaRepository<RoutesOnCarrie
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Object> findAllRoutesOrderByCountryFrom(Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesOrderByCountryFrom(Pageable pageable);
     @Query(value = "SELECT PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
             "PT.COUNTRY COUNTRY_TO,PT.REGION REGION_TO,PT.CITY CITY_TO, CA.CARRIER_NAME,CA.CAR_NAME,CA.VOLUME,CA.CAPACITY,CA.COST,RI.DATE_START,RI.DATE_FINISH,RI.LENGTH,RI.DURATION FROM ROUTES_ON_CARRIERS ROC" +
             " INNER JOIN ROUTES R INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
@@ -50,7 +50,7 @@ public interface RoutesOnCarriersRepository extends JpaRepository<RoutesOnCarrie
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Object> findAllRoutesOrderByCityFromDesc(Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesOrderByCityFromDesc(Pageable pageable);
     @Query(value = "SELECT PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
             "PT.COUNTRY COUNTRY_TO,PT.REGION REGION_TO,PT.CITY CITY_TO, CA.CARRIER_NAME,CA.CAR_NAME,CA.VOLUME,CA.CAPACITY,CA.COST,RI.DATE_START,RI.DATE_FINISH,RI.LENGTH,RI.DURATION FROM ROUTES_ON_CARRIERS ROC" +
             " INNER JOIN ROUTES R INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
@@ -63,7 +63,7 @@ public interface RoutesOnCarriersRepository extends JpaRepository<RoutesOnCarrie
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Object> findAllRoutesOrderByCountryFromDesc(Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesOrderByCountryFromDesc(Pageable pageable);
 
     @Query(value = "SELECT PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
             "PT.COUNTRY COUNTRY_TO,PT.REGION REGION_TO,PT.CITY CITY_TO, CA.CARRIER_NAME,CA.CAR_NAME,CA.VOLUME,CA.CAPACITY,CA.COST,RI.DATE_START,RI.DATE_FINISH,RI.LENGTH,RI.DURATION FROM ROUTES_ON_CARRIERS ROC" +
@@ -77,7 +77,7 @@ public interface RoutesOnCarriersRepository extends JpaRepository<RoutesOnCarrie
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Object> findAllRoutesOrderByDateStart(Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesOrderByDateStart(Pageable pageable);
     @Query(value = "SELECT PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
             "PT.COUNTRY COUNTRY_TO,PT.REGION REGION_TO,PT.CITY CITY_TO, CA.CARRIER_NAME,CA.CAR_NAME,CA.VOLUME,CA.CAPACITY,CA.COST,RI.DATE_START,RI.DATE_FINISH,RI.LENGTH,RI.DURATION FROM ROUTES_ON_CARRIERS ROC" +
             " INNER JOIN ROUTES R INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
@@ -90,7 +90,7 @@ public interface RoutesOnCarriersRepository extends JpaRepository<RoutesOnCarrie
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Object> findAllRoutesOrderByDateStartDesc(Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesOrderByDateStartDesc(Pageable pageable);
 
 
 
@@ -106,7 +106,7 @@ public interface RoutesOnCarriersRepository extends JpaRepository<RoutesOnCarrie
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Object> findAllRoutesByEmailCreatorOrderByCityFrom(String  email,Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByCityFrom(String  email,Pageable pageable);
     @Query(value = "SELECT PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
             "PT.COUNTRY COUNTRY_TO,PT.REGION REGION_TO,PT.CITY CITY_TO, CA.CARRIER_NAME,CA.CAR_NAME,CA.VOLUME,CA.CAPACITY,CA.COST,RI.DATE_START,RI.DATE_FINISH,RI.LENGTH,RI.DURATION FROM ROUTES_ON_CARRIERS ROC" +
             " INNER JOIN ROUTES R INNER JOIN CONTACTS CON ON R.CONTACTS_ID=CON.ID INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
@@ -132,7 +132,7 @@ public interface RoutesOnCarriersRepository extends JpaRepository<RoutesOnCarrie
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Object> findAllRoutesByEmailCreatorOrderByCityFromDesc(String  email,Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByCityFromDesc(String  email,Pageable pageable);
     @Query(value = "SELECT PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
             "PT.COUNTRY COUNTRY_TO,PT.REGION REGION_TO,PT.CITY CITY_TO, CA.CARRIER_NAME,CA.CAR_NAME,CA.VOLUME,CA.CAPACITY,CA.COST,RI.DATE_START,RI.DATE_FINISH,RI.LENGTH,RI.DURATION FROM ROUTES_ON_CARRIERS ROC" +
             " INNER JOIN ROUTES R INNER JOIN CONTACTS CON ON R.CONTACTS_ID=CON.ID INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
@@ -159,7 +159,7 @@ public interface RoutesOnCarriersRepository extends JpaRepository<RoutesOnCarrie
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Object> findAllRoutesByEmailCreatorOrderByDateStart(String  email,Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByDateStart(String  email,Pageable pageable);
     @Query(value = "SELECT PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
             "PT.COUNTRY COUNTRY_TO,PT.REGION REGION_TO,PT.CITY CITY_TO, CA.CARRIER_NAME,CA.CAR_NAME,CA.VOLUME,CA.CAPACITY,CA.COST,RI.DATE_START,RI.DATE_FINISH,RI.LENGTH,RI.DURATION FROM ROUTES_ON_CARRIERS ROC" +
             " INNER JOIN ROUTES R INNER JOIN CONTACTS CON ON R.CONTACTS_ID=CON.ID INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
@@ -172,5 +172,5 @@ public interface RoutesOnCarriersRepository extends JpaRepository<RoutesOnCarrie
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Object> findAllRoutesByEmailCreatorOrderByDateStartDesc(String  email,Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByDateStartDesc(String  email,Pageable pageable);
 }

@@ -1,5 +1,6 @@
 package com.samsolutions.logistics.mainlogistics.controllers;
 
+import com.samsolutions.logistics.mainlogistics.dto.PageDTO;
 import com.samsolutions.logistics.mainlogistics.dto.RouteDTO;
 import com.samsolutions.logistics.mainlogistics.services.routes.RoutesService;
 import com.samsolutions.logistics.mainlogistics.services.user.ContactsService;
@@ -37,9 +38,9 @@ public class RouteController {
     }
 
     @GetMapping("/routes/readAll")
-    public List<RouteDTO> getAllRoutes(@PageableDefault(value = 5) Pageable pageable){
-        routesService.getRoutesByPage("kosy@mail.ru","CountryFrom",true,pageable);
-        return new ArrayList<>();
+    public PageDTO<RouteDTO> getAllRoutes(@PageableDefault(value = 5) Pageable pageable){
+
+        return routesService.getRoutesByPage("kosy@mail.ru","CountryFrom",true,pageable);
     }
 
 }
