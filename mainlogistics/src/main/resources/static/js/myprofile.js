@@ -271,25 +271,34 @@ function addRouteToResultCont(routeId,pointFrom,pointTo,dateStart,dateFinish,cos
     tr.appendChild(td1);
     tr.appendChild(td3);
     tr.appendChild(td5);
-
     let resultsCont=document.getElementById('routesResultCont');
     resultsCont.appendChild(tr);
 }
+let ret;
 function openRoutePage(e) {
     console.log(e);
-    console.log(e.target.tagName);
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", "/routes/read?routeId="+e.target.getAttribute("routeId"), true);
-    let csrfToken = $("meta[name='_csrf']").attr("content");
-    let csrfHeader = $("meta[name='_csrf_header']").attr("content");
-    xhr.setRequestHeader(csrfHeader,csrfToken);
-    xhr.setRequestHeader("Content-type", "application/json");
-    xhr.onreadystatechange = function() {
-        if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-            console.log(xhr.responseText);
-        }
+    getParentElement('TR',e.target);
+    console.log(ret.getAttribute('routeId'));
+    let routeId=ret.getAttribute('routeId');
+    let form=document.createElement('form');
+    form.action="/routes/read";
+    form.method='GET';
+    let routeIdParam=document.createElement('input');
+    routeIdParam.name='routeId';
+    routeIdParam.value=routeId;
+    form.appendChild(routeIdParam);
+    console.log(form.action);
+    ret.appendChild(form);
+    form.submit();
+}
+function getParentElement(parentTagName,element) {
+    if(element.tagName==parentTagName){
+        ret=element;
+        return element;
     }
-    xhr.send(null);
+    else {
+        getParentElement(parentTagName,element.parentElement);
+    }
 }
 function getUserRoutes(action,cb) {
     let xhr = new XMLHttpRequest();

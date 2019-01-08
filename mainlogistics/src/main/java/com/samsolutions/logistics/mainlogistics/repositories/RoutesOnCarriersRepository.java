@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
@@ -99,80 +100,80 @@ public interface RoutesOnCarriersRepository extends JpaRepository<RoutesOnCarrie
             " INNER JOIN ROUTES R INNER JOIN CONTACTS CON ON R.CONTACTS_ID=CON.ID INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
             " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
             " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
-            " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID WHERE CON.EMAIL=?1 ORDER BY PF.CITY",
+            " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID WHERE CON.EMAIL=:email ORDER BY PF.CITY",
             countQuery = "SELECT count(*) FROM ROUTES_ON_CARRIERS ROC" +
                     " INNER JOIN ROUTES R INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
                     " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByCityFromAsc(String  email,Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByCityFromAsc(@Param("email") String  email,Pageable pageable);
     @Query(value = "SELECT ROC.ID, PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
             "PT.COUNTRY COUNTRY_TO,PT.REGION REGION_TO,PT.CITY CITY_TO, CA.CARRIER_NAME,CA.CAR_NAME,CA.VOLUME,CA.CAPACITY,CA.COST,RI.DATE_START,RI.DATE_FINISH,RI.LENGTH,RI.DURATION FROM ROUTES_ON_CARRIERS ROC" +
             " INNER JOIN ROUTES R INNER JOIN CONTACTS CON ON R.CONTACTS_ID=CON.ID INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
             " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
             " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
-            " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID WHERE CON.EMAIL=?1 ORDER BY PF.COUNTRY",
+            " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID WHERE CON.EMAIL=:email ORDER BY PF.COUNTRY",
             countQuery = "SELECT count(*) FROM ROUTES_ON_CARRIERS ROC" +
                     " INNER JOIN ROUTES R INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
                     " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByCountryFromAsc(String  email, Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByCountryFromAsc(@Param("email") String  email, Pageable pageable);
     @Query(value = "SELECT ROC.ID, PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
             "PT.COUNTRY COUNTRY_TO,PT.REGION REGION_TO,PT.CITY CITY_TO, CA.CARRIER_NAME,CA.CAR_NAME,CA.VOLUME,CA.CAPACITY,CA.COST,RI.DATE_START,RI.DATE_FINISH,RI.LENGTH,RI.DURATION FROM ROUTES_ON_CARRIERS ROC" +
             " INNER JOIN ROUTES R INNER JOIN CONTACTS CON ON R.CONTACTS_ID=CON.ID INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
             " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
             " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
-            " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID WHERE CON.EMAIL=?1 ORDER BY PF.CITY DESC",
+            " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID WHERE CON.EMAIL=:email ORDER BY PF.CITY DESC",
             countQuery = "SELECT count(*) FROM ROUTES_ON_CARRIERS ROC" +
                     " INNER JOIN ROUTES R INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
                     " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByCityFromDesc(String  email,Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByCityFromDesc(@Param("email") String  email,Pageable pageable);
     @Query(value = "SELECT ROC.ID, PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
             "PT.COUNTRY COUNTRY_TO,PT.REGION REGION_TO,PT.CITY CITY_TO, CA.CARRIER_NAME,CA.CAR_NAME,CA.VOLUME,CA.CAPACITY,CA.COST,RI.DATE_START,RI.DATE_FINISH,RI.LENGTH,RI.DURATION FROM ROUTES_ON_CARRIERS ROC" +
             " INNER JOIN ROUTES R INNER JOIN CONTACTS CON ON R.CONTACTS_ID=CON.ID INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
             " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
             " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
-            " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID WHERE CON.EMAIL=?1 ORDER BY PF.COUNTRY DESC",
+            " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID WHERE CON.EMAIL=:email ORDER BY PF.COUNTRY DESC",
             countQuery = "SELECT count(*) FROM ROUTES_ON_CARRIERS ROC" +
                     " INNER JOIN ROUTES R INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
                     " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByCountryFromDesc(String  email,Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByCountryFromDesc(@Param("email") String  email, Pageable pageable);
 
     @Query(value = "SELECT ROC.ID, PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
             "PT.COUNTRY COUNTRY_TO,PT.REGION REGION_TO,PT.CITY CITY_TO, CA.CARRIER_NAME,CA.CAR_NAME,CA.VOLUME,CA.CAPACITY,CA.COST,RI.DATE_START,RI.DATE_FINISH,RI.LENGTH,RI.DURATION FROM ROUTES_ON_CARRIERS ROC" +
             " INNER JOIN ROUTES R INNER JOIN CONTACTS CON ON R.CONTACTS_ID=CON.ID INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
             " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
             " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
-            " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID WHERE CON.EMAIL=?1 ORDER BY RI.DATE_START",
+            " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID WHERE CON.EMAIL=:email ORDER BY RI.DATE_START",
             countQuery = "SELECT count(*) FROM ROUTES_ON_CARRIERS ROC" +
                     " INNER JOIN ROUTES R INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
                     " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByDateStartAsc(String  email,Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByDateStartAsc(@Param("email") String  email,Pageable pageable);
     @Query(value = "SELECT ROC.ID, PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
             "PT.COUNTRY COUNTRY_TO,PT.REGION REGION_TO,PT.CITY CITY_TO, CA.CARRIER_NAME,CA.CAR_NAME,CA.VOLUME,CA.CAPACITY,CA.COST,RI.DATE_START,RI.DATE_FINISH,RI.LENGTH,RI.DURATION FROM ROUTES_ON_CARRIERS ROC" +
             " INNER JOIN ROUTES R INNER JOIN CONTACTS CON ON R.CONTACTS_ID=CON.ID INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
             " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
             " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
-            " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID WHERE CON.EMAIL=?1 ORDER BY RI.DATE_START DESC",
+            " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID WHERE CON.EMAIL=:email ORDER BY RI.DATE_START DESC",
             countQuery = "SELECT count(*) FROM ROUTES_ON_CARRIERS ROC" +
                     " INNER JOIN ROUTES R INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
                     " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByDateStartDesc(String  email,Pageable pageable);
+    Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByDateStartDesc(@Param("email") String  email,Pageable pageable);
 
 
     @Query(value = "SELECT ROC.ID, PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
@@ -180,12 +181,12 @@ public interface RoutesOnCarriersRepository extends JpaRepository<RoutesOnCarrie
             " INNER JOIN ROUTES R INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
             " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
             " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
-            " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID WHERE ROC.ID=?1 ORDER BY PF.CITY LIMIT 1",
+            " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID WHERE ROC.ID=:routeId ORDER BY PF.CITY LIMIT 1",
             countQuery = "SELECT count(*) FROM ROUTES_ON_CARRIERS ROC" +
                     " INNER JOIN ROUTES R INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
                     " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
                     " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
-    Map<String,Object> findRoute(Long routeId);
+    Map<String,Object> findRoute(@Param("routeId") Long routeId);
 }
