@@ -10,6 +10,8 @@ public class Carriers {
     private Long id;
     private String carName;
     private String carrierName;
+    private Long initialVolume;
+    private Long initialCapacity;
     private Long volume;
     private Long capacity;
     private Long cost;
@@ -44,6 +46,25 @@ public class Carriers {
 
     public void setCarrierName(String carrierName) {
         this.carrierName = carrierName;
+    }
+
+    @Basic
+    @Column(name = "initial_volume")
+    public Long getInitialVolume() {
+        return initialVolume;
+    }
+    public void setInitialVolume(Long initialVolume) {
+        this.initialVolume = initialVolume;
+    }
+
+    @Basic
+    @Column(name = "initial_capacity")
+    public Long getInitialCapacity() {
+        return initialCapacity;
+    }
+
+    public void setInitialCapacity(Long initialCapacity) {
+        this.initialCapacity = initialCapacity;
     }
 
     @Basic

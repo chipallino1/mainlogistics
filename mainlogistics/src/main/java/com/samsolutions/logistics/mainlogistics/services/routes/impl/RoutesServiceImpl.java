@@ -5,14 +5,12 @@ import com.samsolutions.logistics.mainlogistics.dto.RouteDTO;
 import com.samsolutions.logistics.mainlogistics.entities.*;
 import com.samsolutions.logistics.mainlogistics.repositories.*;
 import com.samsolutions.logistics.mainlogistics.services.routes.RoutesService;
-import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
 import com.samsolutions.logistics.mainlogistics.services.utils.DateConverter;
 import com.samsolutions.logistics.mainlogistics.services.utils.PackageType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.query.AbstractJpaQuery;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,8 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -181,6 +177,8 @@ public class RoutesServiceImpl implements RoutesService{
             routeDTO.setCarrierName((String) ((Map) routeList.get(i)).get("CARRIER_NAME"));
             routeDTO.setVolume(((BigInteger)((Map) routeList.get(i)).get("VOLUME")).longValue());
             routeDTO.setCapacity(((BigInteger)((Map) routeList.get(i)).get("CAPACITY")).longValue());
+            routeDTO.setInitialVolume(((BigInteger)((Map) routeList.get(i)).get("INITIAL_VOLUME")).longValue());
+            routeDTO.setInitialCapacity(((BigInteger)((Map) routeList.get(i)).get("INITIAL_CAPACITY")).longValue());
             routeDTO.setLength(((BigInteger)((Map) routeList.get(i)).get("LENGTH")).longValue());
             routeDTO.setDuration(((BigInteger)((Map) routeList.get(i)).get("DURATION")).longValue());
             routeDTO.setCost(((BigInteger)((Map) routeList.get(i)).get("COST")).longValue());

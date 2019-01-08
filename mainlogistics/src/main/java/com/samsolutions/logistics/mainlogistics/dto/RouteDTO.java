@@ -46,6 +46,12 @@ public class RouteDTO implements Serializable {
     private Long capacity;
     @NotNull
     @Size(min = 1)
+    private Long initialVolume;
+    @NotNull
+    @Size(min = 1)
+    private Long initialCapacity;
+    @NotNull
+    @Size(min = 1)
     private Long length;
     @NotNull
     @Size(min = 1)
@@ -156,6 +162,22 @@ public class RouteDTO implements Serializable {
 
     public void setCapacity(Long capacity) {
         this.capacity = capacity;
+    }
+
+    public Long getInitialVolume() {
+        return initialVolume;
+    }
+
+    public void setInitialVolume(Long initialVolume) {
+        this.initialVolume = initialVolume;
+    }
+
+    public Long getInitialCapacity() {
+        return initialCapacity;
+    }
+
+    public void setInitialCapacity(Long initialCapacity) {
+        this.initialCapacity = initialCapacity;
     }
 
     public Long getLength() {

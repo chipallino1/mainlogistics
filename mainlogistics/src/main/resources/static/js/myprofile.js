@@ -127,6 +127,8 @@ function createRouteSubmit() {
         dateB:finishDateTime.value,
         volume:volume.value,
         capacity:capacity.value,
+        initialVolume:volume.value,
+        initialCapacity:capacity.value,
         length:lengthRoute.value,
         duration:durationRoute.value,
         cost:cost.value
@@ -146,6 +148,7 @@ function post1(action,body,cb) {
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
             console.log(xhr.responseText);
             console.log('route created');
+            alert('Route created');
             if(cb!=null){
 
             }
