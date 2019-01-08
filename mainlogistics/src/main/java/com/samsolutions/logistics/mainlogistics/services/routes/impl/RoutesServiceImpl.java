@@ -5,6 +5,8 @@ import com.samsolutions.logistics.mainlogistics.dto.RouteDTO;
 import com.samsolutions.logistics.mainlogistics.entities.*;
 import com.samsolutions.logistics.mainlogistics.repositories.*;
 import com.samsolutions.logistics.mainlogistics.services.routes.RoutesService;
+import com.samsolutions.logistics.mainlogistics.services.security.Role;
+import com.samsolutions.logistics.mainlogistics.services.user.UserService;
 import com.samsolutions.logistics.mainlogistics.services.utils.DateConverter;
 import com.samsolutions.logistics.mainlogistics.services.utils.PackageType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ public class RoutesServiceImpl implements RoutesService{
     private RoutesOnCarriersRepository routesOnCarriersRepository;
     private ContactsRepository contactsRepository;
     private ApplicationContext applicationContext;
+    private UserService userService;
+    private FirmsRepository firmsRepository;
 
     @Autowired
     public void setDateConverter(DateConverter dateConverter) {
@@ -65,6 +69,15 @@ public class RoutesServiceImpl implements RoutesService{
         this.applicationContext = applicationContext;
     }
 
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public void setFirmsRepository(FirmsRepository firmsRepository) {
+        this.firmsRepository = firmsRepository;
+    }
 
     @Override
     @Transactional
@@ -112,6 +125,21 @@ public class RoutesServiceImpl implements RoutesService{
         Optional<RoutesOnCarriers> routesOnCarriers = routesOnCarriersRepository.findById(routeId);
         if(routesOnCarriers.isPresent())
             routesOnCarriersRepository.delete(routesOnCarriers.get());
+    }
+
+    @Override
+    public void makeOrder(Long routeId) {
+        Orders orders = new Orders();
+        orders.setOrderDate(new Date());
+        orders.setRoutesOnCarriersId(routeId);
+        String emailConsumer = SecurityContextHolder.getContext().getAuthentication().getName();
+        Role role = userService.getRoleByEmail(emailConsumer);
+        if(role==Role.ROLE_CONTACT_USER)
+            orders.setConsumerContactId(contactsRepository.findByEmail(emailConsumer).getId());
+        else
+            orders.setConsumerFirmId(firmsRepository.findAllByEmail(emailConsumer).get(0).getId());
+
+
     }
 
     private RoutesInfo createRoutesInfo(RouteDTO routeDto,Long routeId){

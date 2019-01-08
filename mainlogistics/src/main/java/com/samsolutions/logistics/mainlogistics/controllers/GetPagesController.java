@@ -4,6 +4,7 @@ import com.google.code.geocoder.model.GeocoderGeometry;
 import com.samsolutions.logistics.mainlogistics.dto.RouteDTO;
 import com.samsolutions.logistics.mainlogistics.services.maps.GeoCoderService;
 import com.samsolutions.logistics.mainlogistics.services.routes.RoutesService;
+import com.samsolutions.logistics.mainlogistics.services.utils.MailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class GetPagesController {
 
     private RoutesService routesService;
+    private MailSender mailSender;
+
+    @Autowired
+    public void setMailSender(MailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
     @Autowired
     public void setRoutesService(RoutesService routesService) {
@@ -34,6 +41,7 @@ public class GetPagesController {
      */
     @RequestMapping(path = {"/", "/index"}, method = RequestMethod.GET)
     public String getHome(Model model) {
+        mailSender.sendMail("skorupich00@mail.ru","Logistics","Test mail!");
         model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getName());
         if(!model.containsAttribute("isDeleted"))
             model.addAttribute("isDeleted",false);

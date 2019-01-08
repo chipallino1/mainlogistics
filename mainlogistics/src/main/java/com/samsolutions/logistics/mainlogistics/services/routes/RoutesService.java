@@ -23,4 +23,6 @@ public interface RoutesService extends Converter,Pagination<RouteDTO,Routes>,Pac
     boolean isRouteCreator(Long routeId);
 
     void deleteRoute(Long routeId);
+
+    void makeOrder(Long routeId);
 }
