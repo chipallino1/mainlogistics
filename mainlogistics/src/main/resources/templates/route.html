@@ -73,7 +73,7 @@
 </header>
 <article class="card-body">
 <form th:object="${routeDTO}" id="routeForm" method="post">
-    <input type="text" name="routeId" th:field="*{routeId}">
+    <input type="hidden" id="routeId" name="routeId" th:field="*{routeId}">
     <input type="hidden" name="_csrf" th:value="${_csrf.token}">
      <div class="container">
          <div class="form-row">
@@ -148,9 +148,19 @@
              <label>Cost</label>
              <input type="text" class="form-control"  disabled="disabled"  th:field="*{cost}">
          </div> <!-- form-group end.// -->
+         <div class="form-row" th:if="${!isCreator}" sec:authorize="isAuthenticated()">
+             <div class="form-group">
+                 <label>Your volume</label>
+                 <input type="text" class="form-control" id="yourVolume">
+             </div> <!-- form-group end.// -->
+             <div class="form-group">
+                 <label>Your capacity</label>
+                 <input type="text" class="form-control" id="yourCapacity">
+             </div> <!-- form-group end.// -->
+         </div>
     <div class="form-group">
-        <button type="button" th:if="${isCreator}" class="btn btn-primary btn-block" id="submitDeletionForm" onclick="deleteRoute()"> Delete  </button>
-        <button type="button" class="btn btn-primary btn-block" id="submitOrderForm"> Make order  </button>
+        <button type="button" th:if="${isCreator}" sec:authorize="isAuthenticated()" class="btn btn-primary btn-block" id="submitDeletionForm" onclick="deleteRoute()"> Delete  </button>
+        <button type="button" th:if="${!isCreator}" sec:authorize="isAuthenticated()" class="btn btn-primary btn-block" id="submitOrderForm" onclick="makeOrderRoute()"> Make order  </button>
     </div> <!-- form-group// -->      
 
     </div>                                 

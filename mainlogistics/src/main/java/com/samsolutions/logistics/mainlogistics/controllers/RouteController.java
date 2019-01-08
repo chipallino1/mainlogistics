@@ -46,5 +46,10 @@ public class RouteController {
         return routesService.getRoutesByPage(email,orderBy,isDesc,pageable);
     }
 
+    @PostMapping("/routes/order")
+    public boolean makeOrder(@RequestBody Map<String,Object> payload){
+        return routesService.makeOrder(Long.valueOf((String)payload.get("routeId")),Long.valueOf((String)payload.get("yourCapacity")),Long.valueOf((String)payload.get("yourVolume")));
+    }
+
 
 }

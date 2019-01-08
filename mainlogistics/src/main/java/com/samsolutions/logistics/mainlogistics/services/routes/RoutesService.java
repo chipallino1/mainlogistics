@@ -24,5 +24,5 @@ public interface RoutesService extends Converter,Pagination<RouteDTO,Routes>,Pac
 
     void deleteRoute(Long routeId);
 
-    void makeOrder(Long routeId);
+    boolean makeOrder(Long routeId,Long yourCapacity,Long yourVolume);
 }

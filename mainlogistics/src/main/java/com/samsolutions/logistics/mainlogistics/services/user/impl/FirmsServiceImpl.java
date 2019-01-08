@@ -14,6 +14,7 @@ import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
 import com.samsolutions.logistics.mainlogistics.services.security.Role;
 import com.samsolutions.logistics.mainlogistics.services.signup.FirmsSignUpService;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
+import com.samsolutions.logistics.mainlogistics.services.user.UserService;
 import com.samsolutions.logistics.mainlogistics.services.utils.FileStorageService;
 import com.samsolutions.logistics.mainlogistics.services.utils.PackageType;
 import org.modelmapper.ModelMapper;
@@ -44,6 +45,7 @@ public class FirmsServiceImpl implements FirmsService {
     private ContactsRepository contactsRepository;
     private ApplicationContext applicationContext;
     private FileStorageService fileStorageService;
+    private UserService userService;
 
     private enum OrderTypes { ORDER_BY_FIRST_NAME,ORDER_BY_LAST_NAME,ORDER_BY_MODIFIED_DATE };
 
@@ -74,6 +76,11 @@ public class FirmsServiceImpl implements FirmsService {
     @Autowired
     public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -137,7 +144,10 @@ public class FirmsServiceImpl implements FirmsService {
         Date date = new Date(System.currentTimeMillis());
         contacts.setModifiedTime(date);
         Users users = usersRepository.findByEmail(contactDTO.getEmail());
-        users.setRole(Role.ROLE_CONTACT_LOGISTICS_FIRM_USER);
+        if(userService.getRoleByEmail(SecurityContextHolder.getContext().getAuthentication().getName())==Role.ROLE_SIMPLE_FIRM_USER)
+            users.setRole(Role.ROLE_CONTACT_SIMPLE_FIRM_USER);
+        else
+            users.setRole(Role.ROLE_CONTACT_LOGISTICS_FIRM_USER);
         contactsRepository.save(contacts);
     }
 

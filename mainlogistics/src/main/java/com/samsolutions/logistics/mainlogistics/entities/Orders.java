@@ -17,6 +17,8 @@ import java.util.Objects;
 @Entity
 public class Orders {
     private Long id;
+    private Long yourCapacity;
+    private Long yourVolume;
     private Long routesOnCarriersId;
     private Date orderDate;
     private Long producerId;
@@ -36,6 +38,25 @@ public class Orders {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "your_capacity")
+    public Long getYourCapacity() {
+        return yourCapacity;
+    }
+
+    public void setYourCapacity(Long yourCapacity) {
+        this.yourCapacity = yourCapacity;
+    }
+    @Basic
+    @Column(name = "your_volume")
+    public Long getYourVolume() {
+        return yourVolume;
+    }
+
+    public void setYourVolume(Long yourVolume) {
+        this.yourVolume = yourVolume;
     }
 
     @Basic
@@ -69,7 +90,7 @@ public class Orders {
     }
 
     @Basic
-    @Column(name = "consumer_firm_id", nullable = false)
+    @Column(name = "consumer_firm_id")
     public Long getConsumerFirmId() {
         return consumerFirmId;
     }
@@ -79,7 +100,7 @@ public class Orders {
     }
 
     @Basic
-    @Column(name = "consumer_contact_id", nullable = false)
+    @Column(name = "consumer_contact_id")
     public Long getConsumerContactId() {
         return consumerContactId;
     }

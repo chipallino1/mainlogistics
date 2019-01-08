@@ -43,5 +43,20 @@ function deleteRoute() {
 }
 
 function makeOrderRoute() {
-    
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/routes/order", true);
+    let csrfToken = $("meta[name='_csrf']").attr("content");
+    let csrfHeader = $("meta[name='_csrf_header']").attr("content");
+    xhr.setRequestHeader(csrfHeader,csrfToken);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+            console.log(xhr.responseText);
+            if(xhr.responseText=='true')
+                alert('Route ordered');
+            else
+                alert('Route not ordered');
+        }
+    }
+    xhr.send(JSON.stringify({routeId:routeId.value,yourCapacity:yourCapacity.value,yourVolume:yourVolume.value}));
 }

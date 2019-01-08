@@ -176,7 +176,7 @@ public interface RoutesOnCarriersRepository extends JpaRepository<RoutesOnCarrie
     Page<Map<String,Object>> findAllRoutesByEmailCreatorOrderByDateStartDesc(@Param("email") String  email,Pageable pageable);
 
 
-    @Query(value = "SELECT ROC.ID, CA.INITIAL_CAPACITY,CA.INITIAL_VOLUME, PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
+    @Query(value = "SELECT ROC.ID,CA.ID CARRIER_ID, CA.INITIAL_CAPACITY,CA.INITIAL_VOLUME, PF.COUNTRY COUNTRY_FROM,PF.REGION REGION_FROM,PF.CITY CITY_FROM," +
             "PT.COUNTRY COUNTRY_TO,PT.REGION REGION_TO,PT.CITY CITY_TO, CA.CARRIER_NAME,CA.CAR_NAME,CA.VOLUME,CA.CAPACITY,CA.COST,RI.DATE_START,RI.DATE_FINISH,RI.LENGTH,RI.DURATION FROM ROUTES_ON_CARRIERS ROC" +
             " INNER JOIN ROUTES R INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
             " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
@@ -202,4 +202,31 @@ public interface RoutesOnCarriersRepository extends JpaRepository<RoutesOnCarrie
                     " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
             nativeQuery = true)
     Map<String,Object> findIfCreator(@Param("email") String email,@Param("routeId") Long routeId);
+
+    @Query(value = "SELECT FI.ID" +
+            " FROM ROUTES_ON_CARRIERS ROC" +
+            " INNER JOIN ROUTES R INNER JOIN CONTACTS CON INNER JOIN FIRMS FI ON FI.ID=CON.FIRM_ID ON R.CONTACTS_ID=CON.ID INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
+            " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
+            " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
+            " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID WHERE ROC.ID=:routeId ORDER BY PF.COUNTRY DESC LIMIT 1",
+            countQuery = "SELECT count(*) FROM ROUTES_ON_CARRIERS ROC" +
+                    " INNER JOIN ROUTES R INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
+                    " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
+                    " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
+                    " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
+            nativeQuery = true)
+    Long findFirmCreatorId(@Param("routeId") Long routeId);
+    @Query(value = "SELECT CON.EMAIL" +
+            " FROM ROUTES_ON_CARRIERS ROC" +
+            " INNER JOIN ROUTES R INNER JOIN CONTACTS CON INNER JOIN FIRMS FI ON FI.ID=CON.FIRM_ID ON R.CONTACTS_ID=CON.ID INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
+            " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
+            " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
+            " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID WHERE ROC.ID=:routeId ORDER BY PF.COUNTRY DESC LIMIT 1",
+            countQuery = "SELECT count(*) FROM ROUTES_ON_CARRIERS ROC" +
+                    " INNER JOIN ROUTES R INNER JOIN POINTS PF ON R.POINT_FROM_ID=PF.ID" +
+                    " INNER JOIN POINTS PT ON R.POINT_TO_ID=PT.ID" +
+                    " INNER JOIN ROUTES_INFO RI ON R.ID=RI.ROUTE_ID  ON ROC.ROUTES_ID=R.ID" +
+                    " INNER JOIN CARRIERS CA ON ROC.CARRIERS_ID=CA.ID",
+            nativeQuery = true)
+    String findCreatorEmail(@Param("routeId") Long routeId);
 }

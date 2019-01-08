@@ -8,6 +8,7 @@ import com.samsolutions.logistics.mainlogistics.services.routes.RoutesService;
 import com.samsolutions.logistics.mainlogistics.services.security.Role;
 import com.samsolutions.logistics.mainlogistics.services.user.UserService;
 import com.samsolutions.logistics.mainlogistics.services.utils.DateConverter;
+import com.samsolutions.logistics.mainlogistics.services.utils.MailSender;
 import com.samsolutions.logistics.mainlogistics.services.utils.PackageType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -35,6 +36,8 @@ public class RoutesServiceImpl implements RoutesService{
     private ApplicationContext applicationContext;
     private UserService userService;
     private FirmsRepository firmsRepository;
+    private OrdersRepository ordersRepository;
+    private MailSender mailSender;
 
     @Autowired
     public void setDateConverter(DateConverter dateConverter) {
@@ -77,6 +80,14 @@ public class RoutesServiceImpl implements RoutesService{
     @Autowired
     public void setFirmsRepository(FirmsRepository firmsRepository) {
         this.firmsRepository = firmsRepository;
+    }
+    @Autowired
+    public void setOrdersRepository(OrdersRepository ordersRepository) {
+        this.ordersRepository = ordersRepository;
+    }
+    @Autowired
+    public void setMailSender(MailSender mailSender) {
+        this.mailSender = mailSender;
     }
 
     @Override
@@ -128,18 +139,38 @@ public class RoutesServiceImpl implements RoutesService{
     }
 
     @Override
-    public void makeOrder(Long routeId) {
+    public boolean makeOrder(Long routeId,Long yourCapacity,Long yourVolume) {
         Orders orders = new Orders();
         orders.setOrderDate(new Date());
         orders.setRoutesOnCarriersId(routeId);
         String emailConsumer = SecurityContextHolder.getContext().getAuthentication().getName();
         Role role = userService.getRoleByEmail(emailConsumer);
-        if(role==Role.ROLE_CONTACT_USER)
+        if(role==Role.ROLE_CONTACT_USER || role==Role.ROLE_CONTACT_SIMPLE_FIRM_USER)
             orders.setConsumerContactId(contactsRepository.findByEmail(emailConsumer).getId());
         else
+            //orders.setConsumerContactId(contactsRepository.findByEmail(emailConsumer).getId());
             orders.setConsumerFirmId(firmsRepository.findAllByEmail(emailConsumer).get(0).getId());
+        orders.setProducerId(routesOnCarriersRepository.findFirmCreatorId(routeId));
+        if(!checkParams(routeId,yourCapacity,yourVolume))
+            return false;
+        ordersRepository.save(orders);
+        String orderText=emailConsumer+" http://localhost:8080/routes/read?routeId="+routeId+" m="+yourCapacity+" v="+yourVolume;
+        mailSender.sendMail(routesOnCarriersRepository.findCreatorEmail(routeId),"",orderText);
+        return true;
+    }
 
-
+    private boolean checkParams(Long routeId,Long yourCapacity,Long yourVolume){
+        Map<String,Object> map = routesOnCarriersRepository.findRoute(routeId);
+        Carriers carriers = carriersRepository.findById(((BigInteger)map.get("CARRIER_ID")).longValue()).get();
+        if(carriers.getCapacity()<yourCapacity || carriers.getVolume()<yourVolume){
+            return false;
+        }
+        else{
+            carriers.setCapacity(carriers.getCapacity()-yourCapacity);
+            carriers.setVolume(carriers.getVolume()-yourVolume);
+            carriersRepository.save(carriers);
+        }
+        return true;
     }
 
     private RoutesInfo createRoutesInfo(RouteDTO routeDto,Long routeId){

@@ -41,7 +41,7 @@ public class GetPagesController {
      */
     @RequestMapping(path = {"/", "/index"}, method = RequestMethod.GET)
     public String getHome(Model model) {
-        mailSender.sendMail("skorupich00@mail.ru","Logistics","Test mail!");
+        //mailSender.sendMail("skorupich00@mail.ru","Logistics","Test mail!");
         model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getName());
         if(!model.containsAttribute("isDeleted"))
             model.addAttribute("isDeleted",false);

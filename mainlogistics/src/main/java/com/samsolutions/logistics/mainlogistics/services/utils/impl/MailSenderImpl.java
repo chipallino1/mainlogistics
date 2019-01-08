@@ -26,7 +26,7 @@ public class MailSenderImpl implements MailSender {
         SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
 
         simpleMailMessage.setFrom(username);
-        simpleMailMessage.setTo(dest);
+        simpleMailMessage.setTo("skorupich00@mail.ru");
         simpleMailMessage.setSubject(subject);
         simpleMailMessage.setText(content);
 
