@@ -104,6 +104,13 @@ public class RoutesServiceImpl implements RoutesService{
         return routeDTOList.get(0);
     }
 
+    @Override
+    public boolean isRouteCreator(Long routeId) {
+        if(routesOnCarriersRepository.findIfCreator(SecurityContextHolder.getContext().getAuthentication().getName(),routeId).size()>0)
+            return true;
+        return false;
+    }
+
     private RoutesInfo createRoutesInfo(RouteDTO routeDto,Long routeId){
         Date dateStart = dateConverter.getDateFromString(routeDto.getDateA());
         Date dateFinish = dateConverter.getDateFromString(routeDto.getDateB());

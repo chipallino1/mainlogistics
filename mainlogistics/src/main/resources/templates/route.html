@@ -72,7 +72,8 @@
   <h4 class="card-title mt-2">Route</h4>
 </header>
 <article class="card-body">
-<form th:action="@{/profile/contact/update}" method="post" th:object="${routeDTO}" id="contactForm">
+<form th:object="${routeDTO}" id="routeForm" method="post">
+    <input type="hidden" name="routeId" th:field="*{routeId}">
      <div class="container">
          <div class="form-row">
     <div class="col form-group">
@@ -139,7 +140,8 @@
              <input type="text" class="form-control"  disabled="disabled"  th:field="*{cost}">
          </div> <!-- form-group end.// -->
     <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block" id="submitFormContact"> Save  </button>
+        <button type="button" th:if="${isCreator}" class="btn btn-primary btn-block" id="submitDeletionForm" onclick="deleteRoute()"> Delete  </button>
+        <button type="button" class="btn btn-primary btn-block" id="submitOrderForm"> Make order  </button>
     </div> <!-- form-group// -->      
 
     </div>                                 
@@ -185,8 +187,6 @@
      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZdKOB5yggOzmMtpExsaUdXR1xYXDn__c"></script>
     <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
      <script th:src="@{/js/searchmaker.js}"></script>
-     <script th:if="${role}==1 OR ${role}==2">getContacts(null,firmNameFirm.value,"ADDED","resultCol","resultCont","pagesNumADDED",0,5);</script>
-     <script th:if="${role}==1 OR ${role}==2">getContacts(null,firmNameFirm.value,"WAIT","resultColQueue","resultContQueue","pagesNumWAIT",0,5);</script>
 
     <script th:src="@{/js/authentication.js}"></script>
 
@@ -194,20 +194,7 @@
     <script th:src="@{/js/enter.js}"></script>
     <script th:src="@{/js/autocomplete.js}"></script>
      <script th:inline="javascript">whenRegistred([[${isRegistred}]]);</script>
-     <script th:inline="javascript">
-         if([[${contactDTO}]].email==null) {
-         updateFirm.style.display = "";
-         contactList.style.display = "";
-
-         if(document.getElementById('contactQueue')!=null)
-            contactQueue.style.display="";
-         updateContact.style.display = "none";
-     }
-         console.log( updateContact.style.display);
-     </script>
   <script th:src="@{/js/myprofile.js}"></script>
-     <script th:if="${role}==3">getUserRoutes("/routes/readAll?email=me&orderBy=DateStart&isDesc=true",getRoutesResult);</script>
-     <script th:inline="javascript">autocomplete(document.getElementById("myInput"),[[${contacts}]],'/contacts/' );</script>
   
   
   </body>

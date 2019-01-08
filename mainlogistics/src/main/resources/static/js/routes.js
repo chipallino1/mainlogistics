@@ -36,3 +36,11 @@ lengthRoute.onfocus=function () {
         //getCoordinates('https://maps.googleapis.com/maps/api/geocode/json?address='+cityTo.value+','+regionTo.value+','+countryTo.value+'&key=AIzaSyBZdKOB5yggOzmMtpExsaUdXR1xYXDn__c');
 	}
 }
+
+function deleteRoute() {
+    
+}
+
+function makeOrderRoute() {
+    
+}

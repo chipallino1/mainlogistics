@@ -65,6 +65,7 @@ public class GetPagesController {
     @RequestMapping(path = "/routes/read",method = RequestMethod.GET)
     public String getRoutePage(@RequestParam("routeId") Long routeId,Model model){
         model.addAttribute("routeDTO",routesService.getRouteById(routeId));
+        model.addAttribute("isCreator",routesService.isRouteCreator(routeId));
         return "route";
     }
 }
