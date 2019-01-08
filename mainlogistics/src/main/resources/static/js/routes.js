@@ -38,7 +38,8 @@ lengthRoute.onfocus=function () {
 }
 
 function deleteRoute() {
-    
+    routeForm.action="/routes/delete";
+    routeForm.submit();
 }
 
 function makeOrderRoute() {

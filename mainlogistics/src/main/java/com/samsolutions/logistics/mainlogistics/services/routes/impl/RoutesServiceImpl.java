@@ -111,6 +111,13 @@ public class RoutesServiceImpl implements RoutesService{
         return false;
     }
 
+    @Override
+    public void deleteRoute(Long routeId) {
+        Optional<RoutesOnCarriers> routesOnCarriers = routesOnCarriersRepository.findById(routeId);
+        if(routesOnCarriers.isPresent())
+            routesOnCarriersRepository.delete(routesOnCarriers.get());
+    }
+
     private RoutesInfo createRoutesInfo(RouteDTO routeDto,Long routeId){
         Date dateStart = dateConverter.getDateFromString(routeDto.getDateA());
         Date dateFinish = dateConverter.getDateFromString(routeDto.getDateB());

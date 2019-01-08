@@ -73,7 +73,8 @@
 </header>
 <article class="card-body">
 <form th:object="${routeDTO}" id="routeForm" method="post">
-    <input type="hidden" name="routeId" th:field="*{routeId}">
+    <input type="text" name="routeId" th:field="*{routeId}">
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
      <div class="container">
          <div class="form-row">
     <div class="col form-group">
