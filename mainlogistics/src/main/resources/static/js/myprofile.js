@@ -267,7 +267,7 @@ function addRouteToResultCont(routeId,pointFrom,pointTo,dateStart,dateFinish,cos
 
     let tr=document.createElement('tr');
     tr.setAttribute("routeId",routeId);
-    tr.addEventListener('click',openRoutePage,tr);
+    tr.addEventListener('click',openRoutePage);
     tr.appendChild(td1);
     tr.appendChild(td3);
     tr.appendChild(td5);
@@ -275,9 +275,9 @@ function addRouteToResultCont(routeId,pointFrom,pointTo,dateStart,dateFinish,cos
     let resultsCont=document.getElementById('routesResultCont');
     resultsCont.appendChild(tr);
 }
-function openRoutePage(e,tr) {
+function openRoutePage(e) {
     console.log(e);
-    console.log(tr);
+    console.log(e.target.tagName);
     let xhr = new XMLHttpRequest();
     xhr.open("GET", "/routes/read?routeId="+e.target.getAttribute("routeId"), true);
     let csrfToken = $("meta[name='_csrf']").attr("content");
