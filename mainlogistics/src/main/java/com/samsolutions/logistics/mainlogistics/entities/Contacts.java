@@ -26,6 +26,7 @@ public class Contacts {
     private Firms firmsByFirmId;
     private Passwords passwordsByPasswordsId;
     private Collection<Routes> contactsById;
+    private Collection<Orders> ordersById;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -184,5 +185,14 @@ public class Contacts {
 
     public void setContactsById(Collection<Routes> contactsById) {
         this.contactsById = contactsById;
+    }
+
+    @OneToMany(mappedBy = "contactsByConsumerContactId")
+    public Collection<Orders> getOrdersById() {
+        return ordersById;
+    }
+
+    public void setOrdersById(Collection<Orders> ordersById) {
+        this.ordersById = ordersById;
     }
 }

@@ -164,7 +164,7 @@ public class Firms {
         this.ordersById = ordersById;
     }
 
-    @OneToMany(mappedBy = "firmsByConsumerId")
+    @OneToMany(mappedBy = "firmsByConsumerFirmId")
     public Collection<Orders> getOrdersById_0() {
         return ordersById_0;
     }

@@ -18,7 +18,6 @@ public class Routes {
     private Points pointsByPointToId;
     private Long contactsId;
     private Contacts contactsByContactsId;
-    private Collection<Orders> ordersById;
     private Collection<RoutesInfo> routesInfosById;
     private Collection<RoutesOnCarriers> routesOnCarriersByRoutesId;
 
@@ -76,15 +75,6 @@ public class Routes {
     @Override
     public int hashCode() {
         return Objects.hash(id, pointFromId, pointToId);
-    }
-
-    @OneToMany(mappedBy = "routesByRouteId")
-    public Collection<Orders> getOrdersById() {
-        return ordersById;
-    }
-
-    public void setOrdersById(Collection<Orders> ordersById) {
-        this.ordersById = ordersById;
     }
 
     @OneToMany(mappedBy = "routesByRouteId")

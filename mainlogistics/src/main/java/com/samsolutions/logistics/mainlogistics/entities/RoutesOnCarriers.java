@@ -12,6 +12,7 @@ public class RoutesOnCarriers {
     private Long carriersId;
     private Routes routesByRoutesId;
     private Carriers carriersByCarriersId;
+    private Collection<Orders> ordersById;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,5 +63,14 @@ public class RoutesOnCarriers {
 
     public void setCarriersByCarriersId(Carriers carriersByCarriersId) {
         this.carriersByCarriersId = carriersByCarriersId;
+    }
+
+    @OneToMany(mappedBy = "routesOnCarriersByRoutesOnCarriersId")
+    public Collection<Orders> getOrdersById() {
+        return ordersById;
+    }
+
+    public void setOrdersById(Collection<Orders> ordersById) {
+        this.ordersById = ordersById;
     }
 }

@@ -8,7 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -17,14 +17,15 @@ import java.util.Objects;
 @Entity
 public class Orders {
     private Long id;
-    private Long routeId;
+    private Long routesOnCarriersId;
     private Date orderDate;
-    private Date paymentDay;
     private Long producerId;
-    private Long consumerId;
-    private Routes routesByRouteId;
+    private Long consumerFirmId;
+    private Long consumerContactId;
+    private RoutesOnCarriers routesOnCarriersByRoutesOnCarriersId;
     private Firms firmsByProducerId;
-    private Firms firmsByConsumerId;
+    private Firms firmsByConsumerFirmId;
+    private Contacts contactsByConsumerContactId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,13 +39,13 @@ public class Orders {
     }
 
     @Basic
-    @Column(name = "route_id", nullable = false)
-    public Long getRouteId() {
-        return routeId;
+    @Column(name = "routes_on_carriers_id", nullable = false)
+    public Long getRoutesOnCarriersId() {
+        return routesOnCarriersId;
     }
 
-    public void setRouteId(Long routeId) {
-        this.routeId = routeId;
+    public void setRoutesOnCarriersId(Long routesOnCarriersId) {
+        this.routesOnCarriersId = routesOnCarriersId;
     }
 
     @Basic
@@ -58,16 +59,6 @@ public class Orders {
     }
 
     @Basic
-    @Column(name = "payment_day", nullable = false)
-    public Date getPaymentDay() {
-        return paymentDay;
-    }
-
-    public void setPaymentDay(Date paymentDay) {
-        this.paymentDay = paymentDay;
-    }
-
-    @Basic
     @Column(name = "producer_id", nullable = false)
     public Long getProducerId() {
         return producerId;
@@ -78,13 +69,23 @@ public class Orders {
     }
 
     @Basic
-    @Column(name = "consumer_id", nullable = false)
-    public Long getConsumerId() {
-        return consumerId;
+    @Column(name = "consumer_firm_id", nullable = false)
+    public Long getConsumerFirmId() {
+        return consumerFirmId;
     }
 
-    public void setConsumerId(Long consumerId) {
-        this.consumerId = consumerId;
+    public void setConsumerFirmId(Long consumerFirmId) {
+        this.consumerFirmId = consumerFirmId;
+    }
+
+    @Basic
+    @Column(name = "consumer_contact_id", nullable = false)
+    public Long getConsumerContactId() {
+        return consumerContactId;
+    }
+
+    public void setConsumerContactId(Long consumerContactId) {
+        this.consumerContactId = consumerContactId;
     }
 
     @Override
@@ -93,27 +94,24 @@ public class Orders {
         if (o == null || getClass() != o.getClass()) return false;
         Orders orders = (Orders) o;
         return Objects.equals(id, orders.id) &&
-                Objects.equals(routeId, orders.routeId) &&
                 Objects.equals(orderDate, orders.orderDate) &&
-                Objects.equals(paymentDay, orders.paymentDay) &&
-                Objects.equals(producerId, orders.producerId) &&
-                Objects.equals(consumerId, orders.consumerId);
+                Objects.equals(producerId, orders.producerId);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, routeId, orderDate, paymentDay, producerId, consumerId);
+        return Objects.hash(id, orderDate, producerId);
     }
 
     @ManyToOne
-    @JoinColumn(name = "route_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    public Routes getRoutesByRouteId() {
-        return routesByRouteId;
+    @JoinColumn(name = "routes_on_carriers_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public RoutesOnCarriers getRoutesOnCarriersByRoutesOnCarriersId() {
+        return routesOnCarriersByRoutesOnCarriersId;
     }
 
-    public void setRoutesByRouteId(Routes routesByRouteId) {
-        this.routesByRouteId = routesByRouteId;
+    public void setRoutesOnCarriersByRoutesOnCarriersId(RoutesOnCarriers routesOnCarriersByRoutesOnCarriersId) {
+        this.routesOnCarriersByRoutesOnCarriersId = routesOnCarriersByRoutesOnCarriersId;
     }
 
     @ManyToOne
@@ -127,12 +125,22 @@ public class Orders {
     }
 
     @ManyToOne
-    @JoinColumn(name = "consumer_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    public Firms getFirmsByConsumerId() {
-        return firmsByConsumerId;
+    @JoinColumn(name = "consumer_firm_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public Firms getFirmsByConsumerFirmId() {
+        return firmsByConsumerFirmId;
     }
 
-    public void setFirmsByConsumerId(Firms firmsByConsumerId) {
-        this.firmsByConsumerId = firmsByConsumerId;
+    public void setFirmsByConsumerFirmId(Firms firmsByConsumerFirmId) {
+        this.firmsByConsumerFirmId = firmsByConsumerFirmId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "consumer_contact_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public Contacts getContactsByConsumerContactId() {
+        return contactsByConsumerContactId;
+    }
+
+    public void setContactsByConsumerContactId(Contacts contactsByConsumerContactId) {
+        this.contactsByConsumerContactId = contactsByConsumerContactId;
     }
 }
