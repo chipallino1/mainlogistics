@@ -89,6 +89,10 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.google.code.geocoder-java</groupId>
 			<artifactId>geocoder-java</artifactId>
 			<version>0.15</version>
