@@ -26,16 +26,16 @@
         <div class="navbar-collapse collapse" id="navbarCollapse" style="">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/}">Home </a>
+                    <a class="nav-link" th:href="@{/}" th:text="#{index.home}"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/search}">Search</a>
+                    <a class="nav-link" th:href="@{/search}" th:text="#{index.search}"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/contacts}">Contacts</a>
+                    <a class="nav-link" th:href="@{/contacts}" th:text="#{index.contacts}"></a>
                 </li>
                 <li class="nav-item" sec:authorize="!isAuthenticated()">
-                    <a class="nav-link" th:href="@{/auth}">Login|Register</a>
+                    <a class="nav-link" th:href="@{/auth}" th:text="#{index.auth}"></a>
                 </li>
                 <li class="nav-item active" sec:authorize="isAuthenticated() && (hasRole('ROLE_CONTACT_USER') || hasRole('ROLE_CONTACT_LOGISTICS_FIRM_USER') || hasRole('ROLE_CONTACT_SIMPLE_FIRM_USER'))">
                     <a  class="nav-link" id="profilePageContact" th:href="@{/profile/contact/me}" sec:authentication="name">Name of user page<span class="sr-only">(current)</span></a>
@@ -45,7 +45,7 @@
                 </li>
             </ul>
             <form class="form-inline mt-2 mt-md-0" th:action="@{/logout}" th:method="post" sec:authorize="isAuthenticated()">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" th:text="#{index.logout}"></button>
             </form>
         </div>
       </nav>
@@ -77,23 +77,23 @@
 
          <div class="form-row">
     <div class="col form-group">
-      <label>First name </label>
+      <label th:text="#{myprofile.firstname}"> </label>
         <small class="text-danger" th:if="${#fields.hasErrors('firstName')}" > Empty or too small</small>
         <input type="text" class="form-control" placeholder="first name" id="firstNameContact" disabled="disabled" th:field="*{firstName}">
     </div> <!-- form-group end.// -->
     <div class="col form-group">
-      <label>Last name</label>
+      <label th:text="#{myprofile.lastname}"></label>
         <small class="text-danger" th:if="${#fields.hasErrors('lastName')}" > Empty or too small</small>
         <input type="text" class="form-control" placeholder="last name" id="lastNameContact" disabled="disabled" th:field="*{lastName}">
     </div> <!-- form-group end.// -->
   </div> <!-- form-row end.// -->
   <div class="form-group">
-    <label>Email address</label>
+    <label th:text="#{myprofile.email}"></label>
       <small class="text-danger" th:if="${#fields.hasErrors('email')}" > It's not valid email</small>
     <input type="email" class="form-control" placeholder="email address" id="emailContact" disabled="disabled" th:field="*{email}">
   </div> <!-- form-group end.// -->
   <div class="form-group">
-    <label>Phone Num.</label>
+    <label th:text="#{myprofile.phonenumber}"></label>
       <small class="text-danger" th:if="${#fields.hasErrors('phoneNum')}" > It's not valid num</small>
     <input type="number" class="form-control" placeholder="phone number" id="phoneNumContact" disabled="disabled" th:field="*{phoneNum}">
   </div> <!-- form-group end.// -->
@@ -102,12 +102,12 @@
              <input type="file" class="form-control" placeholder="file" id="contactImage" disabled="disabled" name="file" th:field="*{image}" accept="image/*">
          </div> <!-- form-group end.// -->
   <div class="form-group" id="firms" th:if="*{firmName}!=null">
-    <label>Firm</label>
+    <label th:text="#{myprofile.firmname}"></label>
      <input class="form-control" type="text" name="myCountry" placeholder="Country" id="firmNameContact" disabled="disabled" th:field="*{firmName}">
   </div>
     <div class="form-group" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}">
-        <button type="button" class="btn btn-primary btn-block" onclick="makeEnabled()"> Update  </button>
-        <button type="submit" class="btn btn-primary btn-block" id="submitFormContact"> Save  </button>
+        <button type="button" class="btn btn-primary btn-block" onclick="makeEnabled()" th:text="#{myprofile.update}">  </button>
+        <button type="submit" class="btn btn-primary btn-block" id="submitFormContact" th:text="#{myprofile.save}"> </button>
     </div> <!-- form-group// -->      
 
     </div>                                 
@@ -130,18 +130,18 @@
     </div>
   <div class="form-row">
     <div class="col form-group">
-      <label>Firm name</label>
+      <label th:text="#{myprofile.firmname}"></label>
         <small class="text-danger" th:if="${#fields.hasErrors('firmName')}"  > Empty or too small</small>
         <input type="text" class="form-control" placeholder="firm name" id="firmNameFirm" disabled="disabled" th:field="*{firmName}">
     </div> <!-- form-group end.// -->
   </div> <!-- form-row end.// -->
   <div class="form-group">
-    <label>Email address</label>
+    <label th:text="#{myprofile.email}"></label>
       <small class="text-danger" th:if="${#fields.hasErrors('email')}" > It's not valid email</small>
     <input type="email" class="form-control" placeholder="email address" id="emailFirm" disabled="disabled" th:field="*{email}">
   </div> <!-- form-group end.// -->
   <div class="form-group">
-    <label>Description</label>
+    <label th:text="#{myprofile.desc}"></label>
     <input type="text" class="form-control" placeholder="description" id="descriptionFirm" disabled="disabled" th:field="*{description}">
   </div> <!-- form-group end.// -->
     <div class="form-group">
@@ -150,8 +150,8 @@
 </div> <!-- form-group end.// -->
 
     <div class="form-group" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}">
-        <button type="button" class="btn btn-primary btn-block" onclick="makeFirmEnabled()" > Update  </button>
-        <button type="submit" class="btn btn-primary btn-block" id="submitFormFirm"> Save  </button>
+        <button type="button" class="btn btn-primary btn-block" onclick="makeFirmEnabled()" th:text="#{myprofile.update}">   </button>
+        <button type="submit" class="btn btn-primary btn-block" id="submitFormFirm" th:text="#{myprofile.save}">   </button>
     </div> <!-- form-group// -->
     </div>  
     </form>
@@ -171,22 +171,21 @@
                         <!-- BEGIN RESULT -->
                         <div class="col" id="resultColQueue">
 
-                            <h2><i class="fa fa-file-o"></i> Contacts wait list</h2>
+                            <h2 th:text="#{myprofile.contactwaitlist}"><i class="fa fa-file-o"></i></h2>
                             <hr>
 
-                            <p>They wait for your decision.</p>
                             <div class="container">
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="checkTimeQueue" sortType="modifiedTime" onclick='if(this.checked) {checkLastQueue.checked=false;checkFirstQueue.checked=false;orderBy="ModifiedTime";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue","pageNumsWAIT",0,5)}'>
-                                    <label class="form-check-label" id="checkTimeQueueLb" for="checkTimeQueue">Sort by modified time</label>
+                                    <label class="form-check-label" id="checkTimeQueueLb" for="checkTimeQueue" th:text="#{myprofile.sortbymodtime}"></label>
                                 </div>
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="checkFirstQueue" sortType="firstName" onclick='if(this.checked){checkTimeQueue.checked=false;checkLastQueue.checked=false;orderBy="FirstName";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue","pageNumsWAIT",0,5)}'>
-                                    <label class="form-check-label" id="checkFirstQueueLb" for="checkFirstQueue">Sort by first name</label>
+                                    <label class="form-check-label" id="checkFirstQueueLb" for="checkFirstQueue" th:text="#{myprofile.sortbyfname}"></label>
                                 </div>
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="checkLastQueue" sortType="lastName" onclick='if(this.checked){checkTimeQueue.checked=false;checkFirstQueue.checked=false;orderBy="LastName";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"WAIT","resultColQueue","resultContQueue","pageNumsWAIT",0,5)}'>
-                                    <label class="form-check-label" id="checkLastQueueLb" for="checkLastQueue">Sort by last name</label>
+                                    <label class="form-check-label" id="checkLastQueueLb" for="checkLastQueue" th:text="#{myprofile.sortbylname}"></label>
                                 </div>
                             </div>
 
@@ -194,11 +193,11 @@
                             <div class="container">
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="descQueue" onclick='if(this.checked){isDesc=true;ascQueue.checked=false;checkTimeQueue.checked=false;checkFirstQueue.checked=false;checkLastQueue.checked=false;}'>
-                                    <label class="form-check-label"  for="descQueue">Desc</label>
+                                    <label class="form-check-label"  for="descQueue" th:text="#{myprofile.desc}"></label>
                                 </div>
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="ascQueue" onclick='if(this.checked){isDesc=false;descQueue.checked=false;checkTimeQueue.checked=false;checkFirstQueue.checked=false;checkLastQueue.checked=false;}'>
-                                    <label class="form-check-label"  for="ascQueue">Asc</label>
+                                    <label class="form-check-label"  for="ascQueue" th:text="#{myprofile.asc}"></label>
                                 </div>
                             </div>
                             <div class="padding"></div>
@@ -226,24 +225,22 @@
                                 <!-- BEGIN RESULT -->
                                 <div class="col" id="resultCol">
 
-                                    <h2><i class="fa fa-file-o"></i>Contacts list</h2>
+                                    <h2 th:text="#{myprofile.contactlist}"><i class="fa fa-file-o"></i></h2>
                                     <hr>
-
-                                    <p>Here you can see all contacts.</p>
 
                                     <div class="padding"></div>
                                     <div class="container">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="checkTime" sortType="modifiedTime" onclick='if(this.checked) {checkLast.checked=false;checkFirst.checked=false;orderBy="ModifiedTime";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"ADDED","resultCol","resultCont","pageNumsADDED",0,5)}'>
-                                            <label class="form-check-label" id="checkTimeLb" for="checkTime">Sort by modified time</label>
+                                            <label class="form-check-label" id="checkTimeLb" for="checkTime" th:text="#{myprofile.sortbymodtime}"></label>
                                         </div>
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="checkFirst" sortType="firstName" onclick='if(this.checked){checkTime.checked=false;checkLast.checked=false;orderBy="FirstName";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"ADDED","resultCol","resultCont","pageNumsADDED",0,5)}'>
-                                            <label class="form-check-label" id="checkFirstLb" for="checkFirst">Sort by first name</label>
+                                            <label class="form-check-label" id="checkFirstLb" for="checkFirst" th:text="#{myprofile.sortbyfname}"></label>
                                         </div>
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="checkLast" sortType="lastName" onclick='if(this.checked){checkTime.checked=false;checkFirst.checked=false;orderBy="LastName";getContacts({orderBy:orderBy,desc:isDesc},firmNameFirm.value,"ADDED","resultCol","resultCont","pageNumsADDED",0,5)}'>
-                                            <label class="form-check-label" id="checkLastLb" for="checkLast">Sort by last name</label>
+                                            <label class="form-check-label" id="checkLastLb" for="checkLast" th:text="#{myprofile.sortbylname}"></label>
                                         </div>
                                     </div>
 
@@ -251,11 +248,11 @@
                                     <div class="container">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="desc" onclick='if(this.checked){isDesc=true;asc.checked=false;checkTime.checked=false;checkFirst.checked=false;checkLast.checked=false;}'>
-                                            <label class="form-check-label"  for="desc">Desc</label>
+                                            <label class="form-check-label"  for="desc" th:text="#{myprofile.desc}"></label>
                                         </div>
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="asc" onclick='if(this.checked){isDesc=false;desc.checked=false;checkTime.checked=false;checkFirst.checked=false;checkLast.checked=false;}'>
-                                            <label class="form-check-label"  for="asc">Asc</label>
+                                            <label class="form-check-label"  for="asc" th:text="#{myprofile.asc}"></label>
                                         </div>
                                     </div>
                                     <div class="padding"></div>
@@ -274,78 +271,78 @@
 
             <div class="card">
                 <header class="card-header">
-                    <h4 class="card-title mt-2" >Create route</h4>
+                    <h4 class="card-title mt-2" th:text="#{myprofile.createroute}"></h4>
                 </header>
                 <article class="card-body">
                     <form id="routeForm" th:object="${routeDTO}" th:action="@{/routes/create}" method="post">
                         <div class="container">
                             <div class="form-row">
                                 <div class="col form-group">
-                                    <label>From </label>
-                                    <input type="text" class="form-control" placeholder="country" id="countryFrom" th:field="*{countryFrom}">
+                                    <label th:text="#{myprofile.from}"> </label>
+                                    <input type="text" class="form-control" th:placeholder="#{myprofile.country}" id="countryFrom" th:field="*{countryFrom}">
                                 </div> <!-- form-group end.// -->
                                 <div class="col form-group">
-                                    <label>Point</label>
-                                    <input type="text" class="form-control" placeholder="region" id="regionFrom" th:field="*{regionFrom}">
-                                </div> <!-- form-group end.// -->
-                            </div> <!-- form-row end.// -->
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="city" id="cityFrom" th:field="*{cityFrom}">
-                            </div> <!-- form-group end.// -->
-                            <div class="form-row">
-                                <div class="col form-group">
-                                    <label>To </label>
-                                    <input type="text" class="form-control" placeholder="country" id="countryTo" th:field="*{countryTo}">
-                                </div> <!-- form-group end.// -->
-                                <div class="col form-group">
-                                    <label>Point</label>
-                                    <input type="text" class="form-control" placeholder="region" id="regionTo" th:field="*{regionTo}">
+                                    <label th:text="#{myprofile.point}"></label>
+                                    <input type="text" class="form-control" th:placeholder="#{myprofile.region}" id="regionFrom" th:field="*{regionFrom}">
                                 </div> <!-- form-group end.// -->
                             </div> <!-- form-row end.// -->
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="city" id="cityTo" th:field="*{cityTo}">
-                            </div> <!-- form-group end.// -->
-                            <div class="form-group">
-                                <label>Carrier name</label>
-                                <input type="text" class="form-control" placeholder="car name" id="carrierName" th:field="*{carrierName}">
-                            </div> <!-- form-group end.// -->
-                            <div class="form-group">
-                                <label>Car name</label>
-                                <input type="text" class="form-control" placeholder="car name" id="carName" th:field="*{carName}">
+                                <input type="text" class="form-control" th:placeholder="#{myprofile.city}" id="cityFrom" th:field="*{cityFrom}">
                             </div> <!-- form-group end.// -->
                             <div class="form-row">
                                 <div class="col form-group">
-                                    <label>Start date and time</label>
+                                    <label th:text="#{myprofile.to}"></label>
+                                    <input type="text" class="form-control" th:placeholder="#{myprofile.country}" id="countryTo" th:field="*{countryTo}">
+                                </div> <!-- form-group end.// -->
+                                <div class="col form-group">
+                                    <label th:text="#{myprofile.point}"></label>
+                                    <input type="text" class="form-control" th:placeholder="#{myprofile.region}" id="regionTo" th:field="*{regionTo}">
+                                </div> <!-- form-group end.// -->
+                            </div> <!-- form-row end.// -->
+                            <div class="form-group">
+                                <input type="text" class="form-control" th:placeholder="#{myprofile.city}" id="cityTo" th:field="*{cityTo}">
+                            </div> <!-- form-group end.// -->
+                            <div class="form-group">
+                                <label th:text="#{myprofile.carriername}"></label>
+                                <input type="text" class="form-control" th:placeholder="#{myprofile.carriername}" id="carrierName" th:field="*{carrierName}">
+                            </div> <!-- form-group end.// -->
+                            <div class="form-group">
+                                <label th:text="#{myprofile.carname}"></label>
+                                <input type="text" class="form-control" th:placeholder="#{myprofile.carname}" id="carName" th:field="*{carName}">
+                            </div> <!-- form-group end.// -->
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label th:text="#{myprofile.dateA}"></label>
                                     <input type="text" th:field="*{dateA}" pattern="^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))\s[0-23]{1,2}:[0-59]{1,2}$" title="Date or time have errors" placeholder="yyyy-mm-dd hh:mm" class="form-control" id="startDateTime">
                                 </div> <!-- form-group end.// -->
                                 <div class="col form-group">
-                                    <label>Finish date and time</label>
+                                    <label th:text="#{myprofile.dateB}"></label>
                                     <input type="text" th:field="*{dateB}" pattern="^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))\s[0-23]{1,2}:[0-59]{1,2}$" title="Date or time have errors" placeholder="yyyy-mm-dd hh:mm" class="form-control" id="finishDateTime">
                                 </div> <!-- form-group end.// -->
                             </div> <!-- form-row end.// -->
                             <div class="form-group">
 
-                                <label>Volume, m3</label>
-                                <input type="text" class="form-control" placeholder="volume" value="0" id="volume" th:field="*{volume}">
+                                <label th:text="#{myprofile.volume}"></label>
+                                <input type="text" class="form-control" th:placeholder="#{myprofile.volume}" value="0" id="volume" th:field="*{volume}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group">
-                                <label>Capacity, tons</label>
-                                <input type="text" class="form-control" placeholder="capacity" id="capacity" value="0" th:field="*{capacity}">
+                                <label th:text="#{myprofile.capacity}"></label>
+                                <input type="text" class="form-control" th:placeholder="#{myprofile.capacity}" id="capacity" value="0" th:field="*{capacity}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group">
-                                <label id="labelLength">Length </label>
-                                <input type="text" class="form-control" placeholder="length" id="lengthRoute" value="0" th:field="*{length}">
+                                <label id="labelLength" th:text="#{myprofile.length}"> </label>
+                                <input type="text" class="form-control" th:placeholder="#{myprofile.length}" id="lengthRoute" value="0" th:field="*{length}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group">
-                                <label id="labelDuration">Duration </label>
-                                <input type="text" class="form-control" placeholder="duration" id="durationRoute" value="0" th:field="*{duration}">
+                                <label id="labelDuration" th:text="#{myprofile.duration}"> </label>
+                                <input type="text" class="form-control" th:placeholder="#{myprofile.duration}" id="durationRoute" value="0" th:field="*{duration}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group">
-                                <label>Cost</label>
-                                <input type="text" class="form-control" placeholder="cost" id="cost" value="0" th:field="*{cost}">
+                                <label th:text="#{myprofile.cost}"></label>
+                                <input type="text" class="form-control" th:placeholder="#{myprofile.cost}" id="cost" value="0" th:field="*{cost}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}">
-                                <button  sec:authorize="!(isAuthenticated() && hasRole('ROLE_FIRM_USER'))" type="button" class="btn btn-primary btn-block" onclick="createRouteSubmit()"> Create route </button>
+                                <button  sec:authorize="!(isAuthenticated() && hasRole('ROLE_FIRM_USER'))" type="button" class="btn btn-primary btn-block" onclick="createRouteSubmit()" th:text="#{myprofile.createroute}"> </button>
                             </div> <!-- form-group// -->
 
                         </div>
@@ -367,10 +364,7 @@
                               <!-- BEGIN RESULT -->
                               <div class="col" id="resultRouteCol">
 
-                                  <h2><i class="fa fa-file-o"></i> Routes list</h2>
-                                  <hr>
-
-                                  <p>Here you can see all routes.</p>
+                                  <h2  th:text="#{myprofile.routelist}"><i class="fa fa-file-o"></i></h2>
 
                                   <div class="padding"></div>
                                   <div class="container">
@@ -433,7 +427,7 @@
        <article class="bg-secondary">  
         <div class="card-body text-center">
         <p class="h5 text-white">Logistics</p>
-        <a class="btn btn-warning" href="#"> Back to top </a>
+        <a class="btn btn-warning" href="#" th:text="#{index.backToTop}"> </a>
          </div>
        </article>
      </footer>
