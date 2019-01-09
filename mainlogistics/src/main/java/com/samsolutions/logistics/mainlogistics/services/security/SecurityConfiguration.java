@@ -61,6 +61,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //.and()
                 .authorizeRequests()
                 .antMatchers("/profile/**").authenticated()
+                .antMatchers("/routes/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .csrf().and()

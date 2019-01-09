@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,8 +33,9 @@ public class RouteController {
     }
 
     @PostMapping("/routes/create")
-    public Boolean createRoute(@RequestBody RouteDTO routeDTO){
-
+    public Boolean createRoute(@Valid @RequestBody RouteDTO routeDTO, BindingResult bindingResult){
+        if(bindingResult.hasErrors())
+            return false;
         routesService.createRoute(routeDTO);
         return true;
     }

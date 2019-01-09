@@ -326,23 +326,23 @@
                             <div class="form-group">
 
                                 <label>Volume, m3</label>
-                                <input type="number" class="form-control" placeholder="volume" id="volume" th:field="*{volume}">
+                                <input type="text" class="form-control" placeholder="volume" value="0" id="volume" th:field="*{volume}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group">
                                 <label>Capacity, tons</label>
-                                <input type="number" class="form-control" placeholder="capacity" id="capacity" th:field="*{capacity}">
+                                <input type="text" class="form-control" placeholder="capacity" id="capacity" value="0" th:field="*{capacity}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group">
                                 <label id="labelLength">Length </label>
-                                <input type="number" class="form-control" placeholder="length" id="lengthRoute" th:field="*{length}">
+                                <input type="text" class="form-control" placeholder="length" id="lengthRoute" value="0" th:field="*{length}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group">
                                 <label id="labelDuration">Duration </label>
-                                <input type="number" class="form-control" placeholder="duration" id="durationRoute" th:field="*{duration}">
+                                <input type="text" class="form-control" placeholder="duration" id="durationRoute" value="0" th:field="*{duration}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group">
                                 <label>Cost</label>
-                                <input type="number" class="form-control" placeholder="cost" id="cost" th:field="*{cost}">
+                                <input type="text" class="form-control" placeholder="cost" id="cost" value="0" th:field="*{cost}">
                             </div> <!-- form-group end.// -->
                             <div class="form-group" th:if="${#authentication.getPrincipal().getUsername()}==${profileName}">
                                 <button  sec:authorize="!(isAuthenticated() && hasRole('ROLE_FIRM_USER'))" type="button" class="btn btn-primary btn-block" onclick="createRouteSubmit()"> Create route </button>

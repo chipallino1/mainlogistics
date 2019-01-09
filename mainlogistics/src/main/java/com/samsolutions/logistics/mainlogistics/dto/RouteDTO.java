@@ -1,5 +1,6 @@
 package com.samsolutions.logistics.mainlogistics.dto;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -39,25 +40,25 @@ public class RouteDTO implements Serializable {
     @Pattern(regexp = "^([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))T[0-23]{1,2}:[0-59]{1,2}:[0-59]{1,2}(\\+|-)\\d{4}$")
     private String dateB;
     @NotNull
-    @Size(min = 1)
+    @Min(1)
     private Long volume;
     @NotNull
-    @Size(min = 1)
+    @Min(1)
     private Long capacity;
     @NotNull
-    @Size(min = 1)
+    @Min(1)
     private Long initialVolume;
     @NotNull
-    @Size(min = 1)
+    @Min(1)
     private Long initialCapacity;
     @NotNull
-    @Size(min = 1)
+    @Min(1)
     private Long length;
     @NotNull
-    @Size(min = 1)
+    @Min(1)
     private Long duration;
     @NotNull
-    @Size(min=1)
+    @Min(1)
     private Long cost;
 
     public Long getRouteId() {

@@ -147,8 +147,10 @@ function post1(action,body,cb) {
     xhr.onreadystatechange = function() {
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
             console.log(xhr.responseText);
-            console.log('route created');
-            alert('Route created');
+            if(xhr.responseText=="true")
+                alert('Route created');
+            else
+                alert('Set valid values');
             if(cb!=null){
 
             }
