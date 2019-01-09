@@ -44,10 +44,9 @@
                     <a  class="nav-link" id="profilePageFirm" th:href="@{/profile/firm/me}" sec:authentication="name">Name of user page<span class="sr-only">(current)</span></a>
                 </li>
             </ul>
-          <form class="form-inline mt-2 mt-md-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
+            <form class="form-inline mt-2 mt-md-0" th:action="@{/logout}" th:method="post" sec:authorize="isAuthenticated()">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+            </form>
         </div>
       </nav>
     </header>
@@ -480,7 +479,7 @@
   <script th:src="@{/js/myprofile.js}"></script>
      <script th:if="${role}==3">getUserRoutes("/routes/readAll?email=me&orderBy=DateStart&isDesc=true",getRoutesResult);</script>
      <script th:inline="javascript">autocomplete(document.getElementById("myInput"),[[${contacts}]],'/contacts/' );</script>
-  
+        <script th:if="${error}">alert('Set valid values');</script>
   
   </body>
 </html>

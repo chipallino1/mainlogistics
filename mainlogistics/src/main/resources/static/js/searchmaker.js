@@ -11,7 +11,6 @@ function radioClick(curr) {
 	{			
 		getElem.appendChild(createCol('firm name','firmName'));
 		getElem.appendChild(createButton('Search',getSearchResults));
-		getElem.appendChild(createButton('Show all',getSearchResults));
 		getHelp('Firms');
 
 	}
@@ -20,7 +19,6 @@ function radioClick(curr) {
 		
 		getElem.appendChild(createCol('email','email'));
 		getElem.appendChild(createButton('Search',getSearchResults));
-		getElem.appendChild(createButton('Show all',getSearchResults));
 		getHelp('Users');
 
 	}

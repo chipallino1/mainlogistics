@@ -7,14 +7,19 @@ import com.samsolutions.logistics.mainlogistics.services.user.ContactsService;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
 import com.samsolutions.logistics.mainlogistics.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 /**
  * Profile controller for CRUD in profile page
@@ -52,6 +57,8 @@ public class ProfileController {
     public String profilePage(@PathVariable("type") String type, @PathVariable("email") String email, Model model) {
         String profileName = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("routeDTO",new RouteDTO());
+        if(!model.containsAttribute("error"))
+            model.addAttribute("error",false);
         //contact user
         if (type.equals("contact")) {
             //your profile
@@ -103,10 +110,15 @@ public class ProfileController {
      * @return redirection to profile page
      */
     @RequestMapping(path = "profile/{type}/update", method = RequestMethod.POST)
-    public String updateUser(ContactDTO contactDTO, @PathVariable("type") String userType, FirmDTO firmDTO) {
+    public String updateUser(@Valid ContactDTO contactDTO, BindingResult bindingResultContacts, @PathVariable("type") String userType,
+                             @Valid FirmDTO firmDTO, BindingResult bindingResultFirms, RedirectAttributes redirectAttributes) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         //for contact
         if (userType.equals("contact")) {
+            if(bindingResultContacts.hasErrors()){
+                redirectAttributes.addFlashAttribute("error",true);
+                return "redirect:/profile/contact/me";
+            }
             contactsService.update(email, contactDTO);
             //logout if you change email
             if (contactDTO.getEmail().equals(email))
@@ -115,6 +127,10 @@ public class ProfileController {
                 return "redirect:/auth/logout";
         }
         else {
+            if(bindingResultFirms.hasErrors()){
+                redirectAttributes.addFlashAttribute("error",true);
+                return "redirect:/profile/firm/me";
+            }
             firmsService.update(email, firmDTO);
             if (firmDTO.getEmail().equals(email))
                 return "redirect:/profile/firm/me";
