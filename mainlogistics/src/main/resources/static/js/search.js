@@ -200,7 +200,7 @@ function addSearchFirmToResultCont(email,firmName,email,description,pageNumber,c
 
     let tr=document.createElement('tr');
     tr.setAttribute("firmMail",email);
-    tr.addEventListener('click',openRoutePage);
+    tr.addEventListener('click',openFirmPage);
     tr.appendChild(td1);
     tr.appendChild(td3);
     //tr.appendChild(td5);
@@ -283,4 +283,16 @@ function getSearchFirmPage(e) {
         return;
     }
 
+}
+function openFirmPage(e) {
+    console.log(e);
+    getParentElement('TR',e.target);
+    console.log(ret.getAttribute('firmMail'));
+    let routeId=ret.getAttribute('firmMail');
+    let form=document.createElement('form');
+    form.action="/profile/firm/"+routeId;
+    form.method='GET';
+    console.log(form.action);
+    ret.appendChild(form);
+    form.submit();
 }
