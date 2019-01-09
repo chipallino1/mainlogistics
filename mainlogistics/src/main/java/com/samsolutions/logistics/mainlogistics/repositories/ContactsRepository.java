@@ -36,4 +36,6 @@ public interface ContactsRepository extends JpaRepository<Contacts, Long> {
     Page<Contacts> findAllByContactStateAndFirmIdOrderByModifiedTimeAsc(ContactState contactState, Long firmId, Pageable pageable);
 
     Page<Contacts> findAllByContactStateAndFirmIdOrderByModifiedTimeDesc(ContactState contactState, Long firmId, Pageable pageable);
+
+    Page<Contacts> findAllByEmail(String email,Pageable pageable);
 }
