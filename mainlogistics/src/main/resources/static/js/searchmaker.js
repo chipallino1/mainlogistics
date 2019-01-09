@@ -9,36 +9,32 @@ function radioClick(curr) {
 		deleteLastNode('allCont');
 	if(curr.id=='defaultInline1')
 	{			
-		getElem.appendChild(createCol('name'));
-		getElem.appendChild(createCol('city'));
-		getElem.appendChild(createButton('Search',getResults));
-		getElem.appendChild(createButton('Show all',getResults));
+		getElem.appendChild(createCol('firm name','firmName'));
+		getElem.appendChild(createButton('Search',getSearchResults));
+		getElem.appendChild(createButton('Show all',getSearchResults));
 		getHelp('Firms');
 
 	}
 	if(curr.id=='defaultInline2')
 	{
 		
-		getElem.appendChild(createCol('username'));
-		getElem.appendChild(createCol('firstname'));
-		getElem.appendChild(createCol('lastname'));
-		getElem.appendChild(createButton('Search',getResults));
-		getElem.appendChild(createButton('Show all',getResults));
+		getElem.appendChild(createCol('email','email'));
+		getElem.appendChild(createButton('Search',getSearchResults));
+		getElem.appendChild(createButton('Show all',getSearchResults));
 		getHelp('Users');
 
 	}
 	if(curr.id=='defaultInline3')
 	{
-		getElem.appendChild(createCol('username'));
-		getElem.appendChild(createCol('firstname'));
-		getElem.appendChild(createCol('lastname'));
-		getElem.appendChild(createCol('mark'));
-		getElem.appendChild(createCol('stage'));
+		getElem.appendChild(createCol('Country from','countryFrom'));
+		getElem.appendChild(createCol('City from','cityFrom'));
+		getElem.appendChild(createCol('Country to','countryTo'));
+		getElem.appendChild(createCol('City to','cityTo'));
 
 		let div=document.createElement('div');
 		div.className='row justify-content-center';
-		div.appendChild(createButton('Search',getResults));
-		div.appendChild(createButton('Show all',getResults));		
+		div.appendChild(createButton('Search',getSearchResults));
+		//div.appendChild(createButton('Show all',getSearchResults));
 		allCont.appendChild(div);
 		getHelp('Carriers');
 		
@@ -64,17 +60,20 @@ function deleteLastNode(id) {
 	{
 		return;
 	}
-	
+	console.log(myNode.childNodes.length);
+	console.log(myNode.lastChild);
    	 myNode.removeChild(myNode.lastChild);
 	
 
 }
 
-function createCol(placeholder) {
+function createCol(placeholder,id) {
 
 	let input=document.createElement('input');
 	input.className='form-control';
 	input.placeholder=placeholder;
+	if(id!=null)
+		input.id=id;
 	let span=document.createElement('span');
 	span.className='input-group-addon my-2 mr-1';
 	span.appendChild(input);

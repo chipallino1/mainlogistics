@@ -77,4 +77,6 @@ public interface FirmsService  extends Converter,Packagable,Pagination<ContactDT
      * @return string yyyy/MM
      */
     String getCreatedAt(String email);
+
+    PageDTO<FirmDTO> getFirmsByFirmNameAndPage(String firmName,Pageable pageable);
 }

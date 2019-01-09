@@ -190,6 +190,24 @@ public class FirmsServiceImpl implements FirmsService {
     }
 
     @Override
+    public PageDTO<FirmDTO> getFirmsByFirmNameAndPage(String firmName, Pageable pageable) {
+        Page<Firms> firmsPage=firmsRepository.findAllByFirmNameLike(firmName+"%",pageable);
+        List<Firms> firmsList = firmsPage.getContent();
+        List<FirmDTO> firmDTOList = new ArrayList<>();
+        FirmDTO firmDTO;
+        for (int i = 0; i < firmsList.size(); i++) {
+                firmDTO = new FirmDTO();
+                map(firmsList.get(i), firmDTO);
+                firmDTOList.add(firmDTO);
+        }
+        PageDTO<FirmDTO> pageDTO=new PageDTO<>();
+        pageDTO.setListEntitiesDTO(firmDTOList);
+        pageDTO.setPageNumber(firmsPage.getNumber());
+        pageDTO.setPageCount(firmsPage.getTotalPages());
+        return pageDTO;
+    }
+
+    @Override
     public Page<Contacts> getOrderPage(Map<String,Object> samples, String orderBy, boolean desc,Pageable pageable,ApplicationContext applicationContext) {
         Page<Contacts> contactsPage=null;
         Set<String> stringSetKeys = samples.keySet();

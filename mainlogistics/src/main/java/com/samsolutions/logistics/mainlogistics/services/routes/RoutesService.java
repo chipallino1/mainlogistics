@@ -25,4 +25,6 @@ public interface RoutesService extends Converter,Pagination<RouteDTO,Routes>,Pac
     void deleteRoute(Long routeId);
 
     boolean makeOrder(Long routeId,Long yourCapacity,Long yourVolume);
+
+    PageDTO<RouteDTO> searchRoutesByParams(String countryFrom,String cityFrom,String countryTo,String cityTo,Pageable pageable);
 }

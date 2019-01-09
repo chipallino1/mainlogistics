@@ -159,6 +159,16 @@ public class RoutesServiceImpl implements RoutesService{
         return true;
     }
 
+    @Override
+    public PageDTO<RouteDTO> searchRoutesByParams(String countryFrom, String cityFrom, String countryTo, String cityTo,Pageable pageable) {
+        Page routesPage = routesOnCarriersRepository
+                .findAllRoutesByCountryFromAndCityFromAndCountryToAndCityToOrderByDateStartAsc(countryFrom,cityFrom,countryTo,cityTo,pageable);
+        List<Object> objectList=routesPage.getContent();
+        List<RouteDTO> routeDTOList=new ArrayList<>();
+        map(objectList,routeDTOList);
+        return getPage(routeDTOList,routesPage);
+    }
+
     private boolean checkParams(Long routeId,Long yourCapacity,Long yourVolume){
         Map<String,Object> map = routesOnCarriersRepository.findRoute(routeId);
         Carriers carriers = carriersRepository.findById(((BigInteger)map.get("CARRIER_ID")).longValue()).get();
