@@ -47,7 +47,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //.usersByUsernameQuery(usersFirmsQuery)
                 .authoritiesByUsernameQuery(rolesQuery)
                 //.authoritiesByUsernameQuery(rolesFirmsQuery)
-                .passwordEncoder(saltHash);
+                .passwordEncoder(saltHash) ;
+        ;
     }
 
     @Override

@@ -10,6 +10,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * PasswordEncoder implementation
@@ -56,6 +57,11 @@ public class SaltHashImpl implements SaltHash {
 
     @Override
     public String getSaltByHash(String hash) {
+        List list=passwordsRepository.findDistinctTop1ByPassHashLike(hash);
+        if(list.size()==0){
+            return null;
+        }
+
         return passwordsRepository.findDistinctTop1ByPassHashLike(hash).get(0).getSalt();
     }
 
@@ -70,6 +76,8 @@ public class SaltHashImpl implements SaltHash {
 
     @Override
     public byte[] getBytesFromString(String string) {
+        if(string==null)
+            return new byte[1];
         byte[] byteArr = new BigInteger(string, 16).toByteArray();
         if (byteArr[0] == 0) {
             return Arrays.copyOfRange(byteArr, 1, byteArr.length);
