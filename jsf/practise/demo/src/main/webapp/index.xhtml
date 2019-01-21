@@ -16,19 +16,21 @@
             <ui:include src="header.xhtml"/>
         </ui:insert>
         <div class="container">
-            <h:form>
-                <label for="loginId">Login:</label>
-                <h:inputText id="login" class="form-control" value="#{registrationBean.login}"/>
-                <label for="image">Choose image:</label>
-                <!--<h:inputFile  id="imageId" class="form-control"/>-->
-                <label for="password">Password:</label>
-                <h:inputSecret id="password" class="form-control" value="#{registrationBean.password}"/>
+            <h:form enctype="multipart/form-data" prependId="false">
+                <label>Login:</label>
+                <h:inputText class="form-control" value="#{registrationBean.login}"/>
+                <label>Choose image:</label>
+                <h:inputFile class="form-control" value="#{registrationBean.file}"/>
+                <label>Password:</label>
+                <h:inputSecret  class="form-control" value="#{registrationBean.password}"/>
                 <br/>
-                <h:commandButton styleClass="btn btn-primary btn-block" value="Show user info">
-                    <f:ajax execute="@form"/>
+                <h:commandButton styleClass="btn btn-primary btn-block" value="Show user info" actionListener="#{registrationBean.getData}">
+                    <f:ajax execute="@form" render="@form"/>
                 </h:commandButton>
+                <h2><h:outputText value = "#{registrationBean.login != null ? registrationBean.login : ''}"/></h2>
+                <h2><h:outputText value = "#{registrationBean.password != null ? registrationBean.password : ''}"/></h2>
             </h:form>
-            <h:outputLabel>#{springBean.user.firstName}</h:outputLabel>
+
         </div>
 
         <ui:insert name="footer">
