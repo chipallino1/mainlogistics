@@ -1,43 +1,47 @@
 package com.jpa.hibernate.demodao;
 
 
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.util.List;
 
-public abstract class AbstractJpaDAO< T extends Serializable> {
+@Transactional
+public abstract class AbstractJpaDAO<Entity>{
 
-    private Class< T > entityClass;
+    private Class<Entity> entityClass;
 
     @PersistenceContext
     EntityManager entityManager;
 
-    public final void setEntityClass( Class< T > entityClass ){
+    public final void setEntityClass( Class< Entity > entityClass ){
         this.entityClass = entityClass;
     }
 
-    public T findOne( Long id ){
+    public Entity findOne( Long id ){
         return entityManager.find( entityClass, id );
     }
-    public List< T > findAll(){
+    public List< Entity > findAll(){
         return entityManager.createQuery( "from " + entityClass.getName() )
                 .getResultList();
     }
 
-    public void create( T entity ){
+    public void create( Entity entity ){
         entityManager.persist( entity );
     }
 
-    public T update( T entity ){
+    public Entity update( Entity entity ){
         return entityManager.merge( entity );
     }
 
-    public void delete( T entity ){
+    public void delete( Entity entity ){
         entityManager.remove( entity );
     }
     public void deleteById( long entityId ){
-        T entity = findOne( entityId );
+        Entity entity = findOne( entityId );
         delete( entity );
     }
 }
