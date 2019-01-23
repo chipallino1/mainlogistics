@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.DispatcherType;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import javax.faces.webapp.FacesServlet;
@@ -13,8 +14,12 @@ import java.util.EnumSet;
 @SpringBootApplication
 public class DemoApplication {
 
+	public static ApplicationContext applicationContext;
+
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+
+		applicationContext = SpringApplication.run(DemoApplication.class, args);
+		System.out.println(applicationContext.getApplicationName());
 	}
 
 
