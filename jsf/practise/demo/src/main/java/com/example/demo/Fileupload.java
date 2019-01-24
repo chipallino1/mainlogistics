@@ -9,13 +9,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 
-import javax.annotation.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.PartialResponseWriter;
 import javax.faces.event.ValueChangeEvent;
+import javax.faces.view.ViewScoped;
 import javax.servlet.http.Part;
+
 @ManagedBean
-@SessionScope
+@ViewScoped
 public class Fileupload {
 
     private Part uploadedFile;

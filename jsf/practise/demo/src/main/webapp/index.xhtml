@@ -7,7 +7,7 @@
 
 <h:form enctype="multipart/form-data">
     <h:outputText value="File: "/>
-    <h:inputFile name="image" value="#{fileupload.uploadedFile}" valueChangeListener="#{fileupload.saveFile1}"
+    <h:inputFile name="image" value="#{fileupload.uploadedFile}"
                  id="inputGroupImage"/>
     <h:commandButton value="Save" type="submit" action="#{fileupload.saveFile}" style="color: red;"/>
 </h:form>
