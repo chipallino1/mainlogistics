@@ -24,7 +24,7 @@ public class MainLogisticsApplication {
     @Bean
     public ServletRegistrationBean<FacesServlet> servletRegistrationBean() {
         ServletRegistrationBean<FacesServlet> servletRegistrationBean = new ServletRegistrationBean<>(
-                new FacesServlet(), "*.xhtml");
+                new FacesServlet(), "*.jsf");
         servletRegistrationBean.setLoadOnStartup(1);
         Map<String,String> initParams=new HashMap<>();
         initParams.put("javax.faces.WEBAPP_RESOURCES_DIRECTORY","../resources");
