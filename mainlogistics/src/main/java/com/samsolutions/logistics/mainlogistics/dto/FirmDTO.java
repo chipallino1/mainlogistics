@@ -3,6 +3,8 @@ package com.samsolutions.logistics.mainlogistics.dto;
 import com.samsolutions.logistics.mainlogistics.validation.annotations.PasswordConfirm;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Default;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;

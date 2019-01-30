@@ -2,6 +2,7 @@ package com.samsolutions.logistics.mainlogistics.dto;
 
 import com.samsolutions.logistics.mainlogistics.services.security.ContactState;
 import com.samsolutions.logistics.mainlogistics.validation.annotations.PasswordConfirm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
@@ -18,7 +19,7 @@ public class ContactDTO implements Serializable {
 
     @NotNull
     @Size(min = 2, max = 30)
-    @Pattern(regexp = "^[a-zA-z]+$")
+    @Pattern(regexp = "^[a-zA-z]|[а-яА-я]+$")
     private String firstName;
 
     @NotNull
