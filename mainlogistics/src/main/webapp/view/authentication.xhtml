@@ -66,7 +66,7 @@
                                         </div> <!-- form-group end.// -->
                                         <div class="form-group">
                                             <label>Choose photo</label>
-                                            <h:inputFile a:accept="image/*"/>
+                                            <h:inputFile a:accept="image/*" value="#{authenticationMBeanController.contactDTO.partImage}"/>
                                         </div> <!-- form-group end.// -->
 
                                         <div class="form-group">
@@ -83,8 +83,13 @@
                                             <label>Choose firm</label>
                                             <h:form autocomplete="off">
                                                 <div class="autocomplete" style="width:150px;">
-                                                    <input id="myInput" class="form-control" type="text" name="myCountry" placeholder="firm name" />
+                                                    <h:inputText id="myInput" class="form-control" type="text" name="myCountry" a:placeholder="firm name" valueChangeListener="#{authenticationMBeanController.getFirms}">
+                                                        <f:ajax/>
+                                                    </h:inputText>
                                                 </div>
+                                                <h:selectOneMenu class="form-control">
+                                                    <f:selectItems value="#{authenticationMBeanController.list}"/>
+                                                </h:selectOneMenu>
                                             </h:form>
                                         </div>
                                         <div class="form-group">

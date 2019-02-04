@@ -5,6 +5,7 @@ import com.samsolutions.logistics.mainlogistics.validation.annotations.PasswordC
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Part;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -57,6 +58,8 @@ public class ContactDTO implements Serializable {
     private String passwordRepeat;
 
     private MultipartFile image;
+
+    private Part partImage;
 
     private String avatarPath;
 
@@ -130,6 +133,14 @@ public class ContactDTO implements Serializable {
 
     public void setImage(MultipartFile image) {
         this.image = image;
+    }
+
+    public Part getPartImage() {
+        return partImage;
+    }
+
+    public void setPartImage(Part partImage) {
+        this.partImage = partImage;
     }
 
     public String getAvatarPath() {
