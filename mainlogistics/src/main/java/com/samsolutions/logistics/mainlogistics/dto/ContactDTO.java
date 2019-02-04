@@ -19,12 +19,12 @@ public class ContactDTO implements Serializable {
 
     @NotNull
     @Size(min = 2, max = 30)
-    @Pattern(regexp = "^[a-zA-z]|[а-яА-я]+$")
+    @Pattern(regexp = "^[a-zA-Z]+$|^[а-яА-Я]+$")
     private String firstName;
 
     @NotNull
     @Size(min = 2, max = 30)
-    @Pattern(regexp = "^[a-zA-z]+$")
+    @Pattern(regexp = "^[a-zA-Z]+$|^[а-яА-Я]+$")
     private String lastName;
 
     @NotNull
