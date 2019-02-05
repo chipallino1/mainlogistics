@@ -8,6 +8,7 @@ import com.samsolutions.logistics.mainlogistics.services.signup.FirmsSignUpServi
 import com.samsolutions.logistics.mainlogistics.services.signup.SignUpType;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
 import com.samsolutions.logistics.mainlogistics.services.utils.ImageStorageJsfService;
+import com.samsolutions.logistics.mainlogistics.services.utils.JsonEncoder;
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,7 +30,7 @@ public class AuthenticationMBeanController {
 
     private FirmDTO firmDTO;
     private ContactDTO contactDTO;
-    private List<String> list;
+    private List<String> firmsNamesList;
     private String json;
 
     @Inject
@@ -40,20 +41,14 @@ public class AuthenticationMBeanController {
     private ImageStorageJsfService imageStorageJsfService;
     @Inject
     private FirmsService firmsService;
+    @Inject
+    private JsonEncoder jsonEncoder;
 
     @PostConstruct
     public void init(){
         System.out.println("Post construct");
         this.firmDTO=new FirmDTO();
         this.contactDTO=new ContactDTO();
-        this.list=new ArrayList<>();
-        this.list.add("Egor");
-        this.list.add("Vanya");
-        this.list.add("Mama");
-        this.list.add("Papa");
-        Gson gson=new Gson();
-        this.json = gson.toJson(this.list);
-
     }
 
     public void register(){
@@ -64,8 +59,8 @@ public class AuthenticationMBeanController {
     public void getFirms(AjaxBehaviorEvent event){
         System.out.println("Value changed");
         String firmName = (String)((UIInput)event.getSource()).getSubmittedValue();
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-        List<String> firmsNamesList;
+        this.firmsNamesList = firmsService.getAllFirmsNamesByName(firmName);
+        this.json=jsonEncoder.toJson(this.firmsNamesList);
     }
 
     public FirmDTO getFirmDTO() {
@@ -84,12 +79,12 @@ public class AuthenticationMBeanController {
         this.contactDTO = contactDTO;
     }
 
-    public List<String> getList() {
-        return list;
+    public List<String> getFirmsNamesList() {
+        return firmsNamesList;
     }
 
-    public void setList(List<String> list) {
-        this.list = list;
+    public void setFirmsNamesList(List<String> firmsNamesList) {
+        this.firmsNamesList = firmsNamesList;
     }
 
     public String getJson() {

@@ -26,4 +26,6 @@ public interface FirmsRepository extends JpaRepository<Firms, Long> {
     Firms findByEmail(String email);
 
     Page<Firms> findAllByFirmNameLike(String firmName, Pageable pageable);
+
+    List<Firms> findAllByFirmNameLike(String firmName);
 }
