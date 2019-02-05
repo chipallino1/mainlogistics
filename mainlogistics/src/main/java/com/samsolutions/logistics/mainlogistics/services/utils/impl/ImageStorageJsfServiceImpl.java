@@ -45,8 +45,7 @@ public class ImageStorageJsfServiceImpl implements ImageStorageJsfService {
         String fileName = StringUtils.cleanPath(((Long)System.currentTimeMillis()).toString()+part.getSubmittedFileName());
         try {
             if(part.getContentType().equals(MediaType.IMAGE_GIF_VALUE) || part.getContentType().equals(MediaType.IMAGE_JPEG_VALUE) || part.getContentType().equals(MediaType.IMAGE_PNG_VALUE)) {
-                Path targetLocation = Paths.get(this.fileStorageLocation+"/"+createdAt+fileName).toAbsolutePath().normalize();
-                //Files.createFile(targetLocation);
+                Path targetLocation = Paths.get(this.fileStorageLocation+"/"+createdAt+"/"+fileName).toAbsolutePath().normalize();
                 Files.copy(part.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
                 return "/image?fileName="+fileName+"&email="+email;
