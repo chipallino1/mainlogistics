@@ -1,5 +1,6 @@
 package com.samsolutions.logistics.mainlogistics.services.signup.impl;
 
+import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import com.samsolutions.logistics.mainlogistics.entities.Firms;
 import com.samsolutions.logistics.mainlogistics.entities.Passwords;
@@ -12,6 +13,7 @@ import com.samsolutions.logistics.mainlogistics.services.security.SaltHashEncode
 import com.samsolutions.logistics.mainlogistics.services.security.UserState;
 import com.samsolutions.logistics.mainlogistics.services.signup.FirmsSignUpService;
 import com.samsolutions.logistics.mainlogistics.services.utils.FileStorageService;
+import com.samsolutions.logistics.mainlogistics.services.utils.ImageStorageJsfService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.inject.Inject;
+import javax.servlet.http.Part;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,6 +41,8 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
     private Passwords passwords;
     private UsersRepository usersRepository;
     private FileStorageService fileStorageService;
+    @Inject
+    private ImageStorageJsfService imageStorageJsfService;
 
     @Autowired
     public void setFirmsRepository(FirmsRepository firmsRepository) {
@@ -62,6 +68,14 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
     public void setFileStorageService(FileStorageService fileStorageService) {
         this.fileStorageService = fileStorageService;
     }
+
+    @Override
+    public void store(FirmDTO firmDTO) {
+        createNew();
+        setFirmDTO(firmDTO);
+        saveFirm();
+    }
+
     @Override
     public void updateFirm(String email){
         this.firms = firmsRepository.findAllByEmail(email).get(0);
@@ -84,9 +98,14 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
     @Override
     @Transactional
     public void saveFirm() {
-        savePassword();
+        savePassword(saltHash,passwordsRepository,passwords,firmDTO.getPassword());
         save();
-        saveAvatar(firmDTO.getImage());
+        if(firmDTO.getImage() == null){
+            saveAvatar(firmDTO.getPartImage());
+        }
+        else {
+            saveAvatar(firmDTO.getImage());
+        }
         saveUser();
     }
 
@@ -98,16 +117,6 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
         return passwords;
     }
 
-    @Override
-    public void savePassword() {
-        String password = firmDTO.getPasswordRepeat();
-        byte[] saltBytes = saltHash.getSalt();
-        String hashPass = saltHash.get_SHA_256_SecurePassword(password, saltBytes);
-        passwords.setPassHash(hashPass);
-        passwords.setSalt(saltHash.getStringFromBytes(saltBytes));
-        passwordsRepository.save(passwords);
-
-    }
 
     @Override
     public void save() {
@@ -136,6 +145,14 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
     public void saveAvatar(MultipartFile file) {
         DateFormat dateFormat=new SimpleDateFormat("yyyy/MM");
         String avatarPath = fileStorageService.storeFile(file,dateFormat.format(firms.getCreatedAt()),firms.getEmail());
+        firms.setAvatarPath(avatarPath);
+        firmsRepository.save(firms);
+    }
+
+    @Override
+    public void saveAvatar(Part file) {
+        DateFormat dateFormat=new SimpleDateFormat("yyyy/MM");
+        String avatarPath = imageStorageJsfService.storeImage(file,dateFormat.format(firms.getCreatedAt()),firms.getEmail());
         firms.setAvatarPath(avatarPath);
         firmsRepository.save(firms);
     }

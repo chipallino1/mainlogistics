@@ -15,6 +15,7 @@ import com.samsolutions.logistics.mainlogistics.services.security.SaltHashEncode
 import com.samsolutions.logistics.mainlogistics.services.security.UserState;
 import com.samsolutions.logistics.mainlogistics.services.signup.ContactsSignUpService;
 import com.samsolutions.logistics.mainlogistics.services.utils.FileStorageService;
+import com.samsolutions.logistics.mainlogistics.services.utils.ImageStorageJsfService;
 import com.samsolutions.logistics.mainlogistics.validation.exceptions.FirmNotFoundException;
 import com.samsolutions.logistics.mainlogistics.validation.exceptions.MainException;
 import org.modelmapper.ModelMapper;
@@ -24,12 +25,15 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.inject.Inject;
+import javax.servlet.http.Part;
 import java.text.DateFormat;
 import java.text.FieldPosition;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Contact user class that provided services for contact users
@@ -47,6 +51,8 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
     private Contacts contacts;
     private Passwords passwords;
     private Users users;
+    @Inject
+    private ImageStorageJsfService imageStorageJsfService;
 
 
     @Autowired
@@ -80,6 +86,14 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
 
 
     @Override
+    @Transactional
+    public void store(ContactDTO contactDTO) {
+        createNewContact();
+        setContactDTO(contactDTO);
+        saveContact();
+    }
+
+    @Override
     public void updateContact(String email) {
         this.contacts=contactsRepository.findByEmail(email);
         this.passwords=passwordsRepository.findById(this.contacts.getPasswordsId()).get();
@@ -101,11 +115,15 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
     }
 
     @Override
-    @Transactional
     public void saveContact() {
-        savePassword();
+        savePassword(saltHash,passwordsRepository,passwords,contactDTO.getPasswordRepeat());
         save();
-        saveAvatar(contactDTO.getImage());
+        if(contactDTO.getImage() == null){
+            saveAvatar(contactDTO.getPartImage());
+        }
+        else {
+            saveAvatar(contactDTO.getImage());
+        }
         saveUser();
     }
 
@@ -126,33 +144,27 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
     }
 
     @Override
-    public void savePassword() {
-        String password = contactDTO.getPasswordRepeat();
-        byte[] saltBytes = saltHash.getSalt();
-        String hashPass = saltHash.get_SHA_256_SecurePassword(password, saltBytes);
-        passwords.setPassHash(hashPass);
-        passwords.setSalt(saltHash.getStringFromBytes(saltBytes));
-        passwordsRepository.save(passwords);
-    }
-
-    @Override
     public void save() {
-        if (!contactDTO.getFirmName().equals("")) {
-            List<Firms> firmsList = firmsRepository.findDistinctByFirmNameLike(contactDTO.getFirmName());
-            if (firmsList.size() > 0) {
-                Firms firm = firmsList.get(0);
-                contacts.setFirmId(firm.getId());
-                if(contacts.getContactState()==null)
-                    contacts.setContactState(ContactState.WAIT);
-            }
-            else {
-                throw new FirmNotFoundException("Firm you chose not found","Cause: this firm is not exists");
-            }
+        if (!Objects.equals(contactDTO.getFirmName(), "") && contactDTO.getFirmName()!=null) {
+            relateToFirm();
         }
         contacts.setPasswordsId(passwords.getId());
         contacts.setCreatedAt(new Date(System.currentTimeMillis()));
         contacts.setModifiedTime(new Date(System.currentTimeMillis()));
         contactsRepository.save(contacts);
+    }
+
+    private void relateToFirm(){
+        List<Firms> firmsList = firmsRepository.findDistinctByFirmNameLike(contactDTO.getFirmName());
+        if (firmsList.size() > 0) {
+            Firms firm = firmsList.get(0);
+            contacts.setFirmId(firm.getId());
+            if(contacts.getContactState()==null)
+                contacts.setContactState(ContactState.WAIT);
+        }
+        else {
+            throw new FirmNotFoundException("Firm you chose not found","Cause: this firm is not exists");
+        }
     }
 
     @Override
@@ -169,6 +181,15 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
         DateFormat dateFormat=new SimpleDateFormat("yyyy/MM") ;
         String createdAt=dateFormat.format(contacts.getCreatedAt());
         String avatarPath=fileStorageService.storeFile(file,createdAt,contacts.getEmail());
+        contacts.setAvatarPath(avatarPath);
+        contactsRepository.save(contacts);
+    }
+
+    @Override
+    public void saveAvatar(Part file) {
+        DateFormat dateFormat=new SimpleDateFormat("yyyy/MM") ;
+        String createdAt=dateFormat.format(contacts.getCreatedAt());
+        String avatarPath=imageStorageJsfService.storeImage(file,createdAt,contacts.getEmail());
         contacts.setAvatarPath(avatarPath);
         contactsRepository.save(contacts);
     }

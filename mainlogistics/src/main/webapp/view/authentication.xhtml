@@ -107,7 +107,9 @@
                                             <h:message for = "inputContactPassword" style = "color:red; font-size: 12px;" />
                                         </div> <!-- form-group end.// -->
                                         <div class="form-group">
-                                            <h:commandButton styleClass="btn btn-primary btn-block" value="Register" action="#{authenticationMBeanController.register}"/>
+                                            <h:commandButton styleClass="btn btn-primary btn-block" value="Register" action="#{authenticationMBeanController.register}">
+                                                <f:param name="signUpType" value="CONTACT"/>
+                                            </h:commandButton>
                                         </div> <!-- form-group// -->
                                         <small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br/> Terms of use and Privacy Policy.</small>
 
@@ -180,7 +182,9 @@
                                             <small class="text-danger" > Passwords must be same</small>
                                         </div> <!-- form-group end.// -->
                                         <div class="form-group">
-                                            <h:commandButton styleClass="btn btn-primary btn-block" value="Register" action="#{authenticationMBeanController.register}"/>
+                                            <h:commandButton styleClass="btn btn-primary btn-block" value="Register" action="#{authenticationMBeanController.register}">
+                                                <f:param name="signUpType" value="FIRM"/>
+                                            </h:commandButton>
                                         </div> <!-- form-group// -->
                                         <small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br/> Terms of use and Privacy Policy.</small>
                                     </div>

@@ -10,6 +10,11 @@ import org.springframework.stereotype.Component;
 public interface ContactsSignUpService extends SignUpService {
 
     /**
+     * Store contact in db
+     * @param contactDTO contact info
+     */
+    void store(ContactDTO contactDTO);
+    /**
      * update existing contact
      */
     void updateContact(String email);

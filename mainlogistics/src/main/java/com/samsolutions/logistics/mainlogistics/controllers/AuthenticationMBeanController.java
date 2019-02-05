@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
@@ -23,6 +24,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Named
 @ViewScoped
@@ -53,7 +55,15 @@ public class AuthenticationMBeanController {
 
     public void register(){
         System.out.println("Register");
-        imageStorageJsfService.storeImage(contactDTO.getPartImage(),((Long)System.currentTimeMillis()).toString(),"egor");
+        Map<String, String> params = FacesContext.getCurrentInstance().
+                getExternalContext().getRequestParameterMap();
+        String signUpType = params.get("signUpType");
+        if(SignUpType.valueOf(signUpType).equals(SignUpType.CONTACT)){
+            contactsSignUpService.store(contactDTO);
+        }
+        else {
+            firmsSignUpService.store(firmDTO);
+        }
     }
 
     public void getFirms(AjaxBehaviorEvent event){
