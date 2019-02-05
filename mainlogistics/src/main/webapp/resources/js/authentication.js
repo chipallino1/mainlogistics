@@ -16,3 +16,6 @@ $(function() {
 	});
 
 });
+function getFirms(data,list) {
+	console.log(list);
+}

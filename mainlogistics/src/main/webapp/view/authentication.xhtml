@@ -85,9 +85,9 @@
                                             <h:form autocomplete="off" id="autocompleteForm">
                                                 <div class="autocomplete" style="width:150px;">
                                                     <h:inputText id="myInput" class="form-control" type="text" name="myCountry" a:placeholder="firm name">
-                                                        <f:ajax event="keyup" render="autocompleteForm"/>
+                                                        <f:ajax event="keyup" render="autocompleteForm" onevent="function(data) { getFirms(data,#{authenticationMBeanController.json}) }"/>
                                                         <c:if test="#{param['contactInfo:autocompleteForm:myInput'].length() == 3}">
-                                                            <f:ajax event="keyup" render="resultSet" onevent="" listener="#{authenticationMBeanController.getFirms}"/>
+                                                            <f:ajax event="keyup" render="resultSet" listener="#{authenticationMBeanController.getFirms}"/>
                                                         </c:if>
                                                     </h:inputText>
                                                 </div>

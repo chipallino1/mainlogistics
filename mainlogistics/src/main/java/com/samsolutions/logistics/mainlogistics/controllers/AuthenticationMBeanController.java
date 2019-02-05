@@ -1,5 +1,6 @@
 package com.samsolutions.logistics.mainlogistics.controllers;
 
+import com.google.gson.Gson;
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import com.samsolutions.logistics.mainlogistics.services.signup.ContactsSignUpService;
@@ -29,6 +30,7 @@ public class AuthenticationMBeanController {
     private FirmDTO firmDTO;
     private ContactDTO contactDTO;
     private List<String> list;
+    private String json;
 
     @Inject
     private ContactsSignUpService contactsSignUpService;
@@ -49,6 +51,8 @@ public class AuthenticationMBeanController {
         this.list.add("Vanya");
         this.list.add("Mama");
         this.list.add("Papa");
+        Gson gson=new Gson();
+        this.json = gson.toJson(this.list);
 
     }
 
@@ -60,6 +64,7 @@ public class AuthenticationMBeanController {
     public void getFirms(AjaxBehaviorEvent event){
         System.out.println("Value changed");
         String firmName = (String)((UIInput)event.getSource()).getSubmittedValue();
+        RequestContext requestContext = RequestContext.getCurrentInstance();
         List<String> firmsNamesList;
     }
 
@@ -87,4 +92,11 @@ public class AuthenticationMBeanController {
         this.list = list;
     }
 
+    public String getJson() {
+        return json;
+    }
+
+    public void setJson(String json) {
+        this.json = json;
+    }
 }
