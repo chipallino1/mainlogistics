@@ -106,6 +106,17 @@ public class FirmsServiceImpl implements FirmsService {
     }
 
     @Override
+    public List<String> getAllFirmsNamesByName(String firmName) {
+        List<Firms> firmsList = firmsRepository.findDistinctTop5ByFirmNameLike(firmName + "%");
+        List<String> firmsNamesList = new ArrayList<>(firmsList.size());
+        for (int i = 0; i < firmsList.size(); i++) {
+            firmsNamesList.add(firmsList.get(i).getFirmName());
+        }
+        return firmsNamesList;
+    }
+
+
+    @Override
     public FirmDTO getByEmail(String email) {
         FirmDTO firmDTO = new FirmDTO();
         Firms firm = firmsRepository.findAllByEmail(email).get(0);

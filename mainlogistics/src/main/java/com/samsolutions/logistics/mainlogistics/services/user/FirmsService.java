@@ -34,6 +34,13 @@ public interface FirmsService  extends Converter,Packagable,Pagination<ContactDT
     List<FirmDTO> getAllByName(String firmName);
 
     /**
+     * Get all firms names by passed in param firm name
+     * @param firmName firm name
+     * @return list of firms names
+     */
+    List<String> getAllFirmsNamesByName(String firmName);
+
+    /**
      * Get firm
      * @param email firm email
      * @return dto of firms
