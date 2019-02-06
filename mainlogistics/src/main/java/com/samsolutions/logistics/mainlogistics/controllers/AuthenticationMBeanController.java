@@ -9,6 +9,7 @@ import com.samsolutions.logistics.mainlogistics.services.signup.SignUpType;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
 import com.samsolutions.logistics.mainlogistics.services.utils.ImageStorageJsfService;
 import com.samsolutions.logistics.mainlogistics.services.utils.JsonEncoder;
+import org.primefaces.PrimeFaces;
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,14 +34,12 @@ public class AuthenticationMBeanController {
     private FirmDTO firmDTO;
     private ContactDTO contactDTO;
     private List<String> firmsNamesList;
-    private String json;
+    private String json="[\"wefwef\"]";
 
     @Inject
     private ContactsSignUpService contactsSignUpService;
     @Inject
     private FirmsSignUpService firmsSignUpService;
-    @Inject
-    private ImageStorageJsfService imageStorageJsfService;
     @Inject
     private FirmsService firmsService;
     @Inject
@@ -68,9 +67,11 @@ public class AuthenticationMBeanController {
 
     public void getFirms(AjaxBehaviorEvent event){
         System.out.println("Value changed");
-        String firmName = (String)((UIInput)event.getSource()).getSubmittedValue();
+        String firmName = (String)((UIInput)event.getSource()).getValue();
         this.firmsNamesList = firmsService.getAllFirmsNamesByName(firmName);
         this.json=jsonEncoder.toJson(this.firmsNamesList);
+        RequestContext requestContext=RequestContext.getCurrentInstance();
+        PrimeFaces.current().ajax().update("contactInfo:autocompleteForm:myInput");
     }
 
     public FirmDTO getFirmDTO() {
