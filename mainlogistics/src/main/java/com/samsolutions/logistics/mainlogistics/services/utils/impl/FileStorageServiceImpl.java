@@ -43,7 +43,6 @@ public class FileStorageServiceImpl implements FileStorageService{
     @Override
     public String storeFile(MultipartFile file,String createdAt,String email) {
         String fileName = StringUtils.cleanPath(System.currentTimeMillis()+file.getOriginalFilename());
-
         try {
             if(fileName.contains("..")) {
                 throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
-public interface FileStorageService {
+public interface FileStorageService extends PartFileService {
     String storeFile(MultipartFile file,String createdAt,String email);
     Resource loadFileAsResource(String fileName,String createdAt);
     String updateFilePath(String avatarPath,String newEmail);

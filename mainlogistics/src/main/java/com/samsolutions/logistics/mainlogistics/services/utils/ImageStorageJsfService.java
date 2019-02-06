@@ -5,6 +5,6 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.Part;
 
 @Component
-public interface ImageStorageJsfService {
+public interface ImageStorageJsfService extends PartFileService{
     String storeImage(Part part,String createdAt,String email);
 }

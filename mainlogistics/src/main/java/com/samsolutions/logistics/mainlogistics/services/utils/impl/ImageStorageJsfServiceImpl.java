@@ -42,21 +42,16 @@ public class ImageStorageJsfServiceImpl implements ImageStorageJsfService {
 
     @Override
     public String storeImage(Part part, String createdAt, String email) {
-        String fileName = StringUtils.cleanPath(((Long)System.currentTimeMillis()).toString()+part.getSubmittedFileName());
         try {
             if(part.getContentType().equals(MediaType.IMAGE_GIF_VALUE) || part.getContentType().equals(MediaType.IMAGE_JPEG_VALUE) || part.getContentType().equals(MediaType.IMAGE_PNG_VALUE)) {
-                Path targetLocation = Paths.get(this.fileStorageLocation+"/"+createdAt+"/"+fileName).toAbsolutePath().normalize();
-                Files.copy(part.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-
-                return "/image?fileName="+fileName+"&email="+email;
-
+                return createPartFile(part,this.fileStorageLocation,createdAt,email);
             }
             else{
                 throw new FileStorageException("Sorry! File is not an image");
             }
 
         } catch (IOException ex) {
-            throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
+            throw new FileStorageException("Could not store file. Please try again!", ex);
         }
     }
 }
