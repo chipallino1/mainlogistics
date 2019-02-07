@@ -12,6 +12,8 @@ import com.samsolutions.logistics.mainlogistics.services.utils.JsonEncoder;
 import org.primefaces.PrimeFaces;
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -46,11 +48,13 @@ public class AuthenticationMBeanController {
     @Inject
     private JsonEncoder jsonEncoder;
 
+
     @PostConstruct
     public void init(){
         System.out.println("Post construct");
         this.firmDTO=new FirmDTO();
         this.contactDTO=new ContactDTO();
+
     }
 
     public void register(){

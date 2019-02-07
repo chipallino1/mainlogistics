@@ -3,6 +3,7 @@ package com.samsolutions.logistics.mainlogistics;
 import com.samsolutions.logistics.mainlogistics.properties.FileStorageProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import javax.faces.webapp.FacesServlet;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.context.event.EventListener;
 
 @SpringBootApplication
 @EnableConfigurationProperties({
