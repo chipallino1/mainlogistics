@@ -85,15 +85,13 @@
                                             <h:form autocomplete="off" id="autocompleteForm">
                                                 <div class="autocomplete" style="width:150px;">
                                                     <h:inputText id="myInput" class="form-control" type="text" name="myCountry" a:placeholder="firm name">
-                                                        <f:ajax event="keyup" render="contactInfo:autocompleteForm" />
+                                                        <f:ajax event="keyup" render="@form" onevent="function(data) { contactradio.checked=true;getFirms(data,#{authenticationMBeanController.json}) }"/>
                                                         <c:if test="#{param['contactInfo:autocompleteForm:myInput'].length() == 3}">
-                                                            <f:ajax event="keyup" render="resultSet" listener="#{authenticationMBeanController.getFirms}"/>
-                                                        </c:if>
-                                                        <c:if test="#{param['contactInfo:autocompleteForm:myInput'].length() > 3}">
-                                                            <f:ajax event="keyup" render="contactInfo:autocompleteForm" onevent="function(data) { getFirms(data,#{authenticationMBeanController.json}) }"/>
+                                                            <f:ajax event="keyup" render="@form" listener="#{authenticationMBeanController.getFirms}"/>
                                                         </c:if>
                                                     </h:inputText>
                                                 </div>
+                                                <h:outputLabel id="testLabel" value="#{authenticationMBeanController.json}"/>
                                                 <br/>
                                                 <h:selectOneMenu id="resultSet" class="form-control">
                                                     <f:selectItems value="#{authenticationMBeanController.firmsNamesList}"/>

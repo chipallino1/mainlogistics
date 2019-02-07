@@ -6,6 +6,8 @@ import com.samsolutions.logistics.mainlogistics.dto.UserDTO;
 import com.samsolutions.logistics.mainlogistics.services.signup.ContactsSignUpService;
 import com.samsolutions.logistics.mainlogistics.services.signup.FirmsSignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 /**
@@ -45,7 +48,6 @@ public class AuthenticationController {
      */
     @RequestMapping(path = "auth", method = RequestMethod.GET)
     public String getAuthenticate(Model model, @ModelAttribute("registred") String isRegistred) {
-
         /*if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0].toString().equals("ROLE_USER")){
             model.addAttribute("isRegistred",true);
         }*/

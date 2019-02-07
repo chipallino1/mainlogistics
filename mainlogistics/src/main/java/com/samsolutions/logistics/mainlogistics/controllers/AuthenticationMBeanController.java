@@ -14,6 +14,7 @@ import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIInput;
@@ -34,7 +35,7 @@ public class AuthenticationMBeanController {
     private FirmDTO firmDTO;
     private ContactDTO contactDTO;
     private List<String> firmsNamesList;
-    private String json="[\"wefwef\"]";
+    private String json;
 
     @Inject
     private ContactsSignUpService contactsSignUpService;
