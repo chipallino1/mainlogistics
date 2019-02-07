@@ -3,6 +3,7 @@ package com.samsolutions.logistics.mainlogistics.controllers;
 import com.google.gson.Gson;
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
+import com.samsolutions.logistics.mainlogistics.services.events.FirmAddingEvent;
 import com.samsolutions.logistics.mainlogistics.services.signup.ContactsSignUpService;
 import com.samsolutions.logistics.mainlogistics.services.signup.FirmsSignUpService;
 import com.samsolutions.logistics.mainlogistics.services.signup.SignUpType;
@@ -13,6 +14,7 @@ import org.primefaces.PrimeFaces;
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 
 import javax.annotation.PostConstruct;
@@ -40,6 +42,9 @@ public class AuthenticationMBeanController {
     private String json;
 
     @Inject
+    private ApplicationEventPublisher applicationEventPublisher;
+
+    @Inject
     private ContactsSignUpService contactsSignUpService;
     @Inject
     private FirmsSignUpService firmsSignUpService;
@@ -54,6 +59,8 @@ public class AuthenticationMBeanController {
         System.out.println("Post construct");
         this.firmDTO=new FirmDTO();
         this.contactDTO=new ContactDTO();
+        FirmAddingEvent firmAddingEvent=new FirmAddingEvent(this,"hi");
+        applicationEventPublisher.publishEvent(firmAddingEvent);
 
     }
 
