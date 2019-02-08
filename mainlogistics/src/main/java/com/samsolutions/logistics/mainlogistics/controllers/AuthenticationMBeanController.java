@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import com.samsolutions.logistics.mainlogistics.services.events.FirmAddingEvent;
+import com.samsolutions.logistics.mainlogistics.services.listeners.AutoCompleteFirmsServiceImpl;
 import com.samsolutions.logistics.mainlogistics.services.signup.ContactsSignUpService;
 import com.samsolutions.logistics.mainlogistics.services.signup.FirmsSignUpService;
 import com.samsolutions.logistics.mainlogistics.services.signup.SignUpType;
@@ -42,6 +43,8 @@ public class AuthenticationMBeanController {
     private String json;
 
     @Inject
+    private AutoCompleteFirmsServiceImpl autoCompleteFirmsService;
+    @Inject
     private ContactsSignUpService contactsSignUpService;
     @Inject
     private FirmsSignUpService firmsSignUpService;
@@ -74,10 +77,7 @@ public class AuthenticationMBeanController {
     public void getFirms(AjaxBehaviorEvent event){
         System.out.println("Value changed");
         String firmName = (String)((UIInput)event.getSource()).getValue();
-        this.firmsNamesList = firmsService.getAllFirmsNamesByName(firmName);
-        this.json=jsonEncoder.toJson(this.firmsNamesList);
-        RequestContext requestContext=RequestContext.getCurrentInstance();
-        PrimeFaces.current().ajax().update("contactInfo:autocompleteForm:myInput");
+        firmsNamesList = autoCompleteFirmsService.getFirmsByFirmName(firmName);
     }
 
     public FirmDTO getFirmDTO() {

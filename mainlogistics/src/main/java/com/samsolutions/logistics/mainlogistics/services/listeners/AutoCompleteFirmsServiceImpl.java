@@ -13,14 +13,15 @@ import org.springframework.stereotype.Service;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 @ApplicationScoped
@@ -55,6 +56,16 @@ public class AutoCompleteFirmsServiceImpl {
         } catch (IOException e) {
             throw new FileStorageException("Could not save file!", e);
         }
+    }
+
+    public List<String> getFirmsByFirmName(String firmName){
+        Stream<Object> stream = Arrays.stream(this.firmsList.toArray()).filter(str -> ((String)str).startsWith(firmName));
+        Object[] objects = stream.sorted().toArray();
+        List<String> firmsList=new ArrayList<>();
+        for(int i=0;i<objects.length;i++){
+            firmsList.add((String)objects[i]);
+        }
+        return firmsList;
     }
 
     public List<String> getFirmsList() {
