@@ -58,7 +58,7 @@
                                         <div class="form-group">
                                             <label>Email address</label>
                                             <h:message for = "inputContactEmail" style = "color:red; font-size: 12px;" />
-                                            <h:inputText id="inputContactEmail" class="form-control" a:placeholder="email" value="#{authenticationMBeanController.contactDTO.email}"/>
+                                            <h:inputText id="inputContactEmail" a:type="email" class="form-control" a:placeholder="email" value="#{authenticationMBeanController.contactDTO.email}"/>
                                         </div> <!-- form-group end.// -->
                                         <div class="form-group">
                                             <label>Phone Num.</label>
@@ -151,7 +151,7 @@
                                         <div class="form-group">
                                             <label>Email address</label>
                                             <h:message for = "firmEmail" style = "color:red; font-size: 12px;" />
-                                            <h:inputText id="firmEmail" class="form-control" a:placeholder="email" value="#{authenticationMBeanController.firmDTO.email}"/>
+                                            <h:inputText id="firmEmail" a:type="email" class="form-control" a:placeholder="email" value="#{authenticationMBeanController.firmDTO.email}"/>
                                         </div> <!-- form-group end.// -->
                                         <div class="form-group">
                                             <label>Description</label>
@@ -170,13 +170,13 @@
                                         </div> <!-- form-group end.// -->
 
                                         <div class="form-group">
+                                            <h:message for = "inputSecret" style = "color:red; font-size: 12px;" />
                                             <label>Create password</label>
-                                            <h:inputSecret class="form-control" value="#{authenticationMBeanController.firmDTO.password}"/>
+                                            <h:inputSecret id="inputSecret" class="form-control" value="#{authenticationMBeanController.firmDTO.password}"/>
                                         </div> <!-- form-group end.// -->
                                         <div class="form-group">
                                             <label>Confirm password</label>
                                             <h:inputSecret class="form-control" value="#{authenticationMBeanController.firmDTO.passwordRepeat}"/>
-                                            <small class="text-danger" > Passwords must be same</small>
                                         </div> <!-- form-group end.// -->
                                         <div class="form-group">
                                             <h:commandButton styleClass="btn btn-primary btn-block" value="Register" action="#{authenticationMBeanController.register}">
@@ -200,24 +200,27 @@
                                 <h4 class="card-title mt-2">Log In</h4>
                             </header>
                             <article class="card-body">
-                                <form method="post">
+                                <form action="#{request.contextPath}/auth" method="post">
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input type="email" class="form-control" placeholder="email address" id="username" name="username"/>
+                                        <!--<h:inputText a:type="email" class="form-control" placeholder="email address" id="username" name="username"/>-->
+                                        <input class="form-control" placeholder="email address" id="username" name="username"/>
                                     </div>
                                     <div class="form-group">
                                         <label>Password</label>
-                                        <input class="form-control" type="password" id="password" name="password"/>
+                                        <!--<h:inputSecret class="form-control" id="password" name="password"/>-->
+                                        <input class="form-control" id="password" name="password"/>
                                     </div> <!-- form-group end.// -->
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary btn-block"> Log In  </button>
+                                       <!-- <h:commandButton styleClass="btn btn-primary btn-block" value="Log in"/>-->
+                                        <input type="submit" value="click"/>
+
                                     </div> <!-- form-group// -->
-                                    <small class="text-muted">You are registred,please log in.</small>
+                                    <h:message for = "inputSecret" style = "color:forestgreen; font-size: 12px;" />
                                 </form>
                             </article> <!-- card-body end .// -->
                         </div> <!-- card.// -->
                     </div> <!-- col.//-->
-
                 </div> <!-- row.//-->
 
             </div>
