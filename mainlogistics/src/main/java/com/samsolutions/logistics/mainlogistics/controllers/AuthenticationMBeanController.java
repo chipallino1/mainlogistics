@@ -42,9 +42,6 @@ public class AuthenticationMBeanController {
     private String json;
 
     @Inject
-    private ApplicationEventPublisher applicationEventPublisher;
-
-    @Inject
     private ContactsSignUpService contactsSignUpService;
     @Inject
     private FirmsSignUpService firmsSignUpService;
@@ -59,9 +56,6 @@ public class AuthenticationMBeanController {
         System.out.println("Post construct");
         this.firmDTO=new FirmDTO();
         this.contactDTO=new ContactDTO();
-        FirmAddingEvent firmAddingEvent=new FirmAddingEvent(this,"hi");
-        applicationEventPublisher.publishEvent(firmAddingEvent);
-
     }
 
     public void register(){

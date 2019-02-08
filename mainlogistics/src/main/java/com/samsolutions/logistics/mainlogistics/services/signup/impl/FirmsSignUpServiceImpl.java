@@ -8,6 +8,7 @@ import com.samsolutions.logistics.mainlogistics.entities.Users;
 import com.samsolutions.logistics.mainlogistics.repositories.FirmsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.PasswordsRepository;
 import com.samsolutions.logistics.mainlogistics.repositories.UsersRepository;
+import com.samsolutions.logistics.mainlogistics.services.events.FirmAddingEvent;
 import com.samsolutions.logistics.mainlogistics.services.security.Role;
 import com.samsolutions.logistics.mainlogistics.services.security.SaltHashEncoder.SaltHash;
 import com.samsolutions.logistics.mainlogistics.services.security.UserState;
@@ -16,6 +17,7 @@ import com.samsolutions.logistics.mainlogistics.services.utils.FileStorageServic
 import com.samsolutions.logistics.mainlogistics.services.utils.ImageStorageJsfService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +45,8 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
     private FileStorageService fileStorageService;
     @Inject
     private ImageStorageJsfService imageStorageJsfService;
+    @Inject
+    private ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
     public void setFirmsRepository(FirmsRepository firmsRepository) {
@@ -70,10 +74,13 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
     }
 
     @Override
+    @Transactional
     public void store(FirmDTO firmDTO) {
         createNew();
         setFirmDTO(firmDTO);
         saveFirm();
+        FirmAddingEvent firmAddingEvent=new FirmAddingEvent(this,firms.getFirmName());
+        applicationEventPublisher.publishEvent(firmAddingEvent);
     }
 
     @Override

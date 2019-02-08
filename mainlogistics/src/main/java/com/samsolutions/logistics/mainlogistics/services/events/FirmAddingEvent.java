@@ -1,15 +1,17 @@
 package com.samsolutions.logistics.mainlogistics.services.events;
 
+import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import org.springframework.context.ApplicationEvent;
+import org.springframework.context.event.EventListener;
 
 public class FirmAddingEvent extends ApplicationEvent {
-    private String message;
+    private String firmName;
 
-    public FirmAddingEvent(Object source, String message) {
+    public FirmAddingEvent(Object source, String firmName) {
         super(source);
-        this.message = message;
+        this.firmName = firmName;
     }
-    public String getMessage() {
-        return message;
+    public String getFirmName() {
+        return firmName;
     }
 }

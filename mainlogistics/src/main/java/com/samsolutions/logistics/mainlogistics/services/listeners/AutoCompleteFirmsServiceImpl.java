@@ -1,11 +1,13 @@
-package com.samsolutions.logistics.mainlogistics.services.utils.impl;
+package com.samsolutions.logistics.mainlogistics.services.listeners;
 
+import com.samsolutions.logistics.mainlogistics.services.events.FirmAddingEvent;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
 import com.samsolutions.logistics.mainlogistics.services.utils.JsonEncoder;
 import com.samsolutions.logistics.mainlogistics.validation.exceptions.FileStorageException;
 import com.sun.faces.facelets.util.Path;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -24,29 +26,43 @@ import java.util.List;
 @ApplicationScoped
 public class AutoCompleteFirmsServiceImpl {
 
+    private List<String> firmsList;
     @Inject
     private FirmsService firmsService;
     @Inject
     private JsonEncoder jsonEncoder;
 
+
     @EventListener(ApplicationReadyEvent.class)
-    public void doSomethingAfterStartup() {
-        List<String> firmsList = firmsService.getAllFirmsNamesByName("");
-        String jsonFirmsList = jsonEncoder.toJson(firmsList);
+    public void doSomethingAfterStartup(ApplicationReadyEvent applicationReadyEvent) {
+        this.firmsList = firmsService.getAllFirmsNamesByName("");
+        saveFirmsList();
+        System.out.println("Autocomplete firms list loaded");
+    }
+
+    @EventListener(FirmAddingEvent.class)
+    public void doSomethingAfterStartup(FirmAddingEvent firmAddingEvent) {
+        this.firmsList.add(firmAddingEvent.getFirmName());
+        saveFirmsList();
+        System.out.println("Autocomplete firms list updated");
+    }
+
+    private void saveFirmsList(){
+        String jsonFirmsList = jsonEncoder.toJson(this.firmsList);
         InputStream targetStream = new ByteArrayInputStream(jsonFirmsList.getBytes());
         try {
             Files.copy(targetStream, Paths.get("./firms.json").toAbsolutePath().normalize() , StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new FileStorageException("Could not save file!", e);
         }
-        System.out.println("hello world, I have just started up");
     }
 
-    public FirmsService getFirmsService() {
-        return firmsService;
+    public List<String> getFirmsList() {
+        return firmsList;
     }
 
-    public void setFirmsService(FirmsService firmsService) {
-        this.firmsService = firmsService;
+    public void setFirmsList(List<String> firmsList) {
+        this.firmsList = firmsList;
     }
+
 }
