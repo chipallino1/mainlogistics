@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:sec="http://www.springframework.org/security/tags"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<head>
+    <title>Logistics</title>
+</head>
+<body>
+<ui:composition template = "../templates/template.xhtml">
+    <ui:define name="content">
+        <div class="row justify-content-center" id="profile" >
+            <div class="col-md-6"  id="updateContact">
+                <div class="card">
+                    <header class="card-header">
+                        <h4 class="card-title mt-2"></h4>
+                    </header>
+                    <article class="card-body">
+                        <form method="post" id="contactForm"  enctype="multipart/form-data">
+                            <div class="container">
+                                <div class="justify-content-center" align="center">
+                                    <h:graphicImage class="d-block w-100"/>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col form-group">
+                                        <label> </label>
+                                        <small class="text-danger"> Empty or too small</small>
+                                        <input type="text" class="form-control" placeholder="first name" id="firstNameContact" disabled="disabled"/>
+                                    </div> <!-- form-group end.// -->
+                                    <div class="col form-group">
+                                        <label></label>
+                                        <small class="text-danger"  > Empty or too small</small>
+                                        <input type="text" class="form-control" placeholder="last name" id="lastNameContact" disabled="disabled" />
+                                    </div> <!-- form-group end.// -->
+                                </div> <!-- form-row end.// -->
+                                <div class="form-group">
+                                    <label></label>
+                                    <small class="text-danger" > It's not valid email</small>
+                                    <input type="email" class="form-control" placeholder="email address" id="emailContact" disabled="disabled"/>
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group">
+                                    <label></label>
+                                    <small class="text-danger"> It's not valid num</small>
+                                    <input type="number" class="form-control" placeholder="phone number" id="phoneNumContact" disabled="disabled" />
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group">
+                                    <label>Choose another photo</label>
+                                    <input type="file" class="form-control" placeholder="file" id="contactImage" disabled="disabled" name="file" accept="image/*"/>
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group" id="firms" >
+                                    <label ></label>
+                                    <input class="form-control" type="text" name="myCountry" placeholder="Country" id="firmNameContact" disabled="disabled" />
+                                </div>
+                                <div class="form-group" >
+                                    <button type="button" class="btn btn-primary btn-block" onclick="makeEnabled()" >  </button>
+                                    <button type="submit" class="btn btn-primary btn-block" id="submitFormContact"> </button>
+                                </div> <!-- form-group// -->
+
+                            </div>
+                        </form>
+                    </article> <!-- card-body end .// -->
+                </div> <!-- card.// -->
+            </div> <!-- col.//-->
+
+            <div class="col-md"  id="updateFirm" style="display: none;" >
+
+                <div class="card">
+                    <header class="card-header">
+                        <h4 class="card-title mt-2"></h4>
+                    </header>
+                    <article class="card-body">
+                        <form  method="post"  id="firmForm"  enctype="multipart/form-data">
+                            <div class="container">
+                                <div class="justify-content-center" align="center">
+                                    <h:graphicImage class="d-block w-100" />
+                                </div>
+                                <div class="form-row">
+                                    <div class="col form-group">
+                                        <label></label>
+                                        <small class="text-danger"  > Empty or too small</small>
+                                        <input type="text" class="form-control" placeholder="firm name" id="firmNameFirm" disabled="disabled" />
+                                    </div> <!-- form-group end.// -->
+                                </div> <!-- form-row end.// -->
+                                <div class="form-group">
+                                    <label></label>
+                                    <small class="text-danger" > It's not valid email</small>
+                                    <input type="email" class="form-control" placeholder="email address" id="emailFirm" disabled="disabled" />
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group">
+                                    <label></label>
+                                    <input type="text" class="form-control" placeholder="description" id="descriptionFirm" disabled="disabled" />
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group">
+                                    <label>Choose another photo</label>
+                                    <input type="file" class="form-control" placeholder="file" id="firmImage" disabled="disabled" name="file" accept="image/*"/>
+                                </div> <!-- form-group end.// -->
+
+                                <div class="form-group" >
+                                    <button type="button" class="btn btn-primary btn-block" onclick="makeFirmEnabled()" >   </button>
+                                    <button type="submit" class="btn btn-primary btn-block" id="submitFormFirm" >   </button>
+                                </div> <!-- form-group// -->
+                            </div>
+                        </form>
+
+
+                    </article> <!-- card-body end .// -->
+                </div> <!-- card.// -->
+            </div> <!-- col.//-->
+            <div class="col-md" id="contactQueue" style="display: none;">
+
+                <div class="card">
+                    <article class="card-body">
+
+                        <div class="grid-body">
+                            <div class="row">
+
+                                <!-- BEGIN RESULT -->
+                                <div class="col" id="resultColQueue">
+
+                                    <h2><i class="fa fa-file-o"></i></h2>
+                                    <hr/>
+
+                                    <div class="container">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="checkTimeQueue"  />
+                                            <label class="form-check-label" id="checkTimeQueueLb" for="checkTimeQueue" ></label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="checkFirstQueue" />
+                                            <label class="form-check-label" id="checkFirstQueueLb" for="checkFirstQueue"></label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="checkLastQueue" />
+                                            <label class="form-check-label" id="checkLastQueueLb" for="checkLastQueue"></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="padding"></div>
+                                    <div class="container">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="descQueue" />
+                                            <label class="form-check-label"  for="descQueue" ></label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="ascQueue"/>
+                                            <label class="form-check-label"  for="ascQueue" ></label>
+                                        </div>
+                                    </div>
+                                    <div class="padding"></div>
+                                    <div class="container" id="res">
+
+                                    </div>
+                                </div>
+                                <!-- END RESULT -->
+                            </div>
+                        </div>
+
+                        <!-- END SEARCH RESULT -->
+
+                    </article> <!-- card-body end .// -->
+                </div> <!-- card.// -->
+            </div> <!-- col.//-->
+            <div class="col-md"  id="contactList" style="display: none;">
+
+                <div class="card">
+                    <article class="card-body">
+
+                        <div class="grid-body">
+                            <div class="row">
+
+                                <!-- BEGIN RESULT -->
+                                <div class="col" id="resultCol">
+
+                                    <h2><i class="fa fa-file-o"></i></h2>
+                                    <hr/>
+
+                                    <div class="padding"></div>
+                                    <div class="container">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="checkTime"/>
+                                            <label class="form-check-label" id="checkTimeLb" for="checkTime" ></label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="checkFirst" />
+                                            <label class="form-check-label" id="checkFirstLb" for="checkFirst"></label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="checkLast" />
+                                            <label class="form-check-label" id="checkLastLb" for="checkLast"></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="padding"></div>
+                                    <div class="container">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="desc"/>
+                                            <label class="form-check-label"  for="desc" ></label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="asc" />
+                                            <label class="form-check-label"  for="asc" ></label>
+                                        </div>
+                                    </div>
+                                    <div class="padding"></div>
+                                </div>
+                                <!-- END RESULT -->
+                            </div>
+                        </div>
+
+                        <!-- END SEARCH RESULT -->
+
+                    </article> <!-- card-body end .// -->
+                </div> <!-- card.// -->
+            </div> <!-- col.//-->
+            <div class="col-md-6" id="route">
+                <div class="col-md"  id="createRoute">
+
+                    <div class="card">
+                        <header class="card-header">
+                            <h4 class="card-title mt-2" ></h4>
+                        </header>
+                        <article class="card-body">
+                            <form id="routeForm"  method="post">
+                                <div class="container">
+                                    <div class="form-row">
+                                        <div class="col form-group">
+                                            <label > </label>
+                                            <input type="text" class="form-control" id="countryFrom" />
+                                        </div> <!-- form-group end.// -->
+                                        <div class="col form-group">
+                                            <label ></label>
+                                            <input type="text" class="form-control" id="regionFrom" />
+                                        </div> <!-- form-group end.// -->
+                                    </div> <!-- form-row end.// -->
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="cityFrom" />
+                                    </div> <!-- form-group end.// -->
+                                    <div class="form-row">
+                                        <div class="col form-group">
+                                            <label></label>
+                                            <input type="text" class="form-control" id="countryTo" />
+                                        </div> <!-- form-group end.// -->
+                                        <div class="col form-group">
+                                            <label></label>
+                                            <input type="text" class="form-control" id="regionTo"/>
+                                        </div> <!-- form-group end.// -->
+                                    </div> <!-- form-row end.// -->
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="cityTo" />
+                                    </div> <!-- form-group end.// -->
+                                    <div class="form-group">
+                                        <label></label>
+                                        <input type="text" class="form-control"  id="carrierName" />
+                                    </div> <!-- form-group end.// -->
+                                    <div class="form-group">
+                                        <label ></label>
+                                        <input type="text" class="form-control" id="carName" />
+                                    </div> <!-- form-group end.// -->
+                                    <div class="form-row">
+                                        <div class="col form-group">
+                                            <label></label>
+                                            <input type="text" pattern="^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))\s[0-23]{1,2}:[0-59]{1,2}$" title="Date or time have errors" placeholder="yyyy-mm-dd hh:mm" class="form-control" id="startDateTime"/>
+                                        </div> <!-- form-group end.// -->
+                                        <div class="col form-group">
+                                            <label ></label>
+                                            <input type="text" pattern="^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))\s[0-23]{1,2}:[0-59]{1,2}$" title="Date or time have errors" placeholder="yyyy-mm-dd hh:mm" class="form-control" id="finishDateTime"/>
+                                        </div> <!-- form-group end.// -->
+                                    </div> <!-- form-row end.// -->
+                                    <div class="form-group">
+
+                                        <label ></label>
+                                        <input type="text" class="form-control" value="0" id="volume" />
+                                    </div> <!-- form-group end.// -->
+                                    <div class="form-group">
+                                        <label></label>
+                                        <input type="text" class="form-control"  id="capacity" value="0" />
+                                    </div> <!-- form-group end.// -->
+                                    <div class="form-group">
+                                        <label id="labelLength"> </label>
+                                        <input type="text" class="form-control" id="lengthRoute" value="0" />
+                                    </div> <!-- form-group end.// -->
+                                    <div class="form-group">
+                                        <label id="labelDuration" > </label>
+                                        <input type="text" class="form-control"  id="durationRoute" value="0" />
+                                    </div> <!-- form-group end.// -->
+                                    <div class="form-group">
+                                        <label></label>
+                                        <input type="text" class="form-control" id="cost" value="0" />
+                                    </div> <!-- form-group end.// -->
+                                    <div class="form-group" >
+                                        <button   type="button" class="btn btn-primary btn-block" > </button>
+                                    </div> <!-- form-group// -->
+
+                                </div>
+                            </form>
+                        </article> <!-- card-body end .// -->
+                    </div> <!-- card.// -->
+                </div> <!-- col.//-->
+            </div><!-- row.//-->
+        </div> <!-- row.//-->
+        <br/>
+        <div class="row justify-content-center"  id="routeList">
+            <div class="col-md-8">
+                <div class="card">
+                    <article class="card-body">
+
+                        <div class="grid-body">
+                            <div class="row">
+
+                                <!-- BEGIN RESULT -->
+                                <div class="col" id="resultRouteCol">
+
+                                    <h2><i class="fa fa-file-o"></i></h2>
+
+                                    <div class="padding"></div>
+                                    <div class="container">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="checkTimeRoute"/>
+                                            <label class="form-check-label" id="checkTimeLbRoute" for="checkTimeRoute">Sort by date start</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="checkFirstRoute" />
+                                            <label class="form-check-label" id="checkFirstLbRoute" for="checkFirstRoute">Sort by country from</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="checkLastRoute" />
+                                            <label class="form-check-label" id="checkLastLbRoute" for="checkLastRoute">Sort by city from</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="padding"></div>
+                                    <div class="container">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="descRoute" />
+                                            <label class="form-check-label"  for="descRoute">Desc</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="ascRoute" />
+                                            <label class="form-check-label"  for="ascRoute">Asc</label>
+                                        </div>
+                                    </div>
+                                    <div class="padding"></div>
+                                    <table class="table table-hover">
+                                        <tbody id="routesResultCont">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- END RESULT -->
+                            </div>
+                        </div>
+
+                        <!-- END SEARCH RESULT -->
+
+                    </article> <!-- card-body end .// -->
+                </div> <!-- card.// -->
+            </div>
+        </div> <!-- col.//-->
+    </ui:define>
+</ui:composition>
+
+</body>
+</html>
