@@ -40,7 +40,6 @@ public class AuthenticationMBeanController {
     private FirmDTO firmDTO;
     private ContactDTO contactDTO;
     private List<String> firmsNamesList;
-    private String json;
 
     @Inject
     private AutoCompleteFirmsServiceImpl autoCompleteFirmsService;
@@ -48,10 +47,6 @@ public class AuthenticationMBeanController {
     private ContactsSignUpService contactsSignUpService;
     @Inject
     private FirmsSignUpService firmsSignUpService;
-    @Inject
-    private FirmsService firmsService;
-    @Inject
-    private JsonEncoder jsonEncoder;
 
 
     @PostConstruct
@@ -102,13 +97,5 @@ public class AuthenticationMBeanController {
 
     public void setFirmsNamesList(List<String> firmsNamesList) {
         this.firmsNamesList = firmsNamesList;
-    }
-
-    public String getJson() {
-        return json;
-    }
-
-    public void setJson(String json) {
-        this.json = json;
     }
 }

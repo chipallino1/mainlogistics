@@ -89,7 +89,7 @@
                                                     </h:inputText>
                                                 </div>
                                                 <br/>
-                                                <h:selectOneMenu id="resultSet" class="form-control">
+                                                <h:selectOneMenu id="resultSet" class="form-control" value="#{authenticationMBeanController.contactDTO.firmName}">
                                                     <f:selectItems value="#{authenticationMBeanController.firmsNamesList}"/>
                                                 </h:selectOneMenu>
                                             </h:form>
