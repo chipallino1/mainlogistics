@@ -22,4 +22,8 @@ public class ContactsDaoImpl extends AbstractJpaDao<Contacts,Long>{
     public EntityManager getEntityManager() {
         return entityManager;
     }
+
+    public Contacts findByEmail(String email){
+        return findBy("email",email);
+    }
 }

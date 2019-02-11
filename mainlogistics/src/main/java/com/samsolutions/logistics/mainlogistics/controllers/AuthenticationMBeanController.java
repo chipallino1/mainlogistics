@@ -1,6 +1,7 @@
 package com.samsolutions.logistics.mainlogistics.controllers;
 
 import com.google.gson.Gson;
+import com.samsolutions.logistics.mainlogistics.dao.ContactsDaoImpl;
 import com.samsolutions.logistics.mainlogistics.dao.DaoInterface;
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
@@ -43,7 +44,7 @@ public class AuthenticationMBeanController {
     private ContactDTO contactDTO;
     private List<String> firmsNamesList;
     @Inject
-    private DaoInterface<Contacts,Long> daoInterface;
+    private ContactsDaoImpl contactsDao;
     @Inject
     private AutoCompleteFirmsServiceImpl autoCompleteFirmsService;
     @Inject
@@ -74,7 +75,7 @@ public class AuthenticationMBeanController {
 
     public void getFirms(AjaxBehaviorEvent event){
         System.out.println("Value changed");
-        daoInterface.findById(3L);
+        contactsDao.findByEmail("sasha@mail.ru");
         String firmName = (String)((UIInput)event.getSource()).getValue();
         firmsNamesList = autoCompleteFirmsService.getFirmsByFirmName(firmName);
     }

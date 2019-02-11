@@ -4,8 +4,6 @@ import org.hibernate.Criteria;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.criteria.*;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
@@ -34,14 +32,27 @@ public abstract class AbstractJpaDao<T,Id extends Serializable> implements DaoIn
 
     @Override
     public T findById(Id id) {
+        return findBy("id",id);
+    }
+
+    @Override
+    public void delete(T entity) {
+        getEntityManager().remove(entity);
+    }
+
+    @Override
+    public List<T> findAll() {
+        return getEntityManager().createQuery("from "+entityClass).getResultList();
+    }
+    protected T findBy(String by,Object object){
         T returnEntity=null;
         CriteriaBuilder cb=getEntityManager().getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = cb.createQuery(entityClass);
         Metamodel m =  getEntityManager().getMetamodel();
         EntityType<T> entity = m.entity(entityClass);
         Root<T> entityRoot = criteriaQuery.from(entityClass);
-        Selection<T> selection = criteriaQuery.where(cb.equal(entityRoot.get(entity.getAttribute("id").getName()),id)).getSelection();
-        criteriaQuery.where(cb.equal(entityRoot.get(entity.getAttribute("id").getName()),id)).select(selection);
+        Selection<T> selection = criteriaQuery.where(cb.equal(entityRoot.get(entity.getAttribute(by).getName()),object)).getSelection();
+        criteriaQuery.where(cb.equal(entityRoot.get(entity.getAttribute(by).getName()),object)).select(selection);
         List<T> tList = getEntityManager().createQuery(criteriaQuery).getResultList();
         if(tList.size()>0){
             returnEntity=tList.get(0);
@@ -49,19 +60,5 @@ public abstract class AbstractJpaDao<T,Id extends Serializable> implements DaoIn
         return returnEntity;
     }
 
-    @Override
-    public void delete(T entity) {
-
-    }
-
-    @Override
-    public List<T> findAll() {
-        return null;
-    }
-
-    @Override
-    public void deleteAll() {
-
-    }
 
 }

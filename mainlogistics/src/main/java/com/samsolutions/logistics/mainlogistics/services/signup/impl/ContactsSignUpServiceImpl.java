@@ -1,5 +1,6 @@
 package com.samsolutions.logistics.mainlogistics.services.signup.impl;
 
+import com.samsolutions.logistics.mainlogistics.dao.ContactsDaoImpl;
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.entities.Contacts;
 import com.samsolutions.logistics.mainlogistics.entities.Firms;
@@ -54,6 +55,8 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
     @Inject
     private ImageStorageJsfService imageStorageJsfService;
 
+    @Inject
+    private ContactsDaoImpl contactsDao;
 
     @Autowired
     public void setContactsRepository(ContactsRepository contactsRepository) {
@@ -125,6 +128,7 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
             saveAvatar(contactDTO.getImage());
         }
         saveUser();
+        contactsDao.persist(contacts);
     }
 
     public Contacts getContacts() {
@@ -151,7 +155,9 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
         contacts.setPasswordsId(passwords.getId());
         contacts.setCreatedAt(new Date(System.currentTimeMillis()));
         contacts.setModifiedTime(new Date(System.currentTimeMillis()));
-        contactsRepository.save(contacts);
+        //contactsDao.persist(contacts);
+        //contactsRepository.save(contacts);
+
     }
 
     private void relateToFirm(){
@@ -182,7 +188,7 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
         String createdAt=dateFormat.format(contacts.getCreatedAt());
         String avatarPath=fileStorageService.storeFile(file,createdAt,contacts.getEmail());
         contacts.setAvatarPath(avatarPath);
-        contactsRepository.save(contacts);
+        //contactsRepository.save(contacts);
     }
 
     @Override
@@ -191,7 +197,7 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
         String createdAt=dateFormat.format(contacts.getCreatedAt());
         String avatarPath=imageStorageJsfService.storeImage(file,createdAt,contacts.getEmail());
         contacts.setAvatarPath(avatarPath);
-        contactsRepository.save(contacts);
+        //contactsRepository.save(contacts);
     }
 
 
