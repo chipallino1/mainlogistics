@@ -24,6 +24,7 @@ public class PaginationDaoImpl<T,Id extends Serializable> implements PaginationD
     @Override
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
+        entityManager.createQuery("select c from Contacts c join Firms f on c.firmId=f.id").getResultList();
     }
     @Override
     public void setEntityClass(Class<T> entityClass){
