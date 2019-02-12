@@ -42,7 +42,7 @@ import java.util.Objects;
 @Service
 public class ContactsSignUpServiceImpl implements ContactsSignUpService {
 
-    private ContactsRepository contactsRepository;
+    //private ContactsRepository contactsRepository;
     private FirmsRepository firmsRepository;
     private PasswordsRepository passwordsRepository;
     private UsersRepository usersRepository;
@@ -58,11 +58,11 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
     @Inject
     private ContactsDaoImpl contactsDao;
 
-    @Autowired
+   /* @Autowired
     public void setContactsRepository(ContactsRepository contactsRepository) {
         this.contactsRepository = contactsRepository;
     }
-
+*/
     @Autowired
     public void setFirmsRepository(FirmsRepository firmsRepository) {
         this.firmsRepository = firmsRepository;
@@ -98,7 +98,8 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
 
     @Override
     public void updateContact(String email) {
-        this.contacts=contactsRepository.findByEmail(email);
+        //this.contacts=contactsRepository.findByEmail(email);
+        this.contacts=contactsDao.findByEmail(email);
         this.passwords=passwordsRepository.findById(this.contacts.getPasswordsId()).get();
         this.users=usersRepository.findByEmail(email);
     }

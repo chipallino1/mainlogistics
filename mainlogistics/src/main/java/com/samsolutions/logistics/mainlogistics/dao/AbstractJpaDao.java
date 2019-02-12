@@ -4,6 +4,7 @@ import org.hibernate.Criteria;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.criteria.*;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
@@ -44,8 +45,16 @@ public abstract class AbstractJpaDao<T,Id extends Serializable> implements DaoIn
     public List<T> findAll() {
         return getEntityManager().createQuery("from "+entityClass).getResultList();
     }
+
     protected T findBy(String by,Object object){
         T returnEntity=null;
+        List<T> tList = createCriteriaQuery(by,object).getResultList();
+        if(tList.size()>0){
+            returnEntity=tList.get(0);
+        }
+        return returnEntity;
+    }
+    protected Query createCriteriaQuery(String by,Object object){
         CriteriaBuilder cb=getEntityManager().getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = cb.createQuery(entityClass);
         Metamodel m =  getEntityManager().getMetamodel();
@@ -53,11 +62,7 @@ public abstract class AbstractJpaDao<T,Id extends Serializable> implements DaoIn
         Root<T> entityRoot = criteriaQuery.from(entityClass);
         Selection<T> selection = criteriaQuery.where(cb.equal(entityRoot.get(entity.getAttribute(by).getName()),object)).getSelection();
         criteriaQuery.where(cb.equal(entityRoot.get(entity.getAttribute(by).getName()),object)).select(selection);
-        List<T> tList = getEntityManager().createQuery(criteriaQuery).getResultList();
-        if(tList.size()>0){
-            returnEntity=tList.get(0);
-        }
-        return returnEntity;
+        return getEntityManager().createQuery(criteriaQuery);
     }
 
 

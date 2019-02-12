@@ -1,5 +1,6 @@
 package com.samsolutions.logistics.mainlogistics.services.user.impl;
 
+import com.samsolutions.logistics.mainlogistics.dao.ContactsDaoImpl;
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import com.samsolutions.logistics.mainlogistics.dto.PageDTO;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,8 +36,9 @@ public class ContactsServiceImpl implements ContactsService {
     private ContactsRepository contactsRepository;
     private UsersRepository usersRepository;
     private FileStorageService fileStorageService;
-
     private ContactsSignUpService contactsSignUpService;
+    @Inject
+    private ContactsDaoImpl contactsDao;
 
     @Autowired
     public void setContactsRepository(ContactsRepository contactsRepository) {
@@ -60,12 +63,15 @@ public class ContactsServiceImpl implements ContactsService {
 
     @Override
     public ContactState getContactState(String email) {
-        return contactsRepository.findByEmail(email).getContactState();
+        Contacts contacts=contactsDao.findByEmail(email);
+        if(contacts!=null)
+            return contacts.getContactState();
+        return null;
     }
 
     @Override
     public ContactDTO getByEmail(String email) {
-        Contacts contact = contactsRepository.findByEmail(email);
+        Contacts contact = contactsDao.findByEmail(email);
         ContactDTO contactDTO = new ContactDTO();
         map(contact, contactDTO);
         return contactDTO;
@@ -74,7 +80,7 @@ public class ContactsServiceImpl implements ContactsService {
     @Override
     @Transactional
     public void update(String email, ContactDTO contactDTO) {
-        Contacts contacts = contactsRepository.findByEmail(email);
+        Contacts contacts = contactsDao.findByEmail(email);
         contactDTO.setContactState(contacts.getContactState());
         if(contactDTO.getImage().getOriginalFilename().equals("")){
             if(email.equals(contactDTO.getEmail()))
@@ -83,7 +89,7 @@ public class ContactsServiceImpl implements ContactsService {
                 contactDTO.setAvatarPath(fileStorageService.updateFilePath(contacts.getAvatarPath(),contactDTO.getEmail()));
             }
             map(contactDTO, contacts);
-            contactsRepository.save(contacts);
+            contactsDao.persist(contacts);
         }
         else{
             contactsSignUpService.updateContact(email);
@@ -99,7 +105,7 @@ public class ContactsServiceImpl implements ContactsService {
 
     @Override
     public String getCreatedAt(String email) {
-        Contacts contacts = contactsRepository.findByEmail(email);
+        Contacts contacts = contactsDao.findByEmail(email);
         DateFormat dateFormat=new SimpleDateFormat("yyyy/MM");
         return dateFormat.format(contacts.getCreatedAt());
     }

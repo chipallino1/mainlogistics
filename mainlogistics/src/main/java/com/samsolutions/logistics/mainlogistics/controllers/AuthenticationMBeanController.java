@@ -3,6 +3,7 @@ package com.samsolutions.logistics.mainlogistics.controllers;
 import com.google.gson.Gson;
 import com.samsolutions.logistics.mainlogistics.dao.ContactsDaoImpl;
 import com.samsolutions.logistics.mainlogistics.dao.DaoInterface;
+import com.samsolutions.logistics.mainlogistics.dao.FirmsDaoImpl;
 import com.samsolutions.logistics.mainlogistics.dto.ContactDTO;
 import com.samsolutions.logistics.mainlogistics.dto.FirmDTO;
 import com.samsolutions.logistics.mainlogistics.entities.Contacts;
@@ -14,6 +15,7 @@ import com.samsolutions.logistics.mainlogistics.services.signup.SignUpType;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
 import com.samsolutions.logistics.mainlogistics.services.utils.ImageStorageJsfService;
 import com.samsolutions.logistics.mainlogistics.services.utils.JsonEncoder;
+import com.samsolutions.logistics.mainlogistics.services.utils.PaginationDao;
 import org.primefaces.PrimeFaces;
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,8 @@ public class AuthenticationMBeanController {
     private FirmDTO firmDTO;
     private ContactDTO contactDTO;
     private List<String> firmsNamesList;
+    @Inject
+    private FirmsDaoImpl firmsDao;
     @Inject
     private ContactsDaoImpl contactsDao;
     @Inject
@@ -75,6 +79,7 @@ public class AuthenticationMBeanController {
 
     public void getFirms(AjaxBehaviorEvent event){
         System.out.println("Value changed");
+        contactsDao.findByEmailPageable("sasha@mail.ru",0,2);
         contactsDao.findByEmail("sasha@mail.ru");
         String firmName = (String)((UIInput)event.getSource()).getValue();
         firmsNamesList = autoCompleteFirmsService.getFirmsByFirmName(firmName);
