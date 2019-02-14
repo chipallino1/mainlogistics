@@ -8,7 +8,7 @@ import java.util.List;
 public interface PaginationDao {
     void setEntityClassAndIdType(Class entityClass,Class idType);
     PaginationDao getPage(int pageNum,int elements);
-    List getPage(int pageNum,int elements, Query query);
+    PaginationDao getPage(int pageNum,int elements, Query query);
     List getContent();
     Long getPagesCount();
     Long getElementsOnPage();

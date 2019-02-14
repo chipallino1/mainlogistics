@@ -37,19 +37,15 @@ public class PaginationDaoImpl implements PaginationDao {
 
     @Override
     public PaginationDao getPage(int pageNum,int elements) {
-        this.content = entityManager.createQuery("from "+entityClass.getTypeName()).setFirstResult(pageNum*elements).setMaxResults(elements).getResultList();
-        Long countRows = getCountRows();
-        long pagesCount=countRows/ (long) elements;
-        if((double)this.content.size()/(double) elements!=(long)this.content.size()/elements)
-            this.pagesCount=pagesCount+1;
-        else
-            this.pagesCount=pagesCount;
+        Query query = entityManager.createQuery("from "+entityClass.getTypeName());
+        setContentAndPagesCount(pageNum,elements,query);
         return this;
     }
 
     @Override
-    public List getPage(int pageNum,int elements, Query query) {
-        return query.setFirstResult(pageNum*elements).setMaxResults(elements).getResultList();
+    public PaginationDao getPage(int pageNum,int elements, Query query) {
+        setContentAndPagesCount(pageNum,elements,query);
+        return this;
     }
 
     @Override
@@ -67,10 +63,19 @@ public class PaginationDaoImpl implements PaginationDao {
         return this.elementsOnPage;
     }
 
-    public Long getCountRows(){
+    private Long getCountRows(){
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery criteriaQuery = cb.createQuery();
         criteriaQuery.select(cb.count(criteriaQuery.from(entityClass)));
         return (Long)entityManager.createQuery(criteriaQuery).getSingleResult();
+    }
+    private void setContentAndPagesCount(int pageNum,int elements,Query query){
+        this.content = query.setFirstResult(pageNum*elements).setMaxResults(elements).getResultList();
+        Long countRows = getCountRows();
+        long pagesCount=countRows/ (long) elements;
+        if((double)this.content.size()/(double) elements!=(long)this.content.size()/elements)
+            this.pagesCount=pagesCount+1;
+        else
+            this.pagesCount=pagesCount;
     }
 }
