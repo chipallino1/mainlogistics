@@ -1,43 +1,76 @@
 package com.samsolutions.logistics.mainlogistics.dao.pagination;
 
-import com.samsolutions.logistics.mainlogistics.dao.DaoInterface;
-import com.samsolutions.logistics.mainlogistics.services.utils.PageDao;
 import com.samsolutions.logistics.mainlogistics.services.utils.PaginationDao;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.io.Serializable;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 @Service
-public class PaginationDaoImpl<T,Id extends Serializable> implements PaginationDao<T,Id> {
+public class PaginationDaoImpl implements PaginationDao {
 
+    @PersistenceContext
     private EntityManager entityManager;
-    private Class<T> entityClass;
+    private Class entityClass;
+    private Class idType;
+    private List content;
+    private Long pagesCount;
+    private Long elementsOnPage;
 
-    public PaginationDaoImpl() {
-        this.getClass();
+    public PaginationDaoImpl(List content,Long pagesCount,Long elementsOnPage) {
+        this.content=content;
+        this.pagesCount=pagesCount;
+        this.elementsOnPage=elementsOnPage;
     }
 
+    public PaginationDaoImpl(){}
+
     @Override
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
-        entityManager.createQuery("select c from Contacts c join Firms f on c.firmId=f.id").getResultList();
-    }
-    @Override
-    public void setEntityClass(Class<T> entityClass){
+    public void setEntityClassAndIdType(Class entityClass,Class idType){
         this.entityClass=entityClass;
+        this.idType=idType;
     }
 
     @Override
-    public List<T> getPage(int pageNum,int elements) {
-        return entityManager.createQuery("from "+entityClass.getTypeName()).setFirstResult(pageNum*elements).setMaxResults(elements).getResultList();
+    public PaginationDao getPage(int pageNum,int elements) {
+        this.content = entityManager.createQuery("from "+entityClass.getTypeName()).setFirstResult(pageNum*elements).setMaxResults(elements).getResultList();
+        Long countRows = getCountRows();
+        long pagesCount=countRows/ (long) elements;
+        if((double)this.content.size()/(double) elements!=(long)this.content.size()/elements)
+            this.pagesCount=pagesCount+1;
+        else
+            this.pagesCount=pagesCount;
+        return this;
     }
 
     @Override
     public List getPage(int pageNum,int elements, Query query) {
         return query.setFirstResult(pageNum*elements).setMaxResults(elements).getResultList();
+    }
+
+    @Override
+    public List getContent() {
+        return this.content;
+    }
+
+    @Override
+    public Long getPagesCount() {
+        return this.pagesCount;
+    }
+
+    @Override
+    public Long getElementsOnPage() {
+        return this.elementsOnPage;
+    }
+
+    public Long getCountRows(){
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery criteriaQuery = cb.createQuery();
+        criteriaQuery.select(cb.count(criteriaQuery.from(entityClass)));
+        return (Long)entityManager.createQuery(criteriaQuery).getSingleResult();
     }
 }

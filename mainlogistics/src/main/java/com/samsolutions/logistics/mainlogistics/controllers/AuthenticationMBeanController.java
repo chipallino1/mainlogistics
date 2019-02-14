@@ -56,6 +56,9 @@ public class AuthenticationMBeanController {
     @Inject
     private FirmsSignUpService firmsSignUpService;
 
+    @Inject
+    private PaginationDao paginationDao;
+
 
     @PostConstruct
     public void init(){
@@ -79,6 +82,8 @@ public class AuthenticationMBeanController {
 
     public void getFirms(AjaxBehaviorEvent event){
         System.out.println("Value changed");
+        paginationDao.setEntityClassAndIdType(Contacts.class,Long.class);
+        paginationDao.getPage(0,3);
         contactsDao.findByEmailPageable("sasha@mail.ru",0,2);
         contactsDao.findByEmail("sasha@mail.ru");
         String firmName = (String)((UIInput)event.getSource()).getValue();

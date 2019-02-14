@@ -1,6 +1,5 @@
 package com.samsolutions.logistics.mainlogistics.dao;
 
-import org.hibernate.Criteria;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
