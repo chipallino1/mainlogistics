@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.*;
+import javax.persistence.metamodel.EntityType;
 import java.util.List;
 
 @Service
@@ -36,9 +36,14 @@ public class PaginationDaoImpl implements PaginationDao {
     }
 
     @Override
-    public PaginationDao getPage(int pageNum,int elements) {
+    public PaginationDao getPage(int pageNum,int elements) throws NoSuchFieldException {
         Query query = entityManager.createQuery("from "+entityClass.getTypeName());
         setContentAndPagesCount(pageNum,elements,query);
+        CriteriaBuilder cb=entityManager.getCriteriaBuilder();
+        CriteriaQuery criteriaQuery = cb.createQuery(entityClass);
+        Root root = criteriaQuery.from(entityClass);
+        String fieldName = entityClass.getDeclaredField("email").getName();
+        getCountRowsByCondition(cb.equal(root.get(fieldName),"sasha@mail.ru")/*,cb.like(root.get("firstName"),"f")*/);
         return this;
     }
 
@@ -68,6 +73,21 @@ public class PaginationDaoImpl implements PaginationDao {
         CriteriaQuery criteriaQuery = cb.createQuery();
         criteriaQuery.select(cb.count(criteriaQuery.from(entityClass)));
         return (Long)entityManager.createQuery(criteriaQuery).getSingleResult();
+    }
+    private Long getCountRowsByCondition(Predicate... predicates){
+      /* *//* CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery criteriaQuery = cb.createQuery();
+        criteriaQuery.select(cb.count(criteriaQuery.where(predicates[0]).from(entityClass)));
+        criteriaQuery.where(predicates);*//*
+        return (Long)entityManager.createQuery(criteriaQuery).getSingleResult();*/
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery();
+        //cb.count(cq.from(entityClass));
+        ParameterExpression<Integer> p =  cb.parameter(Integer.class);
+        Root root = cq.from(entityClass);
+        cq.select(cb.count(cq.from(entityClass)));
+        cq.where(cb.equal(root.get("email"), "sasha@mail.ru"));
+        return (Long)entityManager.createQuery(cq).getSingleResult();
     }
     private void setContentAndPagesCount(int pageNum,int elements,Query query){
         this.content = query.setFirstResult(pageNum*elements).setMaxResults(elements).getResultList();

@@ -18,6 +18,9 @@ public class ContactsDaoImpl extends AbstractJpaDao<Contacts,Long>{
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Inject
+    private PaginationDao paginationDao;
+
     @PostConstruct
     public void init(){
         setEntityClass(Contacts.class);
@@ -32,7 +35,7 @@ public class ContactsDaoImpl extends AbstractJpaDao<Contacts,Long>{
         return findBy("email",email);
     }
 
-    public List findByEmailPageable(String email, int page, int elements){
+    public List findByEmailLikePageable(String email, int page, int elements){
         return null;
     }
 

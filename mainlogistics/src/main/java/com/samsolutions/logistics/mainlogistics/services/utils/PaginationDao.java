@@ -7,7 +7,7 @@ import java.util.List;
 @Component
 public interface PaginationDao {
     void setEntityClassAndIdType(Class entityClass,Class idType);
-    PaginationDao getPage(int pageNum,int elements);
+    PaginationDao getPage(int pageNum,int elements) throws NoSuchFieldException;
     PaginationDao getPage(int pageNum,int elements, Query query);
     List getContent();
     Long getPagesCount();
