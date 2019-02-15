@@ -1,5 +1,6 @@
 package com.samsolutions.logistics.mainlogistics.dao.pagination;
 
+import com.samsolutions.logistics.mainlogistics.entities.Contacts;
 import com.samsolutions.logistics.mainlogistics.services.utils.PaginationDao;
 import org.springframework.stereotype.Service;
 
@@ -7,8 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.*;
-import javax.persistence.metamodel.EntityType;
-import javax.persistence.metamodel.Metamodel;
 import java.util.List;
 
 @Service
@@ -37,7 +36,7 @@ public class PaginationDaoImpl implements PaginationDao {
     }
 
     @Override
-    public PaginationDao getPage(int pageNum,int elements) throws NoSuchFieldException {
+    public PaginationDao getPage(int pageNum,int elements) {
         Query query = entityManager.createQuery("from "+entityClass.getTypeName());
         setContentAndPagesCount(pageNum,elements,query);
         return this;
@@ -73,12 +72,15 @@ public class PaginationDaoImpl implements PaginationDao {
     private Long getCountRowsByCondition(CriteriaQuery cq, Root root, Predicate... predicates){
         CriteriaBuilder qb = entityManager.getCriteriaBuilder();
         cq.select(qb.count(root));
-        cq.where(qb.or(predicates));
+        cq.where(predicates);
         return (Long)entityManager.createQuery(cq).getSingleResult();
     }
     private void setContentAndPagesCount(int pageNum,int elements,Query query){
         this.content = query.setFirstResult(pageNum*elements).setMaxResults(elements).getResultList();
-        Long countRows = getCountRows();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
+        Root root = criteriaQuery.from(Contacts.class);
+        Long countRows = getCountRowsByCondition(criteriaQuery,root);
         long pagesCount=countRows/ (long) elements;
         if((double)this.content.size()/(double) elements!=(long)this.content.size()/elements)
             this.pagesCount=pagesCount+1;

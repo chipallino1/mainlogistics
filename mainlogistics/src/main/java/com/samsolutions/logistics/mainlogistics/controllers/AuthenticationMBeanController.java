@@ -82,14 +82,6 @@ public class AuthenticationMBeanController {
 
     public void getFirms(AjaxBehaviorEvent event){
         System.out.println("Value changed");
-        paginationDao.setEntityClassAndIdType(Contacts.class,Long.class);
-        try {
-            //paginationDao.getPage(0,3);
-            contactsDao.findByEmail("sasha@mail.ru");
-            paginationDao.getPage(0,3);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
         String firmName = (String)((UIInput)event.getSource()).getValue();
         firmsNamesList = autoCompleteFirmsService.getFirmsByFirmName(firmName);
     }
