@@ -3,6 +3,7 @@ package com.samsolutions.logistics.mainlogistics.services.listeners;
 import com.samsolutions.logistics.mainlogistics.entities.Contacts;
 import com.samsolutions.logistics.mainlogistics.services.events.FirmAddingEvent;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
+import com.samsolutions.logistics.mainlogistics.services.utils.JpaQueryParamsParser;
 import com.samsolutions.logistics.mainlogistics.services.utils.JsonEncoder;
 import com.samsolutions.logistics.mainlogistics.services.utils.PaginationDao;
 import com.samsolutions.logistics.mainlogistics.validation.exceptions.FileStorageException;
@@ -42,6 +43,8 @@ public class AutoCompleteFirmsServiceImpl {
     private JsonEncoder jsonEncoder;
     @Inject
     private PaginationDao paginationDao;
+    @Inject
+    private JpaQueryParamsParser jpaQueryParamsParser;
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -51,7 +54,8 @@ public class AutoCompleteFirmsServiceImpl {
         this.firmsList = firmsService.getAllFirmsNamesByName("");
         paginationDao.setEntityClassAndIdType(Contacts.class,Long.class);
         paginationDao.getPage(0,1);
-        Query query = entityManager.createQuery("from Contacts c where c.email = ?1").setParameter(1,"sasha@mail.ru");
+        Query query = entityManager.createQuery("from Contacts c where c.lastName = 'wefwe' and c.email = :arg0 and c.firstName = ?1").setParameter("arg0","sasha@mail.ru").setParameter(1,"hui");
+        jpaQueryParamsParser.getParams(query);
         paginationDao.getPage(0,1,query);
 
         saveFirmsList();
