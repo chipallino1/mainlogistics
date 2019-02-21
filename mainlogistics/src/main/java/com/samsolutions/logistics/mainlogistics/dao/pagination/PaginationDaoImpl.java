@@ -87,4 +87,8 @@ public class PaginationDaoImpl implements PaginationDao {
         else
             this.pagesCount=pagesCount;
     }
+    @Override
+    public long getRowsCount(String query){
+        return (long)entityManager.createQuery(query).getSingleResult();
+    }
 }

@@ -12,4 +12,5 @@ public interface PaginationDao {
     List getContent();
     Long getPagesCount();
     Long getElementsOnPage();
+    long getRowsCount(String query);
 }

@@ -53,6 +53,7 @@ public class AutoCompleteFirmsServiceImpl {
     public void doSomethingAfterStartup(ApplicationReadyEvent applicationReadyEvent) {
         this.firmsList = firmsService.getAllFirmsNamesByName("");
         paginationDao.setEntityClassAndIdType(Contacts.class,Long.class);
+        paginationDao.getRowsCount("select count(1) from Contacts where email='igor@mail.ru' or lastName='Skorupich'");
         paginationDao.getPage(0,1);
         Query query = entityManager.createQuery("from Contacts c where c.lastName = 'wefwe' and c.email = :arg0 and c.firstName = ?1").setParameter("arg0","sasha@mail.ru").setParameter(1,"hui");
         jpaQueryParamsParser.getParams(query);
