@@ -51,7 +51,7 @@ public class JpaQueryParamsParserImpl implements JpaQueryParamsParser {
         for(int i=0;i<splitted.length;i++){
             if(splitted[i].equals("=")){
                 rulesConformity.put(splitted[i],"E");
-                continue;
+                continue;////////////////////
             }
             if(splitted[i].equals("or") || splitted[i].equals("and")){
                 rulesConformity.put(splitted[i],"O");
@@ -76,7 +76,7 @@ public class JpaQueryParamsParserImpl implements JpaQueryParamsParser {
     }
     private void checkRules(Map<String,String> rulesConformity,Map<String,String[]> rulesMap){
         for(int i=0;i<rulesConformity.size();i++){
-            rulesConformity.get
+           // rulesConformity.get
         }
     }
 }
