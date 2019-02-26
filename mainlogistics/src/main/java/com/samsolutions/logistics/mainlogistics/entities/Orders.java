@@ -14,7 +14,7 @@ import java.util.Objects;
 /**
  * Entity
  */
-@Entity
+//@Entity
 public class Orders {
     private Long id;
     private Long yourCapacity;

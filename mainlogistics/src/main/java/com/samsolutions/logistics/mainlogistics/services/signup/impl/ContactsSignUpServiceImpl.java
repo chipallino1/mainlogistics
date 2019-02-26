@@ -153,7 +153,7 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
         if (!Objects.equals(contactDTO.getFirmName(), "") && contactDTO.getFirmName()!=null) {
             relateToFirm();
         }
-        contacts.setPasswordsId(passwords.getId());
+        contacts.setPasswordsId(passwords.getId().longValue());
         contacts.setCreatedAt(new Date(System.currentTimeMillis()));
         contacts.setModifiedTime(new Date(System.currentTimeMillis()));
         //contactsDao.persist(contacts);
@@ -179,7 +179,7 @@ public class ContactsSignUpServiceImpl implements ContactsSignUpService {
         users.setEmail(contacts.getEmail());
         users.setUserState(UserState.ENABLED);
         users.setRole(Role.ROLE_CONTACT_USER);
-        users.setPasswordId(passwords.getId());
+        users.setPasswordId(passwords.getId().longValue());
         usersRepository.save(users);
     }
 

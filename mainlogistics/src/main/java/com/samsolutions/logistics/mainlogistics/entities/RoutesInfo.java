@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * Entity
  */
-@Entity
+//@Entity
 @Table(name = "routes_info", schema = "logistic_db", catalog = "")
 public class RoutesInfo {
     private Long id;

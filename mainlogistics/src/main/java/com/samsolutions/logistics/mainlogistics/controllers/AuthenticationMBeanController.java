@@ -34,13 +34,14 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Named
 @ViewScoped
-public class AuthenticationMBeanController {
+public class AuthenticationMBeanController implements Serializable {
 
     private FirmDTO firmDTO;
     private ContactDTO contactDTO;

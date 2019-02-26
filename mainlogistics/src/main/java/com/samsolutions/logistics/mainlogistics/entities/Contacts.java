@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * Entity
  */
-@Entity
+//@Entity
 public class Contacts {
     private Long id;
     private String firstName;

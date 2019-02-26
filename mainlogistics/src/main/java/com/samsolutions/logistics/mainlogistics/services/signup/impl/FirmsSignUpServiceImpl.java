@@ -127,7 +127,7 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
 
     @Override
     public void save() {
-        firms.setPasswordId(passwords.getId());
+        firms.setPasswordId(passwords.getId().longValue());
         firms.setCreatedAt(new Date(System.currentTimeMillis()));
         firmsRepository.save(firms);
 
@@ -144,7 +144,7 @@ public class FirmsSignUpServiceImpl implements FirmsSignUpService {
         else {
             users.setRole(Role.ROLE_SIMPLE_FIRM_USER);
         }
-        users.setPasswordId(passwords.getId());
+        users.setPasswordId(passwords.getId().longValue());
         usersRepository.save(users);
     }
 

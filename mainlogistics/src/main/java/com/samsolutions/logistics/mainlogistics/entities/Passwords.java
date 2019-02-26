@@ -1,12 +1,7 @@
 package com.samsolutions.logistics.mainlogistics.entities;
 
-import javax.persistence.Id;
-import javax.persistence.Basic;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -15,7 +10,7 @@ import java.util.Objects;
  */
 @Entity
 public class Passwords {
-    private Long id;
+    private Integer id;
     private String passHash;
     private String salt;
     private Collection<Contacts> contactsById;
@@ -25,11 +20,11 @@ public class Passwords {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

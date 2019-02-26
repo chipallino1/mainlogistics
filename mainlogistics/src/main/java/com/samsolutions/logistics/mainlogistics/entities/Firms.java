@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * Entity
  */
-@Entity
+//@Entity
 public class Firms {
     private Long id;
     private String firmName;
