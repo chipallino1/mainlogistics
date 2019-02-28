@@ -2,6 +2,7 @@ package com.samsolutions.logistics.mainlogistics.dao;
 
 import com.samsolutions.logistics.mainlogistics.entities.Contacts;
 import com.samsolutions.logistics.mainlogistics.services.utils.PaginationDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -16,7 +17,7 @@ public class ContactsDaoImpl extends AbstractJpaDao<Contacts,Long>{
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Inject
+    @Autowired
     private PaginationDao paginationDao;
 
     @PostConstruct

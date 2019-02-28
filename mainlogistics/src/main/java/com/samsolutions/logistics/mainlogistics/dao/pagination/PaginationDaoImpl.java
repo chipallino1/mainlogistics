@@ -82,7 +82,7 @@ public class PaginationDaoImpl implements PaginationDao {
         Root root = criteriaQuery.from(Contacts.class);
         Long countRows = getCountRowsByCondition(criteriaQuery,root);
         long pagesCount=countRows/ (long) elements;
-        if((double)this.content.size()/(double) elements!=(long)this.content.size()/elements)
+        if((double)countRows/(double) elements!=pagesCount)
             this.pagesCount=pagesCount+1;
         else
             this.pagesCount=pagesCount;
