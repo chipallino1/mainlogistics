@@ -8,6 +8,7 @@ import com.samsolutions.logistics.mainlogistics.services.utils.JsonEncoder;
 import com.samsolutions.logistics.mainlogistics.services.utils.PaginationDao;
 import com.samsolutions.logistics.mainlogistics.validation.exceptions.FileStorageException;
 import com.sun.faces.facelets.util.Path;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.core.Authentication;
@@ -37,13 +38,11 @@ import java.util.stream.Stream;
 public class AutoCompleteFirmsServiceImpl {
 
     private List<String> firmsList;
-    @Inject
-    private FirmsService firmsService;
-    @Inject
+    @Autowired
     private JsonEncoder jsonEncoder;
-    @Inject
+    @Autowired
     private PaginationDao paginationDao;
-    @Inject
+    @Autowired
     private JpaQueryParamsParser jpaQueryParamsParser;
     @PersistenceContext
     private EntityManager entityManager;
@@ -51,12 +50,11 @@ public class AutoCompleteFirmsServiceImpl {
 
     @EventListener(ApplicationReadyEvent.class)
     public void doSomethingAfterStartup(ApplicationReadyEvent applicationReadyEvent) {
-        this.firmsList = firmsService.getAllFirmsNamesByName("");
         paginationDao.setEntityClassAndIdType(Contacts.class,Long.class);
         paginationDao.getRowsCount("select count(1) from Contacts where email='igor@mail.ru' or lastName='Skorupich'");
         paginationDao.getPage(0,1);
         Query query = entityManager.createQuery("from Contacts c where c.lastName = 'wefwe' and c.email = :arg0 and c.firstName = ?1").setParameter("arg0","sasha@mail.ru").setParameter(1,"hui");
-        jpaQueryParamsParser.getParams(query);
+        //jpaQueryParamsParser.getParams(query);
         paginationDao.getPage(0,1,query);
 
         saveFirmsList();

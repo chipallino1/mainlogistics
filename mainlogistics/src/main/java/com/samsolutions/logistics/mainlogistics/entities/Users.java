@@ -18,7 +18,7 @@ import java.util.Objects;
 /**
  * Entity
  */
-//@Entity
+@Entity
 public class Users {
     private Long id;
     private Role role;

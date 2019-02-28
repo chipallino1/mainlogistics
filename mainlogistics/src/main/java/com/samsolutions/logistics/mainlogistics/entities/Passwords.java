@@ -10,7 +10,7 @@ import java.util.Objects;
  */
 @Entity
 public class Passwords {
-    private Integer id;
+    private Long id;
     private String passHash;
     private String salt;
     private Collection<Contacts> contactsById;
@@ -20,11 +20,11 @@ public class Passwords {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -1,6 +1,5 @@
 package com.samsolutions.logistics.mainlogistics.dao;
 
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -10,7 +9,6 @@ import javax.persistence.metamodel.Metamodel;
 import java.io.Serializable;
 import java.util.List;
 
-@Transactional
 public abstract class AbstractJpaDao<T,Id extends Serializable> implements DaoInterface<T,Id> {
 
     private Class<T> entityClass;

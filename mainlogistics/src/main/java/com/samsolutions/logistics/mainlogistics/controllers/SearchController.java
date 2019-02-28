@@ -8,8 +8,6 @@ import com.samsolutions.logistics.mainlogistics.services.routes.RoutesService;
 import com.samsolutions.logistics.mainlogistics.services.user.ContactsService;
 import com.samsolutions.logistics.mainlogistics.services.user.FirmsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,17 +34,17 @@ public class SearchController {
         this.contactsService = contactsService;
     }
 
-    @GetMapping("/search/routes")
+   /* @GetMapping("/search/routes")
     public PageDTO<RouteDTO> searchRoutes(@PageableDefault(value = 5) Pageable pageable, @RequestParam("countryFrom") String coutryFrom, @RequestParam("cityFrom")String cityFrom,
                                           @RequestParam("countryTo") String countryTo, @RequestParam("cityTo")String cityTo){
         return routesService.searchRoutesByParams(coutryFrom,cityFrom,countryTo,cityTo,pageable);
-    }
-    @GetMapping("/search/firms")
+    }*/
+    /*@GetMapping("/search/firms")
     public PageDTO<FirmDTO> searchFirms(@PageableDefault(value = 5) Pageable pageable, @RequestParam("firmName") String firmName){
         return firmsService.getFirmsByFirmNameAndPage(firmName,pageable);
-    }
-    @GetMapping("/search/contacts")
+    }*/
+    /*@GetMapping("/search/contacts")
     public PageDTO<ContactDTO> searchContacts(@PageableDefault(value = 5) Pageable pageable,@RequestParam("email") String email){
         return contactsService.getContactsByPageAndEmail(email,pageable);
-    }
+    }*/
 }

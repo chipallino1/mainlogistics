@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * Entity
  */
-//@Entity
+@Entity
 @Table(name = "ROUTES")
 public class Routes {
     private Long id;

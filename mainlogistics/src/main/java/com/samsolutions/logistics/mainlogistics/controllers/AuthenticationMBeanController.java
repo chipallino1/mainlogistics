@@ -34,6 +34,8 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,18 +48,20 @@ public class AuthenticationMBeanController implements Serializable {
     private FirmDTO firmDTO;
     private ContactDTO contactDTO;
     private List<String> firmsNamesList;
-    @Inject
+    @Autowired
     private FirmsDaoImpl firmsDao;
-    @Inject
+    @Autowired
     private ContactsDaoImpl contactsDao;
-    @Inject
+    @Autowired
     private AutoCompleteFirmsServiceImpl autoCompleteFirmsService;
-    @Inject
+    @Autowired
     private ContactsSignUpService contactsSignUpService;
-    @Inject
+    @Autowired
     private FirmsSignUpService firmsSignUpService;
 
-    @Inject
+    @PersistenceContext
+    private EntityManager entityManager;
+    @Autowired
     private PaginationDao paginationDao;
 
 

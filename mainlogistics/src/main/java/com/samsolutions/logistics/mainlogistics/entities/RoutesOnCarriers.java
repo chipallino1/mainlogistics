@@ -3,7 +3,7 @@ package com.samsolutions.logistics.mainlogistics.entities;
 import javax.persistence.*;
 import java.util.Collection;
 
-//@Entity
+@Entity
 @Table(name = "routes_on_carriers")
 public class RoutesOnCarriers {
 
